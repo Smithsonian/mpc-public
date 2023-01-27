@@ -21,12 +21,13 @@ Code related to the parsing & validation of best-fit orbit files in the "mpc_orb
  - The code that performs the validation can be found in mpc_orb/validate_mpcorb.py
 
 
-N.B. The code to create the json-schema used for the validation is contained in a separate repo, "mpc_orb_creation"
-  
- 
-## Layout
+## Installation and Usage 
 
-### Directories 
+It is intended that this become a pip-installable python package. 
+
+Once that has been set-up, "pip instal ..." instructions should be placed here.  
+ 
+## Repo Contents 
 
 (a) demos            
 
