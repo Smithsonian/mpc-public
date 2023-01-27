@@ -2,7 +2,7 @@
 
 ## Overview 
 
-Code to 
+Code related to the parsing & validation of best-fit orbit files in the "mpc_orb.json" format 
 
 (i) Provide "parse" functions for JSON files containing "MPC_ORB.JSON" formatted data
 
