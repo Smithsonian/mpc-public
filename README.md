@@ -1,6 +1,6 @@
 # mpc-public
 
-Intended to act as an over-arching repo to hold various publically-released pieces of code written by the MPC 
+An over-arching repo to hold various publically-released pieces of code written by the MPC 
 
 ## Current contents 
 
