@@ -20,15 +20,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install setuptools wheel twine
 
-    - name: Install pypa/build
+    - name: Publish distribution 📦 to PyPI
       run: |
         cd mpc_orb
         python -m pip install build --user
-    - name: Build a binary wheel and a source tarball
-      run: |
-        cd mpc_orb
         python -m build --sdist --wheel --outdir dist/ .
-    - name: Publish distribution 📦 to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
         password: ${{ secrets.PYPI_PASSWORD }}
