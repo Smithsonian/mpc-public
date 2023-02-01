@@ -1,0 +1,16 @@
+LICENSE
+README.md
+pyproject.toml
+setup.py
+mpc_orb/__init__.py
+mpc_orb/filepaths.py
+mpc_orb/interpret.py
+mpc_orb/parse.py
+mpc_orb/validate_mpcorb.py
+mpc_orb.egg-info/PKG-INFO
+mpc_orb.egg-info/SOURCES.txt
+mpc_orb.egg-info/dependency_links.txt
+mpc_orb.egg-info/not-zip-safe
+mpc_orb.egg-info/requires.txt
+mpc_orb.egg-info/top_level.txt
+mpc_orb/json_files/__init__.py

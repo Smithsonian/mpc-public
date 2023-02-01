@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
 	name='mpc_orb',
-	version='0.2',
+	version='0.0.2',
 	description='For the validation and parsing of mpc_orb.json formatted data',
 	author='MJP:MPC',
 	author_email='mpayne@cfa.harvard.edu',
