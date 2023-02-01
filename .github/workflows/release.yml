@@ -21,7 +21,7 @@ jobs:
         TWINE_USERNAME: "__token__"
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
-        echo KEY: '${TWINE_PASSWORD}'
+        echo KEY: ${TWINE_PASSWORD}
         cd mpc_orb
         python setup.py sdist bdist_wheel
         twine upload dist/* --verbose

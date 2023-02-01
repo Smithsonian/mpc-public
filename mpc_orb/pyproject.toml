@@ -3,6 +3,9 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
+dependencies = [
+  "jsonschema",
+  "numpy"]
 name = "mpc_orb"
 version = "0.0.2"
 authors = [
