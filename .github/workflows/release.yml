@@ -1,4 +1,4 @@
-name: Upload Python Package
+name: Build and public mpc-orb to PyPI
 
 on:
   release:
@@ -10,18 +10,13 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-python@v2
+    - uses: actions/checkout@master
+    - uses: actions/setup-python@v3
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install setuptools wheel twine
-    - name: Build and publish
-      env:
-        TWINE_USERNAME: "__token__"
-        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-      run: |
-        echo KEY: ${TWINE_PASSWORD}
-        cd mpc_orb
-        python setup.py sdist bdist_wheel
-        twine upload dist/* --verbose
+    - name: Publish distribution 📦 to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        password: ${{ secrets.PYPI_PASSWORD }}
