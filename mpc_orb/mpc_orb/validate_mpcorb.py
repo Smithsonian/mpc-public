@@ -39,7 +39,7 @@ def validate_mpcorb( arg ):
     Input can be json-filepath, or dictionary of json contents
     
     arg: dictionary or json-filepath
-     - The input json to be validated
+     - The input json to be validated`
     
     returns: Boolean
     
