@@ -19,9 +19,9 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install setuptools wheel twine
+        cd mpc_orb
     - name: Install pypa/build
       run: >-
-        cd mpc_orb
         python -m
         pip install
         build
