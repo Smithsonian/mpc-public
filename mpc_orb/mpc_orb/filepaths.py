@@ -8,20 +8,25 @@ import glob
 from os.path import join, dirname, abspath
 import os
 
+import mpc_orb.json_files.schema_json
+import mpc_orb.json_files.test_jsons.fail_mpcorb
+import mpc_orb.json_files.test_jsons.pass_mpcorb
+
 # Directories
 # -----------------------
-pack_dir  = '/Users/matthewjohnpayne/Envs/mpc-public/mpc_orb/mpc_orb/'      # Directory for code
-json_dir  = os.path.join(pack_dir, 'json_files')  # Directory for supplied JSON files
+schema_dir = mpc_orb.json_files.schema_json.__path__[0]
+fail_dir   = mpc_orb.json_files.test_jsons.fail_mpcorb.__path__[0]
+pass_dir   = mpc_orb.json_files.test_jsons.pass_mpcorb.__path__[0]
 
 
 # Filepaths / Lists-of-Filepaths
 # -----------------------
 # Filepath to json schema against which everything is validated
-mpcorb_schema = os.path.join(json_dir, 'schema_json', 'mpcorb_schema.json')
+mpcorb_schema = os.path.join(schema_dir, 'mpcorb_schema.json')
 
 # Filepaths to sample json files used in tests
-test_fail_mpcorb = glob.glob( os.path.join(json_dir, 'test_jsons', 'fail_mpcorb' + "/*" ) )
-test_pass_mpcorb = glob.glob( os.path.join(json_dir, 'test_jsons', 'pass_mpcorb' + "/*" ) )
+test_fail_mpcorb = glob.glob( fail_dir + "/*.json" )
+test_pass_mpcorb = glob.glob( pass_dir + "/*.json" )
 
 
 

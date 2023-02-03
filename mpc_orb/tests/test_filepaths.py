@@ -13,14 +13,17 @@ from mpc_orb import filepaths
 
 # Tests
 # -----------------------
-
-def test_filepaths_A(  ):
+def test_filepaths_B(  ):
     '''
     Test the variables defined within mpc_orb.filepaths ...
     '''
-  
-    # Test that the expected attributes exist
-    for a in ["pack_dir", "json_dir", "mpcorb_schema", "test_fail_mpcorb", "test_pass_mpcorb"]:
+    # Test that the expected directory-related attributes exist & are directories
+    for a in ["schema_dir", "fail_dir", "pass_dir"]:
+        assert hasattr(filepaths,a)
+        assert os.path.isdir(filepaths.__dict__[a])
+        
+    # Test that the expected file-related attributes exist
+    for a in ["mpcorb_schema", "test_fail_mpcorb", "test_pass_mpcorb"]:
         assert hasattr(filepaths,a)
 
     # Test that the schema filepath is valid
@@ -32,6 +35,6 @@ def test_filepaths_A(  ):
         assert isinstance(l, list)
         assert len(l)
         for fp in l:
-            assert os.path.isfile( fp )
-    
+            assert os.path.isfile( fp ), f'{fp} NOT a file'
+
     
