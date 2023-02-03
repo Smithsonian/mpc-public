@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+dependencies = [
+  "jsonschema",
+  "numpy"]
+name = "mpc_orb"
+version = "0.0.3"
+authors = [
+  { name="Minor Planet Center", email="mpc@cfa.harvard.edu" },
+]
+description = "Code related to the parsing & validation of best-fit orbit files in the mpc_orb.json format"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/Smithsonian/mpc-public"
+"Bug Tracker" = "https://github.com/Smithsonian/mpc-public/issues"
