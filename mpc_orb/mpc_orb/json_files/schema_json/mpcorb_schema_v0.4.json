@@ -801,25 +801,69 @@
                 }
             }
         },
-        "cometary_a" : {
+        "cometary_q" : {
             "type" : "object",
-            "description":"Cometary Position Component",
+            "description":"Cometary Pericenter Distance",
             "properties": {
                 "unit"  : {
-                    "description": "Physical Units associated with Cartesian Position Component",
+                    "description": "Physical Units associated with Cometary Pericenter Distance",
                     "type": "string",
                     "enum": ["au"]
                 }
             }
         },
-        "cometary_vel" : {
+        "cometary_e" : {
             "type" : "object",
-            "description":"Cartesian Velocity Component",
+            "description":"Cometary Eccentricity",
             "properties": {
                 "unit"  : {
-                    "description": "Physical Units associated with Cartesian Velocity Component",
+                    "description": "Physical Units associated with Cometary Eccentricity",
                     "type": "string",
-                    "enum": ["au/day"]
+                    "enum": ["null"]
+                }
+            }
+        },
+        "cometary_i" : {
+            "type" : "object",
+            "description":"Cometary Inclination",
+            "properties": {
+                "unit"  : {
+                    "description": "Physical Units associated with Cometary Inclination",
+                    "type": "string",
+                    "enum": ["degrees"]
+                }
+            }
+        },
+        "cometary_node" : {
+            "type" : "object",
+            "description":"Cometary Longitude of Ascending Node",
+            "properties": {
+                "unit"  : {
+                    "description": "Physical Units associated with Cometary Longitude of Ascending Node",
+                    "type": "string",
+                    "enum": ["degrees"]
+                }
+            }
+        },
+        "cometary_argperi" : {
+            "type" : "object",
+            "description":"Cometary Argument of Pericenter",
+            "properties": {
+                "unit"  : {
+                    "description": "Physical Units associated with Cometary Argument of Pericenter",
+                    "type": "string",
+                    "enum": ["degrees"]
+                }
+            }
+        },
+        "cometary_peri_time" : {
+            "type" : "object",
+            "description":"Cometary Time from Pericenter Passage",
+            "properties": {
+                "unit"  : {
+                    "description": "Physical Units associated with Cometary Time from Pericenter Passage",
+                    "type": "string",
+                    "enum": ["days"]
                 }
             }
         },
