@@ -8,13 +8,10 @@ Code to illustrate the usage of various components of the mpc_orb package
 
  - The code to do the parsing is provided in mpc_orb/parse.py
 
- - Both "demo_parse.py" and "Example_parse_mpcorb_json.ipynb" provide the same basic example of how to parse a given mpc_orb.json file using the code in the mpc_orb/parse.py module. 
+ - Both "demo_parse.py" and "Example_parse_mpcorb_json.ipynb" provide the same basic example of how to parse a given mpc_orb.json file using the code in the mpc_orb/parse.py module.
 
-### (2) Docker stuff
 
- - Dockerfile, build_container.py & pythonServer.py work to allow creation of a bare-bones container with the mpc_orb package in it. 
+### (2) How to use the "describe" function to get information on any given "attribute" of the MPCORB object
+
+ - Provides some more information to the user, describing both the topline "meaning" of the atttribute, as well as units (where relevant)
  
- - If you have docker installed & working, then executing "python3 build_container.py" should ...
-    - Build an image that contains the mpc_orb code, and has all of the requirements installed
-    - Deploy the container
-
