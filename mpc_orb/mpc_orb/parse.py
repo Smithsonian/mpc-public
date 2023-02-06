@@ -77,6 +77,9 @@ class MPCORB():
         if variable_name in self.schema_json['properties'].keys():
             return  {variable_name: {'description':self.schema_json['properties'][variable_name]['description'] }}
 
+        if variable_name == 'schema_json':
+            return {variable_name: {'filepath':filepaths.mpcorb_schema} }
+
         # (ii) If variable_name is one of the defined-schema variables
         if variable_name in self.schema_json['$defs']:
             def_var_name = variable_name
@@ -88,8 +91,8 @@ class MPCORB():
         # (iv) If variable_name is an attribute of CAR
         elif variable_name in self.CAR.__dict__:
             def_var_name = self.schema_json['properties']['CAR']['properties']['coefficient_specification']['properties'][variable_name]['$ref'].replace('#/$defs/','')
-
-        # (v) Hopefully we never see this ...
+        
+        # (vi) Hopefully we never see this ...
         else:
             def_var_name = None
             

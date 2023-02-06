@@ -438,8 +438,7 @@
             "properties": {
                 "H": {
                     "type": "number"
-                },
-                "G": {
+                       "G": {
                     "type": "number"
                 },
                 "G1": {
@@ -464,11 +463,11 @@
         },
         "epoch_data": {
             "type": "object",
-            "description" : "Data concerning the orbit epoch: I.e. The date at which the best-fit orbital coordinates are correct [double-check: Does TT ++ TDT???]",
+            "description" : "Data concerning the orbit epoch: I.e. The date at which the best-fit orbital coordinates are correct ",
             "properties": {
                 "timesystem": {
                     "type": "string",
-                     "enum": ["TDB","TT", "TDT"]
+                     "enum": ["TDB","TDT"]
                 },
                 "timeform": {
                     "type": "string",
