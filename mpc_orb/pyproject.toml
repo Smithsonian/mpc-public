@@ -7,7 +7,7 @@ dependencies = [
   "jsonschema",
   "numpy"]
 name = "mpc_orb"
-version = "0.0.3"
+version = "0.0.4"
 authors = [
   { name="Minor Planet Center", email="mpc@cfa.harvard.edu" },
 ]
