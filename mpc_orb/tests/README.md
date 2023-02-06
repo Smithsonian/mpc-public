@@ -1,3 +1,3 @@
 # MPCORB tests
 
-These tests are insufficient at present!
+ - Various tests of the "filepaths", "validate_mpcorb", "interpret" and "parse" modules. 
