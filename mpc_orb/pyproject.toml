@@ -5,7 +5,8 @@ build-backend = "setuptools.build_meta"
 [project]
 dependencies = [
   "jsonschema",
-  "numpy"]
+  "numpy",
+  "pytest"]
 name = "mpc_orb"
 version = "0.0.4"
 authors = [

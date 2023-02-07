@@ -9,7 +9,8 @@ setuptools.setup(
 	url='https://github.com/matthewjohnpayne/mpc_orb',
 	install_requires=[
 		'jsonschema',
-		'numpy'],
+		'numpy',
+		'pytest'],
 	packages=setuptools.find_packages(),
 	zip_safe=False)
 
