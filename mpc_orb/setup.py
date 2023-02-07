@@ -13,5 +13,5 @@ setuptools.setup(
 		'pytest'],
 	packages=setuptools.find_packages(),
     include_package_data=True,
-	zip_safe=False) 
+	zip_safe=False)
 
