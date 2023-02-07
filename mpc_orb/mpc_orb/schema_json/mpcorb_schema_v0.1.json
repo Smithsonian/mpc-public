@@ -1,0 +1,1117 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "type": "object",
+    "properties": {
+        "CAR": {
+            "type": "object",
+            "properties": {
+                "eigval": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                },
+                "numparams": {
+                    "type": "integer"
+                },
+                "rms": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                },
+                "covariance": {
+                    "type": "object",
+                    "properties": {
+                        "cov00": {
+                            "type": "number"
+                        },
+                        "cov01": {
+                            "type": "number"
+                        },
+                        "cov02": {
+                            "type": "number"
+                        },
+                        "cov03": {
+                            "type": "number"
+                        },
+                        "cov04": {
+                            "type": "number"
+                        },
+                        "cov05": {
+                            "type": "number"
+                        },
+                        "cov11": {
+                            "type": "number"
+                        },
+                        "cov12": {
+                            "type": "number"
+                        },
+                        "cov13": {
+                            "type": "number"
+                        },
+                        "cov14": {
+                            "type": "number"
+                        },
+                        "cov15": {
+                            "type": "number"
+                        },
+                        "cov22": {
+                            "type": "number"
+                        },
+                        "cov23": {
+                            "type": "number"
+                        },
+                        "cov24": {
+                            "type": "number"
+                        },
+                        "cov25": {
+                            "type": "number"
+                        },
+                        "cov33": {
+                            "type": "number"
+                        },
+                        "cov34": {
+                            "type": "number"
+                        },
+                        "cov35": {
+                            "type": "number"
+                        },
+                        "cov44": {
+                            "type": "number"
+                        },
+                        "cov45": {
+                            "type": "number"
+                        },
+                        "cov55": {
+                            "type": "number"
+                        },
+                        "cov06": {
+                            "type": "number"
+                        },
+                        "cov07": {
+                            "type": "number"
+                        },
+                        "cov16": {
+                            "type": "number"
+                        },
+                        "cov17": {
+                            "type": "number"
+                        },
+                        "cov26": {
+                            "type": "number"
+                        },
+                        "cov27": {
+                            "type": "number"
+                        },
+                        "cov36": {
+                            "type": "number"
+                        },
+                        "cov37": {
+                            "type": "number"
+                        },
+                        "cov46": {
+                            "type": "number"
+                        },
+                        "cov47": {
+                            "type": "number"
+                        },
+                        "cov56": {
+                            "type": "number"
+                        },
+                        "cov57": {
+                            "type": "number"
+                        },
+                        "cov66": {
+                            "type": "number"
+                        },
+                        "cov67": {
+                            "type": "number"
+                        },
+                        "cov77": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "cov00",
+                        "cov01",
+                        "cov02",
+                        "cov03",
+                        "cov04",
+                        "cov05",
+                        "cov11",
+                        "cov12",
+                        "cov13",
+                        "cov14",
+                        "cov15",
+                        "cov22",
+                        "cov23",
+                        "cov24",
+                        "cov25",
+                        "cov33",
+                        "cov34",
+                        "cov35",
+                        "cov44",
+                        "cov45",
+                        "cov55"
+                    ]
+                },
+                "elements": {
+                    "type": "object",
+                    "properties": {
+                        "x": {
+                            "type": "number"
+                        },
+                        "y": {
+                            "type": "number"
+                        },
+                        "z": {
+                            "type": "number"
+                        },
+                        "vx": {
+                            "type": "number"
+                        },
+                        "vy": {
+                            "type": "number"
+                        },
+                        "vz": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "vx",
+                        "vy",
+                        "vz",
+                        "x",
+                        "y",
+                        "z"
+                    ]
+                },
+                "element_order": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "covariance",
+                "eigval",
+                "element_order",
+                "elements",
+                "numparams",
+                "rms"
+            ]
+        },
+        "COM": {
+            "type": "object",
+            "properties": {
+                "eigval": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                },
+                "numparams": {
+                    "type": "integer"
+                },
+                "rms": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                },
+                "covariance": {
+                    "type": "object",
+                    "properties": {
+                        "cov00": {
+                            "type": "number"
+                        },
+                        "cov01": {
+                            "type": "number"
+                        },
+                        "cov02": {
+                            "type": "number"
+                        },
+                        "cov03": {
+                            "type": "number"
+                        },
+                        "cov04": {
+                            "type": "number"
+                        },
+                        "cov05": {
+                            "type": "number"
+                        },
+                        "cov11": {
+                            "type": "number"
+                        },
+                        "cov12": {
+                            "type": "number"
+                        },
+                        "cov13": {
+                            "type": "number"
+                        },
+                        "cov14": {
+                            "type": "number"
+                        },
+                        "cov15": {
+                            "type": "number"
+                        },
+                        "cov22": {
+                            "type": "number"
+                        },
+                        "cov23": {
+                            "type": "number"
+                        },
+                        "cov24": {
+                            "type": "number"
+                        },
+                        "cov25": {
+                            "type": "number"
+                        },
+                        "cov33": {
+                            "type": "number"
+                        },
+                        "cov34": {
+                            "type": "number"
+                        },
+                        "cov35": {
+                            "type": "number"
+                        },
+                        "cov44": {
+                            "type": "number"
+                        },
+                        "cov45": {
+                            "type": "number"
+                        },
+                        "cov55": {
+                            "type": "number"
+                        },
+                        "cov06": {
+                            "type": "number"
+                        },
+                        "cov07": {
+                            "type": "number"
+                        },
+                        "cov16": {
+                            "type": "number"
+                        },
+                        "cov17": {
+                            "type": "number"
+                        },
+                        "cov26": {
+                            "type": "number"
+                        },
+                        "cov27": {
+                            "type": "number"
+                        },
+                        "cov36": {
+                            "type": "number"
+                        },
+                        "cov37": {
+                            "type": "number"
+                        },
+                        "cov46": {
+                            "type": "number"
+                        },
+                        "cov47": {
+                            "type": "number"
+                        },
+                        "cov56": {
+                            "type": "number"
+                        },
+                        "cov57": {
+                            "type": "number"
+                        },
+                        "cov66": {
+                            "type": "number"
+                        },
+                        "cov67": {
+                            "type": "number"
+                        },
+                        "cov77": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "cov00",
+                        "cov01",
+                        "cov02",
+                        "cov03",
+                        "cov04",
+                        "cov05",
+                        "cov11",
+                        "cov12",
+                        "cov13",
+                        "cov14",
+                        "cov15",
+                        "cov22",
+                        "cov23",
+                        "cov24",
+                        "cov25",
+                        "cov33",
+                        "cov34",
+                        "cov35",
+                        "cov44",
+                        "cov45",
+                        "cov55"
+                    ]
+                },
+                "elements": {
+                    "type": "object",
+                    "properties": {
+                        "q": {
+                            "type": "number"
+                        },
+                        "e": {
+                            "type": "number"
+                        },
+                        "i": {
+                            "type": "number"
+                        },
+                        "node": {
+                            "type": "number"
+                        },
+                        "argperi": {
+                            "type": "number"
+                        },
+                        "peri_time": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "argperi",
+                        "e",
+                        "i",
+                        "node",
+                        "peri_time",
+                        "q"
+                    ]
+                },
+                "element_order": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "covariance",
+                "eigval",
+                "element_order",
+                "elements",
+                "numparams",
+                "rms"
+            ]
+        },
+        "COT": {
+            "type": "object",
+            "properties": {
+                "eigval": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                },
+                "numparams": {
+                    "type": "integer"
+                },
+                "rms": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                },
+                "covariance": {
+                    "type": "object",
+                    "properties": {
+                        "cov00": {
+                            "type": "number"
+                        },
+                        "cov01": {
+                            "type": "number"
+                        },
+                        "cov02": {
+                            "type": "number"
+                        },
+                        "cov03": {
+                            "type": "number"
+                        },
+                        "cov04": {
+                            "type": "number"
+                        },
+                        "cov05": {
+                            "type": "number"
+                        },
+                        "cov11": {
+                            "type": "number"
+                        },
+                        "cov12": {
+                            "type": "number"
+                        },
+                        "cov13": {
+                            "type": "number"
+                        },
+                        "cov14": {
+                            "type": "number"
+                        },
+                        "cov15": {
+                            "type": "number"
+                        },
+                        "cov22": {
+                            "type": "number"
+                        },
+                        "cov23": {
+                            "type": "number"
+                        },
+                        "cov24": {
+                            "type": "number"
+                        },
+                        "cov25": {
+                            "type": "number"
+                        },
+                        "cov33": {
+                            "type": "number"
+                        },
+                        "cov34": {
+                            "type": "number"
+                        },
+                        "cov35": {
+                            "type": "number"
+                        },
+                        "cov44": {
+                            "type": "number"
+                        },
+                        "cov45": {
+                            "type": "number"
+                        },
+                        "cov55": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "cov00",
+                        "cov01",
+                        "cov02",
+                        "cov03",
+                        "cov04",
+                        "cov05",
+                        "cov11",
+                        "cov12",
+                        "cov13",
+                        "cov14",
+                        "cov15",
+                        "cov22",
+                        "cov23",
+                        "cov24",
+                        "cov25",
+                        "cov33",
+                        "cov34",
+                        "cov35",
+                        "cov44",
+                        "cov45",
+                        "cov55"
+                    ]
+                },
+                "elements": {
+                    "type": "object",
+                    "properties": {
+                        "q": {
+                            "type": "number"
+                        },
+                        "e": {
+                            "type": "number"
+                        },
+                        "i": {
+                            "type": "number"
+                        },
+                        "node": {
+                            "type": "number"
+                        },
+                        "argperi": {
+                            "type": "number"
+                        },
+                        "true_anomaly": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "argperi",
+                        "e",
+                        "i",
+                        "node",
+                        "q",
+                        "true_anomaly"
+                    ]
+                },
+                "element_order": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "EQU": {
+            "type": "object",
+            "properties": {
+                "eigval": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                },
+                "numparams": {
+                    "type": "integer"
+                },
+                "rms": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                },
+                "covariance": {
+                    "type": "object",
+                    "properties": {
+                        "cov00": {
+                            "type": "number"
+                        },
+                        "cov01": {
+                            "type": "number"
+                        },
+                        "cov02": {
+                            "type": "number"
+                        },
+                        "cov03": {
+                            "type": "number"
+                        },
+                        "cov04": {
+                            "type": "number"
+                        },
+                        "cov05": {
+                            "type": "number"
+                        },
+                        "cov11": {
+                            "type": "number"
+                        },
+                        "cov12": {
+                            "type": "number"
+                        },
+                        "cov13": {
+                            "type": "number"
+                        },
+                        "cov14": {
+                            "type": "number"
+                        },
+                        "cov15": {
+                            "type": "number"
+                        },
+                        "cov22": {
+                            "type": "number"
+                        },
+                        "cov23": {
+                            "type": "number"
+                        },
+                        "cov24": {
+                            "type": "number"
+                        },
+                        "cov25": {
+                            "type": "number"
+                        },
+                        "cov33": {
+                            "type": "number"
+                        },
+                        "cov34": {
+                            "type": "number"
+                        },
+                        "cov35": {
+                            "type": "number"
+                        },
+                        "cov44": {
+                            "type": "number"
+                        },
+                        "cov45": {
+                            "type": "number"
+                        },
+                        "cov55": {
+                            "type": "number"
+                        },
+                        "cov06": {
+                            "type": "number"
+                        },
+                        "cov07": {
+                            "type": "number"
+                        },
+                        "cov16": {
+                            "type": "number"
+                        },
+                        "cov17": {
+                            "type": "number"
+                        },
+                        "cov26": {
+                            "type": "number"
+                        },
+                        "cov27": {
+                            "type": "number"
+                        },
+                        "cov36": {
+                            "type": "number"
+                        },
+                        "cov37": {
+                            "type": "number"
+                        },
+                        "cov46": {
+                            "type": "number"
+                        },
+                        "cov47": {
+                            "type": "number"
+                        },
+                        "cov56": {
+                            "type": "number"
+                        },
+                        "cov57": {
+                            "type": "number"
+                        },
+                        "cov66": {
+                            "type": "number"
+                        },
+                        "cov67": {
+                            "type": "number"
+                        },
+                        "cov77": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "cov00",
+                        "cov01",
+                        "cov02",
+                        "cov03",
+                        "cov04",
+                        "cov05",
+                        "cov11",
+                        "cov12",
+                        "cov13",
+                        "cov14",
+                        "cov15",
+                        "cov22",
+                        "cov23",
+                        "cov24",
+                        "cov25",
+                        "cov33",
+                        "cov34",
+                        "cov35",
+                        "cov44",
+                        "cov45",
+                        "cov55"
+                    ]
+                },
+                "elements": {
+                    "type": "object",
+                    "properties": {
+                        "a": {
+                            "type": "number"
+                        },
+                        "e_sin_argperi": {
+                            "type": "number"
+                        },
+                        "e_cos_argperi": {
+                            "type": "number"
+                        },
+                        "tan_i/2_sin_node": {
+                            "type": "number"
+                        },
+                        "tan_i/2_cos_node": {
+                            "type": "number"
+                        },
+                        "mean_long": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "a",
+                        "e_cos_argperi",
+                        "e_sin_argperi",
+                        "mean_long",
+                        "tan_i/2_cos_node",
+                        "tan_i/2_sin_node"
+                    ]
+                },
+                "element_order": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "KEP": {
+            "type": "object",
+            "properties": {
+                "eigval": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                },
+                "numparams": {
+                    "type": "integer"
+                },
+                "rms": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                },
+                "covariance": {
+                    "type": "object",
+                    "properties": {
+                        "cov00": {
+                            "type": "number"
+                        },
+                        "cov01": {
+                            "type": "number"
+                        },
+                        "cov02": {
+                            "type": "number"
+                        },
+                        "cov03": {
+                            "type": "number"
+                        },
+                        "cov04": {
+                            "type": "number"
+                        },
+                        "cov05": {
+                            "type": "number"
+                        },
+                        "cov11": {
+                            "type": "number"
+                        },
+                        "cov12": {
+                            "type": "number"
+                        },
+                        "cov13": {
+                            "type": "number"
+                        },
+                        "cov14": {
+                            "type": "number"
+                        },
+                        "cov15": {
+                            "type": "number"
+                        },
+                        "cov22": {
+                            "type": "number"
+                        },
+                        "cov23": {
+                            "type": "number"
+                        },
+                        "cov24": {
+                            "type": "number"
+                        },
+                        "cov25": {
+                            "type": "number"
+                        },
+                        "cov33": {
+                            "type": "number"
+                        },
+                        "cov34": {
+                            "type": "number"
+                        },
+                        "cov35": {
+                            "type": "number"
+                        },
+                        "cov44": {
+                            "type": "number"
+                        },
+                        "cov45": {
+                            "type": "number"
+                        },
+                        "cov55": {
+                            "type": "number"
+                        },
+                        "cov06": {
+                            "type": "number"
+                        },
+                        "cov07": {
+                            "type": "number"
+                        },
+                        "cov16": {
+                            "type": "number"
+                        },
+                        "cov17": {
+                            "type": "number"
+                        },
+                        "cov26": {
+                            "type": "number"
+                        },
+                        "cov27": {
+                            "type": "number"
+                        },
+                        "cov36": {
+                            "type": "number"
+                        },
+                        "cov37": {
+                            "type": "number"
+                        },
+                        "cov46": {
+                            "type": "number"
+                        },
+                        "cov47": {
+                            "type": "number"
+                        },
+                        "cov56": {
+                            "type": "number"
+                        },
+                        "cov57": {
+                            "type": "number"
+                        },
+                        "cov66": {
+                            "type": "number"
+                        },
+                        "cov67": {
+                            "type": "number"
+                        },
+                        "cov77": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "cov00",
+                        "cov01",
+                        "cov02",
+                        "cov03",
+                        "cov04",
+                        "cov05",
+                        "cov11",
+                        "cov12",
+                        "cov13",
+                        "cov14",
+                        "cov15",
+                        "cov22",
+                        "cov23",
+                        "cov24",
+                        "cov25",
+                        "cov33",
+                        "cov34",
+                        "cov35",
+                        "cov44",
+                        "cov45",
+                        "cov55"
+                    ]
+                },
+                "elements": {
+                    "type": "object",
+                    "properties": {
+                        "a": {
+                            "type": "number"
+                        },
+                        "e": {
+                            "type": "number"
+                        },
+                        "i": {
+                            "type": "number"
+                        },
+                        "node": {
+                            "type": "number"
+                        },
+                        "argperi": {
+                            "type": "number"
+                        },
+                        "mean_anomaly": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "a",
+                        "argperi",
+                        "e",
+                        "i",
+                        "mean_anomaly",
+                        "node"
+                    ]
+                },
+                "element_order": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "refsys": {
+            "type": "string"
+        },
+        "system_data": {
+            "type": "object",
+            "properties": {
+                "eph": {
+                    "type": "string"
+                },
+                "refsys": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "eph",
+                "refsys"
+            ]
+        },
+        "designation_data": {
+            "type": "object",
+            "properties": {
+                "permid": {
+                    "type": "string"
+                },
+                "packed_primary_provisional_designation": {
+                    "type": "string"
+                },
+                "unpacked_primary_provisional_designation": {
+                    "type": "string"
+                },
+                "orbfit_name": {
+                    "type": [
+                        "integer",
+                        "string"
+                    ]
+                },
+                "iau_name": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "iau_name",
+                "orbfit_name",
+                "packed_primary_provisional_designation",
+                "permid",
+                "unpacked_primary_provisional_designation"
+            ]
+        },
+        "nongrav_data": {
+            "type": "object",
+            "properties": {
+                "non_gravs": {
+                    "type": "boolean"
+                },
+                "booleans": {
+                    "type": "object",
+                    "properties": {
+                        "yarkovski": {
+                            "type": "boolean"
+                        },
+                        "srp": {
+                            "type": "boolean"
+                        },
+                        "marsden": {
+                            "type": "boolean"
+                        },
+                        "yc": {
+                            "type": "boolean"
+                        },
+                        "yabushita": {
+                            "type": "boolean"
+                        },
+                        "A1": {
+                            "type": "boolean"
+                        },
+                        "A2": {
+                            "type": "boolean"
+                        },
+                        "A3": {
+                            "type": "boolean"
+                        },
+                        "DT": {
+                            "type": "boolean"
+                        }
+                    },
+                    "required": [
+                        "A1",
+                        "A2",
+                        "A3",
+                        "DT",
+                        "marsden",
+                        "srp",
+                        "yabushita",
+                        "yarkovski",
+                        "yc"
+                    ]
+                },
+                "coefficients": {
+                    "type": "object",
+                    "properties": {
+                        "yarkovski": {
+                            "type": [
+                                "null",
+                                "number"
+                            ]
+                        },
+                        "srp": {
+                            "type": [
+                                "null",
+                                "number"
+                            ]
+                        },
+                        "A1": {
+                            "type": "null"
+                        },
+                        "A2": {
+                            "type": "null"
+                        },
+                        "A3": {
+                            "type": "null"
+                        },
+                        "DT": {
+                            "type": "null"
+                        }
+                    },
+                    "required": [
+                        "A1",
+                        "A2",
+                        "A3",
+                        "DT",
+                        "srp",
+                        "yarkovski"
+                    ]
+                }
+            },
+            "required": [
+                "booleans",
+                "coefficients",
+                "non_gravs"
+            ]
+        },
+        "magnitude_data": {
+            "type": "object",
+            "properties": {
+                "h": {
+                    "type": "number"
+                },
+                "g": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "g",
+                "h"
+            ]
+        },
+        "epoch_data": {
+            "type": "object",
+            "properties": {
+                "timesystem": {
+                    "type": "string"
+                },
+                "epoch": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "epoch",
+                "timesystem"
+            ]
+        }
+    },
+    "required": [
+        "CAR",
+        "COM"
+    ]
+}

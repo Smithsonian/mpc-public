@@ -1,0 +1,1161 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "version": 0.2,
+    "type": "object",
+    "title":"Best Fit Orbit Data for Single Solar System Object",
+    "description":"Standardized MPC JSON format for the exchange of orbit-fit data. Designed to communicate the best-fit orbit for a single minor planet or comet. The precursor to this schema was bootstrapped using a function *create_mpcorb_schema_from_defining_sample_json* function to create an initial working schema. Subsequent to that, extensive by-hand revisions have been made by MJP & FS. As such, this json should now be regarded as the defining schema, with bootstapping no longer being required / allowed.",
+    "required": [
+        "CAR",
+        "COM",
+        "designation_data",
+        "orbit_fit_statistics",
+        "non_grav_data",
+        "magnitude_data",
+        "epoch_data",
+        "moid_data",
+        "categorization",
+        "software_data",
+        "system_data"
+    ],
+    "properties": {
+        "CAR": {
+            "type": "object",
+            "description" : "Cartesian Element Specification: Description of the best-fit orbit based on a cartesian coordinate system (plus any non-gravs). Contains the best-fit orbit and covariance matrix. Heliocentric coordinates.",
+            "properties": {
+                "element_units" : {
+                    "description" : "Physical Units associated with cartesian orbital elements ",
+                    "type": "object",
+                    "properties": {
+                        "posn": {
+                            "type": "string",
+                            "enum": ["au"]
+                        },
+                        "vel": {
+                            "type": "string",
+                            "enum": ["au/day"]
+                        }
+                    },
+                    "required": ["posn","vel"]
+                },
+                "non_grav_units" : {
+                    "description" : "Physical Units associated with non-gravitational fit-parameters ",
+                    "type": "object",
+                    "properties": {
+                        "yarkovski_coeff": {
+                            "type": "string",
+                            "enum": ["10^(-10)*au/day^2"]
+                        },
+                        "srp_coeff": {
+                            "type": "string",
+                            "enum": ["m^2/ton"]
+                        },
+                        "A1_coeff": {
+                            "type": "string",
+                            "enum": ["au/day^2"]
+                        },
+                        "A2_coeff": {
+                            "type": "string",
+                            "enum": ["au/day^2"]
+                        },
+                        "A3_coeff": {
+                            "type": "string",
+                            "enum": ["au/day^2"]
+                        },
+                        "DT_coeff": {
+                            "type": "string",
+                            "enum": ["day"]
+                        }
+                    },
+                    "required": [   "yarkovski_coeff",
+                                    "srp_coeff",
+                                    "A1_coeff",
+                                    "A2_coeff",
+                                    "A3_coeff",
+                                    "DT_coeff"]
+                },
+                "eigval": {
+                    "description" : "Eigenvalues for the cartesian orbital elements (and any non-gravitational parameters). Of length 6 if gravity-only, or 7-10 if we have non-gravs",
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    },
+                    "minItems" : 6,
+                    "maxItems" : 10
+                },
+                "uncertainty":{
+                  "description" :"Uncertainties on the cartesian orbital elements only (uncertainties on non-gravs are in the non-grav section). NB: These correspond to the (square-root of the) diagonal elements of the cov matrix",
+                  "type": "array",
+                    "items": {
+                        "type": "number"
+                    },
+                    "minItems" : 6,
+                    "maxItems" : 6
+                },
+                "covariance": {
+                    "description" : "Covariance matrix elements (upper triangular) for the cartesian orbital elements (and any non-gravitational parameters). Reconstructed square matrix is of size 6x6 if gravity-only, or 7x7 -to- 10x10 if we have non-grav parameters.",
+                    "type": "object",
+                    "properties": {
+                        "cov00": {
+                            "type": "number"
+                        },
+                        "cov01": {
+                            "type": "number"
+                        },
+                        "cov02": {
+                            "type": "number"
+                        },
+                        "cov03": {
+                            "type": "number"
+                        },
+                        "cov04": {
+                            "type": "number"
+                        },
+                        "cov05": {
+                            "type": "number"
+                        },
+                        "cov06": {
+                            "type": ["null", "number"]
+                        },
+                        "cov07": {
+                            "type": ["null", "number"]
+                        },
+                        "cov08": {
+                            "type": ["null", "number"]
+                        },
+                        "cov09": {
+                            "type": ["null", "number"]
+                        },
+                        "cov11": {
+                            "type": "number"
+                        },
+                        "cov12": {
+                            "type": "number"
+                        },
+                        "cov13": {
+                            "type": "number"
+                        },
+                        "cov14": {
+                            "type": "number"
+                        },
+                        "cov15": {
+                            "type": "number"
+                        },
+                        "cov16": {
+                            "type": ["null", "number"]
+                        },
+                        "cov17": {
+                            "type": ["null", "number"]
+                        },
+                        "cov18": {
+                            "type": ["null", "number"]
+                        },
+                        "cov19": {
+                            "type": ["null", "number"]
+                        },
+                        "cov22": {
+                            "type": "number"
+                        },
+                        "cov23": {
+                            "type": "number"
+                        },
+                        "cov24": {
+                            "type": "number"
+                        },
+                        "cov25": {
+                            "type": "number"
+                        },
+                        "cov26": {
+                            "type": ["null", "number"]
+                        },
+                        "cov27": {
+                            "type": ["null", "number"]
+                        },
+                        "cov28": {
+                            "type": ["null", "number"]
+                        },
+                        "cov29": {
+                            "type": ["null", "number"]
+                        },
+                        "cov33": {
+                            "type": "number"
+                        },
+                        "cov34": {
+                            "type": "number"
+                        },
+                        "cov35": {
+                            "type": "number"
+                        },
+                        "cov36": {
+                            "type": ["null", "number"]
+                        },
+                        "cov37": {
+                            "type": ["null", "number"]
+                        },
+                        "cov38": {
+                            "type": ["null", "number"]
+                        },
+                        "cov39": {
+                            "type": ["null", "number"]
+                        },
+                        "cov44": {
+                            "type": "number"
+                        },
+                        "cov45": {
+                            "type": "number"
+                        },
+                        "cov46": {
+                            "type": ["null", "number"]
+                        },
+                        "cov47": {
+                            "type": ["null", "number"]
+                        },
+                        "cov48": {
+                            "type": ["null", "number"]
+                        },
+                        "cov49": {
+                            "type": ["null", "number"]
+                        },
+                        "cov55": {
+                            "type": "number"
+                        },
+                        "cov56": {
+                            "type": ["null", "number"]
+                        },
+                        "cov57": {
+                            "type": ["null", "number"]
+                        },
+                        "cov58": {
+                            "type": ["null", "number"]
+                        },
+                        "cov59": {
+                            "type": ["null", "number"]
+                        },
+                        "cov66": {
+                            "type": ["null", "number"]
+                        },
+                        "cov67": {
+                            "type": ["null", "number"]
+                        },
+                        "cov68": {
+                            "type": ["null", "number"]
+                        },
+                        "cov69": {
+                            "type": ["null", "number"]
+                        },
+                        "cov77": {
+                            "type": ["null", "number"]
+                        },
+                        "cov78": {
+                            "type": ["null", "number"]
+                        },
+                        "cov79": {
+                            "type": ["null", "number"]
+                        },
+                        "cov88": {
+                            "type": ["null", "number"]
+                        },
+                        "cov89": {
+                            "type": ["null", "number"]
+                        },
+                        "cov99": {
+                            "type": ["null", "number"]
+                        }
+                    },
+                    "required": [
+                        "cov00",
+                        "cov01",
+                        "cov02",
+                        "cov03",
+                        "cov04",
+                        "cov05",
+                        "cov11",
+                        "cov12",
+                        "cov13",
+                        "cov14",
+                        "cov15",
+                        "cov22",
+                        "cov23",
+                        "cov24",
+                        "cov25",
+                        "cov33",
+                        "cov34",
+                        "cov35",
+                        "cov44",
+                        "cov45",
+                        "cov55"
+                    ]
+                },
+                "elements": {
+                    "description" : "Best fit values for the cartesian orbital elements.",
+                    "type": "object",
+                    "properties": {
+                        "x": {
+                            "type": "number"
+                        },
+                        "y": {
+                            "type": "number"
+                        },
+                        "z": {
+                            "type": "number"
+                        },
+                        "vx": {
+                            "type": "number"
+                        },
+                        "vy": {
+                            "type": "number"
+                        },
+                        "vz": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "vx",
+                        "vy",
+                        "vz",
+                        "x",
+                        "y",
+                        "z"
+                    ]
+                },
+                "non_grav_coefficients": {
+                    "description" : "Best fit values for any non-gravitational elements employed in the fit.",
+                    "type": "object",
+                    "properties": {
+                        "yarkovski_coeff": {
+                            "description" : "Best fit value for Yarkovski coefficient ... ",
+                            "type": [
+                                "null",
+                                "number"
+                            ]
+                        },
+                        "srp_coeff": {
+                            "description" : "Best fit value for Solar Radiation Pressure coefficient ... ",
+                            "type": [
+                                "null",
+                                "number"
+                            ]
+                        },
+                        "A1_coeff": {
+                            "description" : "Best fit value for non-Gravitational Coefficient A1 ... ",
+                            "type": [
+                                "null",
+                                "number"
+                            ]
+                        },
+                        "A2_coeff": {
+                            "description" : "Best fit value for non-Gravitational Coefficient A2 ... ",
+                            "type": [
+                                "null",
+                                "number"
+                            ]
+                        },
+                        "A3_coeff": {
+                            "description" : "Best fit value for non-Gravitational Coefficient A3 ... ",
+                            "type": [
+                                "null",
+                                "number"
+                            ]
+                        },
+                        "DT_coeff": {
+                            "description" : "Best fit value for non-Gravitational Coefficient DT: Only used in yc (Yeomans & Chodas) model ",
+                            "type": [
+                                "null",
+                                "number"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "yarkovski_coeff",
+                        "srp_coeff",
+                        "A1_coeff",
+                        "A2_coeff",
+                        "A3_coeff",
+                        "DT_coeff"
+                    ]
+                },
+                "non_grav_uncertainty":{
+                  "description" :"Uncertainties on any non-gravitational elements only (uncertainties on elements are in the elements section). NB: These correspond to the (square-root of the) diagonal elements of the cov matrix",
+                  "type": "array",
+                    "items": {
+                        "type": "number"
+                    },
+                    "minItems" : 4,
+                    "maxItems" : 4
+                }
+            },
+            "required": [
+                "eigval",
+                "uncertainty",
+                "elements",
+                "non_grav_coefficients",
+                "covariance",
+                "element_units",
+                "non_grav_units"
+            ]
+        },
+        "COM": {
+            "description" : "Description of the best-fit orbit based on the cometary coordinate system (plus any non-gravs). Contains the best-fit orbit and covariance matrix. Heliocentric coordinates.",
+            "properties": {
+                "element_units" : {
+                    "description" : "Physical Units associated with cartesian orbital elements ",
+                    "type": "object",
+                    "properties": {
+                        "posn": {
+                            "type": "string",
+                            "enum": ["au"]
+                        },
+                        "ang": {
+                            "type": "string",
+                            "enum": ["deg"]
+                        }
+                    },
+                    "required": ["posn","ang"]
+                },
+                "non_grav_units" : {
+                    "description" : "Physical Units associated with non-gravitational fit-parameters ",
+                    "type": "object",
+                    "properties": {
+                        "yarkovski_coeff": {
+                            "type": "string",
+                            "enum": ["10^(-10)*au/day^2"]
+                        },
+                        "srp_coeff": {
+                            "type": "string",
+                            "enum": ["m^2/ton"]
+                        },
+                        "A1_coeff": {
+                            "type": "string",
+                            "enum": ["au/day^2"]
+                        },
+                        "A2_coeff": {
+                            "type": "string",
+                            "enum": ["au/day^2"]
+                        },
+                        "A3_coeff": {
+                            "type": "string",
+                            "enum": ["au/day^2"]
+                        },
+                        "DT_coeff": {
+                            "type": "string",
+                            "enum": ["day"]
+                        }
+                    },
+                    "required": [   "yarkovski_coeff",
+                                    "srp_coeff",
+                                    "A1_coeff",
+                                    "A2_coeff",
+                                    "A3_coeff",
+                                    "DT_coeff"]
+                },
+                "eigval": {
+                    "description" : "Eigenvalues for the cometarian orbital elements (and any non-gravitational parameters). Of length 6 if gravity-only, or 7-10 if we have non-gravs.",
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    },
+                    "minItems" : 6,
+                    "maxItems" : 10
+                },
+                "uncertainty":{ 
+                  "description" :"Uncertainties on the cometarian orbital elements only (uncertainties on non-gravs are in the non-grav section). NB: These correspond to the (square-root of the) diagonal elements of the cov matrix",
+                  "type": "array",
+                    "items": {
+                        "type": "number"
+                    },
+                    "minItems" : 6,
+                    "maxItems" : 6
+                },
+                "covariance": {
+                    "description" : "Covariance matrix elements (upper triangular) for the cometarian orbital elements (and any non-gravitational parameters). Reconstructed square matrix is of size 6x6 if gravity-only, or 7x7 -to- 10x10 if we have non-grav parameters.",
+                    "type": "object",
+                    "properties": {
+                        "cov00": {
+                            "type": "number"
+                        },
+                        "cov01": {
+                            "type": "number"
+                        },
+                        "cov02": {
+                            "type": "number"
+                        },
+                        "cov03": {
+                            "type": "number"
+                        },
+                        "cov04": {
+                            "type": "number"
+                        },
+                        "cov05": {
+                            "type": "number"
+                        },
+                        "cov06": {
+                            "type": ["null", "number"]
+                        },
+                        "cov07": {
+                            "type": ["null", "number"]
+                        },
+                        "cov08": {
+                            "type": ["null", "number"]
+                        },
+                        "cov09": {
+                            "type": ["null", "number"]
+                        },
+                        "cov11": {
+                            "type": "number"
+                        },
+                        "cov12": {
+                            "type": "number"
+                        },
+                        "cov13": {
+                            "type": "number"
+                        },
+                        "cov14": {
+                            "type": "number"
+                        },
+                        "cov15": {
+                            "type": "number"
+                        },
+                        "cov16": {
+                            "type": ["null", "number"]
+                        },
+                        "cov17": {
+                            "type": ["null", "number"]
+                        },
+                        "cov18": {
+                            "type": ["null", "number"]
+                        },
+                        "cov19": {
+                            "type": ["null", "number"]
+                        },
+                        "cov22": {
+                            "type": "number"
+                        },
+                        "cov23": {
+                            "type": "number"
+                        },
+                        "cov24": {
+                            "type": "number"
+                        },
+                        "cov25": {
+                            "type": "number"
+                        },
+                        "cov26": {
+                            "type": ["null", "number"]
+                        },
+                        "cov27": {
+                            "type": ["null", "number"]
+                        },
+                        "cov28": {
+                            "type": ["null", "number"]
+                        },
+                        "cov29": {
+                            "type": ["null", "number"]
+                        },
+                        "cov33": {
+                            "type": "number"
+                        },
+                        "cov34": {
+                            "type": "number"
+                        },
+                        "cov35": {
+                            "type": "number"
+                        },
+                        "cov36": {
+                            "type": ["null", "number"]
+                        },
+                        "cov37": {
+                            "type": ["null", "number"]
+                        },
+                        "cov38": {
+                            "type": ["null", "number"]
+                        },
+                        "cov39": {
+                            "type": ["null", "number"]
+                        },
+                        "cov44": {
+                            "type": "number"
+                        },
+                        "cov45": {
+                            "type": "number"
+                        },
+                        "cov46": {
+                            "type": ["null", "number"]
+                        },
+                        "cov47": {
+                            "type": ["null", "number"]
+                        },
+                        "cov48": {
+                            "type": ["null", "number"]
+                        },
+                        "cov49": {
+                            "type": ["null", "number"]
+                        },
+                        "cov55": {
+                            "type": "number"
+                        },
+                        "cov56": {
+                            "type": ["null", "number"]
+                        },
+                        "cov57": {
+                            "type": ["null", "number"]
+                        },
+                        "cov58": {
+                            "type": ["null", "number"]
+                        },
+                        "cov59": {
+                            "type": ["null", "number"]
+                        },
+                        "cov66": {
+                            "type": ["null", "number"]
+                        },
+                        "cov67": {
+                            "type": ["null", "number"]
+                        },
+                        "cov68": {
+                            "type": ["null", "number"]
+                        },
+                        "cov69": {
+                            "type": ["null", "number"]
+                        },
+                        "cov77": {
+                            "type": ["null", "number"]
+                        },
+                        "cov78": {
+                            "type": ["null", "number"]
+                        },
+                        "cov79": {
+                            "type": ["null", "number"]
+                        },
+                        "cov88": {
+                            "type": ["null", "number"]
+                        },
+                        "cov89": {
+                            "type": ["null", "number"]
+                        },
+                        "cov99": {
+                            "type": ["null", "number"]
+                        }
+                    },
+                    "required": [
+                        "cov00",
+                        "cov01",
+                        "cov02",
+                        "cov03",
+                        "cov04",
+                        "cov05",
+                        "cov11",
+                        "cov12",
+                        "cov13",
+                        "cov14",
+                        "cov15",
+                        "cov22",
+                        "cov23",
+                        "cov24",
+                        "cov25",
+                        "cov33",
+                        "cov34",
+                        "cov35",
+                        "cov44",
+                        "cov45",
+                        "cov55"
+                    ]
+                },
+                "elements": {
+                    "description" : "Best fit values for the cometary orbital elements.",
+                    "type": "object",
+                    "properties": {
+                        "q": {
+                            "type": "number"
+                        },
+                        "e": {
+                            "type": "number"
+                        },
+                        "i": {
+                            "type": "number"
+                        },
+                        "node": {
+                            "type": "number"
+                        },
+                        "argperi": {
+                            "type": "number"
+                        },
+                        "peri_time": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "q",
+                        "e",
+                        "i",
+                        "node",
+                        "argperi",
+                        "peri_time"
+                    ]
+                },
+                "non_grav_coefficients": {
+                    "description" : "Best fit values for any non-gravitational elements employed in the fit.",
+                    "type": "object",
+                    "properties": {
+                        "yarkovski_coeff": {
+                            "description" : "Best fit value for Yarkovski coefficient ... ",
+                            "type": [
+                                "null",
+                                "number"
+                            ]
+                        },
+                        "srp_coeff": {
+                            "description" : "Best fit value for Solar Radiation Pressure coefficient ... ",
+                            "type": [
+                                "null",
+                                "number"
+                            ]
+                        },
+                        "A1_coeff": {
+                            "description" : "Best fit value for non-Gravitational Coefficient A1 ... ",
+                            "type": [
+                                "null",
+                                "number"
+                            ]
+                        },
+                        "A2_coeff": {
+                            "description" : "Best fit value for non-Gravitational Coefficient A2 ... ",
+                            "type": [
+                                "null",
+                                "number"
+                            ]
+                        },
+                        "A3_coeff": {
+                            "description" : "Best fit value for non-Gravitational Coefficient A3 ... ",
+                            "type": [
+                                "null",
+                                "number"
+                            ]
+                        },
+                        "DT_coeff": {
+                            "description" : "Best fit value for non-Gravitational Coefficient DT: Only used in yc (Yeomans & Chodas) model ",
+                            "type": [
+                                "null",
+                                "number"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "A1_coeff",
+                        "A2_coeff",
+                        "A3_coeff",
+                        "DT_coeff"
+                    ]
+                },
+                "non_grav_uncertainty":{
+                  "description" :"Uncertainties on any non-gravitational elements only (uncertainties on elements are in the elements section). NB: These correspond to the (square-root of the) diagonal elements of the cov matrix",
+                  "type": "array",
+                    "items": {
+                        "type": "number"
+                    },
+                    "minItems" : 4,
+                    "maxItems" : 4
+                }
+            },
+            "required": [
+                "covariance",
+                "eigval",
+                "elements",
+                "uncertainty",
+                "element_units",
+                "non_grav_units",
+                "non_grav_coefficients"
+            ]
+        },
+
+        "designation_data": {
+            "type": "object",
+            "description" : "The designations, numbers and names that may be associated with the object",
+            "properties": {
+                "permid": {
+                    "type": ["null","string"]
+                },
+                "packed_primary_provisional_designation": {
+                    "type": "string"
+                },
+                "unpacked_primary_provisional_designation": {
+                    "type": "string"
+                },
+                "orbfit_name": {
+                    "type": "string"
+                },
+                "packed_secondary_provisional_designations": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "unpacked_secondary_provisional_designations": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "iau_name": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "iau_name",
+                "orbfit_name",
+                "packed_primary_provisional_designation",
+                "permid",
+                "unpacked_primary_provisional_designation",
+                "packed_secondary_provisional_designations",
+                "unpacked_secondary_provisional_designations"
+            ]
+        },
+        "software_data" : {
+            "type": "object",
+            "description" : "Details of the software used to perform orbital fit and to create mpcorb output file",
+            "properties": {
+                "fitting_software_name": {
+                    "description":"name of software used to perform orbit-fit",
+                    "type": "string",
+                    "enum": ["orbfit"]
+                },
+                "software_version": {
+                    "description":"version of software used to perform orbit-fit",
+                    "type": "string"
+                },
+                "fitting_datetime": {
+                    "description":"datetime at which the orbit fitting software was executed [null should only allowed for template]",
+                    "type": ["null", "string"]
+                },
+                "mpcorb_version": {
+                    "description":"version of the mpcorb software used to create this json",
+                    "type": "string",
+                    "enum": ["0.1"]
+                },
+                "mpcorb_creation_datetime": {
+                    "description":"datetime at which the mpcorb software was executed to create this json [null should only allowed for template]",
+                    "type": ["null", "string"]
+                }
+            },
+            "required": [
+                "fitting_software_name",
+                "fitting_software_version",
+                "fitting_datetime",
+                "mpcorb_version",
+                "mpcorb_creation_datetime"
+                ]
+        },
+        "system_data": {
+            "type": "object",
+            "description" : "Ephemeris model assumed when integrating the motion of the object, and the frame of reference used to specify the best-fit orbital elements. ",
+            "properties": {
+                "eph": {
+                    "description" : "The ephemeris model used in the orbit-fit, E.g. DE431",
+                    "type": "string",
+                    "enum": ["DE431","DE441"]
+                },
+                "refplane": {
+                    "description" : "The X-Y Reference Plane",
+                    "type": "string",
+                    "enum": ["Equatorial","Ecliptic"]
+                },
+                "EclipticObliquityArcseconds": {
+                    "description" : "Obliquity angle from JPL 777 (heliocentric IAU76/J2000 ecliptic)",
+                    "type": "string",
+                    "enum": ["84381.448"]
+                },
+                "refframe": {
+                    "description" : "The frame of reference for the best-fit orbital elements",
+                    "type": "string",
+                    "enum": ["ICRF"]
+                },
+                "force_model": {
+                    "description" : "The planetary / asteroidal perturbers that were used in the orbit-fit. [need to decide exactly how to populate: url-link?]",
+                    "type": "string",
+                    "enum": ["????"]
+                }
+            },
+            "required": [
+                "eph",
+                "refsys",
+                "EclipticObliquityArcseconds",
+                "refframe",
+                "force_model"
+            ]
+        },
+        "orbit_fit_statistics":{
+            "type": "object",
+             "description" : "Summary fit statistics associated with the best-fit orbit, the observations used, etc",
+            "properties": {
+                "sig_to_noise_ratio" : {
+                    "description": "SNR of the orbital parameters",
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                },
+                "snr_below_3"         : {
+                    "description": "True if any value in the SNR list is <3, False otherwise",
+                    "type": "boolean"
+                },
+                "snr_below_1:"        : {
+                    "description": "True if any value in the SNR list is <1, False otherwise",
+                    "type": "boolean"
+                },
+                "U_param"             : {
+                    "description": "U parameter per https://minorplanetcenter.net/iau/info/UValue.html",
+                    "type": "number"
+                },
+                "score1"              : {
+                    "description": " 1st score for numbering ...",
+                    "type": "number"
+                },
+                "score2"              : {
+                    "description": " 2nd score for numbering ...",
+                    "type": "number"
+                },
+                "orbit_quality"      : {
+                    "description": "Orbit quality: good, poor, unreliable, no orbit (def = good)",
+                    "type": "string"
+                },
+                "normalized_RMS"     : {
+                    "description": "Normalized RMS (def = 0)",
+                    "type": "number"
+                },
+                "not_normalized_RMS" : {
+                    "description": "Not normalized RMS (def=0)",
+                    "type": ["null","number"]
+                },
+                "nobs_total"       : {
+                    "description": "Total number of all observations (optical + radar) available",
+                    "type": "number"
+                },
+                "nobs_total_sel"   : {
+                    "description": "Total number of all observations (optical + radar) selected",
+                    "type": "number"
+                },
+                "nobs_optical"       : {
+                    "description": "Total number of optical observations available",
+                    "type": "number"
+                },
+                "nobs_optical_sel"   : {
+                    "description": "Total number of optical observations selected",
+                    "type": "number"
+                },
+                "nobs_radar"       : {
+                    "description": "Total number of radar observations available",
+                    "type": "number"
+                },
+                "nobs_radar_sel"   : {
+                    "description": "Total number of radar observations selected",
+                    "type": "number"
+                },
+                "arc_length_total"  : {
+                    "description": "Arc length over nobs_total",
+                    "type": ["number","string"]
+                },
+                "arc_length_sel"    : {
+                    "description": "Arc length over nobs_total_sel",
+                    "type": ["number","string"]
+                },
+                "nopp"               : {
+                    "description": "Number of oppositions",
+                    "type": "number"
+                },
+                "numparams": {
+                    "description": "Number of parameters used for fit: E.g. 6-orbital params plus N-non_grav params",
+                    "type": "integer"
+                }
+            }
+        },
+        "non_grav_data": {
+            "type": "object",
+            "description" : "Booleans to indicate whether any non-gravitational parameters are used in the orbit-fit. The actual fitted values and their covariance properties are reported within the CAR and COT parameter sections.",
+            "properties": {
+                "non_gravs": {
+                    "description" : "Boolean to indicate whether any non-gravitational parameters are used in the orbit-fit.",
+                    "type": "boolean"
+                },
+                "non_grav_booleans": {
+                    "description" : "Booleans to indicate which specific non-gravitational model and non-gravitational parameters are used in the orbit-fit.",
+                    "type": "object",
+                    "properties": {
+                        "yarkovski": {
+                            "description" : "Yarkovski model (https://www.sciencedirect.com/science/article/pii/S0019103513000456) boolean ",
+                            "type": "boolean"
+                        },
+                        "srp": {
+                            "description" : "Solar Radiation Pressure model () boolean ",
+                            "type": "boolean"
+                        },
+                        "marsden": {
+                            "description" : "Marsden model () boolean ",
+                            "type": "boolean"
+                        },
+                        "yc": {
+                            "description":"Yeomans & Chodas model () boolean",
+                            "type": "boolean"
+                        },
+                        "yabushita": {
+                            "description" : "Yabushita model (https://www.sciencedirect.com/science/article/pii/S0019103513000456) boolean ",
+                            "type": "boolean"
+                        },
+                        "A1": {
+                            "description" : "Non-Gravitational Coefficient A1 boolean ",
+                            "type": "boolean"
+                        },
+                        "A2": {
+                            "description" : "Non-Gravitational Coefficient A2 boolean ",
+                            "type": "boolean"
+                        },
+                        "A3": {
+                            "description" : "Non-Gravitational Coefficient A3 boolean ",
+                            "type": "boolean"
+                        },
+                        "DT": {
+                            "description" : "Non-Gravitational Coefficient DT boolean: Only used in yc (Yeomans & Chodas) model ",
+                            "type": "boolean"
+                        }
+                    },
+                    "required": [
+                        "yarkovski",
+                        "srp",
+                        "marsden",
+                        "yc",
+                        "yabushita",
+                        "A1",
+                        "A2",
+                        "A3",
+                        "DT"
+                    ]
+                }
+            },
+            "required": [
+                "non_gravs",
+                "non_grav_booleans"
+            ]
+        },
+        "magnitude_data": {
+            "type": "object",
+            "description" : "The absolute magnitude, H, and slope parameter, G, information derived from the fitted orbit in combination with the observed apparent magnitudes. ",
+            "properties": {
+                "H": {
+                    "type": "number"
+                },
+                "G": {
+                    "type": "number"
+                },
+                "G1": {
+                    "type": ["null", "number"]
+                },
+                "G2": {
+                    "type": ["null", "number"]
+                },
+                "G12": {
+                    "type": ["null", "number"]
+                },
+                "photometric_model" : {
+                    "type": "string",
+                     "enum": ["????"]
+               }
+            },
+            "required": [
+                "photometric_model",
+                "H",
+                "G"
+                ]
+        },
+        "epoch_data": {
+            "type": "object",
+            "description" : "Data concerning the orbit epoch: I.e. The date at which the best-fit orbital coordinates are correct [double-check: Does TT ++ TDT???]",
+            "properties": {
+                "timesystem": {
+                    "type": "string",
+                     "enum": ["TDB","TT", "TDT"]
+                },
+                "timeform": {
+                    "type": "string",
+                    "enum": ["JD","MJD"]
+                },
+                "epoch": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "epoch",
+                "timesystem",
+                "timeform"
+            ]
+        },
+        "moid_data": {
+            "type": "object",
+            "description" : "Calculated MOIDs (Minimum Orbital Interception Distances) at Epoch",
+            "properties": {
+                "Venus": {
+                    "type": ["null", "number"]
+                },
+                "Earth": {
+                    "type": ["null", "number"]
+                },
+                "Mars": {
+                    "type": ["null", "number"]
+                },
+                "Jupiter": {
+                    "type": ["null", "number"]
+                },
+                "moid_units" :{
+                    "type": "string",
+                    "enum": ["au"]
+                }
+            },
+            "required": [
+                "Earth",
+                "moid_units"
+            ]
+        },
+        "categorization": {
+            "type": "object",
+            "description" : "Various different ways to categorize / sub-set orbit / object types",
+            "properties": {
+                "object_type_str": {
+                    "description": "# Minor-Planet / Comet / Dual-Status / Binary MP / ...",
+                    "type": "string"
+                },
+                "object_type_int": {
+                    "description": "#     0            10       20          1",
+                    "type": ["null", "number"]
+                },
+                "orbit_type_str": {
+                    "description": "# NEAs / MBAs / TNOs / ...",
+                    "type": "string"
+                },
+                "orbit_type_int": {
+                    "description": "# 0 /1/2/3/4",
+                    "type": ["null", "number"]
+                },
+                "orbit_subtype_str": {
+                    "description": "# Apollo / Amor / ...",
+                    "type": "string"
+                },
+                "orbit_subtype_int": {
+                    "description": "# ...",
+                    "type": ["null", "number"]
+                },
+                "parent_planet_str" : {
+                    "description": "# For Nat-Sats",
+                    "type": "string"
+                },
+                "parent_planet_int" : {
+                    "description": "# For Nat-Sats",
+                    "type": ["null", "number"]
+                }
+            },
+            "required": [
+                "object_type_str",
+                "object_type_int",
+                "orbit_type_str",
+                "orbit_type_int",
+                "orbit_subtype_str",
+                "orbit_subtype_int"
+            ]
+        }
+    }
+}
