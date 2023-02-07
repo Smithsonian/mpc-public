@@ -10,6 +10,7 @@ from os.path import join, dirname, abspath
 # -----------------------
 from mpc_orb import MPCORB, COORD
 from mpc_orb import filepaths
+from . import filepaths_for_testing
 
 
 # Tests
@@ -32,7 +33,7 @@ def test_MPCORB_B(  ):
   
     # Loop over the mpcorb files that are expect to "pass"
     # Attempt to instantiate using each ...
-    for f in filepaths.test_pass_mpcorb:
+    for f in filepaths_for_testing.test_pass_mpcorb:
         M = MPCORB(f)
         
         assert isinstance(M,MPCORB)
@@ -46,7 +47,7 @@ def test_parse_C(  ):
   
     # Loop over the mpcorb files that are expect to "pass"
     # Attempt to instantiate using each ...
-    for f in filepaths.test_pass_mpcorb:
+    for f in filepaths_for_testing.test_pass_mpcorb:
         M = MPCORB(f)
         for k in ['COM','CAR','categorization', 'epoch_data', 'designation_data', 'magnitude_data', 'non_grav_booleans', 'orbit_fit_statistics', 'software_data', 'system_data']:
             assert hasattr(M,k)
@@ -56,7 +57,7 @@ def test_parse_D(  ):
     Test the CAR & COM sub-classes ...
     Check element attributes
     '''
-    for f in filepaths.test_pass_mpcorb:
+    for f in filepaths_for_testing.test_pass_mpcorb:
         M = MPCORB(f)
 
         for I,expected_names  in zip(   [M.COM, M.CAR], \
@@ -90,7 +91,7 @@ def test_describe_A(  ):
     Test the describe function
     '''
 
-    for f in filepaths.test_pass_mpcorb[:1]:
+    for f in filepaths_for_testing.test_pass_mpcorb[:1]:
         M = MPCORB(f)
 
         for key in [ _ for _ in M.__dict__.keys() if _ != 'schema_json']:

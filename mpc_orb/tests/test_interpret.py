@@ -50,7 +50,7 @@ def test_interpret_C(  ):
     Test that an arbitrary string (that is not a file) raises an exception
     '''
     
-    # string
+    # string (this is NOT a file that exists)
     filepath = "bjhadfkbadkjfnkwdnflmdnf.txt"
 
     # read it using interpret.interpret()

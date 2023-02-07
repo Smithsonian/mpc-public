@@ -14,6 +14,7 @@ import sys
 # -----------------------
 from mpc_orb import validate_mpcorb
 from mpc_orb import filepaths
+from . import filepaths_for_testing
 
 
 
@@ -25,14 +26,17 @@ def test_schema():
     ''' Test that the supplied schema is a valid (loadable) json'''
     assert validate_mpcorb.load_json( filepaths.mpcorb_schema ), f'could not open {filepaths.mpcorb_schema}'
 
+
 def test_pass_file():
     ''' Test that a single, valid json-file successfully loads'''
-    assert os.path.isfile(filepaths.test_pass_mpcorb[0])
-    assert validate_mpcorb.load_json( filepaths.test_pass_mpcorb[0] ), f'could not open {filepaths.test_pass_mpcorb[0]}'
+    assert os.path.isfile(filepaths_for_testing.test_pass_mpcorb[0])
+    assert validate_mpcorb.load_json( filepaths_for_testing.test_pass_mpcorb[0] ), \
+        f'could not open {filepaths_for_testing.test_pass_mpcorb[0]}'
 
 def test_validation_A():
     ''' Test that a single, valid json-file successfully validates'''
-    assert validate_mpcorb.validate_mpcorb( filepaths.test_pass_mpcorb[0] ), f'could not validate {filepaths.test_pass_mpcorb[0]}'
+    assert validate_mpcorb.validate_mpcorb( filepaths_for_testing.test_pass_mpcorb[0] ), \
+        f'could not validate {filepaths.test_pass_mpcorb[0]}'
 
 
 # High level tests
@@ -43,7 +47,7 @@ def test_validation_B(  ):
     '''
   
     # The filepath_dict from filepaths contains the locations of a number of test files
-    for f in filepaths.test_pass_mpcorb:
+    for f in filepaths_for_testing.test_pass_mpcorb:
         validate_mpcorb.validate_mpcorb(f)
 
 
@@ -52,5 +56,5 @@ def test_validation_C(  ):
     '''
     Test that all invalid JSON-files in the 'test_fail_mpcorb' directory FAIL validation as expected
     '''
-    for f in filepaths.test_fail_mpcorb:
+    for f in filepaths_for_testing.test_fail_mpcorb:
         validate_mpcorb.validate_mpcorb(f)
