@@ -12,6 +12,6 @@ setuptools.setup(
 		'numpy',
 		'pytest'],
 	packages=setuptools.find_packages(),
-    package_data: {'',['mpc_orb/json_files/schema_json/*.json','mpc_orb/json_files/test_jsons/pass_mpcorb/*.json','mpc_orb/json_files/test_jsons/pass_mpcorb/*.json']}
-	zip_safe=False)
+    include_package_data=True,
+	zip_safe=False) 
 
