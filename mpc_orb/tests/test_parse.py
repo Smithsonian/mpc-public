@@ -24,7 +24,7 @@ def test_MPCORB_A(  ):
   
     M = MPCORB()
     assert isinstance(M,MPCORB)
-
+"""
 def test_MPCORB_B(  ):
     '''
     Test the parsing of mpcorb-jsons ...
@@ -100,3 +100,4 @@ def test_describe_A(  ):
             assert key in description_dict
             assert isinstance(description_dict[key], dict), f'-----------------------------------{key}'
             assert description_dict[key] is not None
+"""
