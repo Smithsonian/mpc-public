@@ -17,8 +17,7 @@ def interpret(arg):
 
     arg: str or dict
     
-    
-    returns dict
+    returns: dict & input_filepath (if filepath supplied)
     """
     
     # try to interpret input as a json-filepath

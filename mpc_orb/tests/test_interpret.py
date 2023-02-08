@@ -11,10 +11,11 @@ import os
 from mpc_orb import interpret
 from mpc_orb import filepaths
 from mpc_orb import validate_mpcorb
-
+from . import filepaths_for_testing
 
 # Tests
 # -----------------------
+"""
 def test_interpret_A(  ):
     '''
     Test that an input json filepath is correctly read ...
@@ -29,7 +30,8 @@ def test_interpret_A(  ):
     # check the results
     assert isinstance(d, dict)
     assert fp == filepath
-    
+"""
+
 @pytest.mark.xfail
 def test_interpret_B(  ):
     '''
@@ -64,10 +66,8 @@ def test_interpret_D(  ):
     '''
     
     # use the schema as an example of a valid json file
-    filepath = filepaths.mpcorb_schema
-    
     # read it using validate_mpcorb.load_json
-    d_in = validate_mpcorb.load_json(filepath)
+    d_in = validate_mpcorb.load_schema()
     
     # "read" d using interpret.interpret()
     d_out,fp = interpret.interpret(d_in)

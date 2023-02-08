@@ -5,19 +5,10 @@ Defining filepaths used by mpc_orb
 # Import standard packages
 # -----------------------
 import glob
-import os
 
-# Import(s) from this package
+# Directories / Filepaths / ...
 # -----------------------
-import mpc_orb.schema_json
-
-# Directories
-# -----------------------
-schema_dir = mpc_orb.schema_json.__path__[0]
-
-# Filepaths / Lists-of-Filepaths
-# -----------------------
-# Filepath to json schema against which everything is validated
+# Relative filepath to json schema against which everything is validated
 # - Gets the highest-numbered version in the directory
-mpcorb_schema = sorted( glob.glob( schema_dir + '/*.json' ) )[-1]
+schema_relative_filepath = "schema_json/mpcorb_schema_latest.json"
 
