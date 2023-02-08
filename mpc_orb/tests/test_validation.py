@@ -34,14 +34,12 @@ def test_pass_file():
     #assert validate_mpcorb.load_json( filepaths_for_testing.test_pass_mpcorb[0] ), \
     #    f'could not open {filepaths_for_testing.test_pass_mpcorb[0]}'
 
-"""
 
 def test_validation_A():
     ''' Test that a single, valid json-file successfully validates'''
-    assert validate_mpcorb.validate_mpcorb( filepaths_for_testing.test_pass_mpcorb[0] ), \
-        f'could not validate {filepaths.test_pass_mpcorb[0]}'
+    assert validate_mpcorb.validate_mpcorb( filepaths_for_testing.test_pass_yarkovski ), \
+        f'could not validate {filepaths_for_testing.test_pass_yarkovski}'
 
-"""
 # High level tests
 # -----------------------
 def test_validation_B(  ):

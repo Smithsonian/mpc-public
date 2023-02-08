@@ -57,8 +57,7 @@ def validate_mpcorb( arg ):
 
     # validate
     # NB # If no exception is raised by validate(), the instance is valid.
-    validate(   instance = data,
-                schema = load_schema    ( filepaths.schema_relative_filepath ))
+    validate(   instance = data,  schema = load_schema( ))
     
     return True
 
