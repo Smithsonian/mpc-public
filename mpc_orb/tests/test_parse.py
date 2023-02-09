@@ -47,7 +47,6 @@ def test_MPCORB_B(  ):
         M = MPCORB(data_dict)
         assert isinstance(M,MPCORB)
 
-"""
 
 def test_parse_C(  ):
     '''
@@ -56,12 +55,17 @@ def test_parse_C(  ):
     '''
   
     # Loop over the mpcorb files that are expect to "pass"
-    # Attempt to instantiate using each ...
-    for f in filepaths_for_testing.test_pass_mpcorb:
-        M = MPCORB(f)
+    valid_jsons = [k for k in filepaths_for_testing.__dict__ if "__" not in k and "pass" in k]
+    assert valid_jsons
+    for k in valid_jsons:
+        data_dict = load_package_json(filepaths_for_testing.__dict__[k])
+        M = MPCORB(data_dict)
+
         for k in ['COM','CAR','categorization', 'epoch_data', 'designation_data', 'magnitude_data', 'non_grav_booleans', 'orbit_fit_statistics', 'software_data', 'system_data']:
             assert hasattr(M,k)
-            
+
+"""
+
 def test_parse_D(  ):
     '''
     Test the CAR & COM sub-classes ...
