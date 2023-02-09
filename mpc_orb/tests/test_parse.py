@@ -64,15 +64,20 @@ def test_parse_C(  ):
         for k in ['COM','CAR','categorization', 'epoch_data', 'designation_data', 'magnitude_data', 'non_grav_booleans', 'orbit_fit_statistics', 'software_data', 'system_data']:
             assert hasattr(M,k)
 
-"""
+
 
 def test_parse_D(  ):
     '''
     Test the CAR & COM sub-classes ...
     Check element attributes
     '''
-    for f in filepaths_for_testing.test_pass_mpcorb:
-        M = MPCORB(f)
+    # Loop over the mpcorb files that are expect to "pass"
+    valid_jsons = [k for k in filepaths_for_testing.__dict__ if "__" not in k and "pass" in k]
+    assert valid_jsons
+    for k in valid_jsons:
+        data_dict = load_package_json(filepaths_for_testing.__dict__[k])
+        M = MPCORB(data_dict)
+
 
         for I,expected_names  in zip(   [M.COM, M.CAR], \
                                         [["q","e","i","node","argperi","peri_time"], ["x","y","z","vx","vy","vz"] ]):
@@ -99,6 +104,7 @@ def test_parse_D(  ):
         for name in ["q","e","i","node","argperi","peri_time"] + ["x","y","z","vx","vy","vz"] :
             assert hasattr(M, name)
         
+"""
 
 def test_describe_A(  ):
     '''
