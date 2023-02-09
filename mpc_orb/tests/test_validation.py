@@ -49,11 +49,11 @@ def test_validation_B(  ):
   
     # Get all of the json filenames defined in filepaths_for_testing that have '...pass...' in the name
     # NB : At the time of writing there was only one filepath ... in which case test_validation_B == test_validation_A
-    for k in filepaths_for_testing.__dict__:
-        if "__" not in k and "pass" in k:
-            
-            data_dict = load_package_json(filepaths_for_testing.__dict__[k])
-            assert validate_mpcorb.validate_mpcorb( data_dict )
+    valid_jsons = [k for k in filepaths_for_testing.__dict__ if "__" not in k and "pass" in k]
+    assert valid_jsons
+    for k in valid_jsons
+        data_dict = load_package_json(filepaths_for_testing.__dict__[k])
+        assert validate_mpcorb.validate_mpcorb( data_dict )
 
 
 
@@ -62,6 +62,9 @@ def test_validation_C(  ):
     '''
     Test that all invalid JSON-files in the 'test_fail_mpcorb' directory FAIL validation as expected
     '''
-    for f in filepaths_for_testing.test_fail_mpcorb:
-        validate_mpcorb.validate_mpcorb(f)
+    invalid_jsons = [k for k in filepaths_for_testing.__dict__ if "__" not in k and "fail" in k]
+    assert invalid_jsons
+    for k in invalid_jsons
+        data_dict = load_package_json(filepaths_for_testing.__dict__[k])
+        assert validate_mpcorb.validate_mpcorb( data_dict )
 
