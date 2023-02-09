@@ -69,7 +69,7 @@ class MPCORB():
         
         """
         if self.schema_json is None:
-            self.schema_json = validate_mpcorb.load_json( filepaths.mpcorb_schema )
+            self.schema_json = validate_mpcorb.load_schema()
                     
                     
         # Find the appropriate variable name to use to search for a description ...
