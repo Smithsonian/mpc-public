@@ -104,15 +104,19 @@ def test_parse_D(  ):
         for name in ["q","e","i","node","argperi","peri_time"] + ["x","y","z","vx","vy","vz"] :
             assert hasattr(M, name)
         
-"""
+
 
 def test_describe_A(  ):
     '''
     Test the describe function
     '''
 
-    for f in filepaths_for_testing.test_pass_mpcorb[:1]:
-        M = MPCORB(f)
+    # Loop over the mpcorb files that are expect to "pass"
+    valid_jsons = [k for k in filepaths_for_testing.__dict__ if "__" not in k and "pass" in k]
+    assert valid_jsons
+    for k in valid_jsons:
+        data_dict = load_package_json(filepaths_for_testing.__dict__[k])
+        M = MPCORB(data_dict)
 
         for key in [ _ for _ in M.__dict__.keys() if _ != 'schema_json']:
             description_dict = M.describe(key)
@@ -120,4 +124,4 @@ def test_describe_A(  ):
             assert key in description_dict
             assert isinstance(description_dict[key], dict), f'-----------------------------------{key}'
             assert description_dict[key] is not None
-"""
+
