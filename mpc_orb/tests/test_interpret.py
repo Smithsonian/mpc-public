@@ -22,19 +22,18 @@ def test_interpret_A(  ):
     '''
     
     # use the schema as an example of a valid json file
-    #filepath = filepaths.mpcorb_schema
-    
+    working_dir = os.path.dirname(os.path.abspath(__file__))
     # Loop over the mpcorb files that are expect to "pass"
     valid_jsons = [k for k in filepaths_for_testing.__dict__ if "__" not in k and "pass" in k]
     assert valid_jsons
     for k in valid_jsons:
-
+        full_path = os.path.join(working_dir, filepaths_for_testing.__dict__[k])
         # read it using interpret.interpret()
-        d,fp = interpret.interpret(filepaths_for_testing.__dict__[k])
+        d,fp = interpret.interpret(full_path)
     
         # check the results
         assert isinstance(d, dict)
-        assert fp == filepaths_for_testing.__dict__[k]
+        assert fp == full_path
 
 
 @pytest.mark.xfail
