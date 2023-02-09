@@ -1,9 +1,13 @@
 import setuptools
 
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
 setuptools.setup(
     name='mpc_orb',
     version='0.0.4',
-    long_description='For the validation and parsing of mpc_orb.json formatted data',
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     author='MJP:MPC',
     author_email='mpayne@cfa.harvard.edu',
     url='https://github.com/matthewjohnpayne/mpc_orb',
