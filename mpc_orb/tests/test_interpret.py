@@ -15,22 +15,27 @@ from . import filepaths_for_testing
 
 # Tests
 # -----------------------
-"""
+
 def test_interpret_A(  ):
     '''
     Test that an input json filepath is correctly read ...
     '''
     
     # use the schema as an example of a valid json file
-    filepath = filepaths.mpcorb_schema
+    #filepath = filepaths.mpcorb_schema
     
-    # read it using interpret.interpret()
-    d,fp = interpret.interpret(filepath)
+    # Loop over the mpcorb files that are expect to "pass"
+    valid_jsons = [k for k in filepaths_for_testing.__dict__ if "__" not in k and "pass" in k]
+    assert valid_jsons
+    for k in valid_jsons:
+
+        # read it using interpret.interpret()
+        d,fp = interpret.interpret(filepaths_for_testing.__dict__[k])
     
-    # check the results
-    assert isinstance(d, dict)
-    assert fp == filepath
-"""
+        # check the results
+        assert isinstance(d, dict)
+        assert fp == filepaths_for_testing.__dict__[k]
+
 
 @pytest.mark.xfail
 def test_interpret_B(  ):
