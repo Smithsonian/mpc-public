@@ -1,16 +1,24 @@
 """
 Test parsing class/functions
 """
-# Third-party imports
+# Standard imports
 # -----------------------
 import pytest
 from os.path import join, dirname, abspath
+import pkgutil
+import json
 
 # Local imports
 # -----------------------
 from mpc_orb import MPCORB, COORD
 from mpc_orb import filepaths
 from . import filepaths_for_testing
+
+
+def load_package_json(filepath_relative_to_package):
+    ''' use pkgutil to get resource & return as dict '''
+    raw_bytes = pkgutil.get_data(__package__ , filepath_relative_to_package)
+    return json.loads(raw_bytes.decode('utf-8'))
 
 
 # Tests
@@ -24,7 +32,7 @@ def test_MPCORB_A(  ):
   
     M = MPCORB()
     assert isinstance(M,MPCORB)
-"""
+
 def test_MPCORB_B(  ):
     '''
     Test the parsing of mpcorb-jsons ...
@@ -32,12 +40,14 @@ def test_MPCORB_B(  ):
     '''
   
     # Loop over the mpcorb files that are expect to "pass"
-    # Attempt to instantiate using each ...
-    for f in filepaths_for_testing.test_pass_mpcorb:
-        M = MPCORB(f)
-        
+    valid_jsons = [k for k in filepaths_for_testing.__dict__ if "__" not in k and "pass" in k]
+    assert valid_jsons
+    for k in valid_jsons:
+        data_dict = load_package_json(filepaths_for_testing.__dict__[k])
+        M = MPCORB(data_dict)
         assert isinstance(M,MPCORB)
 
+"""
 
 def test_parse_C(  ):
     '''
