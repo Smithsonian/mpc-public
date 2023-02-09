@@ -51,7 +51,7 @@ def test_validation_B(  ):
     # NB : At the time of writing there was only one filepath ... in which case test_validation_B == test_validation_A
     valid_jsons = [k for k in filepaths_for_testing.__dict__ if "__" not in k and "pass" in k]
     assert valid_jsons
-    for k in valid_jsons
+    for k in valid_jsons:
         data_dict = load_package_json(filepaths_for_testing.__dict__[k])
         assert validate_mpcorb.validate_mpcorb( data_dict )
 
@@ -64,7 +64,7 @@ def test_validation_C(  ):
     '''
     invalid_jsons = [k for k in filepaths_for_testing.__dict__ if "__" not in k and "fail" in k]
     assert invalid_jsons
-    for k in invalid_jsons
+    for k in invalid_jsons:
         data_dict = load_package_json(filepaths_for_testing.__dict__[k])
         assert validate_mpcorb.validate_mpcorb( data_dict )
 
