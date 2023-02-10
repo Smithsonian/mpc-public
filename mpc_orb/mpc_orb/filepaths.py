@@ -10,5 +10,5 @@ import glob
 # -----------------------
 # Relative filepath to json schema against which everything is validated
 # - Gets the highest-numbered version in the directory
-schema_relative_filepath = "jsons/schema_json/mpcorb_schema_latest.json"
+schema_relative_filepath = "schema_json/mpcorb_schema_latest.json"
 
