@@ -15,6 +15,7 @@ setuptools.setup(
         'jsonschema',
         'numpy',
         'pytest'],
-    packages=setuptools.find_packages(),
-    package_data={'': ['mpc_orb/schema_json/*.json']},
+    packages=setuptools.find_packages(where="mpc_orb"),
+    package_dir={"": "mpc_orb"},
+    package_data={'': ['schema_json/*.json']},
     zip_safe=False)
