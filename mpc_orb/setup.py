@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='mpc_orb',
-    version='0.1.2  ',
+    version='0.1.3',
     long_description=long_description,
     long_description_content_type="text/markdown",
     author='MJP:MPC',
@@ -16,5 +16,5 @@ setuptools.setup(
         'numpy',
         'pytest'],
     packages=setuptools.find_packages(),#where="mpc_orb"),
-    package_data={"": ["*.json"]},
+    package_data={"": ["schema_json/*.json"]},
     zip_safe=False)
