@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='mpc_orb',
-    version='0.0.6',
+    version='0.0.7',
     long_description=long_description,
     long_description_content_type="text/markdown",
     author='MJP:MPC',
