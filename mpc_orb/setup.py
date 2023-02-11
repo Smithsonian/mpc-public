@@ -5,12 +5,12 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='mpc_orb',
-    version='0.1.3',
-    long_description=long_description,
+    version='0.1.4',
+    long_description=long_description,  
     long_description_content_type="text/markdown",
     author='MJP:MPC',
     author_email='mpayne@cfa.harvard.edu',
-    url='https://github.com/matthewjohnpayne/mpc_orb',
+    url='https://github.com/Smithsonian/mpc-public',
     install_requires=[
         'jsonschema',
         'numpy',
