@@ -1,7 +1,11 @@
 # mpc-public/mpc_orb
 
 
-Code related to the parsing & validation of best-fit orbit files in the "mpc_orb.json" format 
+Code related to the parsing & validation of best-fit orbit files in the "mpc_orb.json" format.
+
+This format is intended to be used to describe the orbits of solar-system minor-planets, comets, irregular satellites, and interstellar interlopers.
+
+The MPC currently populates mpc_orb.json files using data from the orbfit package, but we emphasize that the mpc_orb.json format is intended for the generic exchange of orbit data from any source.  
 
 ## Functionalities 
 
@@ -26,32 +30,32 @@ Code related to the parsing & validation of best-fit orbit files in the "mpc_orb
 
 It is intended that this become a pip-installable python package. 
 
-Once that has been set-up, "pip instal ..." instructions should be placed here.  
+Once that has been set-up, "pip install mpc_orb" instructions should be placed here.  
  
 ## Repo Contents 
 
 (a) demos            
 
-Demonstrations of code usage.
+ - Demonstrations of code usage.
 
-Both flat-files and jupyter notebooks.
+ - Both python-scripts and jupyter notebooks.
 
 
 (b) mpc_orb            
 
-The main code directory.
+ - The main code directory.
 
-Contains code to both validate & parse mpc-orb-json files 
+ - Contains code to both validate & parse mpc-orb-json files 
 
 
 (c) mpc_orb/json_files
 
-Sample JSON files.
+ - Sample JSON files.
 
-Both the defining validation schema and some sample jsons for testing.
+ - Both the defining validation schema and some sample jsons for testing.
 
 
 (d) tests
 
-Tests of the code in mpc_orb
+ - Tests of the code in mpc_orb
  
