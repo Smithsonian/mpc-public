@@ -6,4 +6,7 @@ Intended to describe
  - The mpc_orb.json format;
  - The mpc_orb python package.
 
-As of April 2023 this documentation is TBD...
+As of April 2023 the following documentation exists:
+ - mpc_orb.pdf : a PDF version of the mpc_orb.json schema file.
+
+ 
