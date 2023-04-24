@@ -5,4 +5,5 @@ An over-arching repo to hold various publically-released pieces of code written 
 ## Current contents 
 
 ### mpc_orb
- - Python code to parse & validate examples of "mpc_orb.json" files (i.e. best-fit orbit files) 
+ - Code related to the parsing & validation of best-fit orbit files in the "mpc_orb.json" format.
+ - Includes json-schema files, sample orbit files in the mpc_orb.json format, and python code to parse & validate example orbit files.
