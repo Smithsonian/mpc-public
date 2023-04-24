@@ -59,7 +59,7 @@ print('\n\t covariance array ... ')
 print('\t',M.CAR.covariance_array )
 
 
-# Demonstrate access to Cartesian elements
+# Demonstrate access to Cometary elements
 print('-'*33)
 print('\nformat = COM = Cometary ... ')
 print('\n\t coefficient names ... ')

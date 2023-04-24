@@ -12,6 +12,9 @@ MJP
 # -----------------------
 from mpc_orb.parse import MPCORB, COORD
 
+def tprint(lft,rght,width=20):
+    print(f'\t{lft:<{width}}:\t{rght}')
+
 def demo():
     """
     Demonstration function to
@@ -35,18 +38,19 @@ def demo():
     # & Demonstrate the available variables
     M = MPCORB(demo_filepath)
     print(f'\nWe instantiated an MPCORB object using the sample json')
-    print(f'\tCode>>>MPCORB(demo_filepath)')
-        print(f'\tfile:\t{type(M)}
+    tprint('code','MPCORB(demo_filepath)')
+    tprint('type(M)','type(M)')
+
     print('An MPCORB object has variables ... ')
     for attribute in vars(M):
-        print(f'\t{attribute:>20} : {type(M.__dict__[attribute])}')
+        tprint(attribute,type(M.__dict__[attribute]))
 
     # There are COM & CAR objects contained within the MPCORB Object
     # Demonstrate the attributes available in the "COM" coord-object contained
     print('\nWe now examine the CAR object within the MPCORB object ... ')
     print('A CAR instance has variables ... ')
     for attribute in vars(M.CAR):
-        print(f'\t{attribute:>20} : {type(M.CAR.__dict__[attribute])}')
+ex        tprint(attribute,type(M.CAR.__dict__[attribute]))
 
     # Demonstrate access to Cartesian elements
     print('\nWe now examine a selection of the variables within the CAR object ... ')
@@ -68,3 +72,5 @@ def demo():
     print('\n\t covariance array ... ')
     print('\t',M.CAR.covariance_array )
 
+if __name__ == '__main__':
+    demo()
