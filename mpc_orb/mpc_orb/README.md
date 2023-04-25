@@ -8,6 +8,10 @@ As of 2023-01 most/all of this code can be blamed on MJP
 
 ### Python Code
 
+(0) demo.py
+ - A basic demonstration script that can be called immediately after installation. 
+ - Provides some simple examples of how to use *parse.py* (see below), while simultaneously demonstrating that installation has actually worked.
+
 (1) filepaths.py
  - Simple file to define the directory structure & filepaths of this package
 
@@ -25,7 +29,12 @@ As of 2023-01 most/all of this code can be blamed on MJP
  - Code to *validate* a candidate json-file against the mpc_orb schema file
 
 
-### schema_json Directory
+### *schema_json* Directory
 
  - Directory to store schema-JSONs 
  - These are used define the acceptable fields (and values) for mpc_orb.json files
+
+
+### *demo_json* Directory
+
+- Directory to store sample JSON file(s) to illustrate example(s) of the mpc_orb.json format 
