@@ -11,7 +11,7 @@ To execute the tests, run
 
 
 ## Expected Test Results 
-The expected results of running the above are ...
+As of April 2023, the expected results of running the above test are ...
 
 collected 14 items                                                                                                                                                   
 
