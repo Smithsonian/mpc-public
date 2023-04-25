@@ -50,7 +50,7 @@ def demo():
     print('\nWe now examine the CAR object within the MPCORB object ... ')
     print('A CAR instance has variables ... ')
     for attribute in vars(M.CAR):
-ex        tprint(attribute,type(M.CAR.__dict__[attribute]))
+        tprint(attribute,type(M.CAR.__dict__[attribute]))
 
     # Demonstrate access to Cartesian elements
     print('\nWe now examine a selection of the variables within the CAR object ... ')
