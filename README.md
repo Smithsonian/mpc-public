@@ -11,5 +11,3 @@ Notes for MPC staff/developers can be found in *DEVELOPER_NOTES.md*
  - Includes json-schema files, sample orbit files in the mpc_orb.json format, and python code to parse & validate example orbit files.
 
 
-
-## Current contents 
