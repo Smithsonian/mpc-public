@@ -1,5 +1,4 @@
 {
-    "$schema": "http://json-schema.org/schema#",
     "version":"0.4",
     "title":"Best Fit Orbit Data for Single Solar System Object",
     "description":"Standardized MPC JSON format for the exchange of orbit-fit data. Designed to communicate the best-fit orbit for a single minor planet or comet.",
@@ -67,7 +66,7 @@
             "description" : "Description of the best-fit orbit using cometary coordinates (plus any non-gravs) in heliocentric coordinates. Contains the best-fit orbit and covariance matrix.",
             "properties": {
                 "coefficient_specification" : {
-                    "description" : "Description of allowedd fitted quantities within the cometary coordinate specification system. ",
+                    "description" : "Description of allowed fitted quantities within the cometary coordinate specification system. ",
                     "type": "object",
                     "properties": {
                         "q": { "$ref": "#/$defs/cometary_q" },

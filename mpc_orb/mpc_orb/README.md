@@ -25,8 +25,7 @@ As of 2023-01 most/all of this code can be blamed on MJP
  - Code to *validate* a candidate json-file against the mpc_orb schema file
 
 
-### JSON Directory
+### schema_json Directory
 
-(a) json_files
- - Directory to store various JSON files.
- - Includes both schema-JSONs & test-/demo-JSONs 
+ - Directory to store schema-JSONs 
+ - These are used define the acceptable fields (and values) for mpc_orb.json files
