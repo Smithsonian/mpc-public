@@ -8,6 +8,10 @@ As of 2023-01 most/all of this code can be blamed on MJP
 
 ### Python Code
 
+(0) demo.py
+ - A basic demonstration script that can be called immediately after installation. 
+ - Provides some simple examples of how to use *parse.py* (see below), while simultaneously demonstrating that installation has actually worked.
+
 (1) filepaths.py
  - Simple file to define the directory structure & filepaths of this package
 
