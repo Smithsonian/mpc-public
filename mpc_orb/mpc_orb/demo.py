@@ -7,6 +7,9 @@ Author(s)
 MJP
 """
 
+# standard imports
+# -----------------------
+import os
 
 # local imports
 # -----------------------
@@ -31,7 +34,7 @@ def demo():
     
     """
     # Define a filepath to an example json file provided in the package
-    demo_filepath = 'demo_json/2012HN13_mpcorb_yarkovski.json'
+    demo_filepath = os.path.join( os.path.dirname(os.path.abspath(__file__)), 'demo_json/2012HN13_mpcorb_yarkovski.json')
     print(f'\nAccessing a sample json file:\n\t{demo_filepath}')
 
     # Instantiate an MPCORB object & use it to parse the above json file
