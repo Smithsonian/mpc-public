@@ -17,19 +17,6 @@ This repository currently contains code and documentation related to:
 
 ## Repo Contents 
 
-(a) demos            
-
- - Demonstrations of python code usage, including *python-scripts* and *jupyter notebooks*.
-
-
-(b) mpc_orb            
-
- 
-
-(d) tests
-
- - Tests of the python code in the *mpc_orb* directory. For details of the test code, including how to execute the tests, please see the file */tests/README.md*.
-
 
 ### Sample JSON Files 
 
@@ -76,4 +63,12 @@ The python code in *mpc_orb* is available as a pip-installable python package.
 Further details can be found in *mpc_orb/README.md*
 
  
+
+
+### tests
+
+Tests of the python code in the *mpc_orb* directory are provided in the *tests* directory. 
+ 
+ For details of the test code, including how to execute the tests, please see the file */tests/README.md*.
+
 
