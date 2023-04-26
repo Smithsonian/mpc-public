@@ -5,7 +5,7 @@ Directory to store various tests of the python code in */mpc-public/mpc_orb/mpc_
 
 ## Test Execution 
 To execute the tests, run 
-> cd tests
+> cd tests \n
 > pytest -v
 
 
