@@ -1,10 +1,6 @@
 """
 Test parsing class/functions
 """
-# Third-party imports
-# -----------------------
-import pytest
-import os
 
 # Local imports
 # -----------------------
