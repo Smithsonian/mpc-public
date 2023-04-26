@@ -34,8 +34,7 @@ Documentation describing the *mpc_orb.json* format, including *allowed* fields, 
 
 ### Python Functionalities (*mpc_orb*)
 
-The directory containing some utility python code can be found in "mpc_orb". 
-This directory contains code to both validate & parse mpc-orb-json files 
+The */mpc_orb/* directory contains some python code to both validate & parse mpc-orb-json files 
 
 #### Parsing *mpc_orb.json* formatted data
 
@@ -52,7 +51,7 @@ The code in *mpc_orb/parse.py* provides functions & classes to validate *mpc_orb
 
 It is expected that these validation functionalities will typically be used as part of the "parse" functions described above. 
 
-I.e. it is *not* expected that the end-user will regularly access the validation functions *directly *, but rather, the validation functions will be called under-the-hood by the *mpc_orb/parse.py* routines. 
+I.e. it is *not* expected that the end-user will regularly access the validation functions *directly*, but rather, the validation functions will be called under-the-hood by the *mpc_orb/parse.py* routines. 
 
 
 
