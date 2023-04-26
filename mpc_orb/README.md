@@ -64,7 +64,7 @@ Further details can be found in *mpc_orb/README.md*
  
 
 
-### Python Tests
+### Python Tests (*/tests/*)
 
 Tests of the python code in the *mpc_orb* directory are provided in the *tests* directory. 
  
