@@ -32,7 +32,7 @@ The JSON files defining the *mpc_orb.json* format can be found in */mpc_orb/sche
 Documentation describing the *mpc_orb.json* format, including *allowed* fields, *required* fields, constraints, etc, can be found in the */docs/* directory.
 
 
-### Python Functionalities (*mpc_orb*)
+### Python Functionalities (*/mpc_orb/*)
 
 The */mpc_orb/* directory contains some python code to both validate & parse mpc-orb-json files 
 
