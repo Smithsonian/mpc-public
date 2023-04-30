@@ -510,35 +510,35 @@
             "description" : "Various different ways to categorize / sub-set orbit / object types",
             "properties": {
                 "object_type_str": {
-                    "description": "# Minor-Planet / Comet / Dual-Status / Binary MP / ...",
+                    "description": "Object Type (String): E.g. Minor-Planet / Comet / Dual-Status / Binary MP / etc. For a full description of allowed object types, see https://minorplanetcenter.net/mpcops/documentation/object-types/ ",
                     "type": "string"
                 },
                 "object_type_int": {
-                    "description": "#     0            10       20          1",
+                    "description": "Object Type (Integer): E.g.      0            10       20          1. For a full description of allowed object types, see https://minorplanetcenter.net/mpcops/documentation/object-types/ ",
                     "type": ["null", "number"]
                 },
                 "orbit_type_str": {
-                    "description": "# NEAs / MBAs / TNOs / ...",
+                    "description": "Orbit Type (String): E.g. NEAs / MBAs / TNOs / etc. For a full description of allowed orbit types, see https://minorplanetcenter.net/mpcops/documentation/orbit-types/ ",
                     "type": "string"
                 },
                 "orbit_type_int": {
-                    "description": "# 0 /1/2/3/4",
+                    "description": "Orbit Type (Integer): E.g. 0 /1/2/3/4/etc. For a full description of allowed orbit types, see https://minorplanetcenter.net/mpcops/documentation/orbit-types/ ",
                     "type": ["null", "number"]
                 },
                 "orbit_subtype_str": {
-                    "description": "# Apollo / Amor / ...",
+                    "description": "Orbit Sub-Type (String): E.g. Apollo / Amor / ...",
                     "type": "string"
                 },
                 "orbit_subtype_int": {
-                    "description": "# ...",
+                    "description": "Orbit Sub-Type (Integer)",
                     "type": ["null", "number"]
                 },
                 "parent_planet_str" : {
-                    "description": "# For Nat-Sats",
+                    "description": "Parent Planet (String) if Natural Satellite",
                     "type": "string"
                 },
                 "parent_planet_int" : {
-                    "description": "# For Nat-Sats",
+                    "description": "Parent Planet (Integer) if Natural Satellite",
                     "type": ["null", "number"]
                 }
             },
