@@ -23,6 +23,7 @@ def test_interpret_A(  ):
     
     # use the schema as an example of a valid json file
     working_dir = os.path.dirname(os.path.abspath(__file__))
+    
     # Loop over the mpcorb files that are expect to "pass"
     valid_jsons = [k for k in filepaths_for_testing.__dict__ if "__" not in k and "pass" in k]
     assert valid_jsons
@@ -66,7 +67,7 @@ def test_interpret_C(  ):
     
 def test_interpret_D(  ):
     '''
-    Test that an input dictionary ...
+    Test that an input dictionary is correctly interpreted ...
     '''
     
     # use the schema as an example of a valid json file

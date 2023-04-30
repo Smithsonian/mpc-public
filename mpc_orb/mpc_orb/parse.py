@@ -75,10 +75,17 @@ class MPCORB():
         # Find the appropriate variable name to use to search for a description ...
         # (i) If variable_name is a top-level property such as 'designation_data', 'COM', etc
         if variable_name in self.schema_json['properties'].keys():
-            return  {variable_name: {'description':self.schema_json['properties'][variable_name]['description'] }}
+            return  {variable_name:
+                        {'description':
+                            self.schema_json['properties'][variable_name]['description'] ,
+                        'allowed properties':
+                            list(self.schema_json['properties'][variable_name]['properties'].keys())
+                        }
+                    }
+            
 
         if variable_name == 'schema_json':
-            return {variable_name: {'filepath':filepaths.mpcorb_schema} }
+            return {variable_name: {'filepath':filepaths.schema_relative_filepath} }
 
         # (ii) If variable_name is one of the defined-schema variables
         if variable_name in self.schema_json['$defs']:
@@ -103,9 +110,14 @@ class MPCORB():
             
 
     def _clean(self,d):
-        """ """
-        return { k: self._clean(v) if isinstance(v, dict) else v for k,v in d.items() if k not in ['type']}
-        
+        """
+        Provides an easy-to-read form of the schema-data for a specific $defs component
+        """
+        #return { k: self._clean(v) if isinstance(v, dict) else v for k,v in d.items() if k not in ['type']}
+        return {
+            "description": d["description"],
+            "units": d["properties"]["unit"]["enum"],
+        }
 
     
     def _add_various_attributes(self,json_dict):

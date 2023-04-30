@@ -2,8 +2,6 @@
 Test validation schema
 """
 
-
-
 # Standard imports
 # -----------------------
 import pytest
@@ -28,7 +26,7 @@ def load_package_json(filepath_relative_to_package):
 # Lower level tests
 # -----------------------
 def test_schema():
-    ''' Test that the supplied schema is a valid (loadable) json'''
+    ''' Test that the *load_schema* function works ... '''
     assert validate_mpcorb.load_schema(), \
         f'could not open schema'
 
@@ -48,7 +46,7 @@ def test_validation_B(  ):
     '''
   
     # Get all of the json filenames defined in filepaths_for_testing that have '...pass...' in the name
-    # NB : At the time of writing there was only one filepath ... in which case test_validation_B == test_validation_A
+    # NB : At the time of writing there was only one filepath ... 
     valid_jsons = [k for k in filepaths_for_testing.__dict__ if "__" not in k and "pass" in k]
     assert valid_jsons
     for k in valid_jsons:

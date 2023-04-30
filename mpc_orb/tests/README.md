@@ -1,6 +1,6 @@
 # tests 
 
-Directory to store various tests of the python code in mpc_orb
+Directory to store various tests of the python code in */mpc-public/mpc_orb/mpc_orb/*
 
 
 ## Test Execution 
