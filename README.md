@@ -1,12 +1,12 @@
 # mpc-public
 
-An over-arching repository to hold various publically-released pieces of code written by the MPC
+An over-arching repository to hold various publicly-released pieces of code written by the MPC
 
 Notes for MPC staff/developers can be found in *DEVELOPER_NOTES.md*
 
 ## Current contents 
 
-As of April 2023, only the *mpc_orb* component exists within *mpc-public*.
+As of May 2023, only the *mpc_orb* component exists within *mpc-public*.
 The MPC intends to add additional components over the coming months. 
 
 ### mpc_orb
