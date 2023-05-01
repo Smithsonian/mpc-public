@@ -2,6 +2,11 @@
 
 The main code directory for the mpc_orb package
 
+N.B. The code in this repository is available as a pip-installable package:
+```
+pip install mpc_orb
+```
+
 ## Package Components
 
 ### Python Code
