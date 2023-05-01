@@ -209,8 +209,8 @@
         "mpcorb_creation_datetime": "2023-04-12 20:05:07"
     },
     "categorization": {
-        "orbit_type_int": null,
-        "orbit_type_str": "",
+        "orbit_type_int": 3,
+        "orbit_type_str": "Inner Apollo",
         "object_type_int": 0,
         "object_type_str": "Minor Planet",
         "orbit_subtype_int": null,
