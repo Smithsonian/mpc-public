@@ -27,16 +27,16 @@ def interpret(arg):
                 json_dict       = json.load(f)
                 input_filepath  = arg
         except:
-            raise  Exception(f"Input {arg} does not seem to be a json-file")
+            raise ValueError(f"Input {arg} does not seem to be a json-file")
     
-    # if its a dictionary, use that
+    # if the input arg is a dictionary, use that
     elif isinstance(arg, dict):
         json_dict       = arg
         input_filepath  = None
         
     # no other options yet implemented
     else:
-        raise  Exception(f"Input {arg}\nis of type {type(arg)} and cannot be interpreted as json file/dict")
+        raise  ValueError(f"Input '{arg}' is of type '{type(arg)}' and cannot be interpreted as a json file or dict")
     
     # return the contents of the json file in dict form
     return json_dict,input_filepath

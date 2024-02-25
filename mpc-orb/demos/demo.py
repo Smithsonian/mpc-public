@@ -13,7 +13,7 @@ import os
 
 # local imports
 # -----------------------
-from mpc_orb.parse import MPCORB, COORD
+from mpc_orb import MPCORB, COORD, MPCORB_FILEPATHS
 
 def tprint(lft,rght,width=20):
     print(f'\t{lft:<{width}}:\t{rght}')
@@ -34,29 +34,30 @@ def demo():
     
     """
     # Define a filepath to an example json file provided in the package
-    demo_filepath = os.path.join( os.path.dirname(os.path.abspath(__file__)), 'demo_json/2012HN13_mpcorb_yarkovski.json')
+    demo_filepath = os.path.join( MPCORB_FILEPATHS().code_dir, MPCORB_FILEPATHS().valid_sample_relative_filepaths[0])
     print(f'\nAccessing a sample json file:\n\t{demo_filepath}')
 
     # Instantiate an MPCORB object & use it to parse the above json file
     # & Demonstrate the available variables
+    print(f'\nInstantiating an MPCORB object using the sample json')
+    tprint('code', 'MPCORB(demo_filepath)')
+    tprint('type(M)', 'type(M)')
     M = MPCORB(demo_filepath)
-    print(f'\nWe instantiated an MPCORB object using the sample json')
-    tprint('code','MPCORB(demo_filepath)')
-    tprint('type(M)','type(M)')
 
+    # Demonstrate the attributes available in the MPCORB Object
     print('An MPCORB object has variables ... ')
     for attribute in vars(M):
         tprint(attribute,type(M.__dict__[attribute]))
 
     # There are COM & CAR objects contained within the MPCORB Object
     # Demonstrate the attributes available in the "COM" coord-object contained
-    print('\nWe now examine the CAR object within the MPCORB object ... ')
-    print('A CAR instance has variables ... ')
+    print('\nWe now examine the object named `CAR` within the MPCORB object ... ')
+    print('A `CAR` instance has variables ... ')
     for attribute in vars(M.CAR):
         tprint(attribute,type(M.CAR.__dict__[attribute]))
 
     # Demonstrate access to Cartesian elements
-    print('\nWe now examine a selection of the variables within the CAR object ... ')
+    print('\nWe now examine a selection of the variables within the `CAR` object ... ')
     print('\n\t coefficient names ... ')
     print('\t',M.CAR.coefficient_names )
 

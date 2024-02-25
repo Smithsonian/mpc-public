@@ -1,0 +1,195 @@
+{
+    "COM": {
+        "covariance": {
+            "cov00": 1.903722760582765e-16,
+            "cov01": -1.47434163245842e-16,
+            "cov02": -2.066146705352834e-15,
+            "cov03": 3.068414637597512e-14,
+            "cov04": -9.871834383993458e-14,
+            "cov05": -9.868599098081353e-14,
+            "cov06": -6.657790672964452e-13,
+            "cov07": null,
+            "cov08": null,
+            "cov09": null,
+            "cov11": 1.174299528583189e-16,
+            "cov12": 2.147079951548079e-15,
+            "cov13": -2.456883282252683e-14,
+            "cov14": 8.309608061243053e-14,
+            "cov15": 8.57623115749212e-14,
+            "cov16": 7.741235901378988e-13,
+            "cov17": null,
+            "cov18": null,
+            "cov19": null,
+            "cov22": 4.494203757075407e-12,
+            "cov23": 1.836269873008393e-11,
+            "cov24": -1.125850734554831e-11,
+            "cov25": 9.834431941369221e-12,
+            "cov26": -7.845630171653076e-12,
+            "cov27": null,
+            "cov28": null,
+            "cov29": null,
+            "cov33": 2.681732552138934e-10,
+            "cov34": -3.00990351635974e-10,
+            "cov35": -4.896421283851155e-11,
+            "cov36": -3.46714656961301e-10,
+            "cov37": null,
+            "cov38": null,
+            "cov39": null,
+            "cov44": 4.129059735336989e-10,
+            "cov45": 1.61251211692271e-10,
+            "cov46": 8.646259768670356e-10,
+            "cov47": null,
+            "cov48": null,
+            "cov49": null,
+            "cov55": 1.622427586689586e-10,
+            "cov56": 8.092275606554158e-10,
+            "cov57": null,
+            "cov58": null,
+            "cov59": null,
+            "cov66": 2.471883155510798e-08,
+            "cov67": null,
+            "cov68": null,
+            "cov69": null,
+            "cov77": null,
+            "cov78": null,
+            "cov79": null,
+            "cov88": null,
+            "cov89": null,
+            "cov99": null
+        },
+        "eigenvalues": [
+            1.48802e-10,
+            1.34296e-08,
+            1.40513e-08,
+            2.49534e-08,
+            3.9273e-07,
+            1.16468e-05,
+            0.000157307
+        ],
+        "coefficient_names": [
+            "q",
+            "e",
+            "i",
+            "node",
+            "argperi",
+            "peri_time",
+            "yarkovski"
+        ],
+        "coefficient_values": [
+            0.974691034818114,
+            0.307980763141293,
+            4.0744770505197,
+            183.4982668700381,
+            97.2208277743456,
+            59765.3930151203,
+            -0.00118541929703336
+        ],
+        "non_grav_uncertainty": {},
+        "coefficient_uncertainties": [
+            1.37975e-08,
+            1.08365e-08,
+            2.11995e-06,
+            1.6376e-05,
+            2.03201e-05,
+            1.27375e-05,
+            0.000157222
+        ]
+    },
+    "moid_data": {
+        "Mars": null,
+        "Earth": null,
+        "Venus": null,
+        "Jupiter": null
+    },
+    "epoch_data": {
+        "epoch": 60000.0,
+        "timeform": "MJD",
+        "timesystem": "TDT"
+    },
+    "system_data": {
+        "eph": "DE431",
+        "refsys": "Ecliptic",
+        "refframe": "ICRF",
+        "force_model": "????",
+        "EclipticObliquityArcseconds": "84381.448"
+    },
+    "software_data": {
+        "mpcorb_version": "0.4",
+        "fitting_datetime": "2023/03/17_21:10:13",
+        "fitting_software_name": "orbfit",
+        "fitting_software_version": "1.0",
+        "mpcorb_creation_datetime": "2023-04-13 00:48:58"
+    },
+    "categorization": {
+        "orbit_type_int": 3,
+        "orbit_type_str": "Inner Apollo",
+        "object_type_int": 0,
+        "object_type_str": "Minor Planet",
+        "orbit_subtype_int": null,
+        "orbit_subtype_str": ""
+    },
+    "magnitude_data": {
+        "G": 0.15,
+        "H": 22.958,
+        "G1": null,
+        "G2": null,
+        "G12": null,
+        "photometric_model": "????"
+    },
+    "designation_data": {
+        "permid": null,
+        "iau_name": "",
+        "orbfit_name": "",
+        "designation_count": 1,
+        "packed_primary_provisional_designation": "K12H13N",
+        "unpacked_primary_provisional_designation": "2012 HN13",
+        "packed_secondary_provisional_designations": [],
+        "unpacked_secondary_provisional_designations": []
+    },
+    "non_grav_booleans": {
+        "non_gravs": true,
+        "non_grav_model": {
+            "yc": false,
+            "srp": false,
+            "marsden": false,
+            "yabushita": false,
+            "yarkovski": true
+        },
+        "non_grav_coefficients": {
+            "A1": false,
+            "A2": false,
+            "A3": false,
+            "DT": false,
+            "srp": false,
+            "yarkovski": true
+        }
+    },
+    "orbit_fit_statistics": {
+        "nopp": 5,
+        "score1": 0.0,
+        "score2": 0.0,
+        "U_param": 0.0,
+        "numparams": 7,
+        "nobs_radar": 0,
+        "nobs_total": 180,
+        "snr_below_1": false,
+        "snr_below_3": false,
+        "nobs_optical": 180,
+        "orbit_quality": "good",
+        "arc_length_sel": "2012-2022",
+        "nobs_radar_sel": 0,
+        "nobs_total_sel": 180,
+        "normalized_RMS": 0.863045,
+        "arc_length_total": "2012-2022",
+        "nobs_optical_sel": 180,
+        "not_normalized_RMS": null,
+        "sig_to_noise_ratio": [
+            20114526.796001285,
+            7493571.98809625,
+            916345.2598970179,
+            25733.188858244543,
+            26780669.15857411,
+            2001018.2847507293
+        ]
+    }
+}
