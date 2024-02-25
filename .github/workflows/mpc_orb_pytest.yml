@@ -20,12 +20,12 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
-        working-directory: ./mpc_orb
+        working-directory: ./mpc-orb
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install .
       - name: Test with pytest
-        working-directory: ./mpc_orb
+        working-directory: ./mpc-orb
         run: |
           pytest -v -s
