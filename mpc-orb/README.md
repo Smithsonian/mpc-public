@@ -23,12 +23,12 @@ the wider community, but it is not intended to be the *only* way to use the form
 
 ## Repo Contents 
 
- - [demos](demos) : # Example code and use cases
- - [docs](docs)	: # Documentation for both the Python package and JSON schemas	
+ - [demos](demos) : Example code and use cases
+ - [docs](docs)	: Documentation for both the Python package and JSON schemas	
  - [sample_json](sample_json) : Examples of the *mpc_orb.json* format for some specific objects	
  - [schema_json](schema_json) : The JSON schema files defining the *mpc_orb.json* format
  - [src](src) : Source files for Python code
- - [tests](tests) : # Test suite for the Python code
+ - [tests](tests) : Test suite for the Python code
 
 
 
