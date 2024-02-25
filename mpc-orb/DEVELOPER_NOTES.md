@@ -7,20 +7,37 @@ This is to emphasize that:
 (a) the schema are separate from the python code;
 (b) to maintain a single source of truth for the schema;
 
-## Local Development
-
 Because the defining `mpc_orb.json` files are not in the python `src/..` directory, 
 we need to do something with them to make them available to the python code when it is packaged and distributed. 
-The chosen solution is to *copy* the JSON-related directories to the `src/mpc_orb` directory during the *build* process.
+The chosen solution is to *copy* the JSON-related directories to the `build/lib/mpc_orb/` directory during the *build* process.
+This is handled automatically by the `setup.py` script: see [the Local Build section](#local-build) below. 
 
-### WIP 
 
+## Local Development
+
+Work within a branch, etc etc. 
+
+If you want to edit/develop the code within `src/mpc_orb/`, ensure that you create appropriate 
+unit tests within the `tests/` directory.
+
+To check that your code works as expected, you can run the commands in [the Local Build section](#local-build) below.
+
+
+### Local Build 
+
+To create a local copy of the build and check whether it works as expected,
+we can do the following: 
 ````
-python setup.py build_py
-python setup.py bdist_wheel 
+python3 setup.py build_py
+python3 setup.py bdist_wheel 
 pip install dist/mpc_orb-0.2.1-py3-none-any.whl --force-reinstall
-
+pytest -v tests 
 ````
+where the final command runs the various unit tests.
+If the build & dist-install (above) worked, then the unit-tests should pass. 
+NB: The unit-tests require JSON files to exist within the `../site-packages/mpc_orb/sample_json/` directory.
+As such, this helps to check both that the `sample_json` was copied into the `build` directory, 
+and that this was subsequently installed. 
 
 ## Pushing to PyPI
 

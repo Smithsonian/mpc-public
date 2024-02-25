@@ -46,4 +46,4 @@ pip install mpc_orb
 
 ## Developers 
 
-Some information for developers can be found in the [mpc-public/DEVELOPERS.md](../DEVELOPERS.md) file.
+Some information for developers can be found in the [DEVELOPERS.md](DEVELOPERS.md) file.
