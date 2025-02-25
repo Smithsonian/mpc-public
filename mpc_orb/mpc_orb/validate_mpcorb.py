@@ -10,14 +10,13 @@ MJP
 # Standdard imports
 # -----------------------
 import json
-from jsonschema import validate
 from pathlib import Path
-import pkgutil
+from jsonschema import validate
 
 
 # local imports
 # -----------------------
-from . import interpret
+from mpc_orb import interpret
 
 
 # Validation function(s)
