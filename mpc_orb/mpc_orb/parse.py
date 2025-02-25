@@ -9,8 +9,7 @@ MJP
 """
 
 # Import third-party packages
-# -----------------------
-from pathlib import Path
+# --------------------------------
 import numpy as np
 
 
