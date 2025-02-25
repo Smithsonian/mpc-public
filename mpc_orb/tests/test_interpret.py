@@ -5,13 +5,11 @@ Test "interpret" function(s)
 # Third-party imports
 # -----------------------
 import pytest
-import os
 from pathlib import Path
 
 # Local imports
 # -----------------------
 from mpc_orb import interpret
-from mpc_orb import filepaths
 from mpc_orb import validate_mpcorb
 
 JSON_DIR = Path(__file__).parent / "jsons"
