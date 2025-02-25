@@ -23,16 +23,14 @@ def interpret(arg):
     # try to interpret input as a json-filepath
     if isinstance(arg, str) and isfile(arg):
         try:
-            with open(arg) as f:
+            with open(arg, 'r', encoding='utf-8') as f:
                 json_dict = json.load(f)
-                input_filepath = arg
         except:
             raise Exception(f"Input {arg} does not seem to be a json-file")
 
     # if its a dictionary, use that
     elif isinstance(arg, dict):
         json_dict = arg
-        input_filepath = None
 
     # no other options yet implemented
     else:
@@ -41,4 +39,4 @@ def interpret(arg):
         )
 
     # return the contents of the json file in dict form
-    return json_dict, input_filepath
+    return json_dict

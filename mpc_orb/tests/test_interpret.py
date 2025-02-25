@@ -30,11 +30,10 @@ def test_interpret_valid_json_files(valid_json_files):
     for k in valid_json_files:
         full_path = k
         # read it using interpret.interpret()
-        d, fp = interpret.interpret(full_path)
+        d = interpret.interpret(full_path)
 
         # check the results
         assert isinstance(d, dict)
-        assert fp == full_path
 
 
 @pytest.mark.parametrize(
@@ -53,10 +52,9 @@ def test_interpret_invalid_json_files(invalid_json_files):
     for k in invalid_json_files:
         full_path = k
         # read it using interpret.interpret()
-        d, fp = interpret.interpret(full_path)
+        d = interpret.interpret(full_path)
 
         assert isinstance(d, dict)
-        assert fp == full_path
 
 
 @pytest.mark.xfail
@@ -69,7 +67,7 @@ def test_interpret_arbitrary_string():
     filepath = "bjhadfkbadkjfnkwdnflmdnf.txt"
 
     # read it using interpret.interpret()
-    d, fp = interpret.interpret(filepath)
+    d = interpret.interpret(filepath)
 
 
 def test_interpret_input_dictionary():
@@ -82,9 +80,8 @@ def test_interpret_input_dictionary():
     d_in = validate_mpcorb.load_schema()
 
     # "read" d using interpret.interpret()
-    d_out, fp = interpret.interpret(d_in)
+    d_out = interpret.interpret(d_in)
 
     # check the results
     assert isinstance(d_out, dict)
     assert d_out == d_in
-    assert fp is None

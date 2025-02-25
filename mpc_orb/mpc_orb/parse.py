@@ -11,12 +11,11 @@ MJP
 # Import third-party packages
 # -----------------------
 import numpy as np
+from pathlib import Path
 
 # local imports
 # -----------------------
-from . import interpret
-from . import validate_mpcorb
-from . import filepaths
+from mpc_orb import interpret, validate_mpcorb
 
 
 # Class to parse JSONs
@@ -26,6 +25,8 @@ class MPCORB:
 
     def __init__(self, arg=None):
         self.schema_json = None
+        self.schema_dir = Path(__file__).parent / "schema_json"
+        self.schema_latest = self.schema_dir / "mpcorb_schema_latest.json"
 
         """ If an argument is supplied at initiation, go ahead and parse ( & validate ) """
         if arg is not None:
@@ -89,7 +90,7 @@ class MPCORB:
             }
 
         if variable_name == "schema_json":
-            return {variable_name: {"filepath": filepaths.schema_relative_filepath}}
+            return {variable_name: {"filepath": self.schema_latest}}
 
         # (ii) If variable_name is one of the defined-schema variables
         if variable_name in self.schema_json["$defs"]:
@@ -217,27 +218,3 @@ class COORD:
         for k in self.__dict__["element_dict"]:
             self.__dict__[k] = self.__dict__["element_dict"][k]
 
-    '''
-    *** TOO CLEVER : NOT SURE IF USEFUL ***
-    def _recursive(self,k,v):
-        """
-        Add all levels of supplied json-dict data as class attributes
-        E.g. if json_dict contains
-        { ... , key1: { key2:{ key5:True, key6:False }, key3:[], key4:None}, ... }
-        then all keys 1-6 will be available as attributes, with ...
-        ... key1 & key2 having associated dictionary ,
-        ... key3 having an associated list value,
-        ... key4, key5 & key6 having single (non-iterable) values
-
-        NB: Doing this requires unique "keys" across all dictionaries
-
-        """
-
-        # Add this attribute to the instance
-        self.__dict__[k]=v
-
-        # If dict, then descend
-        if isinstance(v, dict):
-            for k,_ in v.items():
-                self._recursive(k,_)
-    '''

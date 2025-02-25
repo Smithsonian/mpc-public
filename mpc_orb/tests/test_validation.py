@@ -42,7 +42,7 @@ def test_validation_json_files(valid_json_files):
         [f"{JSON_DIR}/fail_mpcorb/2012HN13_mpcorb.json"],
     ],
 )
-def test_validation_single_json_fail(invalid_json_files):
+def test_validation_json_fail(invalid_json_files):
     """Test that invalid json-files fail validation"""
     for k in invalid_json_files:
         with open(k, "r", encoding="utf-8") as f:
