@@ -9,7 +9,6 @@ MJP
 
 # standard imports
 # -----------------------
-import os
 from pathlib import Path
 
 # local imports
