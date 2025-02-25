@@ -24,8 +24,7 @@ dependencies = [
 test = [ "pytest"]
 
 [project.scripts]
-fetchorb = "mpc_orbits.bin.fetchorb:main"
-updatempcorb = "mpc_orbits.bin.update_mpc_orb:main"
+demo = "mpc_orb.bin.demo:demo"
 
 [tool.pytest.ini_options]
 log_cli = true

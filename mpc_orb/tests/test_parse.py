@@ -3,15 +3,12 @@ Test parsing class/functions
 """
 # Standard imports
 # -----------------------
-import pytest
-from os.path import join, dirname, abspath
 import pkgutil
 import json
 
 # Local imports
 # -----------------------
 from mpc_orb import MPCORB, COORD
-from mpc_orb import filepaths
 from . import filepaths_for_testing
 
 

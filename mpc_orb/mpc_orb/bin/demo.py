@@ -10,12 +10,16 @@ MJP
 # standard imports
 # -----------------------
 import os
+from pathlib import Path
 
 # local imports
 # -----------------------
-from mpc_orb.parse import MPCORB, COORD
+from mpc_orb.parse import MPCORB
+
+DEMO_DIR = Path(__file__).parent.parent / "demo_json"
 
 def tprint(lft,rght,width=20):
+    """ Print a left-justified string followed by a right-justified string """
     print(f'\t{lft:<{width}}:\t{rght}')
 
 def demo():
@@ -34,13 +38,13 @@ def demo():
     
     """
     # Define a filepath to an example json file provided in the package
-    demo_filepath = os.path.join( os.path.dirname(os.path.abspath(__file__)), 'demo_json/2012HN13_mpcorb_yarkovski.json')
+    demo_filepath = f'{DEMO_DIR}/2012HN13_mpcorb_yarkovsky.json'
     print(f'\nAccessing a sample json file:\n\t{demo_filepath}')
 
     # Instantiate an MPCORB object & use it to parse the above json file
     # & Demonstrate the available variables
     M = MPCORB(demo_filepath)
-    print(f'\nWe instantiated an MPCORB object using the sample json')
+    print('\nWe instantiated an MPCORB object using the sample json')
     tprint('code','MPCORB(demo_filepath)')
     tprint('type(M)','type(M)')
 

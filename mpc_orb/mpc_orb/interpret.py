@@ -16,28 +16,29 @@ def interpret(arg):
     I.e. looks to see whether its a filepath, a dictionary
 
     arg: str or dict
-    
+
     returns: dict & input_filepath (if filepath supplied)
     """
-    
+
     # try to interpret input as a json-filepath
     if isinstance(arg, str) and isfile(arg):
         try:
             with open(arg) as f:
-                json_dict       = json.load(f)
-                input_filepath  = arg
+                json_dict = json.load(f)
+                input_filepath = arg
         except:
-            raise  Exception(f"Input {arg} does not seem to be a json-file")
-    
+            raise Exception(f"Input {arg} does not seem to be a json-file")
+
     # if its a dictionary, use that
     elif isinstance(arg, dict):
-        json_dict       = arg
-        input_filepath  = None
-        
+        json_dict = arg
+        input_filepath = None
+
     # no other options yet implemented
     else:
-        raise  Exception(f"Input {arg}\nis of type {type(arg)} and cannot be interpreted as json file/dict")
-    
-    # return the contents of the json file in dict form
-    return json_dict,input_filepath
+        raise Exception(
+            f"Input {arg}\nis of type {type(arg)} and cannot be interpreted as json file/dict"
+        )
 
+    # return the contents of the json file in dict form
+    return json_dict, input_filepath
