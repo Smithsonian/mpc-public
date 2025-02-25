@@ -19,6 +19,20 @@ from jsonschema import validate
 from mpc_orb import interpret
 
 
+def load_schema(version=None):
+    """ Load schema file """
+    # If not version, then latest is assumed
+    if version is None:
+        version = "latest"
+        
+    schema_dir = Path(__file__).parent / "schema_json"
+    schema_file = schema_dir / f"mpcorb_schema_v{version}.json"
+
+    with open(schema_file, "r", encoding="utf-8") as f:
+        schema = json.load(f)
+        
+    return schema 
+
 # Validation function(s)
 # -----------------------
 def validate_mpcorb(arg):
@@ -41,12 +55,7 @@ def validate_mpcorb(arg):
     if version is None:
         raise ValueError("No version number found in the input json")
 
-    # load the schema
-    schema_dir = Path(__file__).parent / "schema_json"
-    schema_file = schema_dir / f"mpcorb_schema_v{version}.json"
-
-    with open(schema_file, "r", encoding="utf-8") as f:
-        schema = json.load(f)
+    schema = load_schema(version)
 
     # validate
     # NB # If no exception is raised by validate(), the instance is valid.

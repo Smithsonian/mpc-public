@@ -10,8 +10,9 @@ MJP
 
 # Import third-party packages
 # -----------------------
-import numpy as np
 from pathlib import Path
+import numpy as np
+
 
 # local imports
 # -----------------------
@@ -25,8 +26,6 @@ class MPCORB:
 
     def __init__(self, arg=None):
         self.schema_json = None
-        self.schema_dir = Path(__file__).parent / "schema_json"
-        self.schema_latest = self.schema_dir / "mpcorb_schema_latest.json"
 
         """ If an argument is supplied at initiation, go ahead and parse ( & validate ) """
         if arg is not None:
@@ -47,7 +46,7 @@ class MPCORB:
 
         """
         # interpret argument to allow filepaths as well as dicts as input)
-        json_dict, input_filepath = interpret.interpret(arg)
+        json_dict = interpret.interpret(arg)
 
         # validate supplied json-dict against schema
         validate_mpcorb.validate_mpcorb(json_dict)
@@ -55,7 +54,7 @@ class MPCORB:
         # provide useful quantities as attributes
         self._add_various_attributes(json_dict)
 
-    def describe(self, variable_name):
+    def describe(self, variable_name, version=None):
         """
         Parse an individual variable/attribute of the MPCORB object
 
@@ -71,7 +70,7 @@ class MPCORB:
 
         """
         if self.schema_json is None:
-            self.schema_json = validate_mpcorb.load_schema()
+            self.schema_json = validate_mpcorb.load_schema(version)
 
         # Find the appropriate variable name to use to search for a description ...
         # (i) If variable_name is a top-level property such as 'designation_data', 'COM', etc

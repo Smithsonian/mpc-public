@@ -156,10 +156,12 @@ def test_describe_function(valid_json_files):
 
     for k in valid_json_files:
         data_dict = load_json(k)
+        version = data_dict["software_data"]["mpcorb_version"]
         M = MPCORB(data_dict)
 
-        for key in [_ for _ in M.__dict__.keys() if _ != "schema_json"]:
-            description_dict = M.describe(key)
+        for key in [_ for _ in M.__dict__ if _ != "schema_json"]:
+            description_dict = M.describe(key, version)
+            print(description_dict)
             assert isinstance(description_dict, dict)
             assert key in description_dict
             assert isinstance(

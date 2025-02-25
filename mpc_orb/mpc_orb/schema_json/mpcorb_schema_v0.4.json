@@ -168,7 +168,7 @@
                 "mpcorb_schema_version": {
                     "description":"version of the mpcorb schema used to validate this json",
                     "type": "string",
-                    "enum": ["0.1","0.2","0.3"]
+                    "enum": ["0.1","0.2","0.3","0.4"]
                 },
                 "mpcorb_schema_sha256": {
                     "description":"sha256 hash of the mpcorb schema used to create this json",
