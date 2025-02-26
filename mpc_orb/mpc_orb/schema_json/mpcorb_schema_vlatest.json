@@ -75,7 +75,7 @@
                         "node": { "$ref": "#/$defs/cometary_node" },
                         "argperi": { "$ref": "#/$defs/cometary_argperi" },
                         "peri_time": { "$ref": "#/$defs/cometary_peri_time" },
-                        "yarkovsky": { "$ref": "#/$defs/yarkovski_coeff" },
+                        "yarkovsky": { "$ref": "#/$defs/yarkovsky_coeff" },
                         "srp": { "$ref": "#/$defs/srp_coeff" },
                         "A1": { "$ref": "#/$defs/A123_coeff" },
                         "A2": { "$ref": "#/$defs/A123_coeff" },

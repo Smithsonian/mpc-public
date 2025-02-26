@@ -4,7 +4,6 @@ Test parsing class/functions
 
 # Standard imports
 # -----------------------
-import pkgutil
 import json
 from pathlib import Path
 import pytest
@@ -33,7 +32,8 @@ def test_instantiate_mpcorb():
 @pytest.mark.parametrize(
     "valid_json_files",
     [
-        [f"{JSON_DIR}/pass_mpcorb/2012HN13_mpcorb_yarkovsky.json"],
+        [f"{JSON_DIR}/pass_mpcorb/2012HN13_mpcorb_yarkovsky.json",
+         f"{JSON_DIR}/pass_mpcorb/2062_mpcorb_v05.json"],
     ],
 )
 def test_parsing_mpcorb(valid_json_files):
@@ -51,7 +51,8 @@ def test_parsing_mpcorb(valid_json_files):
 @pytest.mark.parametrize(
     "valid_json_files",
     [
-        [f"{JSON_DIR}/pass_mpcorb/2012HN13_mpcorb_yarkovsky.json"],
+        [f"{JSON_DIR}/pass_mpcorb/2012HN13_mpcorb_yarkovsky.json",
+         f"{JSON_DIR}/pass_mpcorb/2062_mpcorb_v05.json"],
     ],
 )
 def test_parse_mpcorb_basic_attributes(valid_json_files):
@@ -81,7 +82,8 @@ def test_parse_mpcorb_basic_attributes(valid_json_files):
 @pytest.mark.parametrize(
     "valid_json_files",
     [
-        [f"{JSON_DIR}/pass_mpcorb/2012HN13_mpcorb_yarkovsky.json"],
+        [f"{JSON_DIR}/pass_mpcorb/2012HN13_mpcorb_yarkovsky.json",
+         f"{JSON_DIR}/pass_mpcorb/2062_mpcorb_v05.json"],
     ],
 )
 def test_parse_car_com(valid_json_files):
@@ -146,7 +148,8 @@ def test_parse_car_com(valid_json_files):
 @pytest.mark.parametrize(
     "valid_json_files",
     [
-        [f"{JSON_DIR}/pass_mpcorb/2012HN13_mpcorb_yarkovsky.json"],
+        [f"{JSON_DIR}/pass_mpcorb/2012HN13_mpcorb_yarkovsky.json",
+         f"{JSON_DIR}/pass_mpcorb/2062_mpcorb_v05.json"],
     ],
 )
 def test_describe_function(valid_json_files):
@@ -161,7 +164,6 @@ def test_describe_function(valid_json_files):
 
         for key in [_ for _ in M.__dict__ if _ != "schema_json"]:
             description_dict = M.describe(key, version)
-            print(description_dict)
             assert isinstance(description_dict, dict)
             assert key in description_dict
             assert isinstance(

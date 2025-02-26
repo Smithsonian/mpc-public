@@ -18,7 +18,8 @@ JSON_DIR = Path(__file__).parent / "jsons"
 @pytest.mark.parametrize(
     "valid_json_files",
     [
-        [f"{JSON_DIR}/pass_mpcorb/2012HN13_mpcorb_yarkovsky.json"],
+        [f"{JSON_DIR}/pass_mpcorb/2012HN13_mpcorb_yarkovsky.json",
+         f"{JSON_DIR}/pass_mpcorb/2062_mpcorb_v05.json"],
     ],
 )
 def test_interpret_valid_json_files(valid_json_files):

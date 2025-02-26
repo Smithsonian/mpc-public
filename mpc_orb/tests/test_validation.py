@@ -20,10 +20,14 @@ def test_schema():
     """Test that the *load_schema* function works ..."""
     assert validate_mpcorb.load_schema(), "could not open schema"
 
+
 @pytest.mark.parametrize(
     "valid_json_files",
     [
-        [f"{JSON_DIR}/pass_mpcorb/2012HN13_mpcorb_yarkovsky.json"],
+        [
+            f"{JSON_DIR}/pass_mpcorb/2012HN13_mpcorb_yarkovsky.json",
+            f"{JSON_DIR}/pass_mpcorb/2062_mpcorb_v05.json",
+        ],
     ],
 )
 def test_validation_json_files(valid_json_files):
@@ -49,4 +53,3 @@ def test_validation_json_fail(invalid_json_files):
             data_dict = json.load(f)
         with pytest.raises(Exception):
             validate_mpcorb.validate_mpcorb(data_dict)
-
