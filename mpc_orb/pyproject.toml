@@ -1,0 +1,43 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mpc_orb"
+version = "0.2.1"
+requires-python = ">= 3.6"
+author = "Minor Planet Center"
+author_email = "mpc@cfa.harvard.edu"
+description = "MPC package for orbit dissemination"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent"
+]
+dependencies = [
+    "numpy<2.0.0",
+    "jsonschema",
+    "json5",
+]
+
+[project.optional-dependencies]
+test = [ "pytest"]
+
+[project.scripts]
+demo = "mpc_orb.bin.demo:demo"
+
+[tool.pytest.ini_options]
+log_cli = true
+log_cli_level = "ERROR"
+log_cli_format = "%(asctime)s [%(levelname)8s] %(message)s (%(filename)s:%(lineno)s)"
+log_cli_date_format = "%Y-%m-%d %H:%M:%S"
+
+[tool.hatch.build.targets.sdist]
+include = ["mpc_orb", "schema_json/*.json", "demo_json/*.json"]
+
+[tool.hatch.build.targets.wheel]
+include = ["mpc_orb", "schema_json/*.json", "demo_json/*.json"]
+
+[project.urls]
+Homepage = "https://github.com/Smithsonian/mpc-public/mpc_orb"
+Documentation = "https://minorplanetcenter.net/mpcops/documentation/mpc-orb-json/"

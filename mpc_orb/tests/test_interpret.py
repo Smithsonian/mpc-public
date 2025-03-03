@@ -1,83 +1,88 @@
 """
 Test "interpret" function(s)
 """
+
 # Third-party imports
 # -----------------------
 import pytest
-import os
+from pathlib import Path
 
 # Local imports
 # -----------------------
 from mpc_orb import interpret
-from mpc_orb import filepaths
 from mpc_orb import validate_mpcorb
-from . import filepaths_for_testing
 
-# Tests
-# -----------------------
+JSON_DIR = Path(__file__).parent / "jsons"
 
-def test_interpret_A(  ):
-    '''
-    Test that an input json filepath is correctly read ...
-    '''
-    
-    # use the schema as an example of a valid json file
-    working_dir = os.path.dirname(os.path.abspath(__file__))
-    
+
+@pytest.mark.parametrize(
+    "valid_json_files",
+    [
+        [f"{JSON_DIR}/pass_mpcorb/2012HN13_mpcorb_yarkovsky.json",
+         f"{JSON_DIR}/pass_mpcorb/2062_mpcorb_v05.json"],
+    ],
+)
+def test_interpret_valid_json_files(valid_json_files):
+    """
+    Test that an input json filepath is correctly read
+    """
+
     # Loop over the mpcorb files that are expect to "pass"
-    valid_jsons = [k for k in filepaths_for_testing.__dict__ if "__" not in k and "pass" in k]
-    assert valid_jsons
-    for k in valid_jsons:
-        full_path = os.path.join(working_dir, filepaths_for_testing.__dict__[k])
+    for k in valid_json_files:
+        full_path = k
         # read it using interpret.interpret()
-        d,fp = interpret.interpret(full_path)
-    
+        d = interpret.interpret(full_path)
+
         # check the results
         assert isinstance(d, dict)
-        assert fp == full_path
 
 
+@pytest.mark.parametrize(
+    "invalid_json_files",
+    [
+        [f"{JSON_DIR}/fail_mpcorb/2012HN13_mpcorb.json"],
+    ],
+)
 @pytest.mark.xfail
-def test_interpret_B(  ):
-    '''
+def test_interpret_invalid_json_files(invalid_json_files):
+    """
     Test that an non-JSON file raises an exception
-    '''
-    
-    # use the filepaths python file as an example of a NON-JSON file
-    filepath = filepaths.__file__
+    """
 
-    # read it using interpret.interpret()
-    d,fp = interpret.interpret(filepath)
-    
+    # Loop over the mpcorb files that are expect to "fail"
+    for k in invalid_json_files:
+        full_path = k
+        # read it using interpret.interpret()
+        d = interpret.interpret(full_path)
 
-    
+        assert isinstance(d, dict)
+
+
 @pytest.mark.xfail
-def test_interpret_C(  ):
-    '''
+def test_interpret_arbitrary_string():
+    """
     Test that an arbitrary string (that is not a file) raises an exception
-    '''
-    
+    """
+
     # string (this is NOT a file that exists)
     filepath = "bjhadfkbadkjfnkwdnflmdnf.txt"
 
     # read it using interpret.interpret()
-    d,fp = interpret.interpret(filepath)
-    
+    d = interpret.interpret(filepath)
 
-    
-def test_interpret_D(  ):
-    '''
+
+def test_interpret_input_dictionary():
+    """
     Test that an input dictionary is correctly interpreted ...
-    '''
-    
+    """
+
     # use the schema as an example of a valid json file
     # read it using validate_mpcorb.load_json
     d_in = validate_mpcorb.load_schema()
-    
+
     # "read" d using interpret.interpret()
-    d_out,fp = interpret.interpret(d_in)
+    d_out = interpret.interpret(d_in)
 
     # check the results
     assert isinstance(d_out, dict)
     assert d_out == d_in
-    assert fp is None

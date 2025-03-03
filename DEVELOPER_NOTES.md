@@ -1,11 +1,21 @@
 # mpc-public: Developer Notes
 
+## Developing locally 
+
+Before pushing the new version to `PyPI` you may want to develop and test the new code on your local machine.
+```bash
+# Create a new conda environment
+conda create -n mpc-orb-public python=3.11
+conda activate mpc-orb-public
+cd mpc_orb
+python3 -m pip install -e .'[test]'
+```
+
 ## Pushing to PyPI
 
-### Release Version: setup.py
+### Release Version: pyproject.toml
 
-You probably need to increment the *version* in the repo's setup.py script.
- - E.g. "*mpc_orb/setup.py*"
+You need to increment the *version* in `pyproject.toml`.
  - This controls the version number uploaded and made available on PyPI
  - If you don't increment the version (e.g. from 'v0.0.5' to 'v0.0.6') the upload tp PyPI will likely fail
 

@@ -11,7 +11,7 @@ Documentation and code related to the *mpc_orb.json* format.
 
 The MPC currently populates mpc_orb.json files using data from the *orbfit* package, but we emphasize that the mpc_orb.json format is intended for the generic exchange of orbit data from *any* source.  
 
-As of May 2023, the latest version of the defining schema is version 0.4
+As of February 2025, the latest version of the defining schema is version 0.5
  - While the schema versions are numbered < 1, the format should be considered experimental/developmental/beta/WIP.
 
 This repository currently contains code and documentation related to: 

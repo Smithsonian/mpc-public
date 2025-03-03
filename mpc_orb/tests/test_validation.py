@@ -4,65 +4,52 @@ Test validation schema
 
 # Standard imports
 # -----------------------
-import pytest
-import os
-import sys
-import pkgutil
 import json
+from pathlib import Path
+import pytest
+
 
 # Local imports
 # -----------------------
 from mpc_orb import validate_mpcorb
-from mpc_orb import filepaths
-from . import filepaths_for_testing
+
+JSON_DIR = Path(__file__).parent / "jsons"
 
 
-def load_package_json(filepath_relative_to_package):
-    ''' use pkgutil to get resource & return as dict '''
-    raw_bytes = pkgutil.get_data(__package__ , filepath_relative_to_package)
-    return json.loads(raw_bytes.decode('utf-8'))
-    
-
-# Lower level tests
-# -----------------------
 def test_schema():
-    ''' Test that the *load_schema* function works ... '''
-    assert validate_mpcorb.load_schema(), \
-        f'could not open schema'
-
-def test_validation_A():
-    ''' Test that a single, valid json-file successfully validates'''
-    data_dict = load_package_json(filepaths_for_testing.test_pass_yarkovski)
-    assert validate_mpcorb.validate_mpcorb( data_dict ), \
-        f'could not validate data_dict from {filepaths_for_testing.test_pass_yarkovski}'
+    """Test that the *load_schema* function works ..."""
+    assert validate_mpcorb.load_schema(), "could not open schema"
 
 
+@pytest.mark.parametrize(
+    "valid_json_files",
+    [
+        [
+            f"{JSON_DIR}/pass_mpcorb/2012HN13_mpcorb_yarkovsky.json",
+            f"{JSON_DIR}/pass_mpcorb/2062_mpcorb_v05.json",
+        ],
+    ],
+)
+def test_validation_json_files(valid_json_files):
+    """Test that valid json-files successfully validate"""
+    for k in valid_json_files:
+        with open(k, "r", encoding="utf-8") as f:
+            data_dict = json.load(f)
+        assert validate_mpcorb.validate_mpcorb(
+            data_dict
+        ), f"could not validate data_dict from {k}"
 
-# High level tests
-# -----------------------
-def test_validation_B(  ):
-    '''
-    Test that all valid JSON-files in the 'test_pass_mpcorb' directory pass validation as expected
-    '''
-  
-    # Get all of the json filenames defined in filepaths_for_testing that have '...pass...' in the name
-    # NB : At the time of writing there was only one filepath ... 
-    valid_jsons = [k for k in filepaths_for_testing.__dict__ if "__" not in k and "pass" in k]
-    assert valid_jsons
-    for k in valid_jsons:
-        data_dict = load_package_json(filepaths_for_testing.__dict__[k])
-        assert validate_mpcorb.validate_mpcorb( data_dict )
 
-
-
-@pytest.mark.xfail
-def test_validation_C(  ):
-    '''
-    Test that all invalid JSON-files in the 'test_fail_mpcorb' directory FAIL validation as expected
-    '''
-    invalid_jsons = [k for k in filepaths_for_testing.__dict__ if "__" not in k and "fail" in k]
-    assert invalid_jsons
-    for k in invalid_jsons:
-        data_dict = load_package_json(filepaths_for_testing.__dict__[k])
-        assert validate_mpcorb.validate_mpcorb( data_dict )
-
+@pytest.mark.parametrize(
+    "invalid_json_files",
+    [
+        [f"{JSON_DIR}/fail_mpcorb/2012HN13_mpcorb.json"],
+    ],
+)
+def test_validation_json_fail(invalid_json_files):
+    """Test that invalid json-files fail validation"""
+    for k in invalid_json_files:
+        with open(k, "r", encoding="utf-8") as f:
+            data_dict = json.load(f)
+        with pytest.raises(Exception):
+            validate_mpcorb.validate_mpcorb(data_dict)
