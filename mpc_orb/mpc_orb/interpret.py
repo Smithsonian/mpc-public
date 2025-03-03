@@ -28,7 +28,7 @@ def interpret(arg):
         except:
             raise Exception(f"Input {arg} does not seem to be a json-file")
 
-    # if its a dictionary, use that
+    # if it's a dictionary, use that
     elif isinstance(arg, dict):
         json_dict = arg
 
