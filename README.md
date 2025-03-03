@@ -11,6 +11,7 @@ The MPC intends to add additional components over the coming months.
 
 ### mpc_orb
 Last Update: 2025-02-25
+ - Introduction of a new version: 0.5
  - Documentation and code related to a standardized format for the exchange of data on the *best-fit orbit* for solar-system bodies. 
  - The format uses JSON files for the exchange of data, and is refered to as the *mpc_orb.json* format.
  - Documentation is also available on the (https://minorplanetcenter.net/mpcops/documentation/mpc-orb-json/)[MPC Documentation page]
