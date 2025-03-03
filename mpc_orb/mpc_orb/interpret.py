@@ -13,7 +13,7 @@ from os.path import isfile
 def interpret(arg):
     """
     convenience func to interpret input arg as some kind of json-related input
-    I.e. looks to see whether its a filepath, a dictionary
+    I.e. looks to see whether it is a filepath or a dictionary
 
     arg: str or dict
 
