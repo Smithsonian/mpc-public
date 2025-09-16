@@ -6,7 +6,6 @@
     "required": [
         "CAR",
         "COM",
-        "KEP",
         "designation_data",
         "orbit_fit_statistics",
         "non_grav_booleans",
@@ -114,7 +113,7 @@
                     "description" : "Description of allowed fitted quantities within the cometary coordinate specification system. ",
                     "type": "object",
                     "properties": {
-                        "a": { "$ref": "#/$defs/keplerian_q" },
+                        "a": { "$ref": "#/$defs/keplerian_a" },
                         "e": { "$ref": "#/$defs/keplerian_e" },
                         "i": { "$ref": "#/$defs/keplerian_i" },
                         "node": { "$ref": "#/$defs/keplerian_node" },
@@ -213,7 +212,7 @@
                 "mpcorb_schema_version": {
                     "description":"version of the mpcorb schema used to validate this json",
                     "type": "string",
-                    "enum": ["0.1","0.2","0.3","0.4","0.5"]
+                    "enum": ["0.1","0.2","0.3","0.4","0.5","0.6"]
                 },
                 "mpcorb_schema_sha256": {
                     "description":"sha256 hash of the mpcorb schema used to create this json",
@@ -898,6 +897,72 @@
                     "description": "Physical Units associated with Cometary Time from Pericenter Passage",
                     "type": "string",
                     "enum": ["days"]
+                }
+            }
+        },
+        "keplerian_a" : {
+            "type" : "object",
+            "description":"Keplerian semi-major axis",
+            "properties": {
+                "unit"  : {
+                    "description": "Physical Units associated with Keplerian Semi-major Axis",
+                    "type": "string",
+                    "enum": ["au"]
+                }
+            }
+        },
+        "keplerian_e" : {
+            "type" : "object",
+            "description":"Keplerian Eccentricity",
+            "properties": {
+                "unit"  : {
+                    "description": "Physical Units associated with Keplerian Eccentricity",
+                    "type": "string",
+                    "enum": ["null"]
+                }
+            }
+        },
+        "keplerian_i" : {
+            "type" : "object",
+            "description":"Keplerian Inclination",
+            "properties": {
+                "unit"  : {
+                    "description": "Physical Units associated with Keplerian Inclination",
+                    "type": "string",
+                    "enum": ["degrees"]
+                }
+            }
+        },
+        "keplerian_node" : {
+            "type" : "object",
+            "description":"Keplerian Eccentricity",
+            "properties": {
+                "unit"  : {
+                    "description": "Physical Units associated with Keplerian Longitude of Ascending Node",
+                    "type": "string",
+                    "enum": ["degrees"]
+                }
+            }
+        },
+        "keplerian_argperi" : {
+            "type" : "object",
+            "description":"Keplerian Argument of Pericenter",
+            "properties": {
+                "unit"  : {
+                    "description": "Physical Units associated with Keplerian Argument of Pericenter",
+                    "type": "string",
+                    "enum": ["degrees"]
+                }
+            }
+        },
+        "keplerian_mean_anomaly" : {
+            "type" : "object",
+            "description":"Keplerian Mean Anomaly",
+            "properties": {
+                "unit"  : {
+                    "description": "Physical Units associated with Keplerian Mean Anomaly",
+                    "type": "string",
+                    "enum": ["degrees"]
                 }
             }
         },
