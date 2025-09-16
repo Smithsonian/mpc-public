@@ -939,7 +939,7 @@
         },
         "keplerian_node" : {
             "type" : "object",
-            "description":"Keplerian Eccentricity",
+            "description":"Keplerian Longitude of Ascending Node",
             "properties": {
                 "unit"  : {
                     "description": "Physical Units associated with Keplerian Longitude of Ascending Node",

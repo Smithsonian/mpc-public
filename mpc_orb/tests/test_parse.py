@@ -211,6 +211,57 @@ def test_parse_kep(valid_json_files):
         # Double-check that the individual attributes (e.g. "x" or "e") are accessible directly from the MPCORB object, M
         for name in ["a", "e", "i", "node", "argperi", "mean_anomaly"]:
             assert hasattr(M, name)
+            
+@pytest.mark.parametrize(
+    "valid_json_files",
+        [[f"{JSON_DIR}/pass_mpcorb/2062_mpcorb_v05.json",
+        f"{JSON_DIR}/pass_mpcorb/2062_mpcorb_v06_KEP.json"]],
+)
+def test_parse_orbit_fit_statistics(valid_json_files):
+    """
+    Test the orbital period shows up in the orbit_fit_statistics
+    """
+
+    for k in valid_json_files:
+        data_dict = load_json(k)
+        M = MPCORB(data_dict)
+        
+        for I, expected_names in zip(
+            [M.orbit_fit_statistics],
+            [
+                [
+                    "nopp",
+                    "score1",
+                    "score2",
+                    "U_param",
+                    "numparams",
+                    "nobs_radar",
+                    "nobs_total",
+                    "snr_below_1",
+                    "snr_below_3",
+                    "nobs_optical",
+                    "orbit_quality",
+                    "arc_length_sel",
+                    "nobs_radar_sel",
+                    "nobs_total_sel",
+                    "normalized_RMS",
+                    "arc_length_total",
+                    "nobs_optical_sel",
+                    "not_normalized_RMS",
+                    "sig_to_noise_ratio",
+                ],
+            ],
+        ):
+            # Check that "I" has the expected individual keys
+            for name in expected_names:
+                assert name in I
+                
+        # Check that the orbital_period is present for versions >= 0.6
+        version = data_dict["software_data"]["mpcorb_version"]
+        if float(version) >= 0.6:
+            assert "orbital_period" in I
+            assert I["orbital_period"] is not None
+            assert isinstance(I["orbital_period"], float)
 
 
 @pytest.mark.parametrize(
