@@ -293,11 +293,11 @@
                     "type": "number"
                 },
                 "score1"              : {
-                    "description": " 1st score for numbering ...",
+                    "description": " 1st score for numbering",
                     "type": "number"
                 },
                 "score2"              : {
-                    "description": " 2nd score for numbering ...",
+                    "description": " 2nd score for numbering",
                     "type": "number"
                 },
                 "orbit_quality"      : {
@@ -351,6 +351,10 @@
                 "numparams": {
                     "description": "Number of parameters used for fit: E.g. 6-orbital params plus N-non_grav params",
                     "type": "integer"
+                },
+                "orbital_period": {
+                    "description": "Orbital period in days (null for e>=1)",
+                    "type": "number"
                 }
             }
         },
