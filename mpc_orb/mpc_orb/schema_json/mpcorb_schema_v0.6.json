@@ -6,7 +6,6 @@
     "required": [
         "CAR",
         "COM",
-        "KEP",
         "designation_data",
         "orbit_fit_statistics",
         "non_grav_booleans",
