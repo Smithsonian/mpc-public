@@ -354,7 +354,7 @@
                 },
                 "orbital_period": {
                     "description": "Orbital period in days (null for e>=1)",
-                    "type": "number"
+                    "type": ["null", "number"]
                 }
             }
         },
