@@ -14,6 +14,7 @@ from mpc_orb.parse import MPCORB, COORD
 
 JSON_DIR = Path(__file__).parent / "jsons"
 
+
 def load_json(json_file):
     """Read the file and return the json as a dictionary"""
     with open(json_file, "r", encoding="utf-8") as f:
@@ -29,16 +30,21 @@ def test_instantiate_mpcorb():
     M = MPCORB()
     assert isinstance(M, MPCORB)
 
+
 @pytest.mark.parametrize(
     "valid_json_files",
     [
-        [f"{JSON_DIR}/pass_mpcorb/2012HN13_mpcorb_yarkovsky.json",
-         f"{JSON_DIR}/pass_mpcorb/2062_mpcorb_v05.json"],
+        [
+            f"{JSON_DIR}/pass_mpcorb/2012HN13_mpcorb_yarkovsky.json",
+            f"{JSON_DIR}/pass_mpcorb/2062_mpcorb_v05.json",
+            f"{JSON_DIR}/pass_mpcorb/2062_mpcorb_v06_noKEP.json",
+            f"{JSON_DIR}/pass_mpcorb/2062_mpcorb_v06_KEP.json",
+        ],
     ],
 )
 def test_parsing_mpcorb(valid_json_files):
     """
-    Test the parsing of mpcorb-jsons 
+    Test the parsing of mpcorb-jsons
     Instantiate with file
     """
 
@@ -51,13 +57,17 @@ def test_parsing_mpcorb(valid_json_files):
 @pytest.mark.parametrize(
     "valid_json_files",
     [
-        [f"{JSON_DIR}/pass_mpcorb/2012HN13_mpcorb_yarkovsky.json",
-         f"{JSON_DIR}/pass_mpcorb/2062_mpcorb_v05.json"],
+        [
+            f"{JSON_DIR}/pass_mpcorb/2012HN13_mpcorb_yarkovsky.json",
+            f"{JSON_DIR}/pass_mpcorb/2062_mpcorb_v05.json",
+            f"{JSON_DIR}/pass_mpcorb/2062_mpcorb_v06_noKEP.json",
+            f"{JSON_DIR}/pass_mpcorb/2062_mpcorb_v06_KEP.json",
+        ],
     ],
 )
 def test_parse_mpcorb_basic_attributes(valid_json_files):
     """
-    Test the parsing of mpcorb-jsons 
+    Test the parsing of mpcorb-jsons
     Check basic attributes
     """
 
@@ -79,16 +89,20 @@ def test_parse_mpcorb_basic_attributes(valid_json_files):
         ]:
             assert hasattr(M, k)
 
+
 @pytest.mark.parametrize(
     "valid_json_files",
     [
-        [f"{JSON_DIR}/pass_mpcorb/2012HN13_mpcorb_yarkovsky.json",
-         f"{JSON_DIR}/pass_mpcorb/2062_mpcorb_v05.json"],
+        [
+            f"{JSON_DIR}/pass_mpcorb/2012HN13_mpcorb_yarkovsky.json",
+            f"{JSON_DIR}/pass_mpcorb/2062_mpcorb_v05.json",
+            f"{JSON_DIR}/pass_mpcorb/2062_mpcorb_v06_noKEP.json",
+        ]
     ],
 )
 def test_parse_car_com(valid_json_files):
     """
-    Test the CAR & COM sub-classes 
+    Test the CAR & COM sub-classes
     Check element attributes
     """
 
@@ -147,9 +161,117 @@ def test_parse_car_com(valid_json_files):
 
 @pytest.mark.parametrize(
     "valid_json_files",
+    [[f"{JSON_DIR}/pass_mpcorb/2062_mpcorb_v06_KEP.json"]],
+)
+def test_parse_kep(valid_json_files):
+    """
+    Test the KEP sub-classes
+    Check element attributes
+    """
+
+    for k in valid_json_files:
+        data_dict = load_json(k)
+        M = MPCORB(data_dict)
+
+        for I, expected_names in zip(
+            [M.KEP],
+            [
+                ["a", "e", "i", "node", "argperi", "mean_anomaly"],
+            ],
+        ):
+            # Check that we have a "COORD" object
+            assert isinstance(I, COORD)
+
+            # Check that "I" has the expected "bulk" attributes ...
+            for key in [
+                "coefficient_names",
+                "coefficient_values",
+                "coefficient_uncertainties",
+                "eigenvalues",
+                "covariance",
+                "covariance_array",
+                "element_dict",
+            ]:
+                assert hasattr(I, key)
+
+            # Check that "I" has the expected individual attributes ...
+            for name in expected_names:
+                assert hasattr(I, name)
+                assert (
+                    isinstance(I.__dict__[name], dict)
+                    and "val" in I.__dict__[name]
+                    and "unc" in I.__dict__[name]
+                )
+
+            # Check that the individual attribute values are the same as the element_dict entries
+            # E.g. I.element_dict["x"] == I.x
+            for name in expected_names:
+                assert I.element_dict[name] == I.__dict__[name]
+
+        # Double-check that the individual attributes (e.g. "x" or "e") are accessible directly from the MPCORB object, M
+        for name in ["a", "e", "i", "node", "argperi", "mean_anomaly"]:
+            assert hasattr(M, name)
+            
+@pytest.mark.parametrize(
+    "valid_json_files",
+        [[f"{JSON_DIR}/pass_mpcorb/2062_mpcorb_v05.json",
+        f"{JSON_DIR}/pass_mpcorb/2062_mpcorb_v06_KEP.json"]],
+)
+def test_parse_orbit_fit_statistics(valid_json_files):
+    """
+    Test the orbital period shows up in the orbit_fit_statistics
+    """
+
+    for k in valid_json_files:
+        data_dict = load_json(k)
+        M = MPCORB(data_dict)
+        
+        for I, expected_names in zip(
+            [M.orbit_fit_statistics],
+            [
+                [
+                    "nopp",
+                    "score1",
+                    "score2",
+                    "U_param",
+                    "numparams",
+                    "nobs_radar",
+                    "nobs_total",
+                    "snr_below_1",
+                    "snr_below_3",
+                    "nobs_optical",
+                    "orbit_quality",
+                    "arc_length_sel",
+                    "nobs_radar_sel",
+                    "nobs_total_sel",
+                    "normalized_RMS",
+                    "arc_length_total",
+                    "nobs_optical_sel",
+                    "not_normalized_RMS",
+                    "sig_to_noise_ratio",
+                ],
+            ],
+        ):
+            # Check that "I" has the expected individual keys
+            for name in expected_names:
+                assert name in I
+                
+        # Check that the orbital_period is present for versions >= 0.6
+        version = data_dict["software_data"]["mpcorb_version"]
+        if float(version) >= 0.6:
+            assert "orbital_period" in I
+            assert I["orbital_period"] is not None
+            assert isinstance(I["orbital_period"], float)
+
+
+@pytest.mark.parametrize(
+    "valid_json_files",
     [
-        [f"{JSON_DIR}/pass_mpcorb/2012HN13_mpcorb_yarkovsky.json",
-         f"{JSON_DIR}/pass_mpcorb/2062_mpcorb_v05.json"],
+        [
+            f"{JSON_DIR}/pass_mpcorb/2012HN13_mpcorb_yarkovsky.json",
+            f"{JSON_DIR}/pass_mpcorb/2062_mpcorb_v05.json",
+            f"{JSON_DIR}/pass_mpcorb/2062_mpcorb_v06_KEP.json"
+        ],
     ],
 )
 def test_describe_function(valid_json_files):

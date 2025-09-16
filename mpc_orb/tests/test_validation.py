@@ -27,6 +27,7 @@ def test_schema():
         [
             f"{JSON_DIR}/pass_mpcorb/2012HN13_mpcorb_yarkovsky.json",
             f"{JSON_DIR}/pass_mpcorb/2062_mpcorb_v05.json",
+            f"{JSON_DIR}/pass_mpcorb/2062_mpcorb_v06_noKEP.json",
         ],
     ],
 )

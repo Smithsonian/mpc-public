@@ -105,6 +105,12 @@ class MPCORB:
             def_var_name = self.schema_json["properties"]["CAR"]["properties"][
                 "coefficient_specification"
             ]["properties"][variable_name]["$ref"].replace("#/$defs/", "")
+            
+        # (v) If variable_name is an attribute of KEP
+        elif variable_name in self.KEP.__dict__:
+            def_var_name = self.schema_json["properties"]["KEP"]["properties"][
+                "coefficient_specification"
+            ]["properties"][variable_name]["$ref"].replace("#/$defs/", "")
 
         # (vi) Hopefully we never see this ...
         else:
@@ -134,13 +140,17 @@ class MPCORB:
 
         # make top-level quantities available as object attributes (excluding CAR & COM)
         for k, v in json_dict.items():
-            if k not in ["COM", "CAR"]:
+            if k not in ["COM", "CAR", "KEP"]:
                 self.__dict__[k] = v
 
         # Create CAR & COM objects within MPCORB object:
         # - this ultimately allows you to evaluate M.COM.coefficient_values, etc
         for k in ["COM", "CAR"]:
             self.__dict__[k] = COORD(json_dict[k])
+
+        # If KEP data is present, make it available as an attribute
+        if "KEP" in json_dict:
+            self.__dict__["KEP"] = COORD(json_dict["KEP"])
 
         # For convenience, expose individual "elements" (E.g. "x" or "e") from COORD in MPCORB
         # E.g. MPCORB.x == MPCORB.CAR.x
@@ -149,6 +159,11 @@ class MPCORB:
         for k in ["COM", "CAR"]:
             for name in self.__dict__[k].coefficient_names:
                 self.__dict__[name] = self.__dict__[k].__dict__[name]
+
+        # Check that KEP elements are present if KEP data is present
+        if "KEP" in json_dict:
+            for name in self.__dict__["KEP"].coefficient_names:
+                self.__dict__[name] = self.__dict__["KEP"].__dict__[name]
 
         # Is there some other stuff we want to provide as convenient attributes?
         # - E.g. stats on N_Oppositions, N_Observations, etc ?
@@ -215,4 +230,3 @@ class COORD:
         """
         for k in self.__dict__["element_dict"]:
             self.__dict__[k] = self.__dict__["element_dict"][k]
-

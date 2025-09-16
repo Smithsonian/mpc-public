@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "mpc_orb"
-version = "0.2.1"
+version = "0.2.2"
 requires-python = ">= 3.6"
 author = "Minor Planet Center"
 author_email = "mpc@cfa.harvard.edu"
