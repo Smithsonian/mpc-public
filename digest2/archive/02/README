@@ -1,0 +1,253 @@
+
+Digest2 Documentation   ----- version 0.02 -----
+
+Contents
+
+1.  Program overview:  purpose, version, availability, sample run
+2.  Downloading:  source, other files
+3.  Unpacking, building, installing
+4.  Usage:  input file, command line, output, other files
+5.  Theory
+
+
+1.  Program Overview
+
+Digest2 does statistical ranging for short arc moving object
+astrometry.  It accepts astrometry in the MPC 80 character
+observation format and rates objects on the likelyhood that they are
+yet-unknown near Earth objects.
+
+Compared to the version 0.01, this version has been largely rewritten
+in Fortran 90 and has several new features:
+
+*  New algorithms, designed to give more accurate NEO scores.
+*  New config options for controlling the algorithms.
+*  New config option for setting the NEO flag threshold.
+*  A command line option to list the available config options.
+
+The program is still provided as source under an MIT-style open source
+license, and available at http://sourceforge.net/projects/statrange/.
+
+Sample run:  Say you have some unidentified observations.  For example,
+here are the discovery observations of the NEO 2005 OJ3.  (See MPEC
+2005-P07 at http://cfa-www.harvard.edu/mpec/K05/K05P07.html.)
+
+     C5O0011  C2005 07 30.88575 20 11 19.47 -11 08 07.6          19.1 R      599
+     C5O0011  C2005 07 30.89573 20 11 18.69 -11 08 08.1          19.2 R      599
+     C5O0011  C2005 07 30.90566 20 11 17.91 -11 08 08.6          19.0 R      599
+
+You put them in a file, say fmo.obs, then type "digest2 fmo.obs" and 
+get the following output:
+
+Unknown population.
+     #      Design    Score   NEO?   Elong  Elat  ElongR   ElatR  TotalR  VMag
+     1      C5O0011    99.9   NEO   -174.8   8.7  -0.315   0.056   0.320  19.4
+
+The score of 99.9 means the program is pretty sure that this is a NEO!
+
+Overall, the new algorithm in this version of the program should give
+more accurate scores than that of the previous version; however, the
+following is still valid:
+
+CAVEAT:  The NEO Score is effectively a guess and sometimes the guess
+is just plain wrong.  Lots of real NEOs spend a good part of the time
+displaying a motion easily consistent with the main belt.  During this
+time, short arc astrometry will give very low NEO scores.  Also, there
+is a range of non-NEO orbits that return very high NEO scores with
+the current code.  Use the program as one more tool to help you make
+decisions.  Don't rely on it completely or you'll get frustrated when
+it guesses wrong.
+
+
+2.  Downloading
+
+The source and associated files are available at
+http://sourceforge.net/projects/statrange/.  Look for the "Latest File
+Releases" section and download the package called Digest2.  It contains
+all needed files.
+
+
+3.  Unpacking, building, installing
+
+The package is bzip2 tarball which you can unpack on most unix-like
+systems with the command "bzip2 -cd digest2.tar.bz2  | tar xvf -"
+The contents are:
+
+README        this file
+LICENSE       open source license
+digest2.f90   source code
+AST.BIAS.POP  complete population model
+AST.UNKN.POP  unknown population model
+obscode.dat   observatory parallax constants
+
+The source is just a single source file, digest2.f90, and "f90
+digest2.f90 -o digest2" works for me.  On my machine anyway, this
+produces a working executable.  Installing consists of just making sure
+you have a couple of other files present in the same directory:
+
+* AST.BIAS.POP and AST.UNKN.POP are text files representing a model of
+the asteroid population.  One or both of them must be present in the
+directory with the executable, otherwise they are ready to use and
+nothing needs to be done to them.
+
+* obscode.dat is a text file containing parallax constants for MPC
+assigned observatory codes.  It must also be present in the directory
+with the executable.
+
+* .digest2, a configuration file, can optionally be present.  This is
+a file you can create.  The format is described below.
+
+* You probably want the input file containing your observations to be 
+present as well, although if you like, you can type a full path to 
+specify an input file in any directory.
+
+
+4.  Usage
+
+digest2 [<input file>]
+
+digest2 -helpconfig
+
+As in the example above, you can type the input file on the command
+line.  Otherwise the program prompts you for the file name with:
+
+ INPUTFILE (J2000 OBSERVATIONS)
+
+Type the file name just as you would have on the command line.  The
+file must contain observations in the MPC 80 column observation format
+and nothing else.  The observations should be sorted and there should
+be at least two observations of each object.
+
+In the output, the program shows a line number for each object, the
+NEO score, a NEO flag if the score is over 25, Ecliptic latitude and
+longitude, ecliptic latitude and longitude rates of motion, a total
+rate of motion, and the calculated V magnitude.
+
+The program can evaluate observations against one of two models of the
+asteroid population.  One is a hypothetical model of the complete
+population of the asteroid belt, represented in the file AST.BIAS.POP.  
+The other is this same model, but reduced by the population of actual
+discovered asteroids with well known orbits, and is represented in the
+file AST.UNKN.POP.  Which model you use depends on whether you have
+tried to identify your object.  If you have observations of a real
+object, you have tried to identify it, for example with the
+"MPChecker" at http://scully.harvard.edu/~cgi/CheckMP, and it seems
+unknown, then this "unknown" population is most appropriate.  For 
+other purposes, the "complete" population is likely more appropriate.
+
+There is no user interface for selecting the population model.  The
+program simply looks for AST.UNKN.POP first, then if that's not
+present it looks for AST.BIAS.POP, and if that's not present, it
+terminates with an error message.  If you have both files but want to
+use the complete population model, rename or otherwise remove
+AST.UNKN.POP from the program directory so that the program only finds
+AST.BIAS.POP.
+
+The usage "digest2 -helpconfig" displays the following brief help for
+the optional configuration file:
+
+   Configuration file name:  .digest2
+
+   Options:
+
+      algorithm 02/01
+      headings on/off
+      messages on/off
+      neoflag on/off
+      flagscore <integer, 1 or 2 digits>
+      dstep <decimal number>
+      astep <decimal number>
+      utest off/on
+
+   If an option is not present, it defaults to the first value listed
+   above.  Default flagscore is 50 for algorithm=02 and 25 for
+   algorithm=01.  Default dstep is .025 (unit is AU), default astep is 2
+   (unit is degrees.)  Options and values must be lower case, must be
+   flush left, and only a single space or = sign can be between the option
+   and the value.  Anything invalid is ignored.  If configuration file is
+   not present, default values are used for all options.
+
+   See README for complete documentation.
+
+(which, of course, you are doing now.)
+
+The algorithm option selects the set of algorithms used for the NEO
+score calculation.  Algorithm "01" is the set used in version 0.01
+of the program.  Algorithm "02" is the new stuff in version 0.02.
+
+The options for headings, messages, and neoflag allow the specified
+elments to be suppressed from the output.  This has been handy during
+testing to allow the output to be more easily read by other software.
+
+Use the flagscore option if you'd like to change the threshold at which
+the NEO flag is displayed.
+
+astep and dstep are meaningful only for algorithm=01.  they control the
+resolution at which parameter space is sampled to generate orbits.
+Selecting finer resolution will generate more orbit.
+
+utest=on produces an additional output file, utest.out, which gives
+some statistics on the internal calculations.  With algorithm=01, it
+shows the total number of orbits generated, the number of unique bins
+represented by those orbits, and the number of those unique bins for
+which the model has a non-zero population.  This is interesting as it
+illustrates the effect of changing the stepsize.  With algorithm=02,
+utest.out shows the total number of orbits generated, the number of
+unique bins represented, and the number of empty bins, (as opposed to
+the number of non-empty bins shown with algorithm=01.)  The count of
+non-empty bins is broken down into two numbers then, "border" bins and
+"counted" bins.  An unfortunate property of the population model used
+by this program is that the dividing line between NEOs and non-NEOs
+doesn't fall cleanly on bin boundaries but rather cuts across them
+diagonally, creating "border" bins that represent both NEO and non-NEO
+orbits.  Algorithm 02 ignores these border bins and constructs the NEO
+score from bins that clearly represent either NEO or non-NEO orbits.
+
+The file obscode.dat, included in the package, contains observatory
+parallax constants.  In the case that you have data with a new MPC
+assigned observatory code and the code is not not listed in this file,
+you can update the file from the MPC website.  Visit
+http://cfa-www.harvard.edu/iau/lists/ObsCodes.html with a browser, save
+the page as text, then edit the saved file to remove the introductory
+text and the column headings.
+
+
+5.  Theory
+
+The theory behind the program is explained in detail in a paper
+currently in preparation.  Basically though:
+
+1.  For each object, the program computes a motion vector from the
+first and last observation, and computes a V magnitude from whatever
+photometry is provided.
+
+2.  It then generates a whole mess of orbits that are consistent with
+the computed motion, complete with absolute magnitudes consistent with
+the computed V magnitude.  It iterates over a parameter space with enough
+resolution to hopefully generate orbits representative of anything
+that might possibly have that motion.
+
+3.  It looks up each generated orbit in the population model and gets
+a "bin count" of the number of modeled asteroids that have similar
+orbits and absolute magnitudes.  It accumulates two totals, the total
+of all the bin counts and the total of just NEOs.
+
+4.  It computes the NEO score as 100 times the NEO total divided by
+the all-bin total.  It's a percentage then, although it can't reliably 
+be interpreted as a probability (due to various reasons -- approximations,
+simplifications, shortcuts, and so on in the code.)
+
+For any object -- whether NEO or ordinary main-belt -- the set of
+generated orbits will include many wild NEO orbits.  The population
+model identifies these orbits as highly improbable by returning very
+low (often zero) bin counts, so the NEO total doesn't go up much for
+these.  The NEO total will go up somewhat when orbits are found that
+are believable as real NEOs.  Because non-NEOs -- main-belt asteroids
+in particular -- vastly outnumber NEOs however, the all-bin total goes up
+dramatically when believable non-NEO orbits are found.  This leads to
+very low NEO scores when objects are likely main belt objects, but
+higher scores otherwise.
+
+Kyle Smalley
+12 September 2005
+

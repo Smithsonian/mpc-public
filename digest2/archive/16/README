@@ -1,0 +1,341 @@
+Digest2 Documentation  ----- version 0.16 -----  C source
+
+Contents
+
+1.  Program overview
+2.  Installing from C source
+3.  Command line usage
+4.  Configuring file locations
+5.  File formats
+6.  Algorithm outline
+
+
+1.  Program overview
+
+Digest2 uses statistical ranging techniques to compute chances that an
+object is of various orbit classes.  Input is a file of 80 column MPC-format
+observations, with at least two observations per object.  Output is orbit
+class scores for each object.
+
+The MPC observation format is documented at
+http://www.minorplanetcenter.net/iau/info/OpticalObs.html.  This is an ASCII
+encoded format.  There is no allowance for non-ASCII characters.
+
+The program is provided as C source code, and also as a port to the Go
+language.  Comparing the two, there are some small differences in operation
+but the scores produced should be practically identical.  The C and Go
+sources are independent.  You can use either one without the other.
+
+Sample run:
+Here are a few observations of known NEOs (with made up designations.)
+
+     NE00030  C2004 09 16.15206 16 13 11.57 +20 52 23.7          21.1 Vd     291
+     NE00030  C2004 09 16.15621 16 13 11.34 +20 52 16.8          20.8 Vd     291
+     NE00030  C2004 09 16.16017 16 13 11.13 +20 52 09.6          20.7 Vd     291
+     NE00199  C2007 02 09.24234 06 08 06.06 +43 13 26.2          20.1  c     704
+     NE00199  C2007 02 09.25415 06 08 05.51 +43 13 01.7          20.1  c     704
+     NE00199  C2007 02 09.26683 06 08 04.80 +43 12 37.5          19.9  c     704
+     NE00269  C2003 01 06.51893 12 40 50.09 +18 27 46.9          21.4 Vd     291
+     NE00269  C2003 01 06.52850 12 40 50.71 +18 27 46.1          21.8 Vd     291
+     NE00269  C2003 01 06.54359 12 40 51.68 +18 27 42.5          21.9 Vd     291
+
+You put them in a file, say fmo.obs, then type "digest2 fmo.obs" and 
+get the following output:
+
+Digest2 version 0.16 -- Released February 20 2015 -- Compiled Feb 20 2015
+Desig.    RMS Int NEO N22 N18 Other Possibilities
+NE00030  0.15 100 100  37   0
+NE00199  0.56  98  97  17   0 (MC 2) (JFC 1)
+NE00269  0.42  18  18   3   0 (MC 9) (Hun 4) (Pho 27) (MB1 <1) (Han <1) (MB2 30) (MB3 12) (JFC 1)
+
+Only considering these short arcs, digest2 predicts that the first two
+objects are almost certain to be NEOs.  The last one, with a NEO score of
+only 18 shows little chance of being a NEO.  Pho 27, MB2 30, and MB3 12
+show that it is much more likely to have a Phocaea-like or main belt orbit.
+The scores may not add to 100 because they are computed independently and
+because all possible orbits are not categorized.  Orbit classes are based
+on orbital elements and are either known dynamic populations like "Hungarias"
+or popular classifications like "NEO."
+
+The RMS figure is a root-mean-square of residuals in arc seconds of the
+observations against a great circle fit.  A high RMS could indicate either bad
+observations or significant great circle departure over the observation arc.
+It can thus be used as a quick check that scores are meaningful.  If the RMS
+is low, scores are meaningful.  Scores are still meaningful if the RMS is high
+due to great circle departure, but digest2 offers no way of distinguishing this
+case from one where observations are bad.
+
+
+2.  Installing from C source
+
+Create a new directory for the program and download directly into the
+new directory, if that is convenient.  The source and associated files
+are available at http://code.google.com/p/digest2/.
+
+Click the Downloads tab and download the latest C archive.
+
+The package is bzip2 tarball which you can unpack on most Unix-like
+systems with the command "tar xvjf digest2.c.0.16.tar.bz2"
+
+The contents are:
+
+README        this file
+LICENSE       open source license
+s3m.dat       solar system population model
+Makefile      script for building executable
+digest2.c     C source and header files
+d2model.c
+d2math.c
+d2mpc.c
+muk.c
+digest2.h
+d2model.h
+
+Type make, and executables should be built and other files created.
+This process includes downloading a copy of astorb.dat from lowell.edu.
+Astorb.dat is fairly large and bandwidth on that site is often limited.
+It may take a few minutes.  If you happen to have a copy of astorb.dat
+already, you can save some time by copying (or linking) it to this directory
+before typing make.  (It's ok to press control-C on the make, copy the file,
+then rerun make.)
+
+There is no additional installation command.  The executable and associated
+files are built in the current directory and are usable as they are.
+If you would like to manually relocate files, read below under configuration.
+
+
+3.  Command line usage
+
+The main executable is digest2.  Invoking the program without command line
+arguments (or with invalid arguments) shows this usage prompt.
+
+Usage: digest2 [options] <obsfile>    score observations in file
+       digest2 [options] -            score observations from stdin
+       digest2 -h or --help           display help information
+       digest2 -v or --version        display version information
+
+Options:
+       -c or --config <config-file>
+       -m or --model <model-file>
+       -o or --obscodes <obscode-file>
+       -p or --config-path <path>
+       -u or --cpu <n-cores>
+
+The help information lists a quick reference to keywords and orbit classes
+allowed in the configuration file.  The configuration file is explained
+below under File Formats.
+
+The options config, model, obscodes and config-path are described in the
+next section.
+
+The cpu option allows you to specify the number of threads to use.
+The default is the number returned by the C function sysconf, typically
+the total number of cores in the computer.
+
+
+4.  Configuring file locations
+
+The digest2 executable can be copied to another location, a bin directory
+for example, and you can access it as you would any other binary executable.
+
+When digest2 runs, it reads observations either from a file or from stdin.
+
+It also reads from two other required data files and an optional configuration
+file.  The default location for these three files is different for the C and Go
+programs.  For the C program, digest2.obscodes and digest2.model are built
+with make and are initially present in the directory where you ran make.
+By default, the program looks for them in the current directory.
+
+You can maintain these three files in their default location or you can
+relocate them and specify their locations with command line options.
+
+	File                                           Command line option
+	digest2.obscodes                               -o
+	digest2.model (digest2.gmodel for Go program)  -m
+	digest2.config                                 -c
+
+A configuration file is required to be present if -c is used.
+
+You can use the -p option to specify a common path to the three files,
+overriding the default location.  They will be accessed with their default
+names but in the specified location.
+
+If you specify -p in combination with -c, -o, or -m, the path specified
+with the -c, -o, or -m option takes precedence.  That is, the path specified
+with -p is not joined with with a file name specified with -c, -o, or -m.
+
+
+5.  File formats
+
+Observations, whether supplied in a file or through stdin, should contain
+observations in the MPC 80 column observation format and nothing else.
+The observations should be sorted first by designation and then by time
+of observation, and there should be at least two observations of each object.
+
+digest2.obscodes is a text file containing observatory codes in the standard
+MPC format.  Running make as described above downloads the current obscode
+list from the MPC web site.  You can edit or update this file as needed.
+
+digest2.model (digest2.gmodel for the Go program) is a binary file generated
+by a program called muk.  Muk takes as input a binned version of the PanSTARRS
+Synthetic Solar System Model, and a copy of Lowell Observatory's orbit catalog,
+astorb.dat.  The binned S3M is distributed with digest2.  Astorb.dat may be
+downloaded from the lowell.edu site as described above.
+
+digest2.config, the optional configuration file, is a text file with a simple
+format.  Empty lines and lines beginning with # are ignored.  Other lines must
+contain either a keyword or an orbit class.
+
+Allowable keywords:
+   headings
+   noheadings
+   rms
+   norms
+   raw
+   noid
+   repeatable
+   random
+   obserr
+   poss
+
+Headings and the rms column can be turned off if desired.
+
+Keywords raw and noid determine the score produced as described below
+under Theory.  The default is noid.  If both keywords are present, both scores are output.
+
+The keywords repeatable and random determine if program output is
+strictly repeatable or can vary slightly from one run to the next.
+The program uses a Monte Carlo method.  By default, the pseudo random
+number generator is seeded randomly.  When the keyword repeatable is
+used, it is reseeded with a constant value for each tracklet, yielding
+repeatable scores.
+
+Keyword obserr specifies the amount of observational error that the algorithm
+should allow for.  It is specified in arc seconds as in,
+
+obserr=0.7
+
+The default, if no obserr is specified, is 1.0 arc seconds.
+Obserr may be specified for individual observatory codes as in,
+
+obserrF51=.3
+obserr 704 = 1
+
+As shown, white space is optional.
+
+The keyword poss specifies to output the "Other Possibilities" column.
+By default, other possibilities are suppressed if orbit classes are
+explicitly specified.
+
+Orbit classes:
+   Abbr.  Long Form
+   ---    -------------
+   Int    MPC interest.
+   NEO    NEO(q < 1.3)
+   N22    NEO(H <= 22)
+   N18    NEO(H <= 18)
+   MC     Mars Crosser
+   Hun    Hungaria gr.
+   Pho    Phocaea group
+   MB1    Inner MB
+   Pal    Pallas group
+   Han    Hansa group
+   MB2    Middle MB
+   MB3    Outer MB
+   Hil    Hilda group
+   JTr    Jupiter tr.
+   JFC    Jupiter Comet
+
+Listing an orbit class limits scoring to only the listed classes.
+Other possibilities are not computed or listed.  Either abbreviations or
+long forms may be used.  In any case they must be spelled exactly as
+shown.
+
+Example 1:
+
+Int
+Neo
+N22
+N18
+poss
+
+This is equivalent to default program behavior without a config file.
+
+Example 2:
+
+# just three
+NEO
+Hun
+JTr
+
+program output is
+
+Digest2 version 0.16 -- Released February 20 2015 -- Compiled Feb 20 2015
+Desig.    RMS NEO Hun JTr
+NE00030  0.15 100   0   0
+NE00199  0.56  97   0   0
+NE00269  0.42  18   4   0
+
+The program runs considerably faster in this case, as it computes scores for
+only these three classes and not all possible classes.
+
+Example 3:
+
+noheadings
+norms
+N22
+
+output:
+
+NE00030  37
+NE00199  17
+NE00269   3
+
+This might be useful for generating results to be analyzed by another program,
+See the program mcc, for example, included with the Go version of digest2.
+
+Known quirk of the C program:  The order of designations may not match the
+input.  Both the C and Go programs parallelize on multi-core CPUs but the
+C program simply outputs scores as they complete and does not reorder output.
+
+
+6.  Algorithm outline
+
+1.  For each object, the program computes a motion vector from the
+first and last observation, and computes a V magnitude from whatever
+photometry is provided.
+
+2.  It then generates a number of orbits that are consistent with
+the computed motion, complete with absolute magnitudes consistent with
+the computed V magnitude.
+
+3.  Each orbit is located within a binned, or histogram, model of the
+solar system.  The model is binned in the four dimensions of q, e, i, and H.
+As the bin is determined for each orbit, a tag is set for that bin.
+Additionally, each orbit is tested for each configured class and a separate
+tag is set, by bin, for each class.
+
+4.  A search algorithm is used to generate orbits covering the entire range
+of possible orbits, and tag corresponding possible bins.  As the algorithm
+generates variant orbits, it checks if the orbits are yielding new bin
+taggings, either in general or of specific orbit classes.  The algorithm
+terminates after reaching a point of diminishing returns in finding bins.
+
+5.  The histogram contains object population counts by bin.  For each bin
+there is a population of each orbit class, and also a complete population
+count.  After orbit search, the sum of complete population of tagged bins
+represents the number of possible candidate objects in the solar system.
+The population sum of tagged bins of a specified class represents the number
+of possible candidates of that class.  The class sum divided by the complete
+sum represents the fraction of candidate objects that are of that class.
+This fraction is multiplied by 100 and output as the "raw" percentage.
+
+6.  No-ID scores are computed similarly with a parallel histogram.
+In it, population counts are not of the expected complete population of the
+solar system, but of the expected yet-undiscovered population.  This
+population is computed by reducing the modeled complete population by known
+discoveries.  As the intended context of the no-ID score is after attempted
+object identification, the selected known population is that which is readily
+identifiable.  The current criteria used is sky uncertainty < 1' arc.
+The uncertainty parameter selected for this comparison is field 24 of
+astorb.dat, which is a peak ephemeris uncertainty over a 10 year period.

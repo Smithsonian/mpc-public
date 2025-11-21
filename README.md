@@ -20,4 +20,6 @@ Last Update: 2025-02-25
     - sample orbit files in the format;
     - python code to parse & validate example orbit files.
 
-
+### digest2
+Last Update: 2025-11-21
+ - XML-enhanled repository of digest2 code, population model and the configuration files.
