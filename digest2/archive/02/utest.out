@@ -1,0 +1,5 @@
+ dstep =    2.5000000000000001E-002
+ astep =    2.0000000000000000     
+                     Orbits     Unique  % of       Non-empty  % of
+     #      Desig.   generated  bins    generated  bins       unique
+     1                  4358     686     15.7%      339       49.42%

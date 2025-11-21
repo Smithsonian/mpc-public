@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ades version="2017">
+<obsBlock>
+<obsData>
+<optical>
+<provID>2023 MO1</provID>
+<trkSub>P11GiqT</trkSub>
+<obsID>LcmDei8d0000FCTi010000002</obsID>
+<trkID>00000HJSCU</trkID>
+<mode>CCD</mode>
+<stn>F51</stn>
+<obsTime>2023-06-18T12:06:27.5Z</obsTime>
+<ra>298.738717</ra>
+<dec>-15.038213</dec>
+<rmsRA>0.13</rmsRA>
+<rmsDec>0.13</rmsDec>
+<astCat>Gaia3E</astCat>
+<mag>22.11</mag>
+<rmsMag>0.73</rmsMag>
+<band>Pw</band>
+<logSNR>0.18</logSNR>
+<exp>45.0</exp>
+<ref>MPEC 2023-M77</ref>
+<subFmt>A17</subFmt>
+</optical>
+<optical>
+<provID>2023 MO1</provID>
+<trkSub>P11GiqT</trkSub>
+<obsID>LcmDei8d0000FCTi010000001</obsID>
+<trkID>00000HJSCU</trkID>
+<mode>CCD</mode>
+<stn>F51</stn>
+<obsTime>2023-06-18T12:22:20.2Z</obsTime>
+<ra>298.741030</ra>
+<dec>-15.034252</dec>
+<rmsRA>0.13</rmsRA>
+<rmsDec>0.13</rmsDec>
+<astCat>Gaia3E</astCat>
+<mag>21.39</mag>
+<rmsMag>0.61</rmsMag>
+<band>Pw</band>
+<logSNR>0.26</logSNR>
+<exp>45.0</exp>
+<ref>MPEC 2023-M77</ref>
+<subFmt>A17</subFmt>
+</optical>
+<optical>
+<provID>2023 MO1</provID>
+<trkSub>P11GiqT</trkSub>
+<obsID>LcmDei8d0000FCTi010000003</obsID>
+<trkID>00000HJSCU</trkID>
+<mode>CCD</mode>
+<stn>F51</stn>
+<obsTime>2023-06-18T12:38:11.6Z</obsTime>
+<ra>298.743423</ra>
+<dec>-15.030190</dec>
+<rmsRA>0.13</rmsRA>
+<rmsDec>0.13</rmsDec>
+<astCat>Gaia3E</astCat>
+<mag>21.55</mag>
+<rmsMag>0.19</rmsMag>
+<band>Pw</band>
+<logSNR>0.76</logSNR>
+<exp>45.0</exp>
+<ref>MPEC 2023-M77</ref>
+<subFmt>A17</subFmt>
+</optical>
+<optical>
+<provID>2023 MO1</provID>
+<trkSub>P11GiqT</trkSub>
+<obsID>LcmDei8d0000FCTi010000004</obsID>
+<trkID>00000HJSCU</trkID>
+<mode>CCD</mode>
+<stn>F51</stn>
+<obsTime>2023-06-18T12:54:01.3Z</obsTime>
+<ra>298.745747</ra>
+<dec>-15.026292</dec>
+<rmsRA>0.13</rmsRA>
+<rmsDec>0.13</rmsDec>
+<astCat>Gaia3E</astCat>
+<mag>21.72</mag>
+<rmsMag>0.28</rmsMag>
+<band>Pw</band>
+<logSNR>0.59</logSNR>
+<exp>45.0</exp>
+<ref>MPEC 2023-M77</ref>
+<subFmt>A17</subFmt>
+</optical>
+</obsData>
+</obsBlock>
+</ades>

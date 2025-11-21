@@ -1,0 +1,23 @@
+# D2Model -- Digest2 solar system model generator
+
+This repository is relevant to the [Digest2](https://bitbucket.org/mpcdev/digest2) tracklet classifier.  It is totally NOT NEEDED however, for normal use of digest2.
+
+For normal use of digest2 download a prepared model `d2model.tar.bz2` from the [digest2 Bitbucket repository](https://bitbucket.org/mpcdev/digest2/downloads).
+
+## Purpose
+
+Digest2 uses a model file in the csv, or comma separated values, format.  Programs here generate this file.
+
+## s3mbin
+
+One data input is the [Pan-STARRS Synthetic Solar System Model](http://adsabs.harvard.edu/abs/2007AAS...211.4721G).  The original data set is not freely available and is not provided here.  We do have permission however to distribute a derived product.  The program s3mbin generates this derived product.  The output is the file [s3m.dat](https://bitbucket.org/mpcdev/d2model/downloads) and this file is provided as a download from this repository.
+
+## muk
+
+Muk takes s3m.dat and a second file and outputs digest2.model.csv, the model file used by digest2.  The second file is an orbit catalog of known minor planets.  The catalog used is [astorb.dat](http://www.naic.edu/~nolan/astorb.html) produced by the Lowell Observatory.
+
+## Compiling
+An example Makefile is provided.  You may need to make adjustments for your C compiler.  The source files include headers from digest2.  You should put digest2 source (or at least the header files) in an adjacent directory `digest2`.
+
+## Usage
+For muk you will need the two input data files s3m.dat and astorb.dat.  Obtain these files as described above.  There are no command line parameters or options for muk.  Just run it; it should display some status and create the file `digest2.model.csv`.  You will then need to copy `digest2.model.csv` to your digest2 directory or otherwise make it available to digest2.  See the [digest2 README.md](https://bitbucket.org/mpcdev/digest2) for information on running digest2.

@@ -17,9 +17,11 @@ Last Update: 2025-02-25
     - sample orbit files in the format;
     - python code to parse & validate example orbit files.
 
+### digest2
+Last Update: 2025-11-21
+ - XML-enhanled repository of digest2 code, population model and the configuration files.
+
 ### docs-public
 Last Update: 2026-01-29
  - `docs-public` provides a landing page for the MPC's documentation website, 
 [https://docs.minorplanetcenter.net/](https://docs.minorplanetcenter.net/). 
-
-

@@ -1,0 +1,879 @@
+001     0.15  -268  -330      Crowborough
+002     0.62  -265  -333      Rayleigh
+003     3.90  -309  -293      Montpellier
+004     1.46  -309  -293      Toulouse
+005     2.23  -281  -319      Meudon
+006     2.13  -320  -281      Fabra Observatory, Barcelona
+007     2.34  -281  -319      Paris
+008     3.04  -342  -254      Algiers-Bouzareah
+009     7.44  -292  -310      Berne-Uecht
+010     6.93  -309  -293      Caussols
+011     8.80  -290  -312      Wetzikon
+012     4.36  -270  -329      Uccle
+013     4.48  -262  -335      Leiden
+014     5.39  -311  -291      Marseilles
+015     5.13  -263  -335      Utrecht
+016     5.99  -290  -312      Besancon
+017     6.85  -274  -326      Hoher List
+018     6.76  -268  -331      Dusseldorf-Bilk
+019     6.96  -291  -310      Neuchatel
+020     7.30  -309  -293      Nice
+021     8.39  -280  -320      Karlsruhe
+022     7.77  -302  -300      Pino Torinese
+023     8.26  -274  -325      Wiesbaden
+024     8.72  -278  -322      Heidelberg-Konigstuhl
+025     9.20  -281  -319      Stuttgart
+026     7.46  -292  -310      Berne-Zimmerwald
+027     9.19  -300  -302      Milan
+028     9.94  -276  -324      Wurzburg
+029    10.24  -254  -341      Hamburg-Bergedorf
+030    11.26  -308  -293      Arcetri Observatory, Florence
+031    11.19  -272  -327      Sonneberg
+032    11.58  -269  -329      Jena
+033    11.71  -269  -330      Karl Schwarzschild Observatory, Tautenburg
+034    12.45  -318  -283      Monte Mario Observatory, Rome
+035    12.58  -241  -351      Copenhagen
+036    12.65  -319  -282      Castel Gandolfo
+037    13.73  -314  -287      Collurania Observatory, Teramo
+038    13.77  -299  -303      Trieste
+039    13.19  -241  -351      Lund
+040    13.73  -269  -330      Lohrmann Institute, Dresden
+041    11.38  -290  -312      Innsbruck
+042    13.07  -261  -336      Potsdam
+043    11.53  -297  -304      Asiago Astrophysical Observatory, Padua
+044    14.26  -323  -277      Capodimonte Observatory, Naples
+045    16.34  -285  -316      Vienna (since 1879)
+046    14.29  -281  -320      Klet Observatory, Ceske Budejovice
+047    16.88  -261  -336      Poznan
+048    15.83  -273  -326      Hradec Kralove
+049    17.61  -217  -366      Uppsala-Kvistaberg
+050    18.06  -218  -365      Stockholm (before 1931)
+051    18.48  -354  +237      Cape
+052    18.31  -218  -365      Stockholm-Saltsjobaden
+053    18.96  -289  -313      Konkoly Observatory, Budapest (since 1934)
+054    11.67  -241  -350      Brorfelde
+055    19.96  -274  -325      Cracow
+056    20.25  -279  -321      Skalnate Pleso
+057    20.51  -303  -299      Belgrade
+058    20.50  -247  -346      Kaliningrad
+059    20.22  -279  -321      Lomnicky Stit
+060    21.42  -263  -335      Warsaw-Ostrowik
+061    22.30  -282  -318      Uzhgorod
+062    22.23  -211  -369      Turku
+063    22.45  -211  -369      Turku-Tuorla
+064    22.75  -211  -369      Turku-Kevola
+065    12.63  -287  -315      Traunstein
+066    23.72  -337  -261      Athens
+067    24.03  -276  -324      Lvov University Observatory
+068    24.01  -276  -324      Lvov Polytechnic Institute
+069    24.41  -234  -355      Baldone, near Riga
+070    25.29  -247  -346      Vilnius (before 1939)
+071    24.72  -319  -282      Smolyan
+072     7.17  -268  -330      Scheuren Observatory
+073    26.10  -305  -297      Bucharest
+074    26.41  -373  +206      Boyden Observatory, Bloemfontein
+075    26.72  -224  -361      Tartu
+076    27.88  -384  +184      Johannesburg-Hartbeespoort
+077    28.03  -383  +187      Yale-Columbia Station, Johannesburg
+078    28.07  -383  +187      Johannesburg
+079    28.23  -384  +184      Radcliffe Observatory, Pretoria
+080    28.97  -322  -278      Istanbul
+081    27.88  -384  +184      Leiden Station, Johannesburg
+082    15.63  -285  -316      St. Polten
+083    30.50  -273  -327      Golosseevo-Kiev
+084    30.33  -215  -367      Pulkovo
+085    30.50  -272  -327      Kiev
+086    30.76  -294  -308      Odessa
+087    31.34  -370  -211      Helwan
+088    31.82  -370  -213      Kottomia
+089    31.97  -291  -310      Nikolaev
+090     8.25  -275  -325      Mainz
+091     4.21  -300  -302      Observatoire de Nurol, Aurec sur Loire
+092    18.55  -257  -339      Torun-Piwnice
+093    20.36  -151  -397      Skibotn
+094    34.00  -305  -297      Crimea-Simeis
+095    34.02  -303  -299      Crimea-Nauchnij
+096     9.43  -298  -304      Merate
+097    34.76  -367  -216      Wise Observatory, Mitzpeh Ramon
+098    11.57  -298  -304      Asiago Observatory, Cima Ekar
+099    25.53  -206  -372      Lahti
+100    24.13  -197  -377      Ahtari
+101    36.23  -275  -325      Kharkov
+102    36.59  -241  -351      Zvenigorod
+103    14.47  -296  -305      Ljubljana
+104    10.80  -307  -295      San Marcello Pistoiese
+105    37.57  -240  -351      Moscow
+106    14.07  -297  -305      Crni Vrh
+107    11.00  -303  -299      Cavezzo
+108    11.03  -309  -293      Montelupo
+109     3.07  -342  -254      Algiers-Kouba
+110    39.15  -232  -356      Rostov
+111    10.97  -309  -293      Piazzano Observatory, Florence
+112    10.90  -299  -302      Pleiade Observatory, Verona
+113    13.02  -271  -328      Volkssternwarte Drebach, Schoenbrunn
+114    41.43  -309  -293      Engelhardt Observatory, Zelenchukskaya Station
+115    41.44  -309  -293      Zelenchukskaya
+116    11.60  -285  -316      Giesing
+117    11.54  -285  -316      Sendling
+118    17.27  -284  -317      Astronomical and Geophysical Observatory, Modra
+119    42.83  -319  -283      Abastuman
+120    13.73  -301  -301      Visnjan
+121    36.94  -277  -323      Kharkov University, Chuguevskaya Station
+122     3.50  -307  -295      Pises Observatory
+123    44.29  -326  -275      Byurakan
+124     2.25  -309  -293      Castres
+125    44.90  -315  -286      Tbilisi
+126     9.79  -307  -295      Monte Viseggi
+127     6.98  -270  -329      Bornheim
+128    46.10  -267  -332      Saratov
+129    45.88  -331  -268      Ordubad
+130    10.24  -298  -303      Lumezzane
+131     4.72  -304  -298      Observatoire de l'Ardeche
+132     5.24  -307  -295      Bedoin
+133     5.09  -310  -291      Les Tardieux
+134    11.48  -269  -329      Groszschwabhausen
+135    49.12  -240  -351      Kasan
+136    48.82  -240  -351      Engelhardt Observatory, Kasan
+137    34.81  -362  -225      Givatayim Observatory, Raanana
+138     7.57  -288  -313      Village-Neuf
+139     7.11  -309  -293      Antibes
+140     3.63  -298  -304      Augerolles
+141     7.37  -280  -321      Hottviller
+142     7.19  -265  -333      Sinsen
+143     9.03  -295  -306      Gnosca
+144     1.67  -279  -321      Bray et Lu
+145     4.56  -267  -331      's-Gravenwezel
+146    10.67  -306  -296      Frignano
+147     8.58  -299  -303      Osservatorio Astronomico di Suno
+148     2.04  -309  -293      Guitalens
+149     4.22  -279  -321      Beine-Nauroy
+150     2.16  -281  -320      Maisons Laffitte
+151     8.74  -289  -313      Eschenberg Observatory, Winterthur
+152    25.56  -243  -349      Moletai Astronomical Observatory
+153     9.18  -282  -319      Stuttgart-Hoffeld
+154    12.10  -294  -308      Cortina
+155    10.20  -238  -352      Ole Romer Observatory, Aarhus
+156    15.09  -339  -258      Catania Astrophysical Observatory
+157    12.81  -316  -285      Frasso Sabino
+158     7.60  -298  -304      Promiod
+159    10.52  -307  -295      Monte Agliale
+160    10.88  -308  -294      Castelmartini
+161     8.16  -302  -300      Cerrina Tololo Observatory
+162    15.81  -324  -276      Potenza
+163     6.15  -277  -323      Roeser Observatory, Luxembourg
+164     6.89  -284  -317      St. Michel sur Meurthe
+165     1.76  -320  -281      Piera Observatory, Barcelona
+166    16.01  -272  -327      Upice
+167     8.57  -288  -313      Bulach OBservatory
+168    59.50  -233  -356      Kourovskaya
+169     8.40  -302  -300      Airali Observatory
+170     1.92  -321  -280      Observatorio de Begues
+171    14.47  -346  -249      Flarestar Observatory, San Gwann
+172     7.04  -292  -309      Onnens
+173    55.51  -398  +151      St. Clotilde, Reunion
+174    25.51  -198  -376      Nyrola Observatory, Jyvaskyla
+175     7.61  -296  -306      F.-X. Bagnoud Observatory, St-Luc
+176     2.82  -329  -271      Observatori Astronomic de Consell
+177     3.94  -309  -293      Le Cres
+178     6.13  -296  -306      Collonges
+179     9.02  -297  -305      Monte Generoso
+180     3.95  -309  -292      Mauguio
+181    55.20  -397  +155      Observatoire des Makes, Saint-Louis
+182    55.26  -398  +152      St. Paul, Reunion
+183    41.42  -309  -293      Starlab Observatory, Karachay-Cherkessia
+184     6.04  -307  -295      Valmeca Observatory, Puimichel
+185     7.42  -289  -312      Observatoire astronomique jurassien-Vicques
+186    66.88  -331  -268      Kitab
+187    17.07  -261  -336      Astronomical Observatory, Borowiec
+188    66.88  -333  -265      Shokin Majdanak
+189     6.15  -296  -306      Geneva (before 1967)
+190    68.68  -334  -264      Gissar
+191    68.78  -334  -264      Dushanbe
+192    69.29  -321  -280      Tashkent
+193    69.22  -335  -263      Sanglok
+194    18.01  -391  +169      Tivoli
+195    11.45  -285  -316      Untermenzing Observatory, Munich
+196     7.33  -278  -322      Homburg-Erbach
+197    12.18  -306  -296      Bastia
+198     8.76  -282  -318      Wildburg
+199     2.44  -284  -317      Buthiers
+200     4.30  -270  -329      Beersel Hills Observatory
+201     7.60  -298  -304      Jonathan B. Postel Observatory
+202     5.90  -312  -290      Tamaris Observatoire, La Seyne sur Mer
+203     9.00  -299  -303      GiaGa Observatory
+204     8.77  -297  -305      Schiaparelli Observatory
+205    11.27  -305  -297      Obs. Casalecchio di Reno, Bologna
+210    76.96  -311  -290      Alma-Ata
+217    77.88  -311  -291      Assah
+218    78.45  -407  -127      Hyderabad
+219    78.73  -408  -125      Japal-Rangapur
+220    78.83  -416   -92      Vainu Bappu Observatory, Kavalur
+223    80.25  -415   -96      Madras
+236    84.95  -236  -354      Tomsk
+247     0.00    +0    +0      Roving Observer
+248     0.00    +0    +0      Hipparcos
+249     0.00    +0    +0      SOHO
+250     0.00    +0    +0      Hubble Space Telescope
+251   293.25  -405  -133      Arecibo
+252   243.21  -349  -245      Goldstone DSS 13, Fort Irwin
+253   243.11  -348  -246      Goldstone DSS 14, Fort Irwin
+254   288.51  -314  -287      Haystack, Westford
+255    33.16  -302  -300      Evpatoria
+260   149.07  -365  +220      Siding Spring Observatory-DSS
+261   243.14  -357  -233      Palomar Mountain-DSS
+262   289.27  -372  +207      European Southern Observatory, La Silla-DSS
+286   102.79  -387  -179      Yunnan Observatory
+292   285.11  -327  -273      Burlington, New Jersey
+293   285.59  -328  -271      Burlington remote site
+294   285.85  -324  -276      Astrophysical Obs., College of Staten Island
+295   283.00  -332  -267      Catholic University Observatory, Washington
+296   286.25  -314  -287      Dudley Observatory (after 1893)
+297   286.83  -307  -295      Middlebury
+298   287.34  -320  -281      Van Vleck Observatory
+299   107.62  -423   +50      Bosscha Observatory, Lembang
+300   133.54  -351  -241      Bisei Spaceguard Center-BATTeRS
+301   288.85  -300  -302      Mont Megantic
+302   288.88  -422   -64      University of the Andes station
+303   289.13  -422   -65      Merida
+304   289.30  -373  +206      Las Campanas Observatory
+305   109.53  -405  -132      Purple Mountain, Hainan Island station
+306   290.68  -420   -74      Observatorio Taya Beixo, Barquisimeto
+309   289.60  -388  +177      Cerro Paranal
+312   112.33  -408  -123      Tsingtao field station, Xisha Islands
+319   116.14  -362  +225      Perth Observatory, Perth-Lowell Telescope
+320   116.44  -366  +218      Chiro Observatory
+321   115.76  -363  +223      Craigie
+322   116.13  -362  +225      Perth Observatory, Bickley-MCT
+323   116.14  -362  +225      Perth Observatory, Bickley
+324   116.33  -327  -273      Peking Observatory, Shaho Station
+327   117.58  -325  -275      Peking Observatory, Xinglong Station
+330   118.82  -362  -225      Purple Mountain Observatory, Nanking
+334   120.32  -345  -250      Tsingtao
+337   121.19  -365  -219      Zo-Se
+341   137.95  -344  -251      Akashina
+342   134.32  -356  -234      Shishikui
+343   127.13  -335  -262      Younchun
+344   128.98  -345  -250      Bohyunsan Optical Astronomy Observatory
+345   128.46  -341  -255      Sobaeksan Optical Astronomy Observatory
+346   127.39  -343  -252      KNUE Astronomical Observatory
+347   139.91  -343  -253      Utsunomiya-Imaizumi
+348   135.27  -348  -245      Ayabe
+349   139.55  -345  -249      Ageo
+350   139.26  -343  -252      Kurohone
+351   135.87  -349  -244      Sakamoto
+352   136.18  -350  -243      Konan
+353   135.06  -351  -242      Nishi Kobe
+354   140.02  -342  -254      Kawachi
+355   139.21  -348  -246      Hadano
+356   141.09  -334  -264      Kogota
+357   140.01  -345  -250      Shimotsuma
+358   140.16  -336  -261      Nanyo
+359   135.17  -353  -238      Wakayama
+360   132.94  -355  -235      Kuma Kogen
+361   134.90  -352  -239      Sumoto
+362   140.66  -314  -287      Ray Observatory
+363   130.77  -356  -234      Yamada
+364   130.57  -363  -222      YCPM Kagoshima Station
+365   135.96  -352  -240      Uto Observatory
+366   138.30  -346  -248      Miyasaka Observatory
+367   133.17  -347  -246      Yatsuka
+368   138.81  -346  -248      Ochiai
+369   139.15  -345  -249      Chichibu
+370   133.53  -356  -234      Kochi
+371   133.60  -351  -241      Tokyo-Okayama
+372   133.83  -356  -234      Geisei
+373   135.34  -353  -238      Oishi
+374   134.72  -349  -244      Minami-Oda Observatory
+375   134.87  -350  -243      Uzurano
+376   139.04  -347  -247      Uenohara
+377   135.79  -350  -243      Kwasan Observatory, Kyoto
+378   136.01  -351  -241      Murou
+379   137.77  -351  -241      Hamamatsu
+380   137.03  -350  -242      Ishiki
+381   137.63  -346  -248      Tokyo-Kiso
+382   137.56  -345  -250      Tokyo-Norikura
+383   137.90  -342  -254      Chirorin
+384   138.18  -350  -242      Shimada
+385   138.47  -350  -243      Nihondaira Observatory
+386   138.32  -346  -249      Yatsugatake-Kobuchizawa
+387   139.19  -345  -249      Tokyo-Dodaira
+388   139.54  -347  -247      Tokyo-Mitaka
+389   139.74  -347  -247      Tokyo (before 1938)
+390   139.87  -343  -253      Utsunomiya
+391   140.78  -335  -263      Sendai Observatory, Ayashi Station
+392   141.37  -313  -289      JCPM Sapporo Station
+393   140.13  -345  -250      JCPM Sakura Station
+394   142.32  -301  -301      JCPM Hamatonbetsu Station
+395   142.36  -308  -294      Tokyo-Asahikawa
+396   142.42  -308  -293      Asahikawa
+397   141.48  -312  -289      Sapporo Science Center
+398   139.11  -345  -250      Nagatoro
+399   144.59  -312  -290      Kushiro
+400   143.78  -308  -293      Kitami
+401   139.42  -345  -250      Oosato
+402   136.31  -349  -244      Dynic Astronomical Observatory
+403   137.06  -348  -246      Kani
+404   140.93  -337  -260      Yamamoto
+405   139.33  -344  -251      Kamihoriguchi
+406   141.82  -311  -291      Bibai
+407   140.31  -334  -264      Kahoku
+408   138.17  -346  -249      Nyukasa
+409   139.52  -346  -248      Kiyose and Mizuho
+410   134.89  -349  -244      Sengamine
+411   139.42  -344  -251      Oizumi
+412   140.60  -341  -255      Iwaki
+413   149.07  -365  +220      Siding Spring Observatory
+414   149.01  -348  +245      Mount Stromlo
+415   149.06  -348  +246      Kambah, near Canberra
+416   149.13  -348  +245      Barton, near Canberra
+417   137.14  -339  -257      Yanagida Astronomical Observatory
+418   150.94  -366  +218      Tamworth
+419   150.83  -355  +235      Windsor
+420   151.21  -354  +236      Sydney
+421   133.76  -355  -236      Mt. Kajigamori, Otoyo
+422   151.05  -365  +220      Loomberah
+423   151.12  -355  +236      North Ryde
+424   149.07  -349  +245      Macquarie, near Canberra
+425   152.93  -382  +189      Taylor Range Observatory, Brisbane
+426   136.82  -365  +220      Woomera
+427   138.73  -352  +239      Stockport
+428   153.40  -376  +200      Reedy Creek
+429   149.04  -349  +245      Hawker
+430   149.21  -365  +220      Rainbow Observatory, near Coonabarabran
+431   149.76  -356  +234      Mt. Tarana Observatory, Bathurst
+432   153.08  -368  +214      Boambee
+433   152.11  -359  +229      Bagnall Beach Observatory
+457    18.34  -282  -318      Partizanske
+461    19.89  -286  -315      JATE Asteroid Survey, Piszkesteto Stn. (Konkoly)
+465   174.78  -342  +254      Takapuna
+466   174.85  -341  +255      Mount Molehill Observatory, Auckland
+467   174.78  -341  +255      Auckland Observatory
+468    13.33  -318  -283      Astronomical Observatory, Campo Catino
+469     7.38  -289  -312      Courroux
+470    13.33  -319  -281      Ceccano
+471     8.24  -240  -351      Houstrup
+472     6.32  -304  -298      Merlette
+473    13.32  -296  -306      Remanzacco
+474   170.47  -307  +295      Mount John Observatory, Lake Tekapo
+475     7.70  -302  -300      Turin (before 1913)
+476     7.14  -301  -301      Grange Observatory, Bussoleno
+477     0.49  -265  -333      Galleywood
+478     3.09  -309  -292      Lamalou-les-Bains
+479     6.05  -311  -290      Sollies-Pont
+480     0.77  -262  -335      Cockfield
+481     7.93  -254  -341      Moorwarfen
+482   357.19  -237  -353      St. Andrews
+483   173.80  -319  +282      Carter Observatory, Black Birch Station
+484   174.75  -321  +280      Happy Valley, Wellington
+485   174.77  -321  +280      Carter Observatory, Wellington
+486   175.47  -326  +274      Palmerston North
+487   355.44  -242  -350      Macnairston Observatory
+488   358.37  -245  -348      Newcastle-upon-Tyne
+489   359.87  -261  -336      Hemingford Abbots
+490   358.00  -270  -329      Wimborne Minster
+491   356.90  -325  -276      Centro Astronomico de Yebes
+492   358.47  -258  -339      Mickleover
+493   357.45  -340  -257      Calar Alto
+494   357.84  -261  -336      Stakenbridge
+495   357.66  -255  -341      Altrincham
+496   358.69  -269  -330      Bishopstoke
+497   359.30  -267  -331      Ascot-Loudwater
+498   359.26  -261  -336      Northampton
+499   359.79  -267  -331      Cheam
+500     0.00    +0    +0      Geocentric
+501     0.35  -270  -329      Herstmonceux
+502     0.85  -263  -334      Colchester
+503     0.09  -262  -335      Cambridge
+504     4.39  -292  -309      Le Creusot
+505     4.56  -266  -332      Simon Stevin
+506     9.96  -255  -340      Bendestorf
+507     5.22  -263  -334      Nyenheim
+508     5.29  -263  -334      Zeist
+509     5.87  -312  -290      La Seyne sur Mer
+510     8.03  -269  -329      Siegen
+511     5.71  -308  -294      Haute Provence
+512     4.49  -262  -335      Leiden (before 1860)
+513     4.79  -298  -304      Lyons
+514     8.43  -278  -322      Mundenheim (1907-1913)
+515     7.48  -277  -323      Volkssternwarte Dhaun, near Kirn
+516     9.97  -254  -341      Hamburg (before 1909)
+517     6.14  -295  -307      Geneva (from 1967)
+518     9.97  -254  -341      Marine Observatory, Hamburg
+519     8.29  -267  -331      Meschede
+520     7.10  -270  -329      Bonn
+521    10.89  -275  -325      Bamberg
+522     7.77  -283  -318      Strasbourg
+523     8.65  -274  -326      Frankfurt
+524     8.46  -278  -323      Mannheim
+525     8.77  -270  -329      Marburg
+526    10.15  -249  -345      Kiel
+527     9.94  -254  -341      Altona
+528     9.94  -266  -332      Gottingen
+529    10.72  -214  -367      Christiania
+530    10.69  -252  -343      Lubeck
+531    12.48  -318  -283      Collegio Romano, Rome
+532    11.61  -285  -316      Munich
+533    11.87  -300  -302      Padua
+534    12.39  -267  -331      Leipzig (since 1861)
+535    13.36  -336  -262      Palermo
+536    13.11  -261  -336      Berlin-Babelsberg
+537    13.36  -260  -337      Urania Observatory, Berlin
+538    13.85  -303  -299      Pola
+539    14.13  -286  -316      Kremsmunster
+540    14.28  -283  -318      Linz
+541    14.40  -274  -325      Prague
+542    13.04  -259  -337      Falkensee
+543    12.37  -267  -331      Leipzig (before 1861)
+544    13.43  -260  -337      Wilhelm Foerster Observatory, Berlin
+545    16.38  -285  -316      Vienna (before 1879)
+546    16.35  -285  -316      Oppolzer Observatory, Vienna
+547    17.04  -268  -330      Breslau
+548    13.39  -260  -337      Berlin (1835-1913)
+549    17.63  -215  -367      Uppsala
+550    11.42  -253  -342      Schwerin
+551    18.19  -287  -315      Hurbanovo, formerly O'Gyalla
+552    11.34  -305  -297      Osservatorio S. Vittore, Bologna
+553    18.99  -273  -326      Chorzow
+554     8.40  -272  -328      Burgsolms Observatory, Wetzlar
+555    19.83  -274  -325      Cracow-Fort Skala
+556    11.26  -288  -313      Reintal, near Munich
+557    14.78  -275  -325      Ondrejov
+558    21.03  -262  -335      Warsaw
+559    14.98  -338  -259      Serra La Nave
+560    10.93  -300  -302      Madonna di Dossobuono
+561    19.89  -286  -315      Piszkesteto Stn. (Konkoly)
+562    15.92  -285  -316      Figl Observatory, Vienna
+563    13.60  -286  -315      Seewalchen
+564    11.19  -286  -316      Herrsching
+565    10.14  -300  -302      Bassano Bresciano
+566   203.74  -399  -150      Haleakala-NEAT/GEODSS
+567    12.71  -298  -305      Chions
+568   204.53  -401  -144      Mauna Kea
+569    24.96  -213  -368      Helsinki
+570    25.30  -247  -346      Vilnius (since 1939)
+571    10.63  -300  -302      Cavriana
+572     6.89  -269  -329      Cologne
+573     9.66  -262  -335      Eldagsen
+574    10.27  -300  -302      Gottolengo
+575     6.81  -291  -311      La Chaux de Fonds
+576     0.38  -269  -330      Burwash
+577     7.50  -289  -313      Metzerlen Observatory
+578    27.99  -383  +187      Linden Observatory
+579     8.85  -303  -299      Novi Ligure
+580    15.49  -291  -311      Graz
+581    22.80  -354  +237      Sedgefield
+582     1.22  -263  -334      Orwell Park
+583    30.27  -295  -307      Odessa-Mayaki
+584    30.29  -214  -367      Leningrad
+585    30.53  -272  -327      Kiev comet station
+586     0.14  -313  -289      Pic du Midi
+587     9.23  -297  -305      Sormano
+588    11.25  -305  -297      Eremo di Tizzano
+589    12.64  -315  -287      Santa Lucia Stroncone
+590     7.46  -289  -313      Metzerlen
+591     9.63  -260  -337      Resse Observatory
+592     7.01  -268  -330      Solingen
+593    11.17  -315  -286      Monte Argentario
+594    13.20  -318  -284      Monte Autore
+595    13.53  -297  -305      Farra d'Isonzo
+596    12.62  -317  -284      Colleverde di Guidonia
+597     9.66  -262  -335      Springe
+598    11.33  -306  -296      Loiano
+599    13.56  -315  -286      Astronomical Observatory, Campo Imperatore
+600    11.47  -305  -297      TLC Observatory, Bologna
+601    13.73  -269  -330      Engelhardt Observatory, Dresden
+602    16.39  -285  -316      Urania Observatory, Vienna
+603    10.13  -250  -344      Bothkamp
+604    13.48  -260  -337      Archenhold Sternwarte, Berlin-Treptow
+605     7.11  -265  -333      Marl
+606    10.00  -253  -342      Norderstedt
+607     8.00  -268  -331      Hagen Observatory, Ronkhausen
+608   203.74  -399  -150      Haleakala-AMOS
+609    12.85  -315  -287      Osservatorio Polino
+610    11.34  -305  -297      Pianoro
+611     8.65  -277  -323      Starkenburg Sternwarte, Heppenheim
+612     7.10  -266  -332      Lenkerbeck
+613     7.07  -266  -332      Heisingen
+614     2.47  -282  -318      Soisy-sur-Seine
+615     6.91  -304  -298      St. Veran
+616    16.59  -279  -321      Brno
+617     2.57  -283  -317      Arbonne la Foret
+618     5.01  -310  -292      Martigues
+619     2.09  -320  -281      Sabadell
+620     2.95  -329  -271      Observatorio Astronomico de Mallorca
+621     7.49  -268  -330      Bergisch Gladbach
+622     7.57  -293  -308      Oberwichtrach
+623     5.56  -271  -328      Liege
+624     9.62  -276  -324      Dertingen
+625   203.57  -399  -150      Kihei-AMOS Remote Maui Experimental Site
+626     4.99  -268  -331      Geel
+627     5.21  -307  -295      Blauvac
+628     6.84  -266  -332      Mulheim-Ruhr
+629    20.15  -295  -306      JATE Observatory, Szeged
+630     7.24  -286  -315      Osenbach
+631    10.02  -254  -341      Hamburg-Georgswerder
+632    11.17  -309  -293      San Polo A Mosciano
+633     9.93  -307  -295      Romito
+634     5.15  -299  -303      Crolles
+635     2.90  -314  -288      Pergignan
+636     6.98  -267  -332      Essen
+637    10.09  -253  -342      Hamburg-Himmelsmoor
+638     8.89  -263  -334      Detmold
+639    13.72  -268  -330      Dresden
+640    13.60  -274  -325      Senftenberger Sternwarte
+641    20.03  -352  +240      Overberg
+642   236.69  -283  -317      Oak Bay, Victoria
+643   243.28  -356  -234      OCA-Anza Observatory
+644   243.14  -357  -233      Palomar Mountain/NEAT
+645   254.18  -359  -230      Apache Point-Sloan Digital Sky Survey
+646   242.44  -353  -238      Lake Cucamonga
+647   245.97  -270  -329      Stone Finder Observatory, Calgary
+648   249.40  -363  -223      Winer Mobile Observatory, Sonoita
+649   265.30  -333  -265      Powell Observatory, Louisburg
+650   242.90  -356  -234      Temecula
+651   249.42  -363  -223      Grasslands Observatory, Tucson
+652   245.93  -268  -330      Rock Finder Observatory, Calgary
+653   237.87  -290  -311      Torus Observatory, Buckley
+654   242.32  -352  -239      Table Mountain Observatory, Wrightwood-PHMC
+655   236.38  -284  -317      Sooke
+656   236.39  -284  -317      Victoria
+657   236.69  -283  -318      Climenhaga Observatory, Victoria
+658   236.58  -283  -318      National Research Council of Canada
+659   237.05  -282  -318      Heron Cove Observatory, Orcas
+660   237.74  -337  -260      Leuschner Observatory, Berkeley
+661   245.71  -270  -329      Rothney Astrophysical Observatory, Priddis
+662   238.35  -339  -257      Lick Observatory, Mount Hamilton
+663   248.31  -356  -234      Red Mountain Observatory
+664   239.28  -292  -310      Manastash Ridge Observatory
+665   240.99  -351  -242      Wallis Observatory
+666   241.17  -353  -239      Moorpark College Observatory
+667   240.01  -292  -310      Wanapum Dam
+668   240.82  -350  -242      San Emigdio Peak
+669   240.82  -352  -240      Ojai
+670   240.96  -353  -238      Camarillo
+671   242.00  -353  -239      Stony Ridge
+672   241.94  -353  -238      Mount Wilson
+673   242.32  -352  -239      Table Mountain Observatory, Wrightwood
+674   242.39  -352  -240      Ford Observatory, Wrightwood
+675   243.14  -357  -233      Palomar Mountain
+676   242.47  -356  -233      San Clemente
+677   242.83  -353  -239      Lake Arrowhead
+678   248.26  -355  -235      Fountain Hills
+679   244.54  -366  -219      San Pedro Martir
+680   244.78  -355  -236      Los Angeles
+681   245.89  -268  -330      Calgary
+682   247.64  -341  -256      Kanab
+683   248.92  -361  -226      Goodricke-Pigott Observatory, Tucson
+684   247.51  -352  -240      Prescott
+685   247.84  -348  -245      Williams, AZ
+686   249.21  -360  -227      U. of Minn. Infrared Obs., Mt. Lemmon
+687   248.35  -349  -244      Northern Arizona University, Flagstaff
+688   248.46  -349  -244      Lowell Observatory, Anderson Mesa Station
+689   248.26  -349  -244      U.S. Naval Observatory, Flagstaff
+690   248.34  -349  -244      Lowell Observatory, Flagstaff
+691   248.40  -362  -224      Steward Observatory, Kitt Peak-Spacewatch
+692   249.05  -361  -226      Steward Observatory, Tucson
+693   249.27  -360  -227      Catalina Station, Tucson
+694   248.99  -361  -226      Tumamoc Hill, Tucson
+695   248.41  -362  -224      Kitt Peak
+696   249.12  -363  -223      Whipple Observatory, Mt. Hopkins
+697   248.38  -362  -224      Kitt Peak, McGraw-Hill
+698   249.28  -360  -227      Mt. Bigelow
+699   248.46  -349  -244      Lowell Observatory-LONEOS
+700   250.38  -344  -251      Chinle
+701   249.80  -364  -221      Junk Bond Observatory, Sierra Vista
+702   252.81  -354  -237      Joint Obs. for cometary research, Socorro
+703   249.27  -360  -227      Catalina Sky Survey
+704   253.34  -355  -236      Lincoln Laboratory ETS, New Mexico
+705   254.18  -359  -230      Apache Point
+706   253.94  -334  -265      Salida
+707   254.56  -330  -270      Chamberlin field station
+708   255.05  -329  -271      Chamberlin Observatory, Denver
+709   254.23  -358  -231      W & B Observatory, Cloudcroft
+710   254.73  -332  -266      Florissant
+711   255.98  -367  -216      McDonald Observatory, Fort Davis
+712   255.12  -332  -267      USAF Academy Observatory, Colorado Springs
+713   254.99  -328  -272      Thornton
+714   246.82  -351  -241      Bagdad
+715   253.24  -361  -227      Las Cruces
+716   255.25  -331  -267      Palmer Divide Observatory, Colorado Springs
+717   256.05  -367  -216      Prude Ranch
+718   247.71  -324  -276      Univ. of Utah Hansen Planetarium, Tooele
+719   253.09  -354  -238      Etscorn Observatory
+720   259.63  -385  -183      Universidad de Monterrey
+721   259.73  -325  -275      Lime Creek
+722   264.42  -371  -209      Missouri City
+723   263.33  -350  -242      Cottonwood Observatory, Ada
+724   260.81  -402  -141      National Observatory, Tacubaya
+725   261.35  -370  -210      Fair Oaks Ranch
+726   265.69  -294  -307      Brainerd
+727   262.54  -347  -247      Zeno Observatory, Edmond
+728   262.61  -378  -197      Corpus Christi
+729   262.88  -277  -323      Glenlea Astronomical Observatory, Winnipeg
+730   262.92  -286  -315      University of North Dakota, Grand Forks
+731   272.67  -330  -270      Rose-Hulman Observatory, Terre Haute
+732   263.23  -408  -125      Oaxaca
+733   263.35  -357  -232      Allen, Texas
+734   264.00  -332  -266      Farpoint Observatory, Eskridge
+735   264.41  -372  -208      George Observatory, Needville
+736   263.34  -371  -209      Houston
+737   275.66  -353  -238      New Bullpen Observatory, Alpharetta
+738   267.67  -332  -267      Observatory of the State University of Missouri
+739   265.24  -332  -266      Sunflower Observatory, Olathe
+740   265.34  -363  -223      SFA Observatory, Nacogdoches
+741   266.85  -305  -297      Goodsell Observatory, Northfield
+742   266.31  -319  -282      Drake University, Des Moines
+743   266.76  -302  -300      University of Minnesota, Minneapolis
+744   273.84  -328  -272      Doyan Rose Observatory, Indianapolis
+745   267.18  -331  -268      Glasgow, Missouri
+746   275.23  -309  -292      Brooks Observatory, Mt. Pleasant
+747   268.93  -368  -214      Baton Rouge Observatory
+748   268.47  -320  -281      Van Allen Observatory, Iowa City
+749   276.16  -353  -238      Oakwood
+750   268.73  -303  -299      Hobbs Observatory, Fall Creek
+751   269.24  -333  -266      Lake Saint Louis
+752   275.46  -351  -242      Puckett Observatory, Mountain Town
+753   270.59  -312  -290      Washburn Observatory, Madison
+754   271.44  -314  -287      Yerkes Observatory, Williams Bay
+755   274.65  -313  -289      Optec Observatory
+756   272.33  -317  -284      Dearborn Observatory, Evanston
+757   280.00  -345  -249      High Point
+758   279.24  -375  -201      BCC Observatory, Cocoa
+759   273.19  -345  -250      Nashville
+760   273.60  -329  -270      Goethe Link Observatory, Brooklyn
+761   277.65  -376  -201      Zephyrhills
+762   274.20  -302  -300      Four Winds Observatory, Lake Leelanau
+763   280.47  -308  -294      King City
+764   275.14  -355  -235      Puckett Observatory, Stone Mountain
+765   275.58  -331  -268      Cincinnati
+766   275.52  -314  -288      Michigan State University Obs., East Lansing
+767   276.27  -316  -285      Ann Arbor
+768   277.08  -313  -288      Dearborn
+769   276.99  -327  -273      McMillin Observatory, Columbus
+770   274.08  -331  -268      Crescent Moon Observatory, Columbus
+771   277.57  -393  -166      Boyeros Observatory, Havana
+772   284.09  -301  -301      Boltwood Observatory, Stittsville
+773   278.43  -320  -281      Warner and Swasey Observatory, Cleveland
+774   278.93  -319  -282      Warner and Swasey Nassau Station, Chardon
+775   284.62  -324  -276      Sayre Observatory, South Bethlehem
+776   284.47  -313  -288      Foggy Bottom, Hamilton
+777   280.60  -309  -293      Toronto
+778   279.98  -325  -275      Allegheny Observatory, Pittsburgh
+779   280.58  -308  -294      David Dunlap Observatory, Richmond Hill
+780   281.48  -336  -261      Leander McCormick Observatory, Charlottesville
+781   281.51  -427    +2      Quito
+782   281.65  -426    +0      Quito, comet astrograph station
+783   282.02  -334  -265      Rixeyville
+784   282.21  -316  -285      Stull Observatory, Alfred University
+785   285.34  -325  -275      Princeton
+786   282.93  -332  -266      U.S. Naval Obs., Washington (since 1893)
+787   282.95  -332  -266      U.S. Naval Obs., Washington (before 1893)
+788   284.37  -328  -271      Mount Cuba Observatory, Wilmington
+789   284.59  -312  -290      Litchfield Observatory, Clinton
+790   284.28  -300  -302      Dominion Observatory, Ottawa
+791   284.52  -327  -273      Flower and Cook Observatory, Philadelphia
+792   288.30  -321  -280      U. of Rhode Island, Quonochontaug
+793   286.22  -314  -287      Dudley Observatory, Albany (before 1893)
+794   286.11  -319  -282      Vassar College Observatory, Poughkeepsie
+795   286.01  -324  -277      Rutherford
+796   286.45  -322  -279      Stamford
+797   287.08  -321  -280      Yale Observatory, New Haven
+798   287.02  -320  -281      Yale Observatory, Bethany
+799   288.87  -315  -286      Winchester
+800   288.45  -409  +119      Harvard Observatory, Arequipa
+801   288.44  -315  -287      Oak Ridge Observatory
+802   288.87  -315  -286      Harvard Observatory, Cambridge
+803   288.92  -318  -283      Taunton
+804   289.31  -356  +234      Santiago-San Bernardo
+805   288.97  -358  +231      Santiago-Cerro El Roble
+806   289.45  -356  +233      Santiago-Cerro Calan
+807   289.19  -369  +213      Cerro Tololo Observatory, La Serena
+808   290.67  -363  +223      El Leoncito
+809   289.27  -372  +207      European Southern Observatory, La Silla
+810   288.52  -314  -287      Wallace Observatory, Westford
+811   289.90  -321  -280      Maria Mitchell Observatory, Nantucket
+812   288.42  -358  +231      Vina del Mar
+813   289.31  -356  +234      Santiago-Quinta Normal (1862-1920)
+814   288.42  -318  -283      North Scituate
+815   289.35  -356  +234      Santiago-Santa Lucia (1849-1861)
+816   285.76  -305  -296      Rand Observatory
+817   288.61  -316  -286      Sudbury
+818   286.42  -300  -302      Gemeaux Observatory, Laval
+819   284.38  -297  -305      Val-des-Bois
+820   295.37  -397  +156      Tarija
+821   295.45  -364  +222      Cordoba-Bosque Alegre
+822   295.80  -364  +221      Cordoba
+823   288.17  -314  -287      Fitchburg
+824   285.76  -305  -296      Lake Clear
+825   288.26  -316  -286      Granville
+826   288.23  -296  -306      Plessissville
+827   287.54  -282  -319      Saint-Felicien
+828   288.98  -318  -283      Assonet
+829   290.70  -363  +223      Complejo Astronomico El Leoncito
+830   288.57  -313  -288      Hudson
+831   277.41  -372  -208      Rosemary Hill Observatory, University of Florida
+832   283.19  -326  -274      Etters
+833   301.46  -351  +241      Obs. Astronomico de Mercedes, Buenos Aires
+834   301.57  -351  +241      Buenos Aires-AAAA
+835   288.64  -314  -287      Drum Hill Station, Chelmsford
+836   288.50  -319  -282      Furnace Brook Observatory, Cranston
+837   279.76  -380  -192      Jupiter
+838   275.86  -328  -271      Dayton
+839   302.07  -350  +243      La Plata
+840   276.28  -312  -289      Flint
+841   279.44  -339  -257      Martin Observatory, Blacksburg
+842   282.77  -328  -272      Gettysburg College Observatory
+843   273.06  -352  -240      Emerald Lane Observatory, Decatur
+844   303.81  -350  +243      Los Molinos
+845   283.51  -315  -286      Ford Observatory, Ithaca
+846   269.65  -332  -266      Principia Astronomical Observatory, Elsah
+847   275.98  -302  -300      Lunar Cafe Observatory
+848   237.02  -309  -293      Tenagra Observatory, Cottage Grove
+849   265.17  -332  -266      Everstar Observatory, Olathe
+850   274.08  -349  -244      Cordell-Lorenz Observatory, Sewanee
+851   296.42  -304  -298      Burke-Gaffney Observatory, Halifax
+852   269.40  -333  -266      River Moss Observatory, St. Peters
+853   249.15  -360  -228      Biosphere 2 Observatory
+854   249.18  -361  -227      Sabino Canyon Observatory, Tucson
+855   266.54  -302  -300      Wayside Observatory, Minnetonka
+856   242.55  -354  -237      Riverside
+857   249.40  -363  -223      Iowa Robotic Observatory, Sonoita
+858   253.78  -349  -244      Tebbutt Observatory, Edgewood
+859   316.31  -401  +144      Wykrota Observatory-CEAMIG
+860   313.03  -393  +166      Valinhos
+861   312.92  -393  +164      Barao Geraldo
+862   138.53  -345  -250      Saku
+863   137.18  -344  -251      Furukawa
+864   130.75  -359  -229      Kumamoto
+865   285.88  -319  -282      Emmy Observatory, New Paltz
+866   283.51  -332  -267      U.S. Naval Academy, Michelson
+867   134.12  -348  -245      Saji Observatory
+868   135.14  -354  -237      Hidaka Observatory
+869   133.43  -356  -234      Tosa
+870   313.17  -398  +153      Campinas
+871   134.39  -351  -242      Akou
+872   134.24  -353  -238      Tokushima
+873   133.77  -351  -241      Kurashiki Observatory
+874   314.42  -394  +162      Itajuba
+875   139.24  -345  -250      Yorii
+876   139.25  -344  -251      Honjo
+877   139.08  -346  -248      Okutama
+878   136.91  -350  -243      Kagiya
+879   137.35  -349  -243      Tokai
+880   316.78  -393  +165      Rio de Janeiro
+881   137.26  -349  -244      Toyota
+882   137.36  -349  -244      JCPM Oi Station
+883   138.42  -350  -243      Shizuoka
+884   138.08  -349  -244      Kawane
+885   138.47  -350  -243      JCPM Yakiimo Station
+886   138.94  -349  -244      Mishima
+887   139.34  -344  -251      Ojima
+888   139.00  -349  -244      Gekko
+889   140.14  -342  -253      Karasuyama
+890   140.25  -346  -249      JCPM Tone Station
+891   140.86  -335  -263      JCPM Kimachi Station
+892   139.48  -345  -250      YGCO Hoshikawa and Nagano Stations
+893   140.87  -335  -263      Sendai Municipal Observatory
+894   138.45  -346  -249      Kiyosato
+895   140.72  -335  -263      Hatamae
+896   138.37  -346  -249      Yatsugatake South Base Observatory
+897   139.49  -344  -250      YGCO Chiyoda Station
+898   138.19  -350  -243      Fujieda
+899   142.55  -308  -294      Toma
+900   135.99  -349  -243      Moriyama
+901   137.09  -348  -245      Tajimi
+902   132.22  -353  -238      Ootake
+903   135.18  -348  -245      Fukuchiyama and Kannabe
+904   135.12  -351  -241      Go-Chome and Kobe-Suma
+905   135.92  -355  -235      Nachi-Katsuura Observatory
+906   145.67  -346  +249      Cobram
+907   144.98  -337  +260      Melbourne
+908   137.25  -343  -253      Toyama
+909   237.87  -286  -315      Snohomish Hilltop Observatory
+910     6.93  -309  -293      Caussols-ODAS
+911   282.92  -317  -284      Collins Observatory, Corning Community College
+912   288.23  -319  -282      Carbuncle Hill Observatory, Greene
+913   303.82  -350  +243      Observatorio Kappa Crucis, Montevideo
+914   288.01  -315  -287      Underwood Observatory, Hubbardston
+915   261.88  -370  -211      River Oaks Observatory, New Braunfels
+916   272.68  -330  -270      Oakley Observatory, Terre Haute
+917   237.55  -291  -311      Pacific Lutheran University Keck Observatory
+918   257.87  -307  -295      Badlands Observatory, Quinn
+919   248.32  -359  -229      Desert Beaver Observatory
+920   282.34  -312  -290      RIT Observatory, Rochester
+921   254.47  -358  -231      SW Institute for Space Research, Cloudcroft
+922   272.83  -351  -241      Timberland Observatory, Decatur
+923   284.63  -327  -273      The Bradstreet Observatory, St. Davids
+924   287.68  -294  -308      Observatoire du Cegep de Trois-Rivieres
+925   249.86  -364  -221      Palominas Observatory
+926   249.12  -364  -221      Tenagra II Observatory
+927   270.56  -313  -288      Madison-YRS
+928   286.68  -323  -278      Moonedge Observatory, Northport
+929   268.78  -368  -215      Port Allen
+930   210.41  -407  +128      Tahiti
+931   210.38  -406  +128      Punaauia
+937   358.69  -248  -346      Bradbury Observatory, Stockton-on-Tees
+938   351.62  -329  -270      Linhaceira
+939   359.94  -328  -271      Observatorio Rodeno
+940   358.96  -269  -329      Waterlooville
+941   359.61  -328  -271      Observatorio Pla D'Arguines
+942   359.36  -258  -339      Grantham
+943   355.87  -272  -327      Peverell
+944   354.08  -340  -257      Observatorio Geminis, Dos Hermanas
+945   354.40  -310  -292      Observatorio Monte Deva
+946     0.79  -323  -278      Ametlla de Mar
+947     2.12  -278  -322      Saint-Sulpice
+948     0.22  -260  -337      Pymoor
+949   359.82  -288  -314      Durtal
+950   342.12  -374  -204      La Palma
+951   358.30  -265  -333      Highworth
+952   359.76  -332  -267      Marxuquera
+953     2.13  -318  -283      Montjoia
+954   343.50  -376  -201      Teide Observatory
+955   350.67  -333  -265      Sassoeiros
+956   356.19  -325  -275      Observatorio Pozuelo
+957   359.35  -303  -299      Merignac
+958   358.97  -309  -293      Observatoire de Dax
+959     1.47  -310  -292      Ramonville Saint Agne
+960     0.61  -269  -330      Rolvenden
+961   356.82  -239  -352      City Observatory, Edinburgh
+962   359.82  -332  -267      Gandia
+963   359.73  -259  -337      Werrington
+964   358.84  -266  -332      Southend Bradfield
+965   351.40  -340  -256      Observacao Astronomica no Algarve, Portimao
+966   357.21  -260  -337      Church Stretton
+967   358.98  -262  -335      Greens Norton
+968     0.42  -263  -335      Haverhill
+969   359.85  -266  -332      London-Regents Park
+970     0.50  -265  -333      Chelmsford
+971   350.81  -333  -265      Lisbon
+972   357.58  -232  -357      Dun Echt
+973   359.67  -265  -332      Harrow
+974     8.92  -305  -297      Genoa
+975   359.63  -330  -270      Valencia
+976   358.48  -261  -336      Leamington Spa
+977   351.55  -250  -344      Markree
+978   357.25  -251  -343      Conder Brow
+979   358.67  -268  -330      South Wonston
+980   357.22  -251  -343      Lancaster
+981   353.35  -249  -345      Armagh
+982   353.66  -255  -341      Dunsink Observatory, Dublin
+983   353.79  -343  -252      San Fernando
+984   357.26  -269  -330      Eastfield
+985   357.53  -259  -337      Telford
+986   358.75  -266  -332      Ascot
+987   355.37  -250  -344      Archallagan Observatory
+988   355.71  -240  -351      Glasgow
+989   357.69  -256  -340      Wilfred Hall Observatory, Preston
+990   356.31  -325  -275      Madrid
+991   356.93  -255  -341      Liverpool (since 1867)
+992   357.00  -255  -341      Liverpool (before 1867)
+993   357.50  -269  -330      Woolston Observatory
+994   359.39  -268  -331      Godalming
+995   358.42  -247  -347      Durham
+996   358.75  -264  -333      Oxford
+997   359.15  -264  -334      Hartwell
+998   359.76  -265  -333      London-Mill Hill
+999   359.47  -303  -299      Bordeaux-Floirac
+-99     9.99   999   999      99
+000     0.00  -266  -332      Greenwich
