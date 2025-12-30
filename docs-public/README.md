@@ -3,7 +3,7 @@
 ## Overview
 
 `docs-public` provides a **front door** documentation website, 
-[https://smithsonian.github.io/docs-public/](https://smithsonian.github.io/docs-public/), 
+[https://smithsonian.github.io/mpc-public/](https://smithsonian.github.io/mpc-public/), 
 allowing external users a simplified means of accessing and searching 
 the MPC's existing documentation pages.
 
@@ -32,4 +32,5 @@ git add <some.file>
 git commit - m 'some message'
 git push 
 ```
- - Navigate to site, `https://Smithsonian.github.io/mpc-software/` (you might need to give it a few seconds to update)
+ - Update the docs, `mkdocs gh-deploy`
+ - Navigate to site, `https://Smithsonian.github.io/mpc-public/` (you might need to give it a few seconds to update)
