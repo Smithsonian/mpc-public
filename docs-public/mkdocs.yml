@@ -1,0 +1,26 @@
+site_name: MPC Documentation Hub
+site_url: https://smithsonian.github.io/docs-public/
+repo_url: https://github.com/Smithsonian/mpc-public/docs-public
+
+theme:
+  name: material
+  features:
+    - navigation.top
+    - navigation.footer
+    - navigation.sections
+    - navigation.tracking
+    - content.code.copy
+    - search.highlight
+    - search.suggest
+
+nav:
+  - Home: index.md
+  - Submit Data: submit-data.md
+  - Data & Services: data-services.md
+
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
+  - tables
+  - attr_list
