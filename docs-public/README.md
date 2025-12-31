@@ -3,9 +3,14 @@
 ## Overview
 
 `docs-public` provides a **front door** documentation website, 
-[https://smithsonian.github.io/mpc-public/](https://smithsonian.github.io/mpc-public/), 
+[https://docs.minorplanetcenter.net/](https://docs.minorplanetcenter.net/), 
 allowing external users a simplified means of accessing and searching 
 the MPC's existing documentation pages.
+
+Note that the default location for the documentation is 
+[https://smithsonian.github.io/mpc-public/](https://smithsonian.github.io/mpc-public/), 
+but https://github.com/Smithsonian/mpc-public/settings/pages has been edited to allow the docs to be served from 
+[https://docs.minorplanetcenter.net/](https://docs.minorplanetcenter.net/) instead. 
 
 As we improve the documentation, more details/pages/documentation will be 
 consolidated *into* [docs-public](https://smithsonian.github.io/docs-public/), 
@@ -33,4 +38,4 @@ git commit - m 'some message'
 git push 
 ```
  - Update the docs, `mkdocs gh-deploy`
- - Navigate to site, `https://Smithsonian.github.io/mpc-public/` (you might need to give it a few seconds to update)
+ - Navigate to site, `https://docs.minorplanetcenter.net/` (you might need to give it a few seconds to update)
