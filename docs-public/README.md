@@ -31,7 +31,7 @@ pip install mkdocs mkdocs-material
  - From the project root, run from the command-line: `mkdocs serve`
  - Then examine in browser: `http://127.0.0.1:8000/docs-public`
 
-4. Examine deployed version 
+5. Examine deployed version 
  - Add, Commit & Push (to branch) 
 ```bash
 git add <some.file>
