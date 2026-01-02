@@ -19,7 +19,7 @@ but for now, this page primarily serves as a *map into the existing documentatio
 
 ## Setup & Development 
 
-1. Install mkdocs ... 
+1. Install mkdocs 
 ```bash
 pip install mkdocs mkdocs-material
 ```
