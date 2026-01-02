@@ -1,0 +1,28 @@
+site_name: MPC Public Documentation Hub
+site_url: https://docs.minorplanetcenter.net/
+repo_url: https://github.com/Smithsonian/mpc-public
+
+theme:
+  name: material
+  features:
+#    - navigation.top
+    - navigation.footer
+    - navigation.expand
+    - navigation.sections
+    - navigation.tracking
+    - content.code.copy
+    - search.highlight
+    - search.suggest
+
+nav:
+  - Home: index.md
+  - Topics of Interest:
+      - Submit Data: submit-data.md
+      - Data & Services: data-services.md
+
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
+  - tables
+  - attr_list
