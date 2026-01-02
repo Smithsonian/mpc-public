@@ -24,7 +24,8 @@ but for now, this page primarily serves as a *map into the existing documentatio
 pip install mkdocs mkdocs-material
 ```
 
-2. Add-to / Alter some documentation 
+2. Make a new branch 
+3. Add-to / Alter some documentation
 
 3. Examine locally 
  - From the project root, run from the command-line: `mkdocs serve`
