@@ -27,7 +27,7 @@ pip install mkdocs mkdocs-material
 2. Make a new branch 
 3. Add-to / Alter some documentation
 
-3. Examine locally 
+4. Examine locally 
  - From the project root, run from the command-line: `mkdocs serve`
  - Then examine in browser: `http://127.0.0.1:8000/docs-public`
 
