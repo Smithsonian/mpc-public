@@ -19,24 +19,46 @@ but for now, this page primarily serves as a *map into the existing documentatio
 
 ## Setup & Development 
 
-1. Install mkdocs 
+1. **Install mkdocs** 
 ```bash
 pip install mkdocs mkdocs-material
 ```
 
-2. Make a new branch 
-3. Add-to / Alter some documentation
+2. **Make a new branch**
+3. **Add-to / Alter some documentation**
 
-4. Examine locally 
+   E.g. Create / Edit one or more *markdown* files such as [docs/index.md](docs/index.md)
+
+4. **Examine locally**
  - From the project root, run from the command-line: `mkdocs serve`
  - Then examine in browser: `http://127.0.0.1:8000/docs-public`
 
-5. Examine deployed version 
- - Add, Commit & Push (to branch) 
+5. Push Branch to Repo & Request Review
 ```bash
 git add <some.file>
 git commit - m 'some message'
 git push 
 ```
+
+ - Open PR. 
+ - Request review.
+
+6. **Update the deployed public version.**
+
  - Update the docs, `mkdocs gh-deploy`
- - Navigate to site, `https://docs.minorplanetcenter.net/` (you might need to give it a few seconds to update)
+```bash
+cd mpc-public/docs-public
+mkdocs gh-deploy
+```
+ - Navigate to site, `https://docs.minorplanetcenter.net/`, and check results are as desired 
+   (you might need to give it a few seconds to update)
+
+ 
+N.B.(1) The WIP git branch does *not* have to be merged for the 
+        `mkdocs gh-deploy` step to update the public site. 
+        This means that it is possible for the public site to be updated 
+        without a PR being opened or a review performed. 
+
+N.B.(2) I assume that the `mkdocs gh-deploy` step could be replaced by 
+        some form of automated, post-merge github action. 
+ 
