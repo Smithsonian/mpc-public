@@ -1,3 +1,9 @@
+# `digest2`
+
+This folder contains the `digest2` code, as well as the `NEOCP_filters` derived from `digest2`
+results. Further details can be found, respectively, in [digest2/README.md](digest2/README.md)
+and [NEOCP_filters/README.md](NEOCP_filters/README.md)
+
 ## Installation: building `digest2` from source
 
 Requirements:
@@ -15,7 +21,7 @@ To build and install `digest2` (from the `mpc-public` repo root) run the followi
 ## Usage
 
 Here we illustrate how to use `digest2`; more detailed options and be found in
-[digest2/digest2/OPERATION.md](digest2/digest2/OPERATION.md). Run `./digest2 sample.obs` to verify
+[OPERATION.md](digest2/OPERATION.md). Run `./digest2 sample.obs` to verify
 the build (sample observation file `sample.obs` is provided for testing). This should produce the
 following output (small differences might occur):
 ```
