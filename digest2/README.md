@@ -43,7 +43,7 @@ Notes:
 ## `digest2/NEOCP_filters`:
 
 This subfolder contains tools and sample data for filtering digest2 output to separate likely NEOs from
-non‑NEOs with the methods documented in “[Veres et al. (2025)](https://arxiv.org/abs/2505.11910)” (Vereš, Cloete, Payne, Loeb; arXiv:2505.11910).
+non‑NEOs with the methods documented in [Veres et al. (2025)](https://arxiv.org/abs/2505.11910).
 
 ## Installation and requirements
 
@@ -130,4 +130,4 @@ python neocp_filter.py ../digest2/sample.digest2.csv optimal_thresholds.json
 In this example, we have used `sample.xml`, which corresponds to an NEO tracklet. Thus, in this
 case, `neocp_filter.py` produces no output. Otherwise, if the input observations file has non-NEO
 tracklets, then `neocp_filter.py` will output the tracklets which have a high likelihood of
-corresponding to non-NEO tracklets, as detailed by Veres et al. (2025).
+being non-NEO tracklets, as detailed by Veres et al. (2025).
