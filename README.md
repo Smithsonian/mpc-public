@@ -60,21 +60,22 @@ Notes:
 #### `digest2/NEOCP_filters`:
 
 This subfolder contains tools and sample data for filtering digest2 output to separate likely NEOs from
-non‑NEOs with the methods documented in “[Improving the discovery of near-Earth objects with machine-learning methods](https://arxiv.org/abs/2505.11910)” (Vereš, Cloete, Payne, Loeb; arXiv:2505.11910).
+non‑NEOs with the methods documented in “[Veres et al. (2025)](https://arxiv.org/abs/2505.11910)” (Vereš, Cloete, Payne, Loeb; arXiv:2505.11910).
 
 ##### Installation and requirements
 
-In order to use the `NEOCP_filters` code, a `python` installation with an environment where `pandas`
-is available. To install `pandas` e.g. using `pip` the following command can be run:
-`python -m pip install pandas`. We note that in order to use `find_filter.py` and `neocp_filter.py`,
-the output from `digest2` has to be converted to the appropriate CSV format.
+In order to use the `NEOCP_filters` code, a `python` installation (3.6+) with an environment where `pandas`
+is available is required. The `pandas` package can be installed in a python environment e.g. using
+`pip` running the following command: `python -m pip install pandas`. We note that in order to use
+`find_filter.py` and `neocp_filter.py`, the output from `digest2` has to be converted to the
+appropriate CSV format expected by these tools.
 
 Example data file `digest_data_19-24.csv` includes digest2 output in CSV format for NEOCP data
 collected between 2019-2023; data file `digest_data_24.csv` includes digest2 output in CSV format for
 NEOCP data collected during 2024. Derived thresholds following the methods from the paper are found
 in `optimal_thresholds.json`.
 
-##### Code tools:
+##### Code tools
 
 - `find_filter.py`: reads a digest2 CSV (e.g., `digest_data_19-24.csv`) and produces a JSON threshold
   model `optimal_thresholds.json`. Example:
@@ -85,6 +86,68 @@ in `optimal_thresholds.json`.
   ```
   python3 neocp_filter.py digest_data_24.csv optimal_thresholds.json
   ```
+
+##### Example
+
+Add the configuration file `digest2.conf` in the directory where the `digest2` binary lives, with the
+following contents:
+
+```
+repeatable
+norms
+raw
+noid
+Int
+NEO
+MC
+Hun
+Pho
+MB1
+Pal
+Han
+MB2
+MB3
+Hil
+JTr
+JFC
+```
+
+Then, run `digest2` on an ADES XML observations file, e.g. `sample.xml`, and save the results into
+`sample.digest2`:
+
+```sh
+./digest2 sample.xml -c my_digest2.conf > sample.digest2
+```
+
+Next, in a python session, run:
+```python
+with open("sample.digest2", "r") as infile:
+    lines = infile.readlines()[2:]  # skip header lines
+
+output_lines = []
+for line in lines:
+    fields = line.strip().split()
+    fields.append("0")  # Add class column with value 0, not used
+    output_lines.append(",".join(fields))
+
+with open("sample.digest2.csv", "w") as outfile:
+    outfile.write("trksub,Int1,Int2,Neo1,Neo2,MC1,MC2,Hun1,Hun2,Pho1,Pho2,MB1_1,MB1_2,Pal1,Pal2,Han1,Han2,MB2_1,MB2_2,MB3_1,MB3_2,Hil1,Hil2,JTr1,JTr2,JFC1,JFC2,class\n")
+    for line in output_lines:
+        outfile.write(line + "\n")
+```
+
+This will produce the file `sample.digest2.csv`, which has converted the `digest2` output file
+`sample.digest2` to the CSV format expected by `neocp_filter.py`. This means we can now run
+`neocp_filter.py` on `sample.digest2.csv` as follows:
+
+```sh
+python neocp_filter.py ../digest2/sample.digest2.csv optimal_thresholds.json
+```
+
+In this example, we have used `sample.xml`, which corresponds to an NEO tracklet. Thus, in this
+case, `neocp_filter.py` produces no output. Otherwise, if the input observations file has non-NEO
+tracklets, then `neocp_filter.py` will output the tracklets which have a high likelihood of
+corresponding to non-NEO tracklets, as detailed by Veres et al. (2025).
 
 ### docs-public
 Last Update: 2026-01-29
