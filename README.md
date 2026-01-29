@@ -27,18 +27,35 @@ Requirements:
 - C99-capable C compiler (e.g., `gcc` or `clang`)
 - `make`
 - `libxml2` development headers (`libxml2-dev` or `libxml2-devel`)
+- Optional: internet connection to download latest list of observatory codes from the MPC website.
 
 To build and install `digest2` (from the `mpc-public` repo root) run the following commands:
 1. `cd digest2/digest2` — this is the directory containing the `Makefile` used by `make` to build `digest2`.
 2. `make` — builds the `digest2` executable in the same directory.
 3. Ensure the runtime data files are alongside the executable:
    - `digest2.model`, `digest2.model.csv`, and `MPC.config` (found under `digest2/population`; updated versions can be copied in when available).
-4. Quick check: run `./digest2 sample.obs` to verify the build (sample observation file `sample.obs` is provided for testing).
+
+#### Usage
+
+Here we illustrate how to use `digest2`; more detailed options and be found in
+[digest2/digest2/OPERATION.md](digest2/digest2/OPERATION.md). Run `./digest2 sample.obs` to verify
+the build (sample observation file `sample.obs` is provided for testing). This should produce the
+following output (small differences might occur):
+```
+Desig.    RMS Int NEO N22 N18 Other Possibilities
+K16S99K  0.73   0   2   1   0 (MC 2) (MB1 93) (MB2 3) (JFC <1)
+```
 
 Notes:
-- If the program cannot reach the Minor Planet Center to fetch observatory parallax data, place a copy of `obscode.dat` as `digest2.obscodes` in the same directory as the executable.
-- The provided `Makefile` is minimal and may require small tweaks for non-Linux platforms (see `digest2/digest2/BUILDING.md` for details).
-- `libxml2`: the code uses libxml2 for XML parsing (ADES input). Install the development package from your platform: on Debian/Ubuntu `sudo apt-get install libxml2 libxml2-dev`; on RHEL/CentOS/Fedora `sudo dnf install libxml2 libxml2-devel`; on macOS `brew install libxml2` (then ensure its headers are on your include path via Homebrew’s `pkg-config`).
+- If the program cannot reach the Minor Planet Center to fetch observatory codes data, place a copy
+  of `obscode.dat` as `digest2.obscodes` in the same directory as the executable.
+- The provided `Makefile` is minimal and may require small tweaks for non-Linux platforms (see
+  `digest2/digest2/BUILDING.md` for details).
+- `libxml2`: the code uses libxml2 for XML parsing (ADES input). Install the development package from
+  your platform: on Debian/Ubuntu `sudo apt-get install libxml2 libxml2-dev`; on RHEL/CentOS/Fedora 
+  `sudo dnf install libxml2 libxml2-devel`; on macOS `brew install libxml2` (then ensure its headers 
+  are on your include path via Homebrew’s `pkg-config`).
+- Command-line help can be obtained doing `./digest2 --help`.
 
 ### docs-public
 Last Update: 2026-01-29
