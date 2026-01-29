@@ -21,7 +21,7 @@ but for now, this page primarily serves as a *map into the existing documentatio
 
 1. **Install mkdocs** 
 ```bash
-pip install mkdocs mkdocs-material
+pip install mkdocs mkdocs-material mkdocs-jupyter
 ```
 
 2. **Make a new branch**
