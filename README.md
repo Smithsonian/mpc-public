@@ -57,7 +57,37 @@ Notes:
   are on your include path via Homebrew’s `pkg-config`).
 - Command-line help can be obtained doing `./digest2 --help`.
 
+#### `digest2/NEOCP_filters`:
+
+This subfolder contains tools and sample data for filtering digest2 output to separate likely NEOs from
+non‑NEOs with the methods documented in “[Improving the discovery of near-Earth objects with machine-learning methods](https://arxiv.org/abs/2505.11910)” (Vereš, Cloete, Payne, Loeb; arXiv:2505.11910).
+
+##### Installation and requirements
+
+In order to use the `NEOCP_filters` code, a `python` installation with an environment where `pandas`
+is available. To install `pandas` e.g. using `pip` the following command can be run:
+`python -m pip install pandas`. We note that in order to use `find_filter.py` and `neocp_filter.py`,
+the output from `digest2` has to be converted to the appropriate CSV format.
+
+Example data file `digest_data_19-24.csv` includes digest2 output in CSV format for NEOCP data
+collected between 2019-2023; data file `digest_data_24.csv` includes digest2 output in CSV format for
+NEOCP data collected during 2024. Derived thresholds following the methods from the paper are found
+in `optimal_thresholds.json`.
+
+##### Code tools:
+
+- `find_filter.py`: reads a digest2 CSV (e.g., `digest_data_19-24.csv`) and produces a JSON threshold
+  model `optimal_thresholds.json`. Example:
+  ```
+  python3 find_filter.py digest_data_19-24.csv
+  ```
+- `neocp_filter.py`: applies the JSON model to new digest2 output to select assumed non‑NEOs. Example:
+  ```
+  python3 neocp_filter.py digest_data_24.csv optimal_thresholds.json
+  ```
+
 ### docs-public
 Last Update: 2026-01-29
  - `docs-public` provides a landing page for the MPC's documentation website, 
 [https://docs.minorplanetcenter.net/](https://docs.minorplanetcenter.net/). 
+
