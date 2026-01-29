@@ -13,12 +13,19 @@ theme:
     - content.code.copy
     - search.highlight
     - search.suggest
+  custom_dir: overrides
+
+plugins:
+  - search
+  - mkdocs-jupyter:
+      execute: false        # recommended for docs builds
+      include_source: true  # optional: adds a source link / page.nb_url
 
 nav:
   - Home: index.md
   - Topics of Interest:
-      - Submit Data: submit-data.md
       - Data & Services: data-services.md
+      - Tutorials: tutorials.md
 
 markdown_extensions:
   - admonition
