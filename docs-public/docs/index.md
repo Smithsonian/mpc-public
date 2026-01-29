@@ -13,7 +13,6 @@ Use the buttons below to navigate to specific topics of interest.
 
 ## 🚀 Specific Topics of Interest
 
-[Submit Data](submit-data.html){ .md-button }
-
 [Data &amp; Services](data-services.html){ .md-button }
 
+[Tutorials](tutorials.html){ .md-button }

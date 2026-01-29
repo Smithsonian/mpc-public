@@ -6,9 +6,6 @@ Notes for MPC staff/developers can be found in *DEVELOPER_NOTES.md*
 
 ## Current contents 
 
-As of May 2023, only the *mpc_orb* component exists within *mpc-public*.
-The MPC intends to add additional components over the coming months. 
-
 ### mpc_orb
 Last Update: 2025-02-25
  - Introduction of a new version: 0.5
@@ -19,5 +16,10 @@ Last Update: 2025-02-25
     - json-schema files to define the standard;
     - sample orbit files in the format;
     - python code to parse & validate example orbit files.
+
+### docs-public
+Last Update: 2026-01-29
+ - `docs-public` provides a landing page for the MPC's documentation website, 
+[https://docs.minorplanetcenter.net/](https://docs.minorplanetcenter.net/). 
 
 
