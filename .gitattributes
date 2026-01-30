@@ -43,3 +43,8 @@ digest2/population/digest2.obscodes filter=lfs diff=lfs merge=lfs -text
 digest2/archive/02/a.out filter=lfs diff=lfs merge=lfs -text
 digest2/archive/02/d2 filter=lfs diff=lfs merge=lfs -text
 digest2/digest2/digest2.dSYM/Contents/Resources/DWARF/digest2 filter=lfs diff=lfs merge=lfs -text
+digest2/archive/0.223/src/ET filter=lfs diff=lfs merge=lfs -text
+digest2/archive/0.223/src/OBSERVATORY filter=lfs diff=lfs merge=lfs -text
+digest2/archive/01/obscode.dat filter=lfs diff=lfs merge=lfs -text
+digest2/archive/02/obscode.dat filter=lfs diff=lfs merge=lfs -text
+digest2/NEOCP_filters/filtered_pass.csv filter=lfs diff=lfs merge=lfs -text
