@@ -1,0 +1,9 @@
+digest2
+digest2.model
+digest2.model.csv
+digest2.obscodes
+*.config
+*.bz2
+*.gz
+*.obs
+*~

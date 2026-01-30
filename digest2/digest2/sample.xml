@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ades version="2017">
+      <optical>
+        <provID>2016 SK99</provID>
+        <trkSub>C8QY322</trkSub>
+        <obsID>LZtCx18M0000F0eb010000LNh</obsID>
+        <trkID>00000H3GA8</trkID>
+        <mode>CCD</mode>
+        <stn>G96</stn>
+        <prog>01</prog>
+        <obsTime>2022-12-25T09:14:20.991Z</obsTime>
+        <ra>128.151180</ra>
+        <dec>17.176650</dec>
+        <rmsRA>0.247</rmsRA>
+        <rmsDec>0.301</rmsDec>
+        <rmsCorr>-0.0054</rmsCorr>
+        <astCat>Gaia2</astCat>
+        <mag>21.98</mag>
+        <rmsMag>0.318</rmsMag>
+        <band>G</band>
+        <photCat>Gaia2</photCat>
+        <logSNR>0.600</logSNR>
+        <rmsFit>0.088</rmsFit>
+        <nStars>7181</nStars>
+        <ref>MPS  1726996</ref>
+        <subFmt>A17</subFmt>
+      </optical>
+      <optical>
+        <provID>2016 SK99</provID>
+        <trkSub>C8QY322</trkSub>
+        <obsID>LZtCx18M0000F0eb010000LNi</obsID>
+        <trkID>00000H3GA8</trkID>
+        <mode>CCD</mode>
+        <stn>G96</stn>
+        <prog>01</prog>
+        <obsTime>2022-12-25T09:29:11.606Z</obsTime>
+        <ra>128.148480</ra>
+        <dec>17.177020</dec>
+        <rmsRA>0.431</rmsRA>
+        <rmsDec>0.438</rmsDec>
+        <rmsCorr>0.0</rmsCorr>
+        <astCat>Gaia2</astCat>
+        <mag>21.72</mag>
+        <rmsMag>0.328</rmsMag>
+        <band>G</band>
+        <photCat>Gaia2</photCat>
+        <logSNR>0.599</logSNR>
+        <rmsFit>0.083</rmsFit>
+        <nStars>7181</nStars>
+        <ref>MPS  1726996</ref>
+        <subFmt>A17</subFmt>
+      </optical>
+      <optical>
+        <provID>2016 SK99</provID>
+        <trkSub>C8QY322</trkSub>
+        <obsID>LZtCx18M0000F0eb010000LNj</obsID>
+        <trkID>00000H3GA8</trkID>
+        <mode>CCD</mode>
+        <stn>G96</stn>
+        <prog>01</prog>
+        <obsTime>2022-12-25T09:36:34.723Z</obsTime>
+        <ra>128.147805</ra>
+        <dec>17.177050</dec>
+        <rmsRA>0.561</rmsRA>
+        <rmsDec>0.573</rmsDec>
+        <rmsCorr>0.0</rmsCorr>
+        <astCat>Gaia2</astCat>
+        <mag>21.31</mag>
+        <rmsMag>0.327</rmsMag>
+        <band>G</band>
+        <photCat>Gaia2</photCat>
+        <logSNR>0.576</logSNR>
+        <rmsFit>0.085</rmsFit>
+        <nStars>7181</nStars>
+        <ref>MPS  1726996</ref>
+        <subFmt>A17</subFmt>
+      </optical>
+</ades>
