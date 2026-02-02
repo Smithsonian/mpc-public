@@ -5,9 +5,10 @@ repo_url: https://github.com/Smithsonian/mpc-public
 theme:
   name: material
   features:
-#    - navigation.top
+    - navigation.top
     - navigation.footer
     - navigation.expand
+    - navigation.indexes
     - navigation.sections
     - navigation.tracking
     - content.code.copy
@@ -23,9 +24,10 @@ plugins:
 
 nav:
   - Home: index.md
-  - Topics of Interest:
-      - Data & Services: data-services.md
-      - Tutorials: tutorials.md
+  - MPC Documentation:
+    - mpc-ops-docs/index.md
+  - MPC Tutorials:
+    - tutorials/index.md
 
 markdown_extensions:
   - admonition
@@ -33,3 +35,6 @@ markdown_extensions:
       permalink: true
   - tables
   - attr_list
+
+extra_css:
+  - stylesheets/nav-buttons.css

@@ -1,10 +1,9 @@
-# Tutorials
+# MPC Tutorials
 
 This page provides links to tutorials demonstrating how to use various MPC data and services.
 
-We welcome suggestions via the 
-[Jira-Helpdesk](https://mpc-service.atlassian.net/servicedesk/customer/portal/13/create/148) 
-for additional tutorial topics.
+We welcome suggestions regarding additional tutorial topics: please contact us via the 
+MPC's [Jira-Helpdesk](https://mpc-service.atlassian.net/servicedesk/customer/portal/13/create/148).
 
 ---
 
