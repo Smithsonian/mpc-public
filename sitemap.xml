@@ -2,18 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://docs.minorplanetcenter.net/index.html</loc>
-         <lastmod>2026-01-29</lastmod>
+         <lastmod>2026-02-02</lastmod>
     </url>
     <url>
-         <loc>https://docs.minorplanetcenter.net/data-services.html</loc>
-         <lastmod>2026-01-29</lastmod>
+         <loc>https://docs.minorplanetcenter.net/mpc-ops-docs/index.html</loc>
+         <lastmod>2026-02-02</lastmod>
     </url>
     <url>
-         <loc>https://docs.minorplanetcenter.net/tutorials.html</loc>
-         <lastmod>2026-01-29</lastmod>
+         <loc>https://docs.minorplanetcenter.net/tutorials/index.html</loc>
+         <lastmod>2026-02-02</lastmod>
     </url>
     <url>
-         <loc>https://docs.minorplanetcenter.net/notebooks/mpc_tutorial_designation-identifier_01.html</loc>
-         <lastmod>2026-01-29</lastmod>
+         <loc>https://docs.minorplanetcenter.net/tutorials/notebooks/mpc_tutorial_designation-identifier_01.html</loc>
+         <lastmod>2026-02-02</lastmod>
     </url>
 </urlset>
