@@ -7,11 +7,7 @@ MPC's [Jira-Helpdesk](https://mpc-service.atlassian.net/servicedesk/customer/por
 
 ---
 
-## 1. Submission of Observations 
+<div id="contents-grid"></div>  
 
-TBD
-
-## 2. API Tutorials
-
- - [Designation-Identifier API](notebooks/mpc_tutorial_designation-identifier_01.ipynb)
-
+- [Submission of Observations](submission_tutorials.md)
+- [API Tutorials](api_tutorials.md)

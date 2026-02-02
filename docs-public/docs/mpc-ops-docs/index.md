@@ -7,10 +7,10 @@ It is intended as an alternate entry point for MPC documentation and services.
 It is intended that the [MPC Ops documentation](https://minorplanetcenter.net/mpcops/documentation/) landing page
 will soon be **replaced** by this simplified page.
 
+[//]: # (Empty element list to turn on gridformatting, but with now visible content )
 
-
-## Contents { #contents-grid }
-
+<div id="contents-grid"></div>  
+    
 - [FAQs](faqs.md)
 - [Astrometry Guide](astrometry.md)
 - [APIs](apis.md)

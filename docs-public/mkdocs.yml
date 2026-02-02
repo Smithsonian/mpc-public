@@ -38,3 +38,4 @@ markdown_extensions:
 
 extra_css:
   - stylesheets/nav-buttons.css
+  - stylesheets/grid-buttons.css
