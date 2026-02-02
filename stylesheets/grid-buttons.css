@@ -1,0 +1,24 @@
+/* ============================================
+   Material for MkDocs — grid of button cards
+   ============================================ */
+
+/* Escape Material content constraints */
+.grid-wrapper {
+  width: 100%;
+}
+
+/* Force grid layout */
+.grid-wrapper .md-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 0.75rem;
+}
+
+/* Make buttons fill their grid cell */
+.grid-wrapper .md-grid__item .md-button {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  text-align: center;
+  border-radius: 0.75rem;
+  white-space: normal;
+}
