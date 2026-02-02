@@ -31,7 +31,7 @@ pip install mkdocs mkdocs-material mkdocs-jupyter
 
 4. **Examine locally**
  - From the project root, run from the command-line: `mkdocs serve`
- - Then examine in browser: `http://127.0.0.1:8000/docs-public`
+ - Then examine in browser: `http://127.0.0.1:8000/index.html`
 
 5. Push Branch to Repo & Request Review
 ```bash
