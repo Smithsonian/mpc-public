@@ -30,15 +30,20 @@ K16S99K  0.73   0   2   1   0 (MC 2) (MB1 93) (MB2 3) (JFC <1)
 ```
 
 Notes:
-- If the program cannot reach the Minor Planet Center to fetch observatory codes data, place a copy
-  of `obscode.dat` as `digest2.obscodes` in the same directory as the executable.
+- If you have internet connection `digest2` will download the latest observatory parallax data from
+  the Minor Planet Center. If no internet connection is available, you will need to download the
+  `obscode.dat` file from the Minor Planet Center and place it in the current directory with the name
+  `digest2.obscodes`.
 - The provided `Makefile` is minimal and may require small tweaks for non-Linux platforms (see
   `digest2/digest2/BUILDING.md` for details).
-- `libxml2`: the code uses libxml2 for XML parsing (ADES input). Install the development package from
-  your platform: on Debian/Ubuntu `sudo apt-get install libxml2 libxml2-dev`; on RHEL/CentOS/Fedora 
-  `sudo dnf install libxml2 libxml2-devel`; on macOS `brew install libxml2` (then ensure its headers 
-  are on your include path via Homebrew’s `pkg-config`).
+- `libxml2`: the code uses libxml2 for XML parsing (ADES input). If not yet installed: install the
+  development package for your platform: on Debian/Ubuntu `sudo apt-get install libxml2 libxml2-dev`;
+  on RHEL/CentOS/Fedora `sudo dnf install libxml2 libxml2-devel`; on macOS `brew install libxml2`
+  (then ensure its headers are on your include path via Homebrew’s `pkg-config`).
 - Command-line help can be obtained doing `./digest2 --help`.
+- To execute from a path different from the path where the `digest2` binary lives, the `-p` option
+  can be used, e.g.: `/full/path/to/digest2/folder/digest2 some.obs -p '/full/path/to/digest2/folder'`.
+  Note that the path to the `digest2` binary and the path provided in the `-p` do not need to match.
 
 ## `digest2/NEOCP_filters`:
 
