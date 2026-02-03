@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://docs.minorplanetcenter.net/tutorials/notebooks/mpc_tutorial_api_submission_status.html">
+        <link rel="canonical" href="https://docs.minorplanetcenter.net/tutorials/notebooks/mpc_tutorial_api_submission_submission.html">
       
       
       
@@ -21,7 +21,7 @@
     
     
       
-        <title>MPC Submission Status - MPC Public Documentation Hub</title>
+        <title>MPC Submission - MPC Public Documentation Hub</title>
       
     
     
@@ -66,7 +66,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#mpc-submission-status" class="md-skip">
+        <a href="#mpc-submission" class="md-skip">
           Skip to content
         </a>
       
@@ -102,7 +102,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              MPC Submission Status
+              MPC Submission
             
           </span>
         </div>
@@ -413,10 +413,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#this-tutorial-provides-information-on-how-to-use-the-minor-planet-centers-submission-status-api" class="md-nav__link">
+  <a href="#this-tutorial-provides-information-on-how-to-submit-an-ades-formated-file-of-observations-to-the-minor-planet-center" class="md-nav__link">
     <span class="md-ellipsis">
       
-        This tutorial provides information on how to use the Minor Planet Center's Submission Status API.
+        This tutorial provides information on how to submit an ADES-formated file of observations to the Minor Planet Center.
       
     </span>
   </a>
@@ -437,7 +437,7 @@
               <article class="md-content__inner md-typeset">
                 
 
-  <a href="/tutorials/notebooks/mpc_tutorial_api_submission_status.ipynb" title="Download Notebook" class="md-content__button md-icon">
+  <a href="/tutorials/notebooks/mpc_tutorial_api_submission_submission.ipynb" title="Download Notebook" class="md-content__button md-icon">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 20h14v-2H5m14-9h-4V3H9v6H5l7 7z"/></svg>
   </a>
 
@@ -892,17 +892,29 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="mpc-submission-status">MPC Submission Status<a class="anchor-link" href="#mpc-submission-status">¶</a></h1><h4 id="this-tutorial-provides-information-on-how-to-use-the-minor-planet-centers-submission-status-api">This tutorial provides information on how to use the Minor Planet Center's Submission Status API.<a class="anchor-link" href="#this-tutorial-provides-information-on-how-to-use-the-minor-planet-centers-submission-status-api">¶</a></h4><p>The Minor Planet Center's <code>Submission Status</code> service will return information on the status of an MPC data submission.</p>
-<p>This can be useful if you previously submitted observations to the MPC, received a <code>Submission-ID</code>, and would now like to understand whether that submission has been ingested into the MPC's system, or whether it has been rejected (and if so, why).</p>
+<h1 id="mpc-submission">MPC Submission<a class="anchor-link" href="#mpc-submission">¶</a></h1><h4 id="this-tutorial-provides-information-on-how-to-submit-an-ades-formated-file-of-observations-to-the-minor-planet-center">This tutorial provides information on how to submit an ADES-formated file of observations to the Minor Planet Center.<a class="anchor-link" href="#this-tutorial-provides-information-on-how-to-submit-an-ades-formated-file-of-observations-to-the-minor-planet-center">¶</a></h4><p>This tutorial assumes you have successfully created and validated an ADES-formated file of observations.</p>
 <ul>
-<li>Further information on how to perform the precursor step of submitting observations to the MPC can be found in the following companion tutorial:
-<a href="https://docs.minorplanetcenter.net/tutorials/notebooks/mpc_tutorial_api_submission_submission.html">https://docs.minorplanetcenter.net/tutorials/notebooks/mpc_tutorial_api_submission_submission.html</a></li>
+<li>Information on how to undertake the precursor step of <em>constructing</em> an ADES-formated file of observations can be found at:<ul>
+<li><strong>to be inserted</strong></li>
 </ul>
-<p>The Designation Identifier API is a REST endpoint, therefore you can use your language of choice to send GET requests to the following URL:</p>
-<pre><code>https://data.minorplanetcenter.net/api/submission-status</code></pre>
-<p>In the examples below we use python code to query the api.</p>
-<p>Further information and documentation concerning the <code>Submission Status</code> service and its associated api can be found at:
-<a href="https://minorplanetcenter.net/mpcops/documentation/submission-status-api/">https://minorplanetcenter.net/mpcops/documentation/submission-status-api/</a></p>
+</li>
+<li>Information and documentation on the <code>ADES</code> standard can be found at:<ul>
+<li><a href="https://www.minorplanetcenter.net/mpcops/documentation/ades/">https://www.minorplanetcenter.net/mpcops/documentation/ades/</a></li>
+<li><a href="https://github.com/IAU-ADES/ADES-Master">https://github.com/IAU-ADES/ADES-Master</a></li>
+</ul>
+</li>
+</ul>
+<p>In the examples below we use <a href="https://en.wikipedia.org/wiki/Python_(programming_language">python</a>) code to demonstrate the submission of observations, but one can use other tools such as <a href="https://en.wikipedia.org/wiki/CURL">cURL</a> to submit observations.</p>
+<p>Further information and documentation concerning the submission of data to the MPC can be found at:</p>
+<ul>
+<li><a href="https://minorplanetcenter.net/iau/info/commandlinesubmissions.html">https://minorplanetcenter.net/iau/info/commandlinesubmissions.html</a></li>
+<li><a href="https://www.minorplanetcenter.net/iau/info/TechInfo.html">https://www.minorplanetcenter.net/iau/info/TechInfo.html</a></li>
+<li><a href="https://www.minorplanetcenter.net/mpcops/documentation/ades/">https://www.minorplanetcenter.net/mpcops/documentation/ades/</a></li>
+<li><a href="https://minorplanetcenter.net/submit_xml">https://minorplanetcenter.net/submit_xml</a></li>
+<li><a href="https://minorplanetcenter.net/submit_psv">https://minorplanetcenter.net/submit_psv</a></li>
+<li><a href="https://minorplanetcenter.net/submit_xml_test">https://minorplanetcenter.net/submit_xml_test</a></li>
+<li><a href="https://minorplanetcenter.net/submit_psv_test">https://minorplanetcenter.net/submit_psv_test</a></li>
+</ul>
 </div>
 </div>
 </div>
@@ -913,7 +925,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="import-packages">Import Packages<a class="anchor-link" href="#import-packages">¶</a></h1><p>Here we import the standard python packages need to call the api &amp; interpret the returned data</p>
+<h1 id="import-packages">Import Packages<a class="anchor-link" href="#import-packages">¶</a></h1><p>Here we import the standard python packages we use in this tutorial</p>
 </div>
 </div>
 </div>
@@ -923,7 +935,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-1">
@@ -937,45 +949,40 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </clipboard-copy>
 </div>
 <div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">atexit</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 </pre></div>
 <div class="clipboard-copy-txt" id="cell-1">import requests
-import json</div>
+import tempfile
+import atexit
+import os</div>
 </div>
 </div>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=72bd5357-0123-448b-9614-5c449a1d25ee">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=003f4c51-5617-4b30-a48a-e298ddd4c551">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="submission-status-query">Submission Status Query<a class="anchor-link" href="#submission-status-query">¶</a></h1><p>Your request must provide a JSON object payload containing the <code>submission_id</code> of interest.</p>
-<p>E.g. <code>{"submission_id": "2026-01-01T00:05:07.453_0000BhCE"}</code></p>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ea0e0565-8f5c-49ef-aae0-1d0b91f80e79">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="querying-a-successfully-accepted-submission">Querying a successfully accepted submission<a class="anchor-link" href="#querying-a-successfully-accepted-submission">¶</a></h3><p>In the following example we see that the submission was <em>accepted</em>.</p>
+<h1 id="sample-ades-files">Sample ADES Files<a class="anchor-link" href="#sample-ades-files">¶</a></h1><p>Here we download sample XML and PSV files from the MPC's website, and save them to local (temporary) files.</p>
+<p>These files are known to be valid.</p>
+<p>If you have created your own ADES file(s) for submission to the MPC, then this download of sample files is not necessary.</p>
+<p>The local, temporary files will be deleted after this notebook exits.</p>
 </div>
 </div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=1d1067e7-5b7f-456f-bd09-69034e8280ed">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=40fe587c-4785-4628-a348-4396f9558be6">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [19]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-2">
@@ -988,25 +995,42 @@ import json</div>
 </div>
 </clipboard-copy>
 </div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># Call the api using the `requests` package </span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-    <span class="s2">"https://data.minorplanetcenter.net/api/submission-status"</span><span class="p">,</span> 
-    <span class="n">json</span><span class="o">=</span> <span class="p">{</span><span class="s2">"submission_id"</span><span class="p">:</span> <span class="s2">"2026-01-01T00:05:07.453_0000BhCE"</span><span class="p">}</span>
-<span class="p">)</span>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># Define the files that we want fetch &amp; save </span>
+<span class="n">mpc_urls</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"https://www.minorplanetcenter.net/media/ades/goodsubmit.xml.txt"</span><span class="p">,</span> 
+    <span class="s2">"https://www.minorplanetcenter.net/media/ades/goodsubmit.psv.txt"</span><span class="p">]</span>
 
-<span class="c1"># Print the response, making use of the `json` package</span>
-<span class="n">sedna_json</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">sedna_json</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">local_filenames</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"sample.xml"</span><span class="p">,</span> <span class="s2">"sample.psv"</span><span class="p">]</span>
+<span class="n">temp_filepaths</span> <span class="o">=</span> <span class="p">{}</span> 
+
+<span class="c1"># Get the data and save it</span>
+<span class="k">for</span> <span class="n">local_filename</span><span class="p">,</span> <span class="n">mpc_url</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">local_filenames</span><span class="p">,</span> <span class="n">mpc_urls</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">'w'</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="n">local_filename</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">:],</span> <span class="n">delete</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>  <span class="c1"># Open temp file</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">mpc_url</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>  <span class="c1"># Write the data to temp file </span>
+        <span class="n">temp_filepaths</span><span class="p">[</span><span class="n">local_filename</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">:]]</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span>  <span class="c1"># Save the filepath of the temp file </span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Saved </span><span class="si">{</span><span class="n">mpc_url</span><span class="si">}</span><span class="s2"> to: </span><span class="si">{</span><span class="n">temp_filepaths</span><span class="p">[</span><span class="n">local_filename</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">:]]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    
+        <span class="c1"># Register a cleanup function that will execute when the notebook exits. </span>
+        <span class="n">atexit</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-2"># Call the api using the `requests` package 
-response = requests.get(
-    "https://data.minorplanetcenter.net/api/submission-status", 
-    json= {"submission_id": "2026-01-01T00:05:07.453_0000BhCE"}
-)
+<div class="clipboard-copy-txt" id="cell-2"># Define the files that we want fetch &amp; save 
+mpc_urls = [
+    "https://www.minorplanetcenter.net/media/ades/goodsubmit.xml.txt", 
+    "https://www.minorplanetcenter.net/media/ades/goodsubmit.psv.txt"]
 
-# Print the response, making use of the `json` package
-sedna_json = response.json()
-print(json.dumps(sedna_json, indent=4))
+local_filenames = ["sample.xml", "sample.psv"]
+temp_filepaths = {} 
+
+# Get the data and save it
+for local_filename, mpc_url in zip(local_filenames, mpc_urls):
+    with tempfile.NamedTemporaryFile(mode='w', suffix=local_filename[-4:], delete=False) as f:  # Open temp file
+        f.write(requests.get(mpc_url).text)  # Write the data to temp file 
+        temp_filepaths[local_filename[-3:]] = f.name  # Save the filepath of the temp file 
+        print(f"Saved {mpc_url} to: {temp_filepaths[local_filename[-3:]]}")
+    
+        # Register a cleanup function that will execute when the notebook exits. 
+        atexit.register(lambda: os.unlink(f.name) if os.path.exists(f.name) else None)
+
 </div>
 </div>
 </div>
@@ -1019,11 +1043,8 @@ print(json.dumps(sedna_json, indent=4))
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>{
-    "accepted": true,
-    "pipeline_entry_time": "2026-01-01T00:06:00.696565+00:00",
-    "fault_events": []
-}
+<pre>Saved https://www.minorplanetcenter.net/media/ades/goodsubmit.xml.txt to: /var/folders/67/j23cbc8x5r3b_1cy48v0rf4m0000gq/T/tmp0lp20j87.xml
+Saved https://www.minorplanetcenter.net/media/ades/goodsubmit.psv.txt to: /var/folders/67/j23cbc8x5r3b_1cy48v0rf4m0000gq/T/tmpvrww931j.psv
 </pre>
 </div>
 </div>
@@ -1031,23 +1052,37 @@ print(json.dumps(sedna_json, indent=4))
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=bbed6168-0443-43a6-915f-17634e55d474">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6097a89f-b2c8-43f5-9364-56b84e9d57e0">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="querying-a-successfully-accepted-submission-with-warnings-that-did-not-prevent-acceptance">Querying a successfully accepted submission with warnings (that did <em>not</em> prevent acceptance)<a class="anchor-link" href="#querying-a-successfully-accepted-submission-with-warnings-that-did-not-prevent-acceptance">¶</a></h3><p>In the following two examples we see that the submission was <em>accepted</em>, but there is some warning content in the <code>fault_events</code> field.</p>
+<h1 id="test-submission">Test Submission<a class="anchor-link" href="#test-submission">¶</a></h1><p>Here we demonstrate the submission of the above sample ADES files to the MPC's <strong>test</strong> submission URLs.</p>
+<p>We use the <strong>test</strong> endpoint as we do not want to spam the MPC's main pipeline with unnecessary submissions.</p>
+<p>If you wish to test the submission of your own ADES file, please replace the filepath(s) with your own file(s).</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d7f7e1a5-11cf-4b3a-8e19-e3f1299870e0">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="xml-test-submission-successful">XML Test Submission: <strong>Successful</strong><a class="anchor-link" href="#xml-test-submission-successful">¶</a></h3><p>Here we demonstrate sending our sample XML file (saved in <code>temp_filepaths['xml']</code>) to the test-XML end-point, <code>https://minorplanetcenter.net/submit_xml_test</code>.</p>
+<p>We see that the submission was successful and that a Submission-ID was generated and returned.</p>
 </div>
 </div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=3f139bf6-afd4-4252-a91f-10f27bd73ff2">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=f703c7a3-c02e-4c95-a9eb-349a6c263110">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [20]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-3">
@@ -1060,34 +1095,41 @@ print(json.dumps(sedna_json, indent=4))
 </div>
 </clipboard-copy>
 </div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># Loop over two examples of accepted submission with warnings that did *not* prevent acceptance</span>
-<span class="k">for</span> <span class="n">submissionID</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"2025-11-12T18:44:08.601_0000Ba84"</span><span class="p">,</span> <span class="s2">"2025-11-13T11:23:47.333_0000BaBf"</span><span class="p">]:</span>
-    
-    <span class="nb">print</span><span class="p">(</span><span class="s1">'-'</span><span class="o">*</span><span class="mi">55</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Querying </span><span class="si">{</span><span class="n">submissionID</span><span class="si">=}</span><span class="s2">"</span><span class="p">)</span>
-    <span class="c1"># Call the api using the `requests` package </span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-        <span class="s2">"https://data.minorplanetcenter.net/api/submission-status"</span><span class="p">,</span> 
-        <span class="n">json</span><span class="o">=</span> <span class="p">{</span><span class="s2">"submission_id"</span><span class="p">:</span> <span class="s2">"2025-11-12T18:44:08.601_0000Ba84"</span><span class="p">}</span>
-    <span class="p">)</span>
-    
-    <span class="c1"># Print the response, making use of the `json` package</span>
-    <span class="n">sedna_json</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">sedna_json</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># URL of the test end-point to which we will submit </span>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">"https://minorplanetcenter.net/submit_xml_test"</span>  
+
+<span class="c1"># Meta data to be communicated </span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">'ack'</span><span class="p">:</span> <span class="s1">'MPC submission tutorial'</span><span class="p">,</span>  <span class="c1"># Acknowledgment message (required):</span>
+    <span class="s1">'ac2'</span><span class="p">:</span> <span class="s1">'my@email.adr'</span><span class="p">,</span>  <span class="c1"># Address to which subsequent communications/notifications should be sent (required)</span>
+    <span class="s1">'obj_type'</span><span class="p">:</span> <span class="s1">'NEO'</span>  <span class="c1"># Object Type Flag (optional): This example indicaties the observations are believed to be of a known NEO </span>
+<span class="p">}</span>
+
+<span class="c1"># Read the XML file, send to url, collect response</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">temp_filepaths</span><span class="p">[</span><span class="s1">'xml'</span><span class="p">],</span> <span class="s1">'rb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="p">{</span><span class="s1">'source'</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()})</span>
+
+<span class="c1"># Print some of the details of the response</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-3"># Loop over two examples of accepted submission with warnings that did *not* prevent acceptance
-for submissionID in ["2025-11-12T18:44:08.601_0000Ba84", "2025-11-13T11:23:47.333_0000BaBf"]:
-    
-    print('-'*55, f"\nQuerying {submissionID=}")
-    # Call the api using the `requests` package 
-    response = requests.get(
-        "https://data.minorplanetcenter.net/api/submission-status", 
-        json= {"submission_id": "2025-11-12T18:44:08.601_0000Ba84"}
-    )
-    
-    # Print the response, making use of the `json` package
-    sedna_json = response.json()
-    print(json.dumps(sedna_json, indent=4))
-</div>
+<div class="clipboard-copy-txt" id="cell-3"># URL of the test end-point to which we will submit 
+url = "https://minorplanetcenter.net/submit_xml_test"  
+
+# Meta data to be communicated 
+data = {
+    'ack': 'MPC submission tutorial',  # Acknowledgment message (required):
+    'ac2': 'my@email.adr',  # Address to which subsequent communications/notifications should be sent (required)
+    'obj_type': 'NEO'  # Object Type Flag (optional): This example indicaties the observations are believed to be of a known NEO 
+}
+
+# Read the XML file, send to url, collect response
+with open(temp_filepaths['xml'], 'rb') as f:
+    response = requests.post(url, data=data, files={'source': f.read()})
+
+# Print some of the details of the response
+print(response.status_code)
+print(response.text)</div>
 </div>
 </div>
 </div>
@@ -1099,42 +1141,9 @@ for submissionID in ["2025-11-12T18:44:08.601_0000Ba84", "2025-11-13T11:23:47.33
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>------------------------------------------------------- 
-Querying submissionID='2025-11-12T18:44:08.601_0000Ba84'
-{
-    "accepted": true,
-    "pipeline_entry_time": "2025-11-12T19:13:24.148269+00:00",
-    "fault_events": [
-        {
-            "message": "warning: name `WFST NEO Survey Group of PMO and USTC.` in header CON does not match MPC format",
-            "phase": 2,
-            "failure_code": 10
-        },
-        {
-            "message": "warning: postprocessed name `WFST NEO Survey Group of PMO and USTC.` did not match regex `^([A-Z]\\.[- ]){0,6}[A-Z]\\. [-.'A-Za-z ]+$`",
-            "phase": 2,
-            "failure_code": 10
-        }
-    ]
-}
-------------------------------------------------------- 
-Querying submissionID='2025-11-13T11:23:47.333_0000BaBf'
-{
-    "accepted": true,
-    "pipeline_entry_time": "2025-11-12T19:13:24.148269+00:00",
-    "fault_events": [
-        {
-            "message": "warning: name `WFST NEO Survey Group of PMO and USTC.` in header CON does not match MPC format",
-            "phase": 2,
-            "failure_code": 10
-        },
-        {
-            "message": "warning: postprocessed name `WFST NEO Survey Group of PMO and USTC.` did not match regex `^([A-Z]\\.[- ]){0,6}[A-Z]\\. [-.'A-Za-z ]+$`",
-            "phase": 2,
-            "failure_code": 10
-        }
-    ]
-}
+<pre>200
+[MPC submission tutorial].  Submission ID is 2026-02-03T14:30:45.416_00000F86
+
 </pre>
 </div>
 </div>
@@ -1142,23 +1151,24 @@ Querying submissionID='2025-11-13T11:23:47.333_0000BaBf'
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6da21c7d-300c-4b4e-a4bf-85d9489fedc5">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d22c7f09-fce8-4c99-9c36-4730326e5bae">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="querying-a-failed-submission-with-errors">Querying a failed submission with errors<a class="anchor-link" href="#querying-a-failed-submission-with-errors">¶</a></h3><p>In the following example we see that the submission was <strong>not</strong> accepted, with the <code>fault_events</code> field providing information on the failure reason(s).</p>
+<h3 id="psv-test-submission-successful">PSV Test Submission: <strong>Successful</strong><a class="anchor-link" href="#psv-test-submission-successful">¶</a></h3><p>Here we demonstrate sending our sample PSV file (saved in <code>temp_filepaths['psv']</code>) to the test-PSV end-point, <code>https://minorplanetcenter.net/submit_psv_test</code>.</p>
+<p>We see that the submission was successful and that a Submission-ID was generated and returned</p>
 </div>
 </div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=f795796a-2457-481e-b521-d618ffcbe403">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=2329476f-39ee-4940-8684-eb787262b868">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [21]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-4">
@@ -1171,25 +1181,41 @@ Querying submissionID='2025-11-13T11:23:47.333_0000BaBf'
 </div>
 </clipboard-copy>
 </div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># Call the api using the `requests` package </span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-    <span class="s2">"https://data.minorplanetcenter.net/api/submission-status"</span><span class="p">,</span> 
-    <span class="n">json</span><span class="o">=</span> <span class="p">{</span><span class="s2">"submission_id"</span><span class="p">:</span> <span class="s2">"2025-11-12T21:11:49.579_0000Ba8V"</span><span class="p">}</span>
-<span class="p">)</span>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># URL of the test end-point to which we will submit </span>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">"https://minorplanetcenter.net/submit_psv_test"</span>  
 
-<span class="c1"># Print the response, making use of the `json` package</span>
-<span class="n">sedna_json</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">sedna_json</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+<span class="c1"># Meta data to be communicated </span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">'ack'</span><span class="p">:</span> <span class="s1">'MPC submission tutorial'</span><span class="p">,</span>  <span class="c1"># Acknowledgment message (required):</span>
+    <span class="s1">'ac2'</span><span class="p">:</span> <span class="s1">'my@email.adr'</span><span class="p">,</span>  <span class="c1"># Address to which subsequent communications/notifications should be sent (required)</span>
+    <span class="s1">'obj_type'</span><span class="p">:</span> <span class="s1">'NEO'</span>  <span class="c1"># Object Type Flag (optional): This example indicaties the observations are believed to be of a known NEO </span>
+<span class="p">}</span>
+
+<span class="c1"># Read the XML file, send to url, collect response</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">temp_filepaths</span><span class="p">[</span><span class="s1">'psv'</span><span class="p">],</span> <span class="s1">'rb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="p">{</span><span class="s1">'source'</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()})</span>
+
+<span class="c1"># Print some of the details of the response</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-4"># Call the api using the `requests` package 
-response = requests.get(
-    "https://data.minorplanetcenter.net/api/submission-status", 
-    json= {"submission_id": "2025-11-12T21:11:49.579_0000Ba8V"}
-)
+<div class="clipboard-copy-txt" id="cell-4"># URL of the test end-point to which we will submit 
+url = "https://minorplanetcenter.net/submit_psv_test"  
 
-# Print the response, making use of the `json` package
-sedna_json = response.json()
-print(json.dumps(sedna_json, indent=4))</div>
+# Meta data to be communicated 
+data = {
+    'ack': 'MPC submission tutorial',  # Acknowledgment message (required):
+    'ac2': 'my@email.adr',  # Address to which subsequent communications/notifications should be sent (required)
+    'obj_type': 'NEO'  # Object Type Flag (optional): This example indicaties the observations are believed to be of a known NEO 
+}
+
+# Read the XML file, send to url, collect response
+with open(temp_filepaths['psv'], 'rb') as f:
+    response = requests.post(url, data=data, files={'source': f.read()})
+
+# Print some of the details of the response
+print(response.status_code)
+print(response.text)</div>
 </div>
 </div>
 </div>
@@ -1201,22 +1227,9 @@ print(json.dumps(sedna_json, indent=4))</div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>{
-    "accepted": false,
-    "pipeline_entry_time": null,
-    "fault_events": [
-        {
-            "message": "exact duplicate of submission 2025-11-12T21:09:16.359_0000Ba8U",
-            "phase": 2,
-            "failure_code": 5
-        },
-        {
-            "message": "ingest failed",
-            "phase": 2,
-            "failure_code": 7
-        }
-    ]
-}
+<pre>200
+[MPC submission tutorial].  Submission ID is 2026-02-03T14:31:08.666_00000F87
+
 </pre>
 </div>
 </div>
@@ -1224,23 +1237,24 @@ print(json.dumps(sedna_json, indent=4))</div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=cb7784ca-38e3-450a-9851-19885ba7f676">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b160d43b-15ff-4345-823b-8dda3201a8a0">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="querying-a-non-existent-submission">Querying a non-existent submission<a class="anchor-link" href="#querying-a-non-existent-submission">¶</a></h3><p>Here we demonstrate that if you try to query a submission-id that does <strong>not</strong> exist in the MPC system, the api will return a <code>404</code> error.</p>
+<h3 id="xml-test-submission-unsuccessful">XML Test Submission: <strong>Unsuccessful</strong><a class="anchor-link" href="#xml-test-submission-unsuccessful">¶</a></h3><p>Here we demonstrate sending our sample XML file (saved in <code>temp_filepaths['xml']</code>) to the test-XML end-point, <code>https://minorplanetcenter.net/submit_xml_test</code>.</p>
+<p>Here we deliberately omit the required <code>ack</code> field from the <code>data</code> dictionary, resulting in the submission being <strong>unsuccessful</strong>, and thus <strong>no</strong> submission-ID is returned.</p>
 </div>
 </div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=a5745a5e-501c-4c76-bb27-cb3429bfd960">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=569a557b-60f5-472c-9acb-1dbdbb51e6c3">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [22]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-5">
@@ -1253,25 +1267,41 @@ print(json.dumps(sedna_json, indent=4))</div>
 </div>
 </clipboard-copy>
 </div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># Call the api using the `requests` package </span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-    <span class="s2">"https://data.minorplanetcenter.net/api/submission-status"</span><span class="p">,</span> 
-    <span class="n">json</span><span class="o">=</span> <span class="p">{</span><span class="s2">"submission_id"</span><span class="p">:</span> <span class="s2">"2022-02-02T22:22:22.222_0000AaCC"</span><span class="p">}</span>
-<span class="p">)</span>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># URL of the test end-point to which we will submit </span>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">"https://minorplanetcenter.net/submit_xml_test"</span>  
 
-<span class="c1"># Print the response status_code</span>
-<span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span> 
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The response status code was 404, indicating that the submission id was not found"</span><span class="p">)</span>
+<span class="c1"># Meta data to be communicated </span>
+<span class="c1"># NB: The required `ack` field is omitted. </span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">'ac2'</span><span class="p">:</span> <span class="s1">'my@email.adr'</span><span class="p">,</span>  <span class="c1"># Address to which subsequent communications/notifications should be sent (required)</span>
+    <span class="s1">'obj_type'</span><span class="p">:</span> <span class="s1">'NEO'</span>  <span class="c1"># Object Type Flag (optional): This example indicaties the observations are believed to be of a known NEO </span>
+<span class="p">}</span>
+
+<span class="c1"># Read the XML file, send to url, collect response</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">temp_filepaths</span><span class="p">[</span><span class="s1">'xml'</span><span class="p">],</span> <span class="s1">'rb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="p">{</span><span class="s1">'source'</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()})</span>
+
+<span class="c1"># Print some of the details of the response</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-5"># Call the api using the `requests` package 
-response = requests.get(
-    "https://data.minorplanetcenter.net/api/submission-status", 
-    json= {"submission_id": "2022-02-02T22:22:22.222_0000AaCC"}
-)
+<div class="clipboard-copy-txt" id="cell-5"># URL of the test end-point to which we will submit 
+url = "https://minorplanetcenter.net/submit_xml_test"  
 
-# Print the response status_code
-if response.status_code == 404: 
-    print(f"The response status code was 404, indicating that the submission id was not found")</div>
+# Meta data to be communicated 
+# NB: The required `ack` field is omitted. 
+data = {
+    'ac2': 'my@email.adr',  # Address to which subsequent communications/notifications should be sent (required)
+    'obj_type': 'NEO'  # Object Type Flag (optional): This example indicaties the observations are believed to be of a known NEO 
+}
+
+# Read the XML file, send to url, collect response
+with open(temp_filepaths['xml'], 'rb') as f:
+    response = requests.post(url, data=data, files={'source': f.read()})
+
+# Print some of the details of the response
+print(response.status_code)
+print(response.text)</div>
 </div>
 </div>
 </div>
@@ -1283,10 +1313,182 @@ if response.status_code == 404:
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>The response status code was 404, indicating that the submission id was not found
+<pre>400
+error: no `ack` value provided
 </pre>
 </div>
 </div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d97e79c6-b535-42a8-ae52-821cafd35a5d">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="psv-test-submission-initial-success-of-invalid-data">PSV Test Submission: <strong>Initial Success of Invalid Data</strong><a class="anchor-link" href="#psv-test-submission-initial-success-of-invalid-data">¶</a></h3><p>Here we demonstrate sending a string of data containing <strong>no</strong> meaningful observational data, and that does <strong>not</strong> pass <a href="https://www.minorplanetcenter.net/mpcops/documentation/ades/#adessub">ADES validation</a>.</p>
+<p>We see that, because the required meta-data is supplied, a submission-id <strong>is</strong> supplied, and the data is passed into the system for subsequent validation.</p>
+<p>This implies that the assignment of a submission-id does <strong>not</strong> mean that the ADES file passes validation, and hence it does <strong>not</strong> mean that any observations contained in such a submission will necessarily be accepted.</p>
+<p>To understand whether a submission has been fully accepted and ingested, we recommend that submitters make use of the <code>Submission Status</code> API available at</p>
+<p><a href="https://data.minorplanetcenter.net/api/submission-status">https://data.minorplanetcenter.net/api/submission-status</a></p>
+<p>and for which a tutorial is available at</p>
+<p><a href="https://docs.minorplanetcenter.net/tutorials/notebooks/mpc_tutorial_api_submission_status.html">https://docs.minorplanetcenter.net/tutorials/notebooks/mpc_tutorial_api_submission_status.html</a></p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=762aec04-13ef-4a24-af9b-fd3d7380f421">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [23]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-6">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># URL of the test end-point to which we will submit </span>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">"https://minorplanetcenter.net/submit_psv_test"</span>  
+
+<span class="c1"># Meta data to be communicated </span>
+<span class="c1"># NB: The required `ack` field is omitted. </span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">'ack'</span><span class="p">:</span> <span class="s1">'MPC submission tutorial'</span><span class="p">,</span>  <span class="c1"># Acknowledgment message (required):</span>
+    <span class="s1">'ac2'</span><span class="p">:</span> <span class="s1">'my@email.adr'</span><span class="p">,</span>  <span class="c1"># Address to which subsequent communications/notifications should be sent (required)</span>
+    <span class="s1">'obj_type'</span><span class="p">:</span> <span class="s1">'NEO'</span>  <span class="c1"># Object Type Flag (optional): This example indicaties the observations are believed to be of a known NEO </span>
+<span class="p">}</span>
+
+<span class="c1"># Read the XML file, send to url, collect response</span>
+<span class="n">bad_psv_content</span> <span class="o">=</span> <span class="s2">"""# version=2017</span>
+<span class="s2">permID |trkSub |mode|stn |obsTime                |ra         |dec        |rmsRA|rmsDec|rmsCorr|astCat|mag  |rmsMag|band|photCat|logSNR|notes|remarks"""</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="p">{</span><span class="s1">'source'</span><span class="p">:</span> <span class="n">bad_psv_content</span><span class="p">})</span>
+
+<span class="c1"># Print some of the details of the response</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-6"># URL of the test end-point to which we will submit 
+url = "https://minorplanetcenter.net/submit_psv_test"  
+
+# Meta data to be communicated 
+# NB: The required `ack` field is omitted. 
+data = {
+    'ack': 'MPC submission tutorial',  # Acknowledgment message (required):
+    'ac2': 'my@email.adr',  # Address to which subsequent communications/notifications should be sent (required)
+    'obj_type': 'NEO'  # Object Type Flag (optional): This example indicaties the observations are believed to be of a known NEO 
+}
+
+# Read the XML file, send to url, collect response
+bad_psv_content = """# version=2017
+permID |trkSub |mode|stn |obsTime                |ra         |dec        |rmsRA|rmsDec|rmsCorr|astCat|mag  |rmsMag|band|photCat|logSNR|notes|remarks"""
+response = requests.post(url, data=data, files={'source': bad_psv_content})
+
+# Print some of the details of the response
+print(response.status_code)
+print(response.text)</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>200
+[MPC submission tutorial].  Submission ID is 2026-02-03T15:35:44.350_00000F8H
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ba918584-a3b6-4f02-9bc3-0e252288dae1">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="xml-submission-to-production-endpoint">XML Submission to <strong>Production</strong> Endpoint<a class="anchor-link" href="#xml-submission-to-production-endpoint">¶</a></h3><p>Here we demonstrate sending an XML file (saved above into <code>temp_filepaths['xml']</code>) to the <strong>production</strong> XML end-point:</p>
+<pre><code>`https://minorplanetcenter.net/submit_xml`.</code></pre>
+<p>The only difference with respect to the test submissions above, is the change of the URL from <code>https://minorplanetcenter.net/submit_xml_test</code> to <code>https://minorplanetcenter.net/submit_xml</code>.</p>
+<p>To reduce the risk of accidental, repeated submission of fake/test data into the MPC's production system , this tutorial deliberately converts the following cell to "markdown" rather then "code".</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f6fae0ad-931a-4a9f-aab6-7181292a3a2b">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>"""
+This cell deliberately set to <code>markdown</code> format (rather than <code>code</code>) to reduce the risk of
+accidental, repeated submission of fake/test data into the MPC's production system.
+"""</p>
+<h1 id="url-of-the-test-end-point-to-which-we-will-submit">URL of the test end-point to which we will submit<a class="anchor-link" href="#url-of-the-test-end-point-to-which-we-will-submit">¶</a></h1><p>url = "<a href="https://minorplanetcenter.net/submit_xml">https://minorplanetcenter.net/submit_xml</a>"</p>
+<h1 id="meta-data-to-be-communicated">Meta data to be communicated<a class="anchor-link" href="#meta-data-to-be-communicated">¶</a></h1><p>data = {
+'ack': 'MPC submission tutorial',  # Acknowledgment message (required):
+'ac2': 'my@email.adr',  # Address to which subsequent communications/notifications should be sent (required)
+'obj_type': 'NEO'  # Object Type Flag (optional): This example indicaties the observations are believed to be of a known NEO
+}</p>
+<h1 id="read-the-xml-file-send-to-url-collect-response">Read the XML file, send to url, collect response<a class="anchor-link" href="#read-the-xml-file-send-to-url-collect-response">¶</a></h1><p>with open(temp_filepaths['xml'], 'rb') as f:
+response = requests.post(url, data=data, files={'source': f.read()})</p>
+<h1 id="print-some-of-the-details-of-the-response">Print some of the details of the response<a class="anchor-link" href="#print-some-of-the-details-of-the-response">¶</a></h1><p>print(response.status_code)
+print(response.text)</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5d743d83-90a2-4418-9889-ade7663b71da">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="psv-submission-to-production-endpoint">PSV Submission to <strong>Production</strong> Endpoint<a class="anchor-link" href="#psv-submission-to-production-endpoint">¶</a></h3><p>Here we demonstrate sending an PSV file (saved above into <code>temp_filepaths['psv']</code>) to the <strong>production</strong> PSV end-point:</p>
+<pre><code>`https://minorplanetcenter.net/submit_psv`.</code></pre>
+<p>The only difference with respect to the test submissions above, is the change of the URL from <code>https://minorplanetcenter.net/submit_psv_test</code> to <code>https://minorplanetcenter.net/submit_psv</code>.</p>
+<p>To reduce the risk of accidental, repeated submission of fake/test data into the MPC's production system , this tutorial deliberately converts the following cell to "markdown" rather then "code".</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=428ea694-2ded-4792-951e-8411dd3634fe">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>"""
+This cell deliberately set to <code>markdown</code> format (rather than <code>code</code>) to reduce the risk of
+accidental, repeated submission of fake/test data into the MPC's production system.
+"""</p>
+<h1 id="url-of-the-test-end-point-to-which-we-will-submit">URL of the test end-point to which we will submit<a class="anchor-link" href="#url-of-the-test-end-point-to-which-we-will-submit">¶</a></h1><p>url = "<a href="https://minorplanetcenter.net/submit_psv">https://minorplanetcenter.net/submit_psv</a>"</p>
+<h1 id="meta-data-to-be-communicated">Meta data to be communicated<a class="anchor-link" href="#meta-data-to-be-communicated">¶</a></h1><p>data = {
+'ack': 'MPC submission tutorial',  # Acknowledgment message (required):
+'ac2': 'my@email.adr',  # Address to which subsequent communications/notifications should be sent (required)
+'obj_type': 'NEO'  # Object Type Flag (optional): This example indicaties the observations are believed to be of a known NEO
+}</p>
+<h1 id="read-the-xml-file-send-to-url-collect-response">Read the XML file, send to url, collect response<a class="anchor-link" href="#read-the-xml-file-send-to-url-collect-response">¶</a></h1><p>with open(temp_filepaths['psv'], 'rb') as f:
+response = requests.post(url, data=data, files={'source': f.read()})</p>
+<h1 id="print-some-of-the-details-of-the-response">Print some of the details of the response<a class="anchor-link" href="#print-some-of-the-details-of-the-response">¶</a></h1><p>print(response.status_code)
+print(response.text)</p>
 </div>
 </div>
 </div>
