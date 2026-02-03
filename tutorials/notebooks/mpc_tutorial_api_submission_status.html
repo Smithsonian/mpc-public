@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://docs.minorplanetcenter.net/tutorials/notebooks/mpc_tutorial_designation-identifier_01.html">
+        <link rel="canonical" href="https://docs.minorplanetcenter.net/tutorials/notebooks/mpc_tutorial_api_submission_status.html">
       
       
       
@@ -21,7 +21,7 @@
     
     
       
-        <title>MPC Designation Identifier - MPC Public Documentation Hub</title>
+        <title>MPC Submission Status - MPC Public Documentation Hub</title>
       
     
     
@@ -66,7 +66,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#mpc-designation-identifier" class="md-skip">
+        <a href="#mpc-submission-status" class="md-skip">
           Skip to content
         </a>
       
@@ -102,7 +102,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              MPC Designation Identifier
+              MPC Submission Status
             
           </span>
         </div>
@@ -413,10 +413,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#this-tutorial-provides-information-on-how-to-use-the-minor-planet-centers-designation-identifier-api" class="md-nav__link">
+  <a href="#this-tutorial-provides-information-on-how-to-use-the-minor-planet-centers-submission-status-api" class="md-nav__link">
     <span class="md-ellipsis">
       
-        This tutorial provides information on how to use the Minor Planet Center's Designation Identifier API.
+        This tutorial provides information on how to use the Minor Planet Center's Submission Status API.
       
     </span>
   </a>
@@ -437,7 +437,7 @@
               <article class="md-content__inner md-typeset">
                 
 
-  <a href="/tutorials/notebooks/mpc_tutorial_designation-identifier_01.ipynb" title="Download Notebook" class="md-content__button md-icon">
+  <a href="/tutorials/notebooks/mpc_tutorial_api_submission_status.ipynb" title="Download Notebook" class="md-content__button md-icon">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 20h14v-2H5m14-9h-4V3H9v6H5l7 7z"/></svg>
   </a>
 
@@ -892,27 +892,15 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="mpc-designation-identifier">MPC Designation Identifier<a class="anchor-link" href="#mpc-designation-identifier">¶</a></h1><h4 id="this-tutorial-provides-information-on-how-to-use-the-minor-planet-centers-designation-identifier-api">This tutorial provides information on how to use the Minor Planet Center's Designation Identifier API.<a class="anchor-link" href="#this-tutorial-provides-information-on-how-to-use-the-minor-planet-centers-designation-identifier-api">¶</a></h4><p>The Minor Planet Center's <code>Designation Identifier</code> service will return information on the various designations assigned to any given object.</p>
-<p>This includes information such as:</p>
-<ul>
-<li>Name: The name of the object, if available.</li>
-<li>Citation: The citation of the object, if available.</li>
-<li>Permanent ID: The object's permanent ID (unpacked number), if available.</li>
-<li>Object Type: The object type classification.</li>
-<li>IAU Designation: The IAU designation of the object (number if numbered, unpacked primary provisional designation if unnumbered).</li>
-<li>Unpacked Primary Provisional Designation: The unpacked primary provisional designation of the object. (<a href="https://minorplanetcenter.net/mpcops/documentation/provisional-designation-definition/">https://minorplanetcenter.net/mpcops/documentation/provisional-designation-definition/</a>)</li>
-<li>Unpacked Secondary Provisional Designations: A list of unpacked secondary provisional designations, if available. (<a href="https://minorplanetcenter.net/mpcops/documentation/provisional-designation-definition/">https://minorplanetcenter.net/mpcops/documentation/provisional-designation-definition/</a>)</li>
-<li>Packed Permanent ID: The object's packed permanent ID (packed number), if available.</li>
-<li>Packed Primary Provisional Designation: The packed primary provisional designation of the object. (<a href="https://minorplanetcenter.net/mpcops/documentation/provisional-designation-definition/">https://minorplanetcenter.net/mpcops/documentation/provisional-designation-definition/</a>)</li>
-<li>Packed Secondary Provisional Designations: A list of packed secondary provisional designations, if available. (<a href="https://minorplanetcenter.net/mpcops/documentation/provisional-designation-definition/">https://minorplanetcenter.net/mpcops/documentation/provisional-designation-definition/</a>)</li>
-</ul>
+<h1 id="mpc-submission-status">MPC Submission Status<a class="anchor-link" href="#mpc-submission-status">¶</a></h1><h4 id="this-tutorial-provides-information-on-how-to-use-the-minor-planet-centers-submission-status-api">This tutorial provides information on how to use the Minor Planet Center's Submission Status API.<a class="anchor-link" href="#this-tutorial-provides-information-on-how-to-use-the-minor-planet-centers-submission-status-api">¶</a></h4><p>The Minor Planet Center's <code>Submission Status</code> service will return information on the status of an MPC data submission.</p>
+<p>This can be useful if you previously submitted observations to the MPC, received a <code>Submission-ID</code>, and would now like to understand whether that submission has been ingested into the MPC's system, or whether it has been rejected (and if so, why).</p>
+<!-- TODO: When available, insert a link to a notebook describing "how to submit observations to the MPC" -->
 <p>The Designation Identifier API is a REST endpoint, therefore you can use your language of choice to send GET requests to the following URL:</p>
-<pre><code>`https://data.minorplanetcenter.net/api/query-identifier`</code></pre>
+<pre><code>https://data.minorplanetcenter.net/api/submission-status</code></pre>
 <p>In the examples below we use python code to query the api.</p>
-<p>Further information and documentation concerning the <code>Designation Identifier</code> service and its associated api can be found at:</p>
+<p>Further information and documentation concerning the <code>Submission Status</code> service and its associated api can be found at:</p>
 <ul>
-<li><a href="https://data.minorplanetcenter.net/explorer/?tab=Documentation">https://data.minorplanetcenter.net/explorer/?tab=Documentation</a></li>
-<li><a href="https://minorplanetcenter.net/mpcops/documentation/designation-identifier-api/">https://minorplanetcenter.net/mpcops/documentation/designation-identifier-api/</a></li>
+<li><a href="https://minorplanetcenter.net/mpcops/documentation/submission-status-api/">https://minorplanetcenter.net/mpcops/documentation/submission-status-api/</a></li>
 </ul>
 </div>
 </div>
@@ -934,7 +922,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [28]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-1">
@@ -964,8 +952,19 @@ import json</div>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="single-object-query">Single Object Query<a class="anchor-link" href="#single-object-query">¶</a></h1><p>Here we query the <code>Designation Identifier</code> API for information concerning the designations associated with the object named <code>Sedna</code>.</p>
-<p>Among other pieces of information, we see that the permanent-identification (<code>number</code>) for <code>Sedna</code> is <code>90377</code></p>
+<h1 id="submission-status-query">Submission Status Query<a class="anchor-link" href="#submission-status-query">¶</a></h1><p>Your request must provide a JSON object payload containing the <code>submission_id</code> of interest.</p>
+<p>E.g. <code>{"submission_id": "2026-01-01T00:05:07.453_0000BhCE"}</code></p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ea0e0565-8f5c-49ef-aae0-1d0b91f80e79">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="querying-a-successfully-accepted-submission">Querying a successfully accepted submission<a class="anchor-link" href="#querying-a-successfully-accepted-submission">¶</a></h3><p>In the following example we see that the submission was <em>accepted</em>.</p>
 </div>
 </div>
 </div>
@@ -975,7 +974,7 @@ import json</div>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [29]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [19]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-2">
@@ -989,14 +988,20 @@ import json</div>
 </clipboard-copy>
 </div>
 <div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># Call the api using the `requests` package </span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"https://data.minorplanetcenter.net/api/query-identifier"</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span> <span class="p">{</span><span class="s2">"ids"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"Sedna"</span><span class="p">]})</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+    <span class="s2">"https://data.minorplanetcenter.net/api/submission-status"</span><span class="p">,</span> 
+    <span class="n">json</span><span class="o">=</span> <span class="p">{</span><span class="s2">"submission_id"</span><span class="p">:</span> <span class="s2">"2026-01-01T00:05:07.453_0000BhCE"</span><span class="p">}</span>
+<span class="p">)</span>
 
 <span class="c1"># Print the response, making use of the `json` package</span>
 <span class="n">sedna_json</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">sedna_json</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
 </pre></div>
 <div class="clipboard-copy-txt" id="cell-2"># Call the api using the `requests` package 
-response = requests.get("https://data.minorplanetcenter.net/api/query-identifier", json= {"ids": ["Sedna"]})
+response = requests.get(
+    "https://data.minorplanetcenter.net/api/submission-status", 
+    json= {"submission_id": "2026-01-01T00:05:07.453_0000BhCE"}
+)
 
 # Print the response, making use of the `json` package
 sedna_json = response.json()
@@ -1014,25 +1019,9 @@ print(json.dumps(sedna_json, indent=4))
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>{
-    "Sedna": {
-        "citation": "(90377) Sedna = 2003 VB12&lt;br&gt;&lt;br&gt;Sedna is the Inuit goddess of the sea and the mother of all sea creatures. She rewards the people of the land with food from the sea. Without her blessing, hunts fail and the people starve. She is thus one of the most important figures in Inuit legend. ",
-        "disambiguation_list": null,
-        "dual_status_info": null,
-        "found": 1,
-        "iau_designation": "(90377)",
-        "name": "Sedna",
-        "object_type": [
-            "Minor Planet",
-            0
-        ],
-        "orbfit_name": "90377",
-        "packed_permid": "90377",
-        "packed_primary_provisional_designation": "K03V12B",
-        "packed_secondary_provisional_designations": [],
-        "permid": "90377",
-        "unpacked_primary_provisional_designation": "2003 VB12",
-        "unpacked_secondary_provisional_designations": []
-    }
+    "accepted": true,
+    "pipeline_entry_time": "2026-01-01T00:06:00.696565+00:00",
+    "fault_events": []
 }
 </pre>
 </div>
@@ -1041,23 +1030,23 @@ print(json.dumps(sedna_json, indent=4))
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4f37cacd-ad51-47b3-8ec5-7e636de16a42">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=bbed6168-0443-43a6-915f-17634e55d474">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="alternate-single-object-query">Alternate single object query<a class="anchor-link" href="#alternate-single-object-query">¶</a></h3><p>Here we demonstrate that if we query for <code>Sedna</code> using one of its alternative designations (e.g. <code>2003 VB12</code>), the returned information is essentially the same (only the returned search-string is different).</p>
+<h3 id="querying-a-successfully-accepted-submission-with-warnings-that-did-not-prevent-acceptance">Querying a successfully accepted submission with warnings (that did <em>not</em> prevent acceptance)<a class="anchor-link" href="#querying-a-successfully-accepted-submission-with-warnings-that-did-not-prevent-acceptance">¶</a></h3><p>In the following two examples we see that the submission was <em>accepted</em>, but there is some warning content in the <code>fault_events</code> field.</p>
 </div>
 </div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=6d437baf-2cce-4b09-8888-4a3e3b69cde7">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=3f139bf6-afd4-4252-a91f-10f27bd73ff2">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [30]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [20]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-3">
@@ -1070,25 +1059,34 @@ print(json.dumps(sedna_json, indent=4))
 </div>
 </clipboard-copy>
 </div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># Call the api using the `requests` package, now using one of the alternate designations for Sedna: "2003 VB12"</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"https://data.minorplanetcenter.net/api/query-identifier"</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span> <span class="p">{</span><span class="s2">"ids"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"2003 VB12"</span><span class="p">]})</span>
-
-<span class="c1"># Print the response, making use of the `json` package</span>
-<span class="n">alternate_json</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">alternate_json</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
-
-<span class="c1"># Explicitly check that the results in `alternate_json` are the same as those returned in `sedna_json` (above)</span>
-<span class="nb">print</span><span class="p">(</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">Returned data are identical."</span> <span class="k">if</span> <span class="n">sedna_json</span><span class="p">[</span><span class="s2">"Sedna"</span><span class="p">]</span> <span class="o">==</span> <span class="n">alternate_json</span><span class="p">[</span><span class="s2">"2003 VB12"</span><span class="p">]</span> <span class="k">else</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">Returned data are different."</span> <span class="p">)</span>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># Loop over two examples of accepted submission with warnings that did *not* prevent acceptance</span>
+<span class="k">for</span> <span class="n">submissionID</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"2025-11-12T18:44:08.601_0000Ba84"</span><span class="p">,</span> <span class="s2">"2025-11-13T11:23:47.333_0000BaBf"</span><span class="p">]:</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'-'</span><span class="o">*</span><span class="mi">55</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Querying </span><span class="si">{</span><span class="n">submissionID</span><span class="si">=}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="c1"># Call the api using the `requests` package </span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="s2">"https://data.minorplanetcenter.net/api/submission-status"</span><span class="p">,</span> 
+        <span class="n">json</span><span class="o">=</span> <span class="p">{</span><span class="s2">"submission_id"</span><span class="p">:</span> <span class="s2">"2025-11-12T18:44:08.601_0000Ba84"</span><span class="p">}</span>
+    <span class="p">)</span>
+    
+    <span class="c1"># Print the response, making use of the `json` package</span>
+    <span class="n">sedna_json</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">sedna_json</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-3"># Call the api using the `requests` package, now using one of the alternate designations for Sedna: "2003 VB12"
-response = requests.get("https://data.minorplanetcenter.net/api/query-identifier", json= {"ids": ["2003 VB12"]})
-
-# Print the response, making use of the `json` package
-alternate_json = response.json()
-print(json.dumps(alternate_json, indent=4))
-
-# Explicitly check that the results in `alternate_json` are the same as those returned in `sedna_json` (above)
-print( "\nReturned data are identical." if sedna_json["Sedna"] == alternate_json["2003 VB12"] else "\nReturned data are different." )</div>
+<div class="clipboard-copy-txt" id="cell-3"># Loop over two examples of accepted submission with warnings that did *not* prevent acceptance
+for submissionID in ["2025-11-12T18:44:08.601_0000Ba84", "2025-11-13T11:23:47.333_0000BaBf"]:
+    
+    print('-'*55, f"\nQuerying {submissionID=}")
+    # Call the api using the `requests` package 
+    response = requests.get(
+        "https://data.minorplanetcenter.net/api/submission-status", 
+        json= {"submission_id": "2025-11-12T18:44:08.601_0000Ba84"}
+    )
+    
+    # Print the response, making use of the `json` package
+    sedna_json = response.json()
+    print(json.dumps(sedna_json, indent=4))
+</div>
 </div>
 </div>
 </div>
@@ -1100,29 +1098,42 @@ print( "\nReturned data are identical." if sedna_json["Sedna"] == alternate_json
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>{
-    "2003 VB12": {
-        "citation": "(90377) Sedna = 2003 VB12&lt;br&gt;&lt;br&gt;Sedna is the Inuit goddess of the sea and the mother of all sea creatures. She rewards the people of the land with food from the sea. Without her blessing, hunts fail and the people starve. She is thus one of the most important figures in Inuit legend. ",
-        "disambiguation_list": null,
-        "dual_status_info": null,
-        "found": 1,
-        "iau_designation": "(90377)",
-        "name": "Sedna",
-        "object_type": [
-            "Minor Planet",
-            0
-        ],
-        "orbfit_name": "90377",
-        "packed_permid": "90377",
-        "packed_primary_provisional_designation": "K03V12B",
-        "packed_secondary_provisional_designations": [],
-        "permid": "90377",
-        "unpacked_primary_provisional_designation": "2003 VB12",
-        "unpacked_secondary_provisional_designations": []
-    }
+<pre>------------------------------------------------------- 
+Querying submissionID='2025-11-12T18:44:08.601_0000Ba84'
+{
+    "accepted": true,
+    "pipeline_entry_time": "2025-11-12T19:13:24.148269+00:00",
+    "fault_events": [
+        {
+            "message": "warning: name `WFST NEO Survey Group of PMO and USTC.` in header CON does not match MPC format",
+            "phase": 2,
+            "failure_code": 10
+        },
+        {
+            "message": "warning: postprocessed name `WFST NEO Survey Group of PMO and USTC.` did not match regex `^([A-Z]\\.[- ]){0,6}[A-Z]\\. [-.'A-Za-z ]+$`",
+            "phase": 2,
+            "failure_code": 10
+        }
+    ]
 }
-
-Returned data are identical.
+------------------------------------------------------- 
+Querying submissionID='2025-11-13T11:23:47.333_0000BaBf'
+{
+    "accepted": true,
+    "pipeline_entry_time": "2025-11-12T19:13:24.148269+00:00",
+    "fault_events": [
+        {
+            "message": "warning: name `WFST NEO Survey Group of PMO and USTC.` in header CON does not match MPC format",
+            "phase": 2,
+            "failure_code": 10
+        },
+        {
+            "message": "warning: postprocessed name `WFST NEO Survey Group of PMO and USTC.` did not match regex `^([A-Z]\\.[- ]){0,6}[A-Z]\\. [-.'A-Za-z ]+$`",
+            "phase": 2,
+            "failure_code": 10
+        }
+    ]
+}
 </pre>
 </div>
 </div>
@@ -1130,28 +1141,23 @@ Returned data are identical.
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=081a110b-ec10-4872-8fd2-a91b525c2173">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6da21c7d-300c-4b4e-a4bf-85d9489fedc5">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="multi-object-query">Multi Object Query<a class="anchor-link" href="#multi-object-query">¶</a></h1><p>Here we make a single query to the <code>Designation Identifier</code> API for information concerning multiple different designations.</p>
-<p>Among other things, we see that:</p>
-<ul>
-<li>The returned <code>json</code> object (named "multi_object_json" below) contains multiple sets of results, organized using the different supplied designations as "keys".</li>
-<li>The object <code>Ceres</code> has multiple associated designations, including the "secondary designations"  <code>1943 XB</code> and <code>A899 OF</code>.</li>
-</ul>
+<h3 id="querying-a-failed-submission-with-errors">Querying a failed submission with errors<a class="anchor-link" href="#querying-a-failed-submission-with-errors">¶</a></h3><p>In the following example we see that the submission was <strong>not</strong> accepted, with the <code>fault_events</code> field providing information on the failure reason(s).</p>
 </div>
 </div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=0835d805-8b47-49ea-8e50-98f2145aef5d">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=f795796a-2457-481e-b521-d618ffcbe403">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [31]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [21]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-4">
@@ -1164,22 +1170,25 @@ Returned data are identical.
 </div>
 </clipboard-copy>
 </div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># Create a list of the different designations that we would like information on:</span>
-<span class="n">my_list</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"ids"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"Ceres"</span><span class="p">,</span> <span class="s2">"2020 AB1"</span><span class="p">]}</span>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># Call the api using the `requests` package </span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+    <span class="s2">"https://data.minorplanetcenter.net/api/submission-status"</span><span class="p">,</span> 
+    <span class="n">json</span><span class="o">=</span> <span class="p">{</span><span class="s2">"submission_id"</span><span class="p">:</span> <span class="s2">"2025-11-12T21:11:49.579_0000Ba8V"</span><span class="p">}</span>
+<span class="p">)</span>
 
-<span class="c1"># Call the api using the `requests` package &amp; print the results </span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"https://data.minorplanetcenter.net/api/query-identifier"</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">my_list</span><span class="p">)</span>
-<span class="n">multi_object_json</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">multi_object_json</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+<span class="c1"># Print the response, making use of the `json` package</span>
+<span class="n">sedna_json</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">sedna_json</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-4"># Create a list of the different designations that we would like information on:
-my_list = {"ids": ["Ceres", "2020 AB1"]}
+<div class="clipboard-copy-txt" id="cell-4"># Call the api using the `requests` package 
+response = requests.get(
+    "https://data.minorplanetcenter.net/api/submission-status", 
+    json= {"submission_id": "2025-11-12T21:11:49.579_0000Ba8V"}
+)
 
-# Call the api using the `requests` package &amp; print the results 
-response = requests.get("https://data.minorplanetcenter.net/api/query-identifier", json=my_list)
-multi_object_json = response.json()
-print(json.dumps(multi_object_json, indent=4))
-</div>
+# Print the response, making use of the `json` package
+sedna_json = response.json()
+print(json.dumps(sedna_json, indent=4))</div>
 </div>
 </div>
 </div>
@@ -1192,55 +1201,88 @@ print(json.dumps(multi_object_json, indent=4))
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>{
-    "2020 AB1": {
-        "citation": null,
-        "disambiguation_list": null,
-        "dual_status_info": null,
-        "found": 1,
-        "iau_designation": "2020 AB1",
-        "name": null,
-        "object_type": [
-            "Minor Planet",
-            0
-        ],
-        "orbfit_name": "2020AB1",
-        "packed_permid": null,
-        "packed_primary_provisional_designation": "K20A01B",
-        "packed_secondary_provisional_designations": [
-            "K16D00O"
-        ],
-        "permid": null,
-        "unpacked_primary_provisional_designation": "2020 AB1",
-        "unpacked_secondary_provisional_designations": [
-            "2016 DO"
-        ]
-    },
-    "Ceres": {
-        "citation": null,
-        "disambiguation_list": null,
-        "dual_status_info": null,
-        "found": 1,
-        "iau_designation": "(1)",
-        "name": "Ceres",
-        "object_type": [
-            "Minor Planet",
-            0
-        ],
-        "orbfit_name": "1",
-        "packed_permid": "00001",
-        "packed_primary_provisional_designation": "I01A00A",
-        "packed_secondary_provisional_designations": [
-            "I99O00F",
-            "J43X00B"
-        ],
-        "permid": "1",
-        "unpacked_primary_provisional_designation": "A801 AA",
-        "unpacked_secondary_provisional_designations": [
-            "1943 XB",
-            "A899 OF"
-        ]
-    }
+    "accepted": false,
+    "pipeline_entry_time": null,
+    "fault_events": [
+        {
+            "message": "exact duplicate of submission 2025-11-12T21:09:16.359_0000Ba8U",
+            "phase": 2,
+            "failure_code": 5
+        },
+        {
+            "message": "ingest failed",
+            "phase": 2,
+            "failure_code": 7
+        }
+    ]
 }
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=cb7784ca-38e3-450a-9851-19885ba7f676">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="querying-a-non-existent-submission">Querying a non-existent submission<a class="anchor-link" href="#querying-a-non-existent-submission">¶</a></h3><p>Here we demonstrate that if you try to query a submission-id that does <strong>not</strong> exist in the MPC system, the api will return a <code>404</code> error.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=a5745a5e-501c-4c76-bb27-cb3429bfd960">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [22]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-5">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># Call the api using the `requests` package </span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+    <span class="s2">"https://data.minorplanetcenter.net/api/submission-status"</span><span class="p">,</span> 
+    <span class="n">json</span><span class="o">=</span> <span class="p">{</span><span class="s2">"submission_id"</span><span class="p">:</span> <span class="s2">"2022-02-02T22:22:22.222_0000AaCC"</span><span class="p">}</span>
+<span class="p">)</span>
+
+<span class="c1"># Print the response status_code</span>
+<span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span> 
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The response status code was 404, indicating that the submission id was not found"</span><span class="p">)</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-5"># Call the api using the `requests` package 
+response = requests.get(
+    "https://data.minorplanetcenter.net/api/submission-status", 
+    json= {"submission_id": "2022-02-02T22:22:22.222_0000AaCC"}
+)
+
+# Print the response status_code
+if response.status_code == 404: 
+    print(f"The response status code was 404, indicating that the submission id was not found")</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>The response status code was 404, indicating that the submission id was not found
 </pre>
 </div>
 </div>

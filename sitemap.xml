@@ -2,86 +2,90 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://docs.minorplanetcenter.net/index.html</loc>
-         <lastmod>2026-02-02</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.minorplanetcenter.net/mpc-ops-docs/index.html</loc>
-         <lastmod>2026-02-02</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.minorplanetcenter.net/mpc-ops-docs/ades.html</loc>
-         <lastmod>2026-02-02</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.minorplanetcenter.net/mpc-ops-docs/apis.html</loc>
-         <lastmod>2026-02-02</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.minorplanetcenter.net/mpc-ops-docs/artificial-satellites.html</loc>
-         <lastmod>2026-02-02</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.minorplanetcenter.net/mpc-ops-docs/astrometry.html</loc>
-         <lastmod>2026-02-02</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.minorplanetcenter.net/mpc-ops-docs/designations.html</loc>
-         <lastmod>2026-02-02</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.minorplanetcenter.net/mpc-ops-docs/edgar-wilson-award.html</loc>
-         <lastmod>2026-02-02</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.minorplanetcenter.net/mpc-ops-docs/faqs.html</loc>
-         <lastmod>2026-02-02</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.minorplanetcenter.net/mpc-ops-docs/identifications.html</loc>
-         <lastmod>2026-02-02</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.minorplanetcenter.net/mpc-ops-docs/negative-observations.html</loc>
-         <lastmod>2026-02-02</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.minorplanetcenter.net/mpc-ops-docs/orbit-and-object-types.html</loc>
-         <lastmod>2026-02-02</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.minorplanetcenter.net/mpc-ops-docs/orbital-elements.html</loc>
-         <lastmod>2026-02-02</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.minorplanetcenter.net/mpc-ops-docs/programs-and-obscodes.html</loc>
-         <lastmod>2026-02-02</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.minorplanetcenter.net/mpc-ops-docs/replicated-postgresql.html</loc>
-         <lastmod>2026-02-02</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.minorplanetcenter.net/mpc-ops-docs/sarc.html</loc>
-         <lastmod>2026-02-02</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.minorplanetcenter.net/mpc-ops-docs/subscriptions.html</loc>
-         <lastmod>2026-02-02</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.minorplanetcenter.net/tutorials/index.html</loc>
-         <lastmod>2026-02-02</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.minorplanetcenter.net/tutorials/api_tutorials.html</loc>
-         <lastmod>2026-02-02</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
          <loc>https://docs.minorplanetcenter.net/tutorials/submission_tutorials.html</loc>
-         <lastmod>2026-02-02</lastmod>
+         <lastmod>2026-02-03</lastmod>
     </url>
     <url>
-         <loc>https://docs.minorplanetcenter.net/tutorials/notebooks/mpc_tutorial_designation-identifier_01.html</loc>
-         <lastmod>2026-02-02</lastmod>
+         <loc>https://docs.minorplanetcenter.net/tutorials/notebooks/mpc_tutorial_api_designation_identifier.html</loc>
+         <lastmod>2026-02-03</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.minorplanetcenter.net/tutorials/notebooks/mpc_tutorial_api_submission_status.html</loc>
+         <lastmod>2026-02-03</lastmod>
     </url>
 </urlset>
