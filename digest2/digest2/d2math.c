@@ -1051,6 +1051,16 @@ void twoObs(tracklet *tk, double rms[]) {
     // next case still fairly simple: single obs code, arc < 3 hrs.
     // => use gc fit of whole arc and synthesize obs at the 17th
     // and 83rd percentile times.
+    // 
+    // TODO: This is the buggy line as reported by Seaman in https://mpc-service.atlassian.net/browse/MPCHLP-5966
+    // The fix should be ...
+    //
+    //if (allSame && olist[nObs - 1].mjd - olist[0].mjd < .125) {
+    //
+    // I suggest that we do *NOT* make this change yet, but instead
+    // (1) Get this code into the repo as-is
+    // (2) Perform comparison checks with/without the bug-fix to properly characterise the difference, 
+    //       and then add the fix in a subsequent PR
     if (allSame && olist[nObs - 1].mjd - olist[nObs - 1].mjd < .125) {
         obsp = &tk->obsPair[0];
         obsp->mjd = t17;
