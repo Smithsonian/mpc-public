@@ -1,7 +1,6 @@
 // d2mpc.c
 //
 //
-// Update Oct. 7, 2021: added band conversion 'u' and CMOS 'B', by Peter Veres
 // Public domain.
 
 #include <ctype.h>
