@@ -2,27 +2,46 @@
 
 ## Download / Clone
 
-The digest2 download page is: https://github.com/Smithsonian/digest2.
-The repository can be cloned with:
+The `digest2` source code is available as part of the `mpc-public` repository.
+The `mpc-public` download page is: https://github.com/Smithsonian/mpc-public, and it can be cloned
+with:
 
-        git clone https://github.com/Smithsonian/digest2.git
-
+```sh
+git clone https://github.com/Smithsonian/mpc-public.git
+```
 
 ## Build
 
-If you downloaded the repository as a zip file, unpack it. On most Linux-like systems, this can be done with `unzip <filename>` or `tar -xf <filename>`.
+If you downloaded the `mpc-public` repository as a `.zip` or `.tar.gz` file, unpack it. On most
+Linux-like systems, this can be done with `unzip <filename>` or `tar -xf <filename>`.
 
-The directory will contain 3 subdirectories: `archive`, `current_version`, and `population`. 
-The `population` directory contains the population data used by digest2.  
-The `current_version` directory contains the latest version of the source code and a Makefile.
+The `mpc-public` root directory will contain 3 subdirectories: `digest2`, `docs-public` and `mpc-orb`.
+For reference, here's a quick view of the `mpc-public` repo layout, with a focus on the `digest2`
+folder structure:
 
-`cd` into the `current_version` directory:
-    
-    cd current_version
+```
+mpc-public/
+|-- digest2/
+|   |-- digest2/        <-- You are here: mpc-public/digest2/digest2/BUILDING.md
+|   |-- population/
+|   `-- NEOCP_filters/
+|-- docs-public/
+`-- mpc-orb/
+```
 
-Type `make`, and a `digest2` executable should be built in the current
-directory.  (The Makefile is simplistic and may take minor modifications
-to work on your system.)
+From the `mpc-public` root directory, `cd` into the `digest2` directory:
+
+```sh
+cd digest2
+```
+
+The `digest2` top-level directory contains 3 subdirectories: `digest2`, `NEOCP_filters` and `population`.
+The `digest2` directory contains the latest version of the source code and a `Makefile`.
+The `population` directory contains the population data used by `digest2`.
+
+Type `make`, and a `digest2` executable should be built in the current directory. The `Makefile` is
+simplistic and may take minor modifications to work on your system; detailed instructions can be
+found in the "Installation and requirements" section of the `digest2` top-level [README.md](../README.md)
 
 ## Model
 
@@ -50,4 +69,3 @@ it in the current directory with the file name `digest2.obscodes`.
 ## Installation and configuration
 
 See file OPERATION.md.
-
