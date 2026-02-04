@@ -75,10 +75,10 @@ double updateMagnitude(char band, double mag){
                 mag -= 1.3;
                 break;
             case 'g':
-                mag -= 0.35;
+                mag -= 0.28;
                 break;
             case 'r':
-                mag += 0.14;
+                mag += 0.23;
                 break;
             case 'R':
                 mag += 0.4;
@@ -90,10 +90,10 @@ double updateMagnitude(char band, double mag){
                 mag += 0.4;
                 break;
             case 'i':
-                mag += 0.32;
+                mag += 0.39;
                 break;
             case 'z':
-                mag += 0.26;
+                mag += 0.37;
                 break;
             case 'I':
                 mag += 0.8;
@@ -102,10 +102,10 @@ double updateMagnitude(char band, double mag){
                 mag += 1.2;
                 break;
             case 'w':
-                mag -= 0.13;
+                mag -= 0.16;
                 break;
             case 'y':
-                mag += 0.32;
+                mag += 0.36;
                 break;
             case 'L':
                 mag += 0.2;
@@ -120,7 +120,7 @@ double updateMagnitude(char band, double mag){
                 mag += 0.7;
                 break;
             case 'G':
-                mag += 0.28;
+                mag += 0.24;
                 break;
             case 'v':
                 mag += 0;
