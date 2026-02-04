@@ -1,7 +1,5 @@
 /**
  * @File d2ades.c
- * @author Richard Cloete
- * @Email richard.cloete@cfa.harvard.edu
  * @Description parse an ADES XML file and return a tracklet
  * @Param filepath -- the path to the ADES XML file
  * @Return tracklet -- the tracklet
