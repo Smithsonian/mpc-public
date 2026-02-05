@@ -91,5 +91,5 @@ curl -X GET -H "Accept: application/json" \
 
 ## Notes
 
-- Exact matches appear in results even with minor numerical RA/dec differences
+- Exact matches may occasionally show non-zero angular separation values. This is due to the numerical difference between the RA/dec values stored in the database and those given in the obs80 string.
 - The matching criteria require both time AND angle thresholds to be satisfied
