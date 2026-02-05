@@ -1,6 +1,6 @@
 # Action Codes API
 
-The Action Codes API allows you to request that your action codes be resent to your original email address. Action codes are used to retract or replace submitted observations.
+Action codes are automatically generated and sent to the submitters of new NEO and new comet candidates as well as to the NEO/NEOPC follow-up reporters. Action codes are used to retract or replace submitted observations. The Action Codes API allows you to request that your action codes be resent to your original email address. The codes can then be used at the [MPC action codes submission page](https://www.minorplanetcenter.net/submit_action_code).
 
 ## Endpoint
 
