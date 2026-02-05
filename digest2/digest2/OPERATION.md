@@ -6,8 +6,9 @@ Digest2 version 0.19.3
 Having built digest2 (see [BUILDING.md](BUILDING.md), you should have a `digest2` executable in the current directory.
 Make sure that you also have the `digest2.model.csv`, `digest2.model`, and `MPC.config` files in the current directory.
 If you have internet connection `digest2` will download the latest observatory parallax data from the Minor Planet Center.
-If no internet connection is available, you will need to download the `obscode.dat` file from the Minor Planet Center and 
-place it in the current directory with the name `digest2.obscodes`.
+If no internet connection is available, you will need to download the observatory codes flatfile from the Minor Planet Center and 
+place it in the current directory with the name `digest2.obscodes`. The observatory codes flatfile
+can be retrieved via the [Observatory Codes API](https://www.minorplanetcenter.net/mpcops/documentation/obscodes-api/).
 
 You should now be able to run digest2. For this, we have provided two sample files: one in MPC format (`sample.obs`), and one 
 in ADES format (`sample.xml`). More information on the MPC and ADES formats can be found in the 

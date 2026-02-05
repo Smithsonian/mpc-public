@@ -63,8 +63,9 @@ NE00269  0.42  18  18   3   0 (MC 9) (Hun 4) (Pho 27) (MB1 <1) (Han <1) (MB2 30)
 The Internet conection is used only to get a copy of observatory parallax data
 from the Minor Planet Center.  An Internet connection is not otherwise used
 so it is not required, but without an Internet connection you will need to
-otherwise get a copy of the Minor Planet Center's `obscode.dat` file and place
-it in the current directory with the file name `digest2.obscodes`.
+otherwise get a copy of the Minor Planet Center's observatory codes file via the
+[Observatory Codes API](https://www.minorplanetcenter.net/mpcops/documentation/obscodes-api/)
+and place it in the current directory with the file name `digest2.obscodes`.
 
 ## Installation and configuration
 
