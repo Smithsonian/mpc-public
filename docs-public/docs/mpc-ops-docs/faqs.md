@@ -40,7 +40,7 @@ Common questions and answers about MPC operations and services.
         <summary>Why were my observations rejected?</summary>
             <div class="faq-answer">
             <p>The most likely reason is large orbital fit residuals, including orbital fit residuals larger than your reported uncertainty.</p>
-            <p>You can see whether this is the case by using an orbit fitter for the archival astrometry plus your submitted astrometry. If you find that the residuals are good, you can submit a ticket under <a href="https://mpc-service.atlassian.net/servicedesk/customer/portals">General Support</a>.</p>
+            <p>You can see whether this is the case by using an orbit fitter for the archival astrometry, plus your submitted astrometry. If you find that the residuals are good, you can submit a ticket under <a href="https://mpc-service.atlassian.net/servicedesk/customer/portals">General Support</a>.</p>
         </div>
     </details>
     
@@ -77,10 +77,10 @@ Common questions and answers about MPC operations and services.
     <details id="faq-observatory-code">
         <summary>How do I get an observatory code?</summary>
         <div class="faq-answer">
-            <p>The typical procedure for obtaining an observatory code is explained in the links below:</p>
+            <p>The typical procedure for obtaining an observatory code is explained in the Guide to Minor Body Astrometry sections:</p>
             <ul>
-                <li><a href="https://www.minorplanetcenter.net/iau/info/Astrometry.html#begin">How to begin</a></li>
-                <li><a href="https://www.minorplanetcenter.net/iau/info/Astrometry.html#HowObsCode">Get an observatory code</a></li>
+                <li><a href="https://www.minorplanetcenter.net/iau/info/Astrometry.html#begin">"How do I begin?"</a></li>
+                <li><a href="https://www.minorplanetcenter.net/iau/info/Astrometry.html#HowObsCode">"How do I get an observatory code?"</a></li>
             </ul>
         </div>
     </details>
@@ -96,16 +96,19 @@ Common questions and answers about MPC operations and services.
         <summary>My ticket was 'Moved to Development'. What does that mean?</summary>
         <div class="faq-answer">
             <p>Some of the helpdesk tickets submitted to the MPC cannot be resolved immediately. This can include requests for new features or services, the re-implementation of services or files that are no longer produced, or other work that requires effort beyond typical day-to-day operations of the MPC.</p>
-            <p>When a ticket is "Moved to Development", we create or link a matching task in our software development system. This can be "Low", "Medium", or "High", and the priority of the Helpdesk ticket will match the priority of the related task in our internal Development tracking system.</p>
-            <p>To view your ticket's priority, log in to the <a href="https://mpc-service.atlassian.net/servicedesk/customer/portal/">MPC Helpdesk</a>. On the upper right, click 'Requests' and select one of the options.</p>
+
+            <p>When a ticket is "Moved to Development", we create or link a matching task in our software development system. Depending on our assessment of the task, both tickets are assigned a priority, of "Low", "Medium", or "High".</p> 
+
+            <p>You can view the priority assigned to your ticket by logging into the <a href="https://mpc-service.atlassian.net/servicedesk/customer/portal/">Customer Portal</a>. On the upper right, click 'Requests' and select one of the options. This will show a table of all relevant tickets, with the priorities listed on the right-hand side.</p>
         </div>
     </details>
     
     <details id="faq-ip-blocked">
         <summary>I can't access your website anymore. Did you ban my IP Address?</summary>
         <div class="faq-answer">
-            <p>If you submit too many requests to the MPC in a short time, your IP Address might have been blocked.</p>
-            <p>Please change your process to limit queries to not more than 1 API request per 2 seconds, and submit a <a href="https://mpc-service.atlassian.net/servicedesk/customer/portal/">helpdesk ticket</a> requesting we unblock your IP address.</p>
+            <p>If you submit too many requests to the MPC in a short time, your IP Address may be blocked. Please limit queries to <a href="https://data.minorplanetcenter.net/api/">https://data.minorplanetcenter.net/api/</a> endpoints to not more than 5 requests per second. Exceeding this rate may induce an HTTP status code of 429, indicating "Too Many Requests" were sent.</p>
+
+            <p>If you experience interruptions using any of our pages or endpoints, please submit a ticket under <a href="https://mpc-service.atlassian.net/servicedesk/customer/portals">General Support</a>, requesting we unblock your IP address.</p>
         </div>
     </details>
 
