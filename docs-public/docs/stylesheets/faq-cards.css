@@ -60,6 +60,10 @@
   transition: background-color 120ms ease;
 }
 
+#faq-cards > details > summary::before {
+  display: none;
+}
+
 #faq-cards > details > summary::-webkit-details-marker {
   display: none;
 }
