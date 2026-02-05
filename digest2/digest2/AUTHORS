@@ -1,0 +1,5 @@
+The main author of this code was Sonia Keys.  The code has evolved from an earlier
+version of digest2 with contributions from Carl Hergenrother, Robert McNaught,
+and David Asher.
+Recent updates to enable the code to ingest ADES format data and use uncertainties 
+were authored by Richard Cloete and Peter Veres.
