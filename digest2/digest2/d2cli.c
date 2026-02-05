@@ -13,7 +13,7 @@
 //#include <stdbool.h>
 
 char msgVersion[] =
-        "Digest2 version 0.19 -- Released August 16, 2017 -- Compiled %s\n";
+        "Digest2 version v1.0.0\n";
 char msgCopyright[] = "Public domain.";
 
 // stuff used for parsing command line
@@ -279,7 +279,7 @@ void readConfig() {
 }
 
 void printVersion() {
-    printf(msgVersion, __DATE__);
+    printf("%s", msgVersion);
     puts(msgCopyright);
 
     // attempt date/size of csv
