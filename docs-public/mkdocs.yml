@@ -14,7 +14,6 @@ theme:
     - content.code.copy
     - search.highlight
     - search.suggest
-  custom_dir: overrides
 
 plugins:
   - search
