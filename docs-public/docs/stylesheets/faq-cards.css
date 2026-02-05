@@ -1,0 +1,130 @@
+/* ============================================
+   FAQ Cards - Expandable cards in a grid layout
+   Color scheme matches grid-buttons2.css
+   ============================================ */
+
+/* Grid container for FAQ cards */
+#faq-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+/* Each card (details element) */
+#faq-cards > details {
+  margin: 0;
+  padding: 0;
+
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  border-radius: 0.25rem;
+
+  background-color: rgba(0, 0, 0, 0.04);
+
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease,
+    box-shadow 120ms ease,
+    transform 120ms ease;
+
+  overflow: hidden;
+}
+
+#faq-cards > details:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.28);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+/* Open state */
+#faq-cards > details[open] {
+  background-color: rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.28);
+}
+
+/* Question title (summary element) */
+#faq-cards > details > summary {
+  display: block;
+  padding: 0.9rem 1rem;
+  padding-right: 2.5rem;
+
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: rgba(0, 0, 0, 0.7);
+
+  cursor: pointer;
+  list-style: none;
+  position: relative;
+
+  transition: background-color 120ms ease;
+}
+
+#faq-cards > details > summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Expand/collapse indicator */
+#faq-cards > details > summary::after {
+  content: "+";
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.5);
+
+  transition: transform 200ms ease;
+}
+
+#faq-cards > details[open] > summary::after {
+  content: "−";
+}
+
+#faq-cards > details > summary:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* Answer content */
+#faq-cards > details > .faq-answer {
+  padding: 0 1rem 1rem 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+#faq-cards > details > .faq-answer p {
+  margin: 0.75rem 0;
+}
+
+#faq-cards > details > .faq-answer p:first-child {
+  margin-top: 0.75rem;
+}
+
+#faq-cards > details > .faq-answer p:last-child {
+  margin-bottom: 0;
+}
+
+/* Links within answers */
+#faq-cards > details > .faq-answer a {
+  text-decoration: none;
+  border-bottom: 1px dotted currentColor;
+}
+
+#faq-cards > details > .faq-answer a:hover {
+  border-bottom-style: solid;
+}
+
+/* Lists within answers */
+#faq-cards > details > .faq-answer ul,
+#faq-cards > details > .faq-answer ol {
+  margin: 0.5rem 0;
+  padding-left: 1.25rem;
+}
+
+#faq-cards > details > .faq-answer li {
+  margin: 0.25rem 0;
+}
