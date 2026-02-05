@@ -20,12 +20,12 @@ https://data.minorplanetcenter.net/api/action-codes/retrieve
 
 The following identifier formats are accepted:
 
-| Format | Example | Description |
-|--------|---------|-------------|
-| trksub | `A10cnQO` | Tracklet submission ID (1-8 alphanumeric characters) |
-| trkid | `00000DwbEz` | Track ID (8-12 alphanumeric characters) |
-| submission block id | `2024-05-02T21:03:35.001_0000FzZw_01` | Full submission block identifier |
-| submission id | `2024-05-02T21:03:35.001_0000FzZw` | Submission identifier |
+| Format | Example | Regex | Description |
+|--------|---------|-------|-------------|
+| trksub | `A10cnQO` | `^[-A-Za-z0-9_]{1,8}$` | Tracklet submission ID (1-8 alphanumeric characters) |
+| trkid | `00000DwbEz` | `^[-A-Za-z0-9_]{8,12}$` | Track ID (8-12 alphanumeric characters) |
+| submission block id | `2024-05-02T21:03:35.001_0000FzZw_01` | `^\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-6]\d\.\d{3}_\w{8}_\d{2}$` | Full submission block identifier |
+| submission id | `2024-05-02T21:03:35.001_0000FzZw` | `^\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-6]\d\.\d{3}_\w{8}$` | Submission identifier |
 
 ## Response
 
