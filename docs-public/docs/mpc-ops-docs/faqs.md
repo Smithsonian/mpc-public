@@ -47,7 +47,7 @@ Common questions and answers about MPC operations and services.
     <details id="faq-services-problem">
         <summary>A file or website I am trying to use is corrupted/unavailable/has other problems. Can you fix it?</summary>
         <div class="faq-answer">
-            <p>Please submit a ticket under <a href="https://mpc-service.atlassian.net/servicedesk/customer/portals">General Help - Problem with Services</a>. Please provide the complete URL, and, if the issue relates to a file, attach the file as well.</p>
+            <p>Please submit a ticket under <a href="https://mpc-service.atlassian.net/servicedesk/customer/portals">General Support</a>, under the category "Report Broken Services". Please provide the complete URL; if the issue relates to a file, attach the file as well.</p>
         </div>
     </details>
     
