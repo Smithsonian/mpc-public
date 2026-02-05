@@ -46,7 +46,7 @@ response = requests.get(
 )
 
 if response.ok:
-    mpc_orb = response.json()[0]['mpc_orb']
+    mpc_orb = response.json()[0]['mpc_orb'][0]
     print(mpc_orb)
 else:
     print("Error:", response.status_code, response.content)
