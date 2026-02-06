@@ -22,4 +22,6 @@ Last Update: 2026-01-29
  - `docs-public` provides a landing page for the MPC's documentation website, 
 [https://docs.minorplanetcenter.net/](https://docs.minorplanetcenter.net/). 
 
-
+### digest2
+Last Update: 2025-11-21
+ - XML-enhanced repository of digest2 code, population model and the configuration files.
