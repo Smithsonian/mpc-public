@@ -30,7 +30,8 @@ pip install mkdocs mkdocs-material mkdocs-jupyter
    E.g. Create / Edit one or more *markdown* files such as [docs/index.md](docs/index.md)
 
 4. **Examine locally**
- - From the project root, run from the command-line: `mkdocs serve`
+ - From the project root, run from the command-line: `mkdocs serve --livereload`
+ - See [Issue #8478](https://github.com/squidfunk/mkdocs-material/issues/8478) on the addition of `--livereload` argument. Once `mkdocs` solves this issue, it should automatically watch for changes without the `--livereload` flag.
  - Then examine in browser: `http://127.0.0.1:8000/index.html`
 
 5. Push Branch to Repo & Request Review
@@ -61,4 +62,3 @@ N.B.(1) The WIP git branch does *not* have to be merged for the
 
 N.B.(2) I assume that the `mkdocs gh-deploy` step could be replaced by 
         some form of automated, post-merge github action. 
- 
