@@ -4,6 +4,7 @@ repo_url: https://github.com/Smithsonian/mpc-public
 
 theme:
   name: material
+  logo: images/mpc-logo.jpeg
   features:
     - navigation.top
     - navigation.footer
@@ -34,6 +35,15 @@ markdown_extensions:
       permalink: true
   - tables
   - attr_list
+  # Syntax highlighting for code blocks
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+
 
 extra_css:
   - stylesheets/nav-buttons.css

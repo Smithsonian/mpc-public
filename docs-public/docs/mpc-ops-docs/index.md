@@ -13,7 +13,7 @@ will soon be **replaced** by this simplified page.
     
 - [FAQs](faqs.md)
 - [Astrometry Guide](astrometry.md)
-- [APIs](apis.md)
+- [APIs](apis/index.md)
 - [Replicated PostgreSQL Tables](replicated-postgresql.md)
 - [ADES](ades.md)
 - [Program codes and observatory codes](programs-and-obscodes.md)
