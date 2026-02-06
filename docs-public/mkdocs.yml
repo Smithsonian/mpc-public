@@ -4,6 +4,7 @@ repo_url: https://github.com/Smithsonian/mpc-public
 
 theme:
   name: material
+  logo: images/mpc-logo.jpeg
   features:
     - navigation.top
     - navigation.footer
