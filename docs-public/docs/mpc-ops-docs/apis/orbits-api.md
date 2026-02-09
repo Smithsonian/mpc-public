@@ -12,26 +12,21 @@ https://data.minorplanetcenter.net/api/get-orb
 
 ## Parameters
 
-| Parameter | Type | Required | Description | Default |
-|-----------|------|----------|-------------|---------|
-| `desig` | String | Yes | Name, permanent or provisional designation | None |
+| Parameter       | Type            | Required | Description                                                                                    | Default     |
+|-----------------|-----------------|----------|------------------------------------------------------------------------------------------------|-------------|
+| `desig`         | String          | Yes      | Name, permanent or provisional designation                                                     | NA          |
+| `output_fomats` | List of strings | No       | One or more of `['mpc_orb', 'eq0', 'eq1', 'ele220', 'rwo', 'eq0_dict', 'eq1_dict', 'rwo_dict']` | `['mpc_orb']` |
 
-Both packed and unpacked designation formats are supported. Currently limited to single object queries.
+You may use any designation format supported by the [Designation Identifier API](./designation-identifier-api.md). Currently, the Orbits API is limited to single object queries.
 
 ## Response Format
 
-The response is in the `mpc_orb` JSON format, containing:
+At a high level, the Orbits API returns a list containing:
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `mpc_orb` | List of dicts | Orbital elements and orbit-related parameters for the standard epoch orbit |
-
-The `mpc_orb` format includes:
-
-- Cartesian state vectors (CAR)
-- Orbital uncertainties and covariance matrix
-- Epoch information
-- Designation data
+| List Item   | Type       | Description                                                   |
+|-------------|------------|---------------------------------------------------------------|
+| Orbit       | Dictionary | Dictionary containing items for each requested output format. |
+| Status Code | Integer    | 200                                                           |
 
 ## Examples
 
@@ -76,12 +71,13 @@ curl -X GET -H "Content-Type: application/json" \
   https://data.minorplanetcenter.net/api/get-orb
 ```
 
-## Working with mpc_orb Format
+## Working with the `mpc_orb` Format
 
-The MPC maintains a public GitHub repository with a pip-installable package for reading, validating, and writing MPC_ORB JSON files:
+The MPC maintains a public GitHub repository with a pip-installable package for reading, validating, and writing `MPC_ORB` JSON files:
 
-- [mpc_orb on GitHub](https://github.com/Smithsonian/mpc-public/tree/main/mpc_orb)
-- [mpc_orb on PyPI](https://pypi.org/project/mpc-orb/)
+- [`mpc_orb` on GitHub](https://github.com/Smithsonian/mpc-public/tree/main/mpc_orb)
+- [`mpc-orb` on PyPI](https://pypi.org/project/mpc-orb/)
+- [`MPC_ORB` JSON Documentation](https://minorplanetcenter.net/mpcops/documentation/mpc-orb-json/)
 
 ```bash
 pip install mpc-orb
@@ -89,4 +85,4 @@ pip install mpc-orb
 
 ## See Also
 
-- [MPC_ORB JSON Documentation](../orbital-elements.md)
+- [Orbital Elements Documentation](../orbital-elements.md)
