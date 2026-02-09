@@ -17,7 +17,8 @@ https://data.minorplanetcenter.net/api/get-orb
 | `desig`         | String          | Yes      | Name, permanent or provisional designation                                                     | NA          |
 | `output_fomats` | List of strings | No       | One or more of `['mpc_orb', 'eq0', 'eq1', 'ele220', 'rwo', 'eq0_dict', 'eq1_dict', 'rwo_dict']` | `['mpc_orb']` |
 
-You may use any designation format supported by the [Designation Identifier API](./designation-identifier-api.md). Currently, the Orbits API is limited to single object queries.
+!!! note
+    You may use any designation format supported by the [Designation Identifier API](./designation-identifier-api.md). Currently, the Orbits API is limited to single object queries.
 
 ## Response Format
 
@@ -39,15 +40,11 @@ response = requests.get(
     "https://data.minorplanetcenter.net/api/get-orb",
     json={"desig": "123456"}
 )
-
-if response.ok:
-    mpc_orb = response.json()[0]['mpc_orb'][0]
-    print(mpc_orb)
-else:
-    print("Error:", response.status_code, response.content)
+response.raise_for_status()
+mpc_orb = response.json()[0]['mpc_orb'][0]
 ```
 
-**Output:**
+**Output `mpc_orb` Dictionary**
 
 ```python
 {

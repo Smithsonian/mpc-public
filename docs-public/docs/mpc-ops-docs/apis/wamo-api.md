@@ -93,12 +93,14 @@ import requests
 
 url = "https://data.minorplanetcenter.net/api/wamo"
 obs_list = ['P11JuVG F51']
-result = requests.get(url, json=obs_list)
-observations = result.json()
+response = requests.get(url, json=obs_list)
+response.raise_for_status()
+wamo_response = response.json()
 
 # To get the original WAMO string format:
-result = requests.get(url, json=['string'] + obs_list)
-observations = result.text
+response = requests.get(url, json=['string'] + obs_list)
+response.raise_for_status()
+wamo_response = response.text
 ```
 
 ## See Also
