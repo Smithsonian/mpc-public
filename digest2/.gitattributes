@@ -1,0 +1,9 @@
+digest2/digest2.model.csv filter=lfs diff=lfs merge=lfs -text
+digest2/digest2.obscodes filter=lfs diff=lfs merge=lfs -text
+NEOCP_filters/digest_data_19-24.csv filter=lfs diff=lfs merge=lfs -text
+NEOCP_filters/digest_data_24.csv filter=lfs diff=lfs merge=lfs -text
+NEOCP_filters/filtered_pass.csv filter=lfs diff=lfs merge=lfs -text
+NEOCP_filters/neocp.obs filter=lfs diff=lfs merge=lfs -text
+population/make_population/s3m.dat filter=lfs diff=lfs merge=lfs -text
+population/digest2.model.csv filter=lfs diff=lfs merge=lfs -text
+population/digest2.obscodes filter=lfs diff=lfs merge=lfs -text

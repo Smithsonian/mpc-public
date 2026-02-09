@@ -14,7 +14,6 @@ theme:
     - content.code.copy
     - search.highlight
     - search.suggest
-  custom_dir: overrides
 
 plugins:
   - search
@@ -39,6 +38,10 @@ markdown_extensions:
 extra_css:
   - stylesheets/nav-buttons.css
   - stylesheets/grid-buttons2.css
+<<<<<<< submission_status_api_tutorial
 
 extra_javascript:
   - javascript/force-ipynb-download2.js
+=======
+  - stylesheets/faq-cards.css
+>>>>>>> main
