@@ -106,3 +106,4 @@ for event in result["fault_events"]:
 ## See Also
 
 - [Observation Submission API](https://www.minorplanetcenter.net/iau/info/commandlinesubmissions.html) - How to submit observations via cURL and other tools.
+- [Submission Tutorials](../../tutorials/submission_tutorials.md)
