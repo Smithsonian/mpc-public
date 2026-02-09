@@ -49,3 +49,7 @@ extra_css:
   - stylesheets/nav-buttons.css
   - stylesheets/grid-buttons2.css
   - stylesheets/faq-cards.css
+
+extra_javascript:
+  - javascript/force-ipynb-download2.js
+
