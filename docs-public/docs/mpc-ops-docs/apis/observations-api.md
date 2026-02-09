@@ -12,24 +12,25 @@ https://data.minorplanetcenter.net/api/get-obs
 
 ## Parameters
 
-| Parameter | Type | Required | Description | Default |
-|-----------|------|----------|-------------|---------|
-| `desigs` | List (single string) | Yes | Name, permanent or provisional designation | None |
-| `output_format` | List of strings | No | Output format(s): `XML`, `ADES_DF`, `OBS_DF`, `OBS80` | `XML` |
-| `ades_version` | String | No | ADES version: `2017` or `2022` | `2022` |
+| Parameter | Type                      | Required | Description | Default |
+|-----------|---------------------------|----------|-------------|---------|
+| `desigs` | List of one single string | Yes | Name, permanent or provisional designation | None |
+| `output_format` | List of strings           | No | Output format(s): `XML`, `ADES_DF`, `OBS_DF`, `OBS80` | `XML` |
+| `ades_version` | String                    | No | ADES version: `2017` or `2022` | `2022` |
 
-You can search for any single permanent or provisional designation. Both packed and unpacked formats are supported.
+!!! note
+    You may use any designation format supported by the [Designation Identifier API](./designation-identifier-api.md). Currently, the Orbits API is limited to single object queries.
 
-## Output Formats
+### Valid `output_format` specifications
 
-| Format | Type | Description |
-|--------|------|-------------|
-| `XML` | String | Observations in ADES XML format |
-| `OBS80` | String | Observations in MPC1992 80-column format |
-| `ADES_DF` | List of dicts | Dictionary representation of ADES values |
-| `OBS_DF` | List of dicts | Dictionary representation of 80-column format |
+| Format | Type | Description                                                                                      |
+|--------|------|--------------------------------------------------------------------------------------------------|
+| `XML` | String | Observations in [ADES XML](https://minorplanetcenter.net/iau/info/ADES.html) format              |
+| `OBS80` | String | Observations in [MPC1992 80-column](https://minorplanetcenter.net/iau/info/ObsFormat.html) format |
+| `ADES_DF` | List of dicts | Dictionary representation of ADES values                                                         |
+| `OBS_DF` | List of dicts | Dictionary representation of 80-column format                                                    |
 
-Multiple formats can be requested: `["XML", "OBS80"]`
+Multiple formats can be requested. E.g., `["XML", "OBS80"]`
 
 ## Examples
 
@@ -42,12 +43,8 @@ response = requests.get(
     "https://data.minorplanetcenter.net/api/get-obs",
     json={"desigs": ["2023 AB"], "output_format": ["XML"]}
 )
-
-if response.ok:
-    xml_string = response.json()[0]['XML']
-    print(xml_string)
-else:
-    print("Error:", response.status_code, response.content)
+response.raise_for_status()
+xml_string = response.json()[0]['XML']
 ```
 
 ### Python - 80-column Format
@@ -59,15 +56,11 @@ response = requests.get(
     "https://data.minorplanetcenter.net/api/get-obs",
     json={"desigs": ["Bennu"], "output_format": ["OBS80"]}
 )
-
-if response.ok:
-    obs80_string = response.json()[0]['OBS80']
-    print(obs80_string)
-else:
-    print("Error:", response.status_code, response.content)
+response.raise_for_status()
+obs80_string = response.json()[0]['OBS80']
 ```
 
-**Output:**
+**Output `obs80` string:**
 
 ```
 A1955J99R36Q* C1999 09 11.40624 01 37 54.90 -27 04 27.5          15.1  aa6197704
@@ -85,14 +78,9 @@ response = requests.get(
     "https://data.minorplanetcenter.net/api/get-obs",
     json={"desigs": ["Bennu"], "output_format": ["ADES_DF", "OBS_DF"]}
 )
-
-if response.ok:
-    ades_df = pd.DataFrame(response.json()[0]['ADES_DF'])
-    obs_df = pd.DataFrame(response.json()[0]['OBS_DF'])
-    print(ades_df)
-    print(obs_df)
-else:
-    print("Error:", response.status_code, response.content)
+response.raise_for_status()
+ades_df = pd.DataFrame(response.json()[0]['ADES_DF'])
+obs_df = pd.DataFrame(response.json()[0]['OBS_DF'])
 ```
 
 ### curl
