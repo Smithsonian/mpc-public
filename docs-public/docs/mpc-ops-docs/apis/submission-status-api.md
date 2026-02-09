@@ -103,10 +103,6 @@ for event in result["fault_events"]:
 }
 ```
 
-### Non-existent Submission
-
-If you query a submission ID that doesn't exist, the API returns a 404 error.
-
 ## See Also
 
 - [Submission API](submission-api.md) - How to submit observations
