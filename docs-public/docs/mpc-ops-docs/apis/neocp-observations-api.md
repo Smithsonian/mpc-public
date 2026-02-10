@@ -32,7 +32,8 @@ https://data.minorplanetcenter.net/api/get-obs-neocp
 
 ## Examples
 
-**Note:** Examples use tracklet IDs that may no longer be on the NEOCP. Replace with a current tracklet from the [NEOCP](https://minorplanetcenter.net/iau/NEO/toconfirm_tabular.html).
+!!! note
+    These examples use tracklet IDs that may no longer be on the NEOCP. Replace with a current tracklet from the [NEOCP](https://minorplanetcenter.net/iau/NEO/toconfirm_tabular.html).
 
 ### Python - XML Format
 
@@ -43,15 +44,12 @@ response = requests.get(
     "https://data.minorplanetcenter.net/api/get-obs-neocp",
     json={"trksubs": ["A118xu6"], "output_format": ["XML"]}
 )
-
-if response.ok:
-    xml_string = response.json()[0]['XML']
-    print(xml_string)
-else:
-    print("Error:", response.status_code, response.content)
+response.raise_for_status()
+xml_string = response.json()[0]['XML']
+print(xml_string)
 ```
 
-### Python - 80-column Format
+### Python - MPC1992 80-column Format
 
 ```python
 import requests
@@ -60,12 +58,9 @@ response = requests.get(
     "https://data.minorplanetcenter.net/api/get-obs-neocp",
     json={"trksubs": ["xkos423"], "output_format": ["OBS80"]}
 )
-
-if response.ok:
-    obs80_string = response.json()[0]['OBS80']
-    print(obs80_string)
-else:
-    print("Error:", response.status_code, response.content)
+response.raise_for_status()
+obs80_string = response.json()[0]['OBS80']
+print(obs80_string)
 ```
 
 **Output:**
@@ -76,7 +71,7 @@ else:
 ...
 ```
 
-### Python - Pandas DataFrame
+### Python - ADES and MPC1992 data in Pandas DataFrame
 
 ```python
 import requests
@@ -86,14 +81,11 @@ response = requests.get(
     "https://data.minorplanetcenter.net/api/get-obs-neocp",
     json={"trksubs": ["xkos423"], "output_format": ["ADES_DF", "OBS_DF"]}
 )
-
-if response.ok:
-    ades_df = pd.DataFrame(response.json()[0]['ADES_DF'])
-    obs_df = pd.DataFrame(response.json()[0]['OBS_DF'])
-    print(ades_df)
-    print(obs_df)
-else:
-    print("Error:", response.status_code, response.content)
+response.raise_for_status()
+ades_df = pd.DataFrame(response.json()[0]['ADES_DF'])
+obs_df = pd.DataFrame(response.json()[0]['OBS_DF'])
+print(ades_df)
+print(obs_df)
 ```
 
 ### cURL
