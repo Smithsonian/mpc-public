@@ -23,10 +23,10 @@ https://data.minorplanetcenter.net/api/get-orb
 
 At a high level, the Orbits API returns a list containing:
 
-| List Item   | Type       | Description                                                   |
-|-------------|------------|---------------------------------------------------------------|
-| Orbit       | Dictionary | Dictionary containing items for each requested output format. |
-| Status Code | Integer    | 200                                                           |
+| List Item   | Type       | Description                                |
+|-------------|------------|--------------------------------------------|
+| Orbit       | Dictionary | Dictionary containing an `mpc_orb` object. |
+| Status Code | Integer    | 200                                        |
 
 ## Examples
 
