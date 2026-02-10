@@ -15,7 +15,6 @@ https://data.minorplanetcenter.net/api/get-orb
 | Parameter       | Type            | Required | Description                                                                                    | Default     |
 |-----------------|-----------------|----------|------------------------------------------------------------------------------------------------|-------------|
 | `desig`         | String          | Yes      | Name, permanent or provisional designation                                                     | NA          |
-| `output_fomats` | List of strings | No       | One or more of `['mpc_orb', 'eq0', 'eq1', 'ele220', 'rwo', 'eq0_dict', 'eq1_dict', 'rwo_dict']` | `['mpc_orb']` |
 
 !!! note
     You may use any designation format supported by the [Designation Identifier API](./designation-identifier-api.md). Currently, the Orbits API is limited to single object queries.
@@ -60,7 +59,7 @@ mpc_orb = response.json()[0]['mpc_orb'][0]
 }
 ```
 
-### curl
+### cURL
 
 ```bash
 curl -X GET -H "Content-Type: application/json" \
