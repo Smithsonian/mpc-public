@@ -39,3 +39,11 @@ def test_sample_xml_runs_and_reports_designation():
     assert result.returncode == 0, result.stderr
     assert "Desig." in result.stdout
     assert "C8QY322" in result.stdout
+
+
+def test_three_hr_tracklets_runs_and_reports_first_object():
+    result = _run_digest2("three-hr-tracklets.obs")
+    assert result.returncode == 0, result.stderr
+    assert "Desig." in result.stdout
+    # One of the first designations in the output listing.
+    assert "65558" in result.stdout
