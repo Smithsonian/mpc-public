@@ -135,7 +135,7 @@ double updateMagnitude(char band, double mag){
                 mag += 2.5;
                 break;
             default:
-                mag += .4;
+                mag -= 0.08;
                 break;
         }
     }
