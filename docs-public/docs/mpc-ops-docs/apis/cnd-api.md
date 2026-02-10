@@ -74,7 +74,7 @@ else:
     print("Error:", response.status_code)
 ```
 
-### curl
+### cURL
 
 ```bash
 curl -X GET -H "Accept: application/json" \

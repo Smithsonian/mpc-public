@@ -18,7 +18,8 @@ https://data.minorplanetcenter.net/api/get-obs-neocp
 | `output_format` | List of strings           | No | Output format(s): `XML`, `ADES_DF`, `OBS_DF`, `OBS80` | `XML`   |
 | `ades_version` | String                    | No | ADES version: `2017` or `2022`                        | `2022`  |
 
-**Note:** Only objects currently on the NEOCP can be queried. For confirmed objects, use the [Observations API](observations-api.md).
+!!! note 
+    Only objects currently on the NEOCP can be queried. For confirmed objects, use the [Observations API](observations-api.md).
 
 ## Output Formats
 
@@ -95,7 +96,7 @@ else:
     print("Error:", response.status_code, response.content)
 ```
 
-### curl
+### cURL
 
 ```bash
 curl -X GET -H "Content-Type: application/json" \

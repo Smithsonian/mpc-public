@@ -77,7 +77,7 @@ The `"string"` item can be in any position of the list.
 
 ## Examples
 
-### curl
+### cURL
 
 ```bash
 curl -X GET -H "Accept: application/json" \

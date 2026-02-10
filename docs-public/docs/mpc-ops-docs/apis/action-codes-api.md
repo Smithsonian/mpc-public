@@ -51,7 +51,7 @@ response.raise_for_status()
 json.dump(response.json(), sys.stdout, indent=4)  # Response is minimal
 ```
 
-### curl
+### cURL
 
 ```bash
 curl -X POST -H "Accept: application/json" \

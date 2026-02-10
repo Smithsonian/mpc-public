@@ -119,7 +119,7 @@ for code, data in response.json().items():
     print(f'{code:3} : {data["name"]}')
 ```
 
-### curl
+### cURL
 
 ```bash
 # Single observatory

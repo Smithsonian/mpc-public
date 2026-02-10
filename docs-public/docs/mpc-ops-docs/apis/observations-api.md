@@ -83,7 +83,7 @@ ades_df = pd.DataFrame(response.json()[0]['ADES_DF'])
 obs_df = pd.DataFrame(response.json()[0]['OBS_DF'])
 ```
 
-### curl
+### cURL
 
 ```bash
 curl -X GET -H "Content-Type: application/json" \

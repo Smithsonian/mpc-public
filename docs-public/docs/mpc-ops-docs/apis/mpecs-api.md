@@ -102,7 +102,7 @@ json.dump(response.json(), sys.stdout, indent=4)
 }
 ```
 
-### curl
+### cURL
 
 ```bash
 curl -X GET -H "Accept: application/json" \
