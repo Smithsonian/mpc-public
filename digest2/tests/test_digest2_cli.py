@@ -47,3 +47,10 @@ def test_three_hr_tracklets_runs_and_reports_first_object():
     assert "Desig." in result.stdout
     # One of the first designations in the output listing.
     assert "65558" in result.stdout
+
+def test_three_hr_tracklets_trkid_0000000HwDxQ():
+    result = _run_digest2("0000000HwDxQ.obs")
+    assert result.returncode == 0, result.stderr
+    assert "Desig." in result.stdout
+    # One of the first designations in the output listing.
+    assert "K25W00F" in result.stdout
