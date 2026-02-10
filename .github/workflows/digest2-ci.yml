@@ -1,0 +1,41 @@
+name: digest2-build-and-test
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "digest2/**"
+      - ".github/workflows/digest2-ci.yml"
+  pull_request:
+    paths:
+      - "digest2/**"
+      - ".github/workflows/digest2-ci.yml"
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential libxml2-dev
+
+      - name: Build digest2
+        run: make
+        working-directory: digest2/digest2
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install test dependencies
+        run: pip install pytest
+
+      - name: Run pytest
+        run: pytest digest2/tests
