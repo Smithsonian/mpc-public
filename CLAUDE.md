@@ -58,8 +58,27 @@ mkdocs gh-deploy
 
 - `docs/mpc-ops-docs/` - MPC operations documentation pages
 - `docs/tutorials/notebooks/` - Jupyter notebook API tutorials
+- `docs/tutorials/submission_tutorials.md` - Links to submission-related notebooks
+- `docs/tutorials/api_tutorials.md` - Links to API tutorial notebooks
 - `docs/javascript/` - Custom JS for notebook downloads
 - `mkdocs.yml` - Site configuration with Material theme
+
+### Tutorial Notebook Conventions
+
+- **Naming**: `mpc_tutorial_api_*.ipynb` for API tutorials, `mpc_tutorial_*.ipynb` for general tutorials
+- **Structure**: Title markdown → Import section → Sample data download (using `tempfile`/`atexit` for cleanup) → Examples (success then failure cases) → Summary
+- **mkdocs-jupyter config**: `execute: false`, `include_source: true` — notebooks are not executed during build
+- **Sample ADES files**: Available at `https://data.minorplanetcenter.net/media/ades/goodsubmit.xml.txt` and `goodsubmit.psv.txt`
+  - These use ADES v2017; the current `iau-ades` package (v0.1.1) validates against v2022
+  - When using these samples, update: `version` attribute to `2022`, remove `+` prefix from `<ra>`/`<dec>` values in XML, fix `+` prefixed values in PSV
+
+### iau-ades Package Quirks
+
+The `iau-ades` pip package is used for local ADES validation and PSV/XML conversion:
+
+- **`psvtoxml` global state bug**: Calling `psvtoxml()` twice in the same Python process causes `"ElemenStack is too short to pop"` error. Workaround: `importlib.reload(ades.psvtoxml)` before the second call.
+- **`valsubmit` output**: Writes results to `valsubmit.file` in CWD (not returned as a value); detailed error tracebacks print to stdout.
+- **Schema version**: The package validates against ADES v2022 schema only (`version="2022"`).
 
 ## Release Process (PyPI)
 

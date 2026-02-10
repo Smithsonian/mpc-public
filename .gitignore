@@ -82,6 +82,10 @@ target/
 # Jupyter Notebook
 .ipynb_checkpoints
 
+# iau-ades validation output
+valsubmit.file
+valall.file
+
 # IPython
 profile_default/
 ipython_config.py
