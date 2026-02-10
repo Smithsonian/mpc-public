@@ -1,6 +1,6 @@
 # List API
 
-The List API returns lists of objects belonging to various groups (NEOs, comets, TNOs, etc.) ordered alphanumerically by designation.
+The List API returns lists of objects belonging to various groups, ordered alphanumerically by designation. This includes lists of NEOs, comets, TNOs, and other categories.
 
 ## Endpoint
 
@@ -8,17 +8,21 @@ The List API returns lists of objects belonging to various groups (NEOs, comets,
 https://data.minorplanetcenter.net/api/list
 ```
 
-**Method:** GET
+**Method:** GET 
 
-## Parameters
+## JSON Input Format
 
-| Parameter | Type | Required | Description | Default |
-|-----------|------|----------|-------------|---------|
-| `list` | String | Yes | Object group to query | (required) |
-| `order` | String | No | Sort order: `ASC` or `DESC` | `ASC` |
-| `limit` | Integer | No | Maximum results (1-50,000) | 50,000 |
-| `offset` | Integer | No | Starting index for pagination | 0 |
-| `like` | String | No | Pattern for filtering designations (PostgreSQL LIKE syntax) | None |
+The following key/value pairs are accepted by the API. Where applicable, default values are used when omitted by the user. 
+
+| Parameter | Type | Required | Description                                                                                                            | Default |
+|-----------|------|----------|------------------------------------------------------------------------------------------------------------------------|---------|
+| `list` | String | Yes | Object group to query; see below for valid categories                                                                  | NA       |
+| `order` | String | No | Sort order: `ASC` or `DESC`                                                                                            | `ASC`   |
+| `limit` | Integer | No | Maximum results (1-50,000)                                                                                             | 50,000  |
+| `offset` | Integer | No | This offset may be used to start from a given index in the result set, which is ordered alphanumerically by designation | 0       |
+| `like` | String | No | Pattern for filtering designations (PostgreSQL [LIKE syntax][PSQLLIKE])                                                | None    |
+
+[PSQLLIKE]: https://www.postgresql.org/docs/current/functions-matching.html#FUNCTIONS-LIKE
 
 ### Available Lists
 
@@ -56,7 +60,7 @@ https://data.minorplanetcenter.net/api/list
 
 ### Pattern Filtering
 
-The `like` parameter accepts PostgreSQL LIKE patterns for filtering unpacked primary provisional designations:
+The `like` parameter accepts PostgreSQL [LIKE patterns][PSQLLIKE] for filtering unpacked primary provisional designations:
 
 - `%` matches any sequence of characters
 - `_` matches any single character
@@ -140,12 +144,12 @@ print(json.dumps(response.json(), indent=4))
 ```python
 import requests
 
-# Get first page
+# Get 'first page'
 req = {'list': 'neos', 'limit': 100, 'offset': 0}
 response = requests.get('https://data.minorplanetcenter.net/api/list', json=req)
 first_page = response.json()['items']
 
-# Get second page
+# Get 'second page'
 req['offset'] = 100
 response = requests.get('https://data.minorplanetcenter.net/api/list', json=req)
 second_page = response.json()['items']
@@ -153,4 +157,4 @@ second_page = response.json()['items']
 
 ## See Also
 
-- [PostgreSQL Pattern Matching](https://www.postgresql.org/docs/current/functions-matching.html)
+- [PostgreSQL Pattern Matching](PSQLLIKE)
