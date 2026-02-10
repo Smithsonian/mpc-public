@@ -12,11 +12,11 @@ https://data.minorplanetcenter.net/api/get-obs-neocp
 
 ## Parameters
 
-| Parameter | Type | Required | Description | Default |
-|-----------|------|----------|-------------|---------|
-| `trksubs` | List (single string) | Yes | Tracklet identifier on the NEOCP | None |
-| `output_format` | List of strings | No | Output format(s): `XML`, `ADES_DF`, `OBS_DF`, `OBS80` | `XML` |
-| `ades_version` | String | No | ADES version: `2017` or `2022` | `2017` |
+| Parameter | Type                      | Required | Description                                           | Default |
+|-----------|---------------------------|----------|-------------------------------------------------------|---------|
+| `trksubs` | List of one single string | Yes | Tracklet identifier (`trksub`) on the NEOCP           | None    |
+| `output_format` | List of strings           | No | Output format(s): `XML`, `ADES_DF`, `OBS_DF`, `OBS80` | `XML`   |
+| `ades_version` | String                    | No | ADES version: `2017` or `2022`                        | `2022`  |
 
 **Note:** Only objects currently on the NEOCP can be queried. For confirmed objects, use the [Observations API](observations-api.md).
 
