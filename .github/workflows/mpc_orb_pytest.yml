@@ -1,9 +1,16 @@
-name: PyTest
+name: PyTest mpc_orb
 
 on:
   push:
-    branches:
-      - '**'
+    branches: [main]
+    paths:
+      - "mpc_orb/**"
+      - ".github/workflows/mpc_orb_pytest.yml"
+  pull_request:
+    paths:
+      - "mpc_orb/**"
+      - ".github/workflows/mpc_orb_pytest.yml"
+
 jobs:
   build:
 
@@ -24,16 +31,19 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
+
       - name: Install dependencies
         working-directory: ./mpc_orb
         run: |
           python3 -m pip install --upgrade pip
           python3 -m pip install .[test]
-      - name: Test with pytest
+
+      - name: Test mpc_orb
         working-directory: ./mpc_orb
         run: |
           pytest -v -s
