@@ -1,6 +1,6 @@
 # Check Near-Duplicates (CND) API
 
-The Check Near-Duplicates API identifies observations in the MPC database that are potential duplicates of observations you provide. This helps detect duplicate submissions before they enter the database.
+The Check Near-Duplicates API can search for near-duplicates of observations published publicly in the Minor Planet Center database. A near-duplicate is an observation with similar temporal and angular positions to an existing observation.
 
 ## Endpoint
 
@@ -12,21 +12,32 @@ https://data.minorplanetcenter.net/api/cnd
 
 ## Parameters
 
-| Parameter | Type | Required | Description | Default |
-|-----------|------|----------|-------------|---------|
-| `obs` | List of strings | Yes | 80- or 160-character observation records in MPC format | None |
-| `time_separation_s` | Float | No | Temporal threshold (0-60 seconds) | 60 |
-| `angle_separation_arcsec` | Float | No | Spatial threshold (0-10 arcseconds) | 5 |
-| `omit_separation` | Boolean | No | Exclude separation values from results | false |
+| Parameter | Type | Required | Description                                                                                                                                          | Default |
+|-----------|------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| `obs` | List of strings | Yes | 80- or 160-character observation records in the [MPC1992 format](https://minorplanetcenter.net/iau/info/ObsFormat.html).                             | NA      |
+| `time_separation_s` | Float | No | Temporal threshold (0-60 seconds). Matching observations will have been recorded within this time span with respect to the given observation.        | 60      |
+| `angle_separation_arcsec` | Float | No | Spatial threshold (0-10 arcseconds). Matching observations will have been recorded within this angular radius with respect to the given observation. | 5       |
+| `omit_separation` | Boolean | No | Exclude calculated separation values from results.                                                                                                   | false   |
+
+!!! note
+    160-character "two-line" observations may be concatenated, or the 80-character parts may be in sequential order.
 
 **Limits:**
 
-- Up to 10,000 observations per request
-- Searches against publicly published MPC observations only
+- Up to 10,000 observations per request.
+- Searches against publicly published MPC observations only.
 
 ## Response Format
 
-The response contains:
+The original request will be included in a `request` attribute. 
+
+An attribute for each search term is included in the `results` attribute. Note that if the search term is in our database and published, it will always be returned as one of the results. This is called an 'exact' match.
+
+!!! note
+    Exact matches may occasionally show non-zero angular separation values. This is due to the numerical difference between the RA/dec values stored in the database and those given in the obs80 string.
+
+
+The value associated with each search term is a list of dictionaries, giving data about the matching observations. The fields of each match are described below.
 
 | Field | Description |
 |-------|-------------|
@@ -37,9 +48,9 @@ Each match includes:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `obs80` | String | The near-duplicate observation record |
-| `time_separation_s` | Float | Temporal gap in seconds |
-| `angle_separation_arcsec` | Float | Angular distance in arcseconds |
+| `obs80` | String | The 80- or 160- character observation record deemed to be a near-duplicate. |
+| `time_separation_s` | Float | The temporal separation in seconds between the duplicate and the search term. |
+| `angle_separation_arcsec` | Float | The angular separation in arcseconds between the duplicate and the search term. |
 
 ## Examples
 
@@ -48,30 +59,21 @@ Each match includes:
 ```python
 import requests
 
-obs_list = [
-    "     K10CM6D  C2023 05 16.43686615 56 36.807-23 12 43.67         21.55wX~6o8oF51"
+obs = [
+    '     K10CM6D  C2023 05 16.43686615 56 36.807-23 12 43.67         21.55wX~6o8oF51',
+    '     K10HB1E  S2010 04 24.76254008 07 33.34 -16 07 52.4                W     C51',
+    '     K10HB1E  s2010 04 24.7625401 - 3527.1820 + 5686.2015 - 1729.5218        C51'
 ]
 
 request = {
-    'obs': obs_list,
+    'obs': obs,
     'time_separation_s': 60,
     'angle_separation_arcsec': 5
 }
 
 response = requests.get("https://data.minorplanetcenter.net/api/cnd", json=request)
-
-if response.ok:
-    result = response.json()
-    for obs_query, matches in result.get('results', {}).items():
-        if matches:
-            print(f"Found {len(matches)} near-duplicate(s)")
-            for match in matches:
-                print(f"  Time: {match['time_separation_s']}s")
-                print(f"  Angle: {match['angle_separation_arcsec']} arcsec")
-        else:
-            print("No duplicates found")
-else:
-    print("Error:", response.status_code)
+response.raise_for_status()
+near_duplicates = response.json()['results']
 ```
 
 ### cURL
@@ -82,14 +84,3 @@ curl -X GET -H "Accept: application/json" \
   -H "Content-type: application/json" \
   -d '{"obs": ["     K10CM6D  C2023 05 16.43686615 56 36.807-23 12 43.67         21.55wX~6o8oF51"]}'
 ```
-
-## Use Cases
-
-- Check if observations have already been submitted to the MPC
-- Identify potential duplicate observations in your data before submission
-- Verify that your observations are unique
-
-## Notes
-
-- Exact matches may occasionally show non-zero angular separation values. This is due to the numerical difference between the RA/dec values stored in the database and those given in the obs80 string.
-- The matching criteria require both time AND angle thresholds to be satisfied
