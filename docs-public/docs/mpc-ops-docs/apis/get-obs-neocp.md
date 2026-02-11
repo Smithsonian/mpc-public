@@ -19,7 +19,7 @@ https://data.minorplanetcenter.net/api/get-obs-neocp
 | `ades_version` | String                    | No | ADES version: `2017` or `2022`                        | `2022`  |
 
 !!! note 
-    Only objects currently on the NEOCP can be queried. For confirmed objects, use the [Observations API](observations-api.md).
+    Only objects currently on the NEOCP can be queried. For confirmed objects, use the [Observations API](get-obs.md).
 
 ## Output Formats
 
@@ -99,4 +99,4 @@ curl -X GET -H "Content-Type: application/json" \
 ## See Also
 
 - [NEOCP](https://minorplanetcenter.net/iau/NEO/toconfirm_tabular.html) - Current NEOCP listing
-- [Observations API](observations-api.md) - For confirmed objects
+- [Observations API](get-obs.md) - For confirmed objects

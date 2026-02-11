@@ -19,7 +19,7 @@ https://data.minorplanetcenter.net/api/get-obs
 | `ades_version` | String                    | No | ADES version: `2017` or `2022` | `2022` |
 
 !!! note
-    You may use any designation format supported by the [Designation Identifier API](./designation-identifier-api.md). Currently, the Orbits API is limited to single object queries.
+    You may use any designation format supported by the [Designation Identifier API](./query-identifier.md). Currently, the Orbits API is limited to single object queries.
 
 ### Valid `output_format` specifications
 

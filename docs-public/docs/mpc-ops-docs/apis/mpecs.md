@@ -24,7 +24,7 @@ The API accepts a JSON array of search terms:
 
 ### Search Term Types
 
-1. **Object Designations** - Any designation resolvable by the [Designation Identifier API](designation-identifier-api.md). For now, this is only resolved into the "Unpacked Primary Provisional Designation", which is the most common title format of MPECs. That is, searching by any identifier below will only return the MPEC titled [1992 BB](https://www.minorplanetcenter.net/mpec/J93/J93S13.html). Future versions of this search tool will be able to identify MPECs where a given object is mentioned in the title or within the MPEC text itself. For instance, in Daily Orbit Updates or identifications MPECs ([example](https://www.minorplanetcenter.net/mpec/K14/K14A37.html)). 
+1. **Object Designations** - Any designation resolvable by the [Designation Identifier API](query-identifier.md). For now, this is only resolved into the "Unpacked Primary Provisional Designation", which is the most common title format of MPECs. That is, searching by any identifier below will only return the MPEC titled [1992 BB](https://www.minorplanetcenter.net/mpec/J93/J93S13.html). Future versions of this search tool will be able to identify MPECs where a given object is mentioned in the title or within the MPEC text itself. For instance, in Daily Orbit Updates or identifications MPECs ([example](https://www.minorplanetcenter.net/mpec/K14/K14A37.html)). 
    ```
    1992 BB, J92B00B, 6564, Asher
    ```
