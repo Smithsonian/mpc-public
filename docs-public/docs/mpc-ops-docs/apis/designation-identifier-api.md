@@ -1,6 +1,6 @@
 # Designation Identifier API
 
-The Designation Identifier API returns information about the various designations assigned to any given object.
+The Designation Identifier API returns information about the various designations assigned to small solar system objects.
 
 ## Endpoint
 
@@ -14,43 +14,65 @@ https://data.minorplanetcenter.net/api/query-identifier
 
 You can search for up to 100 designations at once. The response will be a dictionary of results, using the input IDs as keys.
 
-Input search terms can be any of the following (you may mix and match):
+Input search terms can be any of the following. You may mix and match input types:
 
-1. **Unpacked Provisional Designations:** `1984 KB`, `A/2017 U1`, `S/1900 J 10`
-2. **Packed Provisional Designations:** `J84K00B`, `AK17U010`, `SJ00J100`
-3. **Names:** `Jason`, `ʻOumuamua`, `Lysithea`
-4. **Permanent IDs:** `6063`, `1I`, `Jupiter X`
-5. **Packed Permanent IDs:** `06063`, `0001I`, `J010S`
+1. **Unpacked Primary (or Secondary) Provisional Designations**, e.g., 
+  [`1984 KB`][Jason],
+  [`A/2017 U1`][Oumuamua], 
+  [`S/1900 J 10`][Lysithea]
+2. **Packed Provisional Designations**, e.g., 
+  [`J84K00B`][Jason], 
+  [`AK17U010`][Oumuamua], 
+  [`SJ00J100`][Lysithea]
+3. **Names**, e.g., 
+  [`Jason`][Jason], 
+  [`ʻOumuamua`][Oumuamua], 
+  [`Lysithea`][Lysithea]
+4. **Permanent IDs**, e.g.,
+  [`6063`][Jason], 
+  [`1I`][Oumuamua], 
+  [`Jupiter X`][Lysithea]
+5. **Packed Permanent IDs**, e.g., 
+  [`06063`][Jason],
+  [`0001I`][Oumuamua], 
+  [`J010S`][Lysithea]
 
-### Fuzzy Name Searching
+[Jason]: https://data.minorplanetcenter.net/explorer/?tab=Designated&search=1984+KB
+[Oumuamua]: https://data.minorplanetcenter.net/explorer/?tab=Designated&search=A%2F2017+U1
+[Lysithea]: https://data.minorplanetcenter.net/explorer/?tab=Designated&search=S%2F1900+J+10
 
-For name searches, you can use comparison operators:
+### JSON Input Format
 
-| Operator | Description |
-|----------|-------------|
-| `=` | Exact match |
-| `ILIKE` | Case-insensitive partial match |
-| `%` | Wildcard/similar to |
+The following fields are accepted by the API:
 
-You can also filter by group: `Minor Planets`, `Natural Satellites`, `Comets`, `Interstellar`
+| Field        | Type            | Required | Default | Description                                                                                                                                                         |
+|--------------|-----------------|----------|---------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `ids`        | List of strings | Yes      | NA      | List of designations to search for                                                                                                                                  |
+| `comparison` | String          | No       | None    | [PSQL comparison operator](https://www.postgresql.org/docs/current/functions-matching.html#FUNCTIONS-MATCHING) for fuzzy name searches; one of `['=', 'ILIKE', '%']` |
+| `group`      | String          | No       | None    | One of `['Minor Planets', 'Natural Satellites', 'Comets', 'Interstellar']`; constrains the name search to a category of objects.                                    |
+
+!!! note
+    The `comparison` and `group` fields are only applicable in name searches.
 
 ## Response Fields
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `found` | Integer | 0 if no match, 1 if found, >1 if disambiguation needed |
-| `object_type` | List | [String name, Numeric index] |
-| `orbfit_name` | String | Orbfit-friendly ID (IAU designation without spaces) |
-| `name` | String | Object name (if assigned) |
-| `citation` | String | Citation text (if assigned) |
-| `iau_designation` | String | IAU designation |
-| `permid` | String | Permanent ID |
-| `packed_permid` | String | Packed permanent ID |
-| `packed_primary_provisional_designation` | String | Packed primary provisional designation |
-| `packed_secondary_provisional_designations` | List[str] | Packed secondary designations |
-| `unpacked_primary_provisional_designation` | String | Unpacked primary provisional designation |
-| `unpacked_secondary_provisional_designations` | List[str] | Unpacked secondary designations |
-| `disambiguation_list` | List[dict] | Populated when multiple matches found |
+The following fields are always returned by the API. If the object lacks one of these ID types, the value will be null. 
+
+| Field | Type                 | Description                                                                                                                   |
+|-------|----------------------|-------------------------------------------------------------------------------------------------------------------------------|
+| `found` | Integer              | 0 if no match, 1 if found, >1 if disambiguation needed                                                                        |
+| `object_type` | List of two values   | An [object type](https://minorplanetcenter.net/mpcops/documentation/object-types/) identifier: `[String name, Numeric index]` |
+| `name` | String               | Object name (if assigned)                                                                                                     |
+| `citation` | String               | Citation text (if assigned)                                                                                                   |
+| `permid` | String               | Permanent ID                                                                                                                  |
+| `packed_permid` | String               | Packed permanent ID                                                                                                           |
+| `iau_designation` | String               | IAU designation                                                                                                               |
+| `orbfit_name` | String               | Orbfit-friendly ID (IAU designation without spaces)                                                                           |
+| `packed_primary_provisional_designation` | String               | Packed primary provisional designation                                                                                        |
+| `packed_secondary_provisional_designations` | List of strings      | Packed secondary designations                                                                                                 |
+| `unpacked_primary_provisional_designation` | String               | Unpacked primary provisional designation                                                                                      |
+| `unpacked_secondary_provisional_designations` | List of strings      | Unpacked secondary designations                                                                                               |
+| `disambiguation_list` | List of dictionaries | Populated _only_ when multiple matches found                                                                                  |
 
 ## Examples
 
@@ -115,7 +137,7 @@ response.raise_for_status()
 print(json.dumps(response.json(), indent=4))
 ```
 
-This returns a disambiguation list for minor planets with names similar to 'Boriso'.
+This returns a disambiguation list for minor planets with names similar to `'Boriso'`.
 
 ## See Also
 
