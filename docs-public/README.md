@@ -19,9 +19,9 @@ but for now, this page primarily serves as a *map into the existing documentatio
 
 ## Setup & Development 
 
-1. **Install mkdocs** 
+1. **Install dependencies** 
 ```bash
-pip install mkdocs mkdocs-material mkdocs-jupyter
+pip install -r requirements.txt
 ```
 
 2. **Make a new branch**
