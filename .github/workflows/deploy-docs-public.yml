@@ -1,6 +1,7 @@
 name: Deploy Documentation to GitHub Pages
 
 on:
+  workflow_dispatch: # Allows us to manually trigger the workflow
   push:
     branches: [main]
     paths:
