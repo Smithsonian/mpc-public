@@ -13,7 +13,7 @@ will soon be **replaced** by this simplified page.
     
 - [FAQs](faqs.md)
 - [ADES](ades.md)
-- [APIs](apis.md)
+- [APIs](apis/index.md)
 - [Artificial satellites](artificial-satellites.md)
 - [Astrometry Guide](astrometry.md)
 - [Designations](designations.md)
