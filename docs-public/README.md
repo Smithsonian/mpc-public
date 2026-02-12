@@ -44,21 +44,7 @@ git push
  - Open PR. 
  - Request review.
 
-6. **Update the deployed public version.**
+6. Once approved, you can merge into `main`. The [public version](https://docs.minorplanetcenter.net) will automatically update in the [.github/workflows/deploy-docs-public.yml] GitHub Action.
 
- - Update the docs, `mkdocs gh-deploy`
-```bash
-cd mpc-public/docs-public
-mkdocs gh-deploy
-```
- - Navigate to site, `https://docs.minorplanetcenter.net/`, and check results are as desired 
-   (you might need to give it a few seconds to update)
-
- 
-N.B.(1) The WIP git branch does *not* have to be merged for the 
-        `mkdocs gh-deploy` step to update the public site. 
-        This means that it is possible for the public site to be updated 
-        without a PR being opened or a review performed. 
-
-N.B.(2) I assume that the `mkdocs gh-deploy` step could be replaced by 
-        some form of automated, post-merge github action. 
+7. Navigate to the public site, [docs.minorplanetcenter.net](https://docs.minorplanetcenter.net/), and check results are as desired. 
+   (You might need to give it a few seconds to update.)
