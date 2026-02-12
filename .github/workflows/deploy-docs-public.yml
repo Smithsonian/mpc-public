@@ -8,11 +8,21 @@ on:
       - 'docs-public/**'
       - '.github/workflows/deploy-docs-public.yml'
 
+# Avoid overlapping deployments by cancelling any in-progress deployment to begin a new one.
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     permissions:
-      contents: write    # needed to push to gh-pages branch
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v6
 
@@ -23,7 +33,18 @@ jobs:
       - name: Install dependencies
         run: pip install -r docs-public/requirements.txt
 
-      - name: Deploy to GitHub Pages
+      - name: Build site
         run: |
-          cd docs-public
-          mkdocs gh-deploy --force
+          mkdocs build -f docs-public/mkdocs.yml -d site
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: docs-public/site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

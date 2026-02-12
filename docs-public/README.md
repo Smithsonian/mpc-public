@@ -37,7 +37,7 @@ pip install -r requirements.txt
 5. Push Branch to Repo & Request Review
 ```bash
 git add <some.file>
-git commit - m 'some message'
+git commit -m 'some message'
 git push 
 ```
 
