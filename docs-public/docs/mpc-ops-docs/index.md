@@ -11,6 +11,7 @@ will soon be **replaced** by this simplified page.
 
 <div id="contents-grid"></div>  
     
+- [MPC Documentation](mpc-documentation.md)
 - [FAQs](faqs.md)
 - [ADES](ades.md)
 - [APIs](apis.md)
