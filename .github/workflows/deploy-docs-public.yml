@@ -1,0 +1,50 @@
+name: Deploy Documentation to GitHub Pages
+
+on:
+  workflow_dispatch: # Allows us to manually trigger the workflow
+  push:
+    branches: [main]
+    paths:
+      - 'docs-public/**'
+      - '.github/workflows/deploy-docs-public.yml'
+
+# Avoid overlapping deployments by cancelling any in-progress deployment to begin a new one.
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        run: pip install -r docs-public/requirements.txt
+
+      - name: Build site
+        run: |
+          mkdocs build -f docs-public/mkdocs.yml -d site
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: docs-public/site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,4 +1,4 @@
-name: Build and public mpc-orb to PyPI
+name: Build and publish mpc-orb to PyPI
 
 on:
   release:

@@ -9,7 +9,7 @@ This page provides an entry point for MPC documentation and services.
 - [Orbits](orbits.md)
 - [Designations](designations.md)
 - [Observatory and Program Codes](observatory-and-program-codes.md)
-- [APIs](apis.md)
+- [APIs](apis/index.md)
 - [Identifications](identifications.md)
 - [Artificial Satellites](artificial-satellites.md)
 - [Data and Services](data-and-services.md)
