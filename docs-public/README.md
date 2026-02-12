@@ -44,7 +44,7 @@ git push
  - Open PR. 
  - Request review.
 
-6. Once approved, you can merge into `main`. The [public version](https://docs.minorplanetcenter.net) will automatically update in the [.github/workflows/deploy-docs-public.yml] GitHub Action.
+6. Once approved, you can merge into `main`. The [public version](https://docs.minorplanetcenter.net) will automatically update in the [deploy-docs-public.yml](../.github/workflows/deploy-docs-public.yml) GitHub Action.
 
 7. Navigate to the public site, [docs.minorplanetcenter.net](https://docs.minorplanetcenter.net/), and check results are as desired. 
    (You might need to give it a few seconds to update.)
