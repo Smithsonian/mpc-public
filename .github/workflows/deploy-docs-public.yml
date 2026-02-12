@@ -1,0 +1,29 @@
+name: Deploy Documentation to GitHub Pages
+
+on:
+  workflow_dispatch: # Allows us to manually trigger the workflow
+  push:
+    branches: [main]
+    paths:
+      - 'docs-public/**'
+      - '.github/workflows/deploy-docs-public.yml'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write    # needed to push to gh-pages branch
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        run: pip install -r docs-public/requirements.txt
+
+      - name: Deploy to GitHub Pages
+        run: |
+          cd docs-public
+          mkdocs gh-deploy --force

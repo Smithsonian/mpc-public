@@ -7,7 +7,7 @@ Notes for MPC staff/developers can be found in *DEVELOPER_NOTES.md*
 ## Current contents 
 
 ### mpc_orb
-Last Update: 2025-02-25
+Last Update: 2025-09-16
  - Introduction of a new version: 0.5
  - Documentation and code related to a standardized format for the exchange of data on the *best-fit orbit* for solar-system bodies. 
  - The format uses JSON files for the exchange of data, and is refered to as the *mpc_orb.json* format.
@@ -18,10 +18,10 @@ Last Update: 2025-02-25
     - python code to parse & validate example orbit files.
 
 ### docs-public
-Last Update: 2026-01-29
+Last Update: 2026-02-11
  - `docs-public` provides a landing page for the MPC's documentation website, 
 [https://docs.minorplanetcenter.net/](https://docs.minorplanetcenter.net/). 
 
 ### digest2
-Last Update: 2025-11-21
+Last Update: 2026-02-10
  - XML-enhanced repository of digest2 code, population model and the configuration files.
