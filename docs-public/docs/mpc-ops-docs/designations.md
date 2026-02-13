@@ -25,4 +25,5 @@ Documentation related to minor planet and comet designation systems.
 
 ## Other
 
+[//]: # (TODO: When the explorer version is working, swap out this link for https://data.minorplanetcenter.net/explorer/?tab=Lists&list=Dual-Status+Objects )
 - [Dual-Status objects](https://minorplanetcenter.net/iau/lists/DualStatus.html)
