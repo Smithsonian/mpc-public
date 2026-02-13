@@ -6,7 +6,7 @@ Documentation related to orbital elements, orbit formats, and orbit/object class
 ## Orbit Formats
 
 - [MPC_ORB JSON](https://minorplanetcenter.net/mpcops/documentation/mpc-orb-json/)
-- [Orbital elements in the *ele220* format](https://minorplanetcenter.net/mpcops/documentation/ele220/)
+- [Orbital elements in the MPC internal *ele220* format](https://minorplanetcenter.net/mpcops/documentation/ele220/)
 - [Export orbit formats (overview)](https://minorplanetcenter.net/iau/info/OrbFormat.html)
 - [Export orbit format for minor planets](https://minorplanetcenter.net/iau/info/MPOrbitFormat.html)
 - [Export orbit format for comets](https://minorplanetcenter.net/iau/info/CometOrbitFormat.html)
