@@ -1,6 +1,6 @@
 # Data and Services
 
-Documentation related to MPC data products, database access, subscriptions, and technical statistics.
+Documentation related to MPC data products, database access, subscriptions.
 
 
 ## Database Access
@@ -19,16 +19,26 @@ Documentation related to MPC data products, database access, subscriptions, and 
 - [Singletons and archival observations committee (SARC)](https://minorplanetcenter.net/mpcops/documentation/sarc/)
 
 
-## Technical Lists and Statistics
+[//]: # (TODO: I'm deliberately leaving this commented-out section here as a reminder to our future selves that we )
+[//]: # (should supply overall stats of this form somewhere)
 
-The links below contain low-level information generated during MPC operation
-or MPC preparation and are not formatted for casual viewing.
+[//]: # (## Technical Lists and Statistics)
 
-- [Break down of amateur discoveries](https://minorplanetcenter.net/iau/special/AmateurDiscoveries.txt)
-- [Yearly break down of observations](https://minorplanetcenter.net/iau/special/CountObsByYear.txt)
-- [Status of designated objects (by year and half-month)](https://minorplanetcenter.net/iau/special/DesignationsStatus.txt)
-- [Statistics on residuals from observations of minor planets, by observatory code](https://minorplanetcenter.net/iau/special/residuals.txt)
-- [Statistics on residuals from observations of numbered minor planets, by observatory code](https://minorplanetcenter.net/iau/special/residuals2.txt)
+[//]: # ()
+[//]: # (The links below contain low-level information generated during MPC operation)
+
+[//]: # (or MPC preparation and are not formatted for casual viewing.)
+
+[//]: # ()
+[//]: # (- [Break down of amateur discoveries]&#40;https://minorplanetcenter.net/iau/special/AmateurDiscoveries.txt&#41;)
+
+[//]: # (- [Yearly break down of observations]&#40;https://minorplanetcenter.net/iau/special/CountObsByYear.txt&#41;)
+
+[//]: # (- [Status of designated objects &#40;by year and half-month&#41;]&#40;https://minorplanetcenter.net/iau/special/DesignationsStatus.txt&#41;)
+
+[//]: # (- [Statistics on residuals from observations of minor planets, by observatory code]&#40;https://minorplanetcenter.net/iau/special/residuals.txt&#41;)
+
+[//]: # (- [Statistics on residuals from observations of numbered minor planets, by observatory code]&#40;https://minorplanetcenter.net/iau/special/residuals2.txt&#41;)
 
 
 ## Other

@@ -5,7 +5,7 @@ Documentation related to observatory codes, program codes, and associated polici
 
 ## Observatory Codes
 
-- [Observatory codes (formatted list)](https://minorplanetcenter.net/iau/lists/ObsCodesF.html)
+- [Observatory codes (interactive list)](https://data.minorplanetcenter.net/explorer/?tab=Lists&list=Observatory+Codes)
 - [Observatory codes (plain text)](https://minorplanetcenter.net/iau/lists/ObsCodes.html)
 - [Observatory codes (documentation)](https://minorplanetcenter.net/iau/info/ObservatoryCodes.html)
 - [How do I obtain an observatory code?](https://minorplanetcenter.net/iau/info/Astrometry.html#HowObsCode)
