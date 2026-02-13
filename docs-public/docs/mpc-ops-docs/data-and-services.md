@@ -1,6 +1,6 @@
 # Data and Services
 
-Documentation related to MPC data products, database access, subscriptions, and technical statistics.
+Documentation related to MPC data products, database access, subscriptions.
 
 
 ## Database Access
