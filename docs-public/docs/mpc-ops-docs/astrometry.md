@@ -50,7 +50,7 @@ This guide covers observing minor planets, comets and natural satellites, and re
 - [MPC ADES webpage](https://minorplanetcenter.net/mpcops/documentation/ades/)
 - [MPC1992 observation format](https://minorplanetcenter.net/iau/info/ObsFormat.html)
 - [Indication of observational details (headers)](https://minorplanetcenter.net/iau/info/ObsDetails.html)
-- [Packed designation format](https://minorplanetcenter.net/iau/info/PackedDes.html)
+- [Packed designation format](https://minorplanetcenter.net/mpcops/documentation/provisional-designation-definition/)
 
 ## Observatory Codes
 
