@@ -7,8 +7,9 @@ the digest2 population model file (digest2.model.csv).  The pipeline is:
     S3M synthetic orbit files  -->  s3m.dat  -->  digest2.model.csv
          (via build_s3m)           (via build_model + astorb.dat)
 
-This replaces the C programs s3mbin.c and muk.c with equivalent Python code,
+This provides pure-Python equivalents of the C programs s3mbin.c and muk.c,
 so users can regenerate or update the population model without a C compiler.
+The original C versions remain available under population/make_population/.
 
 Public domain.
 """
