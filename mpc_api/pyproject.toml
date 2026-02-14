@@ -1,0 +1,39 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mpc_api"
+version = "0.1.0"
+requires-python = ">= 3.8"
+authors = [{name = "Minor Planet Center", email = "mpc@cfa.harvard.edu"}]
+description = "Python client for the Minor Planet Center APIs"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "requests>=2.20.0",
+]
+
+[project.optional-dependencies]
+dataframe = ["pandas>=1.0.0"]
+all = ["pandas>=1.0.0"]
+test = ["pytest", "responses>=0.20.0", "pandas>=1.0.0"]
+
+[tool.pytest.ini_options]
+log_cli = true
+log_cli_level = "ERROR"
+log_cli_format = "%(asctime)s [%(levelname)8s] %(message)s (%(filename)s:%(lineno)s)"
+log_cli_date_format = "%Y-%m-%d %H:%M:%S"
+
+[tool.hatch.build.targets.sdist]
+include = ["mpc_api"]
+
+[tool.hatch.build.targets.wheel]
+include = ["mpc_api"]
+
+[project.urls]
+Homepage = "https://github.com/Smithsonian/mpc-public/mpc_api"
+Documentation = "https://docs.minorplanetcenter.net/tutorials/api_tutorials/"
