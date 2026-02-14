@@ -6,6 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is the Minor Planet Center's public repository containing:
 - **mpc_orb**: Python package for standardized orbit data exchange using JSON format
+- **mpc_api**: Python client for the Minor Planet Center REST APIs
 - **docs-public**: MkDocs-based documentation site deployed to https://docs.minorplanetcenter.net/
 
 ## Common Commands
@@ -27,6 +28,20 @@ pytest tests/test_parse.py -v
 
 # Run a single test
 pytest tests/test_parse.py::test_MPCORB_A -v
+```
+
+### mpc_api (Python Package)
+
+```bash
+# Development setup
+cd mpc_api
+python3 -m pip install -e '.[test]'
+
+# Run tests (from mpc_api directory)
+pytest -v
+
+# Run a single test file
+pytest tests/test_orbits.py -v
 ```
 
 ### docs-public (Documentation Site)
@@ -53,6 +68,23 @@ mkdocs gh-deploy
 - `mpc_orb/schema_json/` - JSON schema definitions (versions 0.1-0.6, latest symlink)
 - `mpc_orb/demo_json/` - Example orbit JSON files
 - `tests/jsons/` - Test data with pass/fail samples
+
+### mpc_api Package Structure
+
+- `mpc_api/client.py` - `MPCClient` class (mixin composition)
+- `mpc_api/exceptions.py` - `MPCAPIError` hierarchy
+- `mpc_api/_base.py` - Shared HTTP logic (session, `_get`, `_post`)
+- `mpc_api/_compat.py` - Pandas lazy-import helper
+- `mpc_api/_identifier.py` - `identify()`
+- `mpc_api/_obscodes.py` - `get_observatory()`, `get_all_observatories()`, `search_observatories()`
+- `mpc_api/_observations.py` - `get_observations()`, `get_observations_df()`
+- `mpc_api/_neocp.py` - `get_neocp_observations()`, `get_neocp_observations_df()`
+- `mpc_api/_orbits.py` - `get_orbit()`, `get_orbit_raw()`
+- `mpc_api/_mpecs.py` - `get_mpecs()`, `get_discovery_mpec()`
+- `mpc_api/_cnd.py` - `check_near_duplicates()`, `count_near_duplicates()`
+- `mpc_api/_submission_status.py` - `get_submission_status()`
+- `mpc_api/_action_codes.py` - `request_action_code()`
+- `mpc_api/_submission.py` - `submit_xml()`, `submit_psv()`
 
 ### docs-public Structure
 
@@ -82,17 +114,25 @@ The `iau-ades` pip package is used for local ADES validation and PSV/XML convers
 
 ## Release Process (PyPI)
 
+### mpc_orb
 1. Increment version in `mpc_orb/pyproject.toml`
 2. Go to https://github.com/Smithsonian/mpc-public
 3. Create a new release with tag `vX.Y.Z`
 4. GitHub Action automatically publishes to PyPI
 
+### mpc_api
+1. Increment version in `mpc_api/pyproject.toml` and `mpc_api/mpc_api/__init__.py`
+2. Create a new release with tag `mpc-api-vX.Y.Z`
+3. GitHub Action (`mpc_api_release.yml`) publishes to PyPI via OIDC
+
 ## CI/CD
 
-- **mpc_orb_pytest.yml**: Runs tests across Python 3.6-3.11 on Ubuntu, macOS, Windows
-- **release.yml**: Publishes to PyPI on release creation
+- **mpc_orb_pytest.yml**: Runs mpc_orb tests across Python 3.6-3.11 on Ubuntu, macOS, Windows
+- **mpc_orb_release.yml**: Publishes mpc_orb to PyPI on release creation
+- **mpc_api_pytest.yml**: Runs mpc_api tests across Python 3.8-3.12 on Ubuntu, macOS, Windows
+- **mpc_api_release.yml**: Publishes mpc_api to PyPI on release tag `mpc-api-v*`
 
 ## Key Dependencies
 
-- mpc_orb requires: numpy<2.0.0, jsonschema, json5
-- Python >= 3.6
+- mpc_orb requires: numpy<2.0.0, jsonschema, json5 (Python >= 3.6)
+- mpc_api requires: requests>=2.20.0 (Python >= 3.8); optional: pandas>=1.0.0
