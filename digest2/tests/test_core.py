@@ -1,5 +1,6 @@
 """Tests for the high-level Python API (digest2.core)."""
 
+import subprocess
 import tempfile
 from pathlib import Path
 
@@ -346,3 +347,150 @@ class TestClassificationResult:
         )
         with pytest.raises(AttributeError):
             result.rms = 99.0
+
+
+# ── Cross-validation: Python API vs C CLI ──────────────────────────────
+
+
+ALL_CLASSES = [
+    "Int", "NEO", "N22", "N18", "MC", "Hun", "Pho",
+    "MB1", "Pal", "Han", "MB2", "MB3", "Hil", "JTr", "JFC",
+]
+
+
+def _parse_cli_output(stdout: str):
+    """Parse CLI stdout into a list of dicts with designation, rms, and scores.
+
+    Expected format (with all classes requested):
+        Desig.    RMS Int NEO N22 N18  MC Hun Pho MB1 Pal Han MB2 MB3 Hil JTr JFC
+        K16S99K  0.73   2   2   1   0   2   0   0  85   0   0   3   0   0   0   0
+    """
+    lines = [l for l in stdout.strip().splitlines() if l.strip()]
+    header = lines[0].split()
+    results = []
+    for line in lines[1:]:
+        fields = line.split()
+        desig = fields[0]
+        rms = float(fields[1])
+        scores = {}
+        for i, cls in enumerate(ALL_CLASSES):
+            scores[cls] = int(fields[2 + i])
+        results.append({"designation": desig, "rms": rms, "scores": scores})
+    return results
+
+
+def _run_cli(data_dir, config_path, obs_filename):
+    """Run the C digest2 binary and return parsed results."""
+    binary = data_dir / "digest2"
+    if not binary.exists():
+        pytest.skip(f"digest2 binary not found at {binary}")
+    result = subprocess.run(
+        [str(binary), "-c", config_path, obs_filename],
+        cwd=data_dir,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        pytest.fail(f"digest2 CLI failed: {result.stderr}")
+    return _parse_cli_output(result.stdout)
+
+
+class TestCLIvsPythonAPI:
+    """Compare C CLI output to Python API output on the same inputs."""
+
+    @pytest.fixture
+    def cli_config_path(self, tmp_path):
+        """Write a CLI config that requests repeatable + all 15 NoID classes."""
+        cfg = tmp_path / "cli_test.config"
+        cfg.write_text("repeatable\nnoid\n" + "\n".join(ALL_CLASSES) + "\n")
+        return str(cfg)
+
+    @staticmethod
+    def _compare_results(cli_results, py_results, tolerance=0):
+        """Compare CLI and Python results, allowing +-tolerance on scores.
+
+        Args:
+            tolerance: Maximum allowed difference per score. Use 0 for exact
+                match (MPC 80-col where both paths are identical), or 1 for
+                ADES XML where different XML parsers can cause minor
+                floating-point divergence at rounding boundaries.
+        """
+        assert len(py_results) == len(cli_results), \
+            f"Tracklet count mismatch: CLI={len(cli_results)} Python={len(py_results)}"
+
+        for cli_r, py_r in zip(cli_results, py_results):
+            # Designations should match
+            assert cli_r["designation"] in py_r.designation or \
+                   py_r.designation in cli_r["designation"], \
+                   f"Designation mismatch: CLI={cli_r['designation']} Python={py_r.designation}"
+
+            # RMS should match within tolerance
+            assert abs(cli_r["rms"] - py_r.rms) < 0.01, \
+                f"RMS mismatch for {cli_r['designation']}: " \
+                f"CLI={cli_r['rms']} Python={py_r.rms:.2f}"
+
+            # Every class score (rounded to integer) should match within tolerance
+            for cls in ALL_CLASSES:
+                cli_score = cli_r["scores"][cls]
+                py_score = round(py_r.noid[cls])
+                assert abs(cli_score - py_score) <= tolerance, \
+                    f"Score mismatch for {cli_r['designation']} class {cls}: " \
+                    f"CLI={cli_score} Python={py_score} (tolerance={tolerance})"
+
+    def test_sample_obs_scores_match(self, digest2_dir, model_path,
+                                      obscodes_path, sample_obs_path,
+                                      cli_config_path):
+        """C CLI and Python API produce identical scores for sample.obs.
+
+        MPC 80-column format is parsed identically by both C and Python,
+        so scores should match exactly (tolerance=0).
+        """
+        data_dir = digest2_dir / "digest2"
+
+        # Run C CLI
+        cli_results = _run_cli(data_dir, cli_config_path, "sample.obs")
+        assert len(cli_results) >= 1
+
+        # Run Python API with equivalent settings (repeatable, no site errors)
+        empty_cfg = Path(cli_config_path).parent / "empty.config"
+        empty_cfg.write_text("# empty config\n")
+
+        with Digest2(
+            model_path=model_path,
+            obscodes_path=obscodes_path,
+            config_path=str(empty_cfg),
+            repeatable=True,
+        ) as d2:
+            py_results = d2.classify_file(sample_obs_path)
+
+        self._compare_results(cli_results, py_results, tolerance=0)
+
+    def test_sample_xml_scores_match(self, digest2_dir, model_path,
+                                      obscodes_path, sample_xml_path,
+                                      cli_config_path):
+        """C CLI and Python API produce near-identical scores for sample.xml.
+
+        ADES XML is parsed by libxml2 in the CLI and by Python's xml.etree
+        in the Python API. Minor floating-point differences in RMS handling
+        can cause +-1 at rounding boundaries, so we allow tolerance=1.
+        """
+        data_dir = digest2_dir / "digest2"
+
+        # Run C CLI
+        cli_results = _run_cli(data_dir, cli_config_path, "sample.xml")
+        assert len(cli_results) >= 1
+
+        # Run Python API
+        empty_cfg = Path(cli_config_path).parent / "empty.config"
+        empty_cfg.write_text("# empty config\n")
+
+        with Digest2(
+            model_path=model_path,
+            obscodes_path=obscodes_path,
+            config_path=str(empty_cfg),
+            repeatable=True,
+        ) as d2:
+            py_results = d2.classify_file(sample_xml_path)
+
+        self._compare_results(cli_results, py_results, tolerance=1)
