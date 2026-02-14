@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "digest2"
+version = "2.1.0"
+description = "NEO orbit classification from short-arc astrometric tracklets"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "Public Domain"}
+authors = [
+    {name = "Minor Planet Center"},
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: Public Domain",
+    "Operating System :: OS Independent",
+    "Programming Language :: C",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Astronomy",
+]
+dependencies = ["numpy"]
+
+[project.optional-dependencies]
+filters = ["pandas"]
+test = ["pytest"]
+all = ["pandas", "pytest"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+digest2 = ["data/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -27,7 +27,9 @@ uint64_t LCGA, LCGM;
 double invLCGM;
 double arcsecrad, rtol;
 double obsErr;
+#ifndef D2_NO_REGEX
 regex_t rxObsErr;
+#endif
 
 void initGlobals(void) {
     // a little bit of one time setup
@@ -51,8 +53,10 @@ void initGlobals(void) {
     invLCGM = 1. / LCGM;
     LCGM--;
     obsErr = 1 * arcsecrad;
+#ifndef D2_NO_REGEX
     assert(regcomp
                    (&rxObsErr, "^[ \t]*([^ \t=]*)[ \t]*=[ \t]*(.+)$", REG_EXTENDED) == 0);
+#endif
 }
 
 /*

@@ -1,0 +1,44 @@
+name: digest2-python-test
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "digest2/**"
+      - ".github/workflows/digest2-python-test.yml"
+  pull_request:
+    paths:
+      - "digest2/**"
+      - ".github/workflows/digest2-python-test.yml"
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Download observatory codes
+        run: |
+          curl -s https://minorplanetcenter.net/iau/lists/ObsCodes.html -o digest2/digest2/digest2.obscodes
+
+      - name: Install package in dev mode
+        run: |
+          cd digest2
+          pip install -e '.[test]'
+
+      - name: Run Python tests
+        run: |
+          cd digest2
+          pytest tests/ -v --ignore=tests/test_digest2_cli.py

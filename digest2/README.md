@@ -1,10 +1,49 @@
 # `digest2`
 
+NEO orbit classification from short-arc astrometric tracklets. Available as both a C command-line tool and a pip-installable Python package.
+
 This folder contains the `digest2` code, as well as the `NEOCP_filters` derived from `digest2`
 results. Further details can be found, respectively, in [digest2/README.md](digest2/README.md)
 and [NEOCP_filters/README.md](NEOCP_filters/README.md)
 
-## Installation: building `digest2` from source
+## Python Package (recommended)
+
+```bash
+pip install digest2
+```
+
+```python
+from digest2 import Digest2
+
+with Digest2() as d2:
+    results = d2.classify_file("observations.obs")
+    for r in results:
+        print(r.designation, r.noid.NEO, r.noid.MB1)
+```
+
+The Python package wraps the C scoring engine via a CPython extension. No libxml2 or pthreads required — XML parsing is done in Python, and scoring is single-threaded. Cross-platform wheels are available for Linux, macOS, and Windows.
+
+### Python API
+
+- **`Digest2(model_path=None, config_path=None, obscodes_path=None, repeatable=True, no_threshold=False)`** — Stateful classifier; auto-discovers bundled model data. Set `no_threshold=True` to disable per-observation RMS ceiling clamping.
+- **`d2.classify_tracklet(observations)`** — Classify a list of `Observation` objects. Returns `ClassificationResult`.
+- **`d2.classify_file(filepath)`** — Classify all tracklets in an MPC 80-col or ADES XML file. Returns `List[ClassificationResult]`.
+- **`classify(input, ...)`** — One-shot convenience function.
+- **`parse_mpc80(line)`** / **`parse_mpc80_file(path)`** — Parse MPC 80-column observations.
+- **`parse_ades_xml(path)`** — Parse ADES XML observations.
+- **`digest2.filters`** — NEOCP threshold filtering tools (requires `pip install digest2[filters]`).
+
+### Development Setup
+
+```bash
+cd digest2
+pip install -e '.[test]'
+# Download observatory codes (one-time)
+curl -o digest2/digest2.obscodes https://minorplanetcenter.net/iau/lists/ObsCodes.html
+pytest tests/ -v
+```
+
+## C Command-Line Tool (building from source)
 
 Requirements:
 - C99-capable C compiler (e.g., `gcc` or `clang`)
