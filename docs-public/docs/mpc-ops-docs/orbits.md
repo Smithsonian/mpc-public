@@ -27,14 +27,24 @@ Documentation related to orbital elements, orbit formats, and orbit/object class
 - [Object Type Definition](https://minorplanetcenter.net/mpcops/documentation/object-types/)
 
 
-## Technical Lists
+[//]: # (TODO: Reminder to self to make some equivalent stats site/similar in the future)
 
-These lists contain low-level information generated during MPC filing operations. They are updated with each batch of Minor Planet Circulars and should be complete through observations processed up to the cutoff date for the latest MPC batch.
+[//]: # (## Technical Lists)
 
-- [Yearly breakdown of observations](https://minorplanetcenter.net/iau/special/CountObsByYear.txt)
-- [Breakdown of amateur discoveries](https://minorplanetcenter.net/iau/special/AmateurDiscoveries.txt)
-- [Status of designated objects (by year and half-month)](https://minorplanetcenter.net/iau/special/DesignationsStatus.txt)
-- [Residual statistics by observatory code](https://minorplanetcenter.net/iau/special/residuals.txt)
-- [Residual statistics for numbered minor planets by observatory code](https://minorplanetcenter.net/iau/special/residuals2.txt)
-- [Magnitude-weighting file](https://minorplanetcenter.net/iau/special/magweights.txt)
-- [Astrometry-weighting file](https://minorplanetcenter.net/iau/special/posweights.txt)
+[//]: # ()
+[//]: # (These lists contain low-level information generated during MPC filing operations. They are updated with each batch of Minor Planet Circulars and should be complete through observations processed up to the cutoff date for the latest MPC batch.)
+
+[//]: # ()
+[//]: # (- [Yearly breakdown of observations]&#40;https://minorplanetcenter.net/iau/special/CountObsByYear.txt&#41;)
+
+[//]: # (- [Breakdown of amateur discoveries]&#40;https://minorplanetcenter.net/iau/special/AmateurDiscoveries.txt&#41;)
+
+[//]: # (- [Status of designated objects &#40;by year and half-month&#41;]&#40;https://minorplanetcenter.net/iau/special/DesignationsStatus.txt&#41;)
+
+[//]: # (- [Residual statistics by observatory code]&#40;https://minorplanetcenter.net/iau/special/residuals.txt&#41;)
+
+[//]: # (- [Residual statistics for numbered minor planets by observatory code]&#40;https://minorplanetcenter.net/iau/special/residuals2.txt&#41;)
+
+[//]: # (- [Magnitude-weighting file]&#40;https://minorplanetcenter.net/iau/special/magweights.txt&#41;)
+
+[//]: # (- [Astrometry-weighting file]&#40;https://minorplanetcenter.net/iau/special/posweights.txt&#41;)
