@@ -72,6 +72,11 @@ mkdocs gh-deploy
   - These use ADES v2017; the current `iau-ades` package (v0.1.1) validates against v2022
   - When using these samples, update: `version` attribute to `2022`, remove `+` prefix from `<ra>`/`<dec>` values in XML, fix `+` prefixed values in PSV
 
+### mpc_orb Package Quirks
+
+- **`M.CAR.eigenvalues` is misleading**: The `eigenvalues` attribute stored in the JSON (and exposed by `MPCORB`) does **not** correspond to eigenvalues of `M.CAR.covariance_array`. Use `np.linalg.eigvalsh(M.CAR.covariance_array)` to compute the actual covariance eigenvalues.
+- **Rebound unit mismatch**: MPC Cartesian elements use AU and AU/day, but Rebound's default Horizons units use yr/(2π) for time. When combining MPC state vectors with Horizons-loaded planets, set `sim.units = ('AU', 'day', 'Msun')` before adding any particles to ensure consistent units.
+
 ### iau-ades Package Quirks
 
 The `iau-ades` pip package is used for local ADES validation and PSV/XML conversion:
