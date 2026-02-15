@@ -30,7 +30,7 @@ dependencies = ["numpy"]
 
 [project.optional-dependencies]
 filters = ["pandas"]
-test = ["pytest"]
+test = ["pytest","numpy"]
 all = ["pandas", "pytest"]
 
 [tool.setuptools.packages.find]
