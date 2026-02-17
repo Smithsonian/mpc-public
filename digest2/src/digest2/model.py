@@ -1,5 +1,7 @@
 """Model and observatory code file path resolution."""
 
+from __future__ import annotations
+
 import os
 from pathlib import Path
 
