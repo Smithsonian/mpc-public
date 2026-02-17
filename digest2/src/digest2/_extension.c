@@ -176,9 +176,7 @@ static PyObject *py_score(PyObject *self, PyObject *args) {
     }
 
     // Call the C scoring function
-    d2_result res = d2_score_observations(obs, (int)n_obs,
-                                          class_indices, n_classes,
-                                          is_ades);
+    d2_result res = d2_score_observations(obs, (int)n_obs, class_indices, n_classes, is_ades);
 
     free(obs);
     if (class_indices) free(class_indices);
