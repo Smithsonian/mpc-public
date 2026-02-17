@@ -302,24 +302,38 @@ static PyObject *py_get_classes(PyObject *self, PyObject *noargs) {
 // --- Module definition ---
 
 static PyMethodDef methods[] = {
-    {"init",           py_init,           METH_VARARGS,
+    {"init",
+    py_init,
+    METH_VARARGS,
      "init(model_csv_path, obscodes_path)\n"
      "Initialize digest2 with model and observatory data."},
-    {"cleanup",        py_cleanup,        METH_NOARGS,
+    {"cleanup",
+    py_cleanup,
+    METH_NOARGS,
      "cleanup()\nRelease resources."},
-    {"is_initialized", py_is_initialized, METH_NOARGS,
+    {"is_initialized",
+    py_is_initialized,
+    METH_NOARGS,
      "is_initialized() -> bool\nCheck if digest2 is initialized."},
-    {"score",          py_score,          METH_VARARGS,
+    {"score",
+    py_score,
+    METH_VARARGS,
      "score(observations, classes=None, is_ades=0) -> dict\n"
      "Score a tracklet. observations is a list of tuples or dicts.\n"
      "Tuple format: (mjd, ra_rad, dec_rad, vmag, site_int[, rmsRA, rmsDec, spacebased])\n"
      "Returns dict with 'raw_scores', 'noid_scores', 'rms', 'rms_prime'."},
-    {"configure",      (PyCFunction)py_configure, METH_VARARGS | METH_KEYWORDS,
+    {"configure",
+    (PyCFunction)py_configure,
+    METH_VARARGS | METH_KEYWORDS,
      "configure(obserr=None, repeatable=None, no_threshold=None, site_errors=None)\n"
      "Set scoring configuration."},
-    {"parse_obscode",  py_parse_obscode,  METH_VARARGS,
+    {"parse_obscode",
+    py_parse_obscode,
+    METH_VARARGS,
      "parse_obscode(code) -> int\nConvert 3-char MPC obscode to integer index."},
-    {"get_classes",    py_get_classes,    METH_NOARGS,
+    {"get_classes",
+    py_get_classes,
+    METH_NOARGS,
      "get_classes() -> list of (abbr, name) tuples for all orbit classes."},
     {NULL, NULL, 0, NULL}
 };
