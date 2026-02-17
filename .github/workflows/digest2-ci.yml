@@ -36,7 +36,7 @@ jobs:
 
       - name: Download observatory codes
         run: |
-          curl -s https://minorplanetcenter.net/iau/lists/ObsCodes.html -o digest2/digest2/digest2.obscodes
+          curl -X GET -H "Content-Type: application/json" -d '{"format": "ObsCodes.html"}' https://data.minorplanetcenter.net/api/obscodes  > digest2/digest2/digest2.obscodes
 
       - name: Install package in dev mode
         run: |

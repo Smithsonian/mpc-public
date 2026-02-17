@@ -26,12 +26,12 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Topic :: Scientific/Engineering :: Astronomy",
 ]
-dependencies = ["numpy"]
+dependencies = ["numpy", "astropy"]
 
 [project.optional-dependencies]
 filters = ["pandas"]
-test = ["pytest","numpy"]
-all = ["pandas", "pytest","numpy"]
+test = ["pytest", "numpy", "astropy"]
+all = ["pandas", "pytest", "numpy", "astropy"]
 
 [tool.setuptools.packages.find]
 where = ["src"]

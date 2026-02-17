@@ -21,8 +21,6 @@ Or as a one-shot::
     result = classify("observations.obs")
 """
 
-__version__ = "2.1.0"
-
 from digest2.core import Digest2, classify
 from digest2.observation import Observation, parse_mpc80, parse_mpc80_file
 from digest2.population import build_model, read_model_csv
@@ -38,5 +36,4 @@ __all__ = [
     "parse_mpc80_file",
     "build_model",
     "read_model_csv",
-    "__version__",
 ]

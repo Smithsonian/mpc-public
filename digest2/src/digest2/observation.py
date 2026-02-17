@@ -1,7 +1,7 @@
 """Observation data classes and parsers for various astrometric formats."""
 
 import math
-import re
+from astropy.time import Time
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 
@@ -104,8 +104,30 @@ def _update_magnitude(band: str, mag: float) -> float:
 def _date_to_mjd(year: int, month: int, day: float) -> float:
     """Convert calendar date to Modified Julian Date.
 
-    Uses C-style integer division (truncation toward zero) to match
-    the MPC80 parsing in d2mpc.c.
+    This intentionally reimplements the exact algorithm from d2mpc.c
+    (parseMpc80, lines 170-174) rather than using astropy.time.Time,
+    for three reasons:
+
+    1. **Bit-exact C parity.**  The Python package wraps the C scoring
+       engine.  The MJD produced here is passed to the C extension and
+       must match the value that the C CLI computes for the same input
+       line, otherwise the two would give different scores for the same
+       observation file.
+
+    2. **No heavy dependency.**  astropy is ~200 MB installed; this
+       package intentionally depends only on numpy.
+
+    3. **Timescale sophistication is unnecessary.**  MPC 80-column
+       dates carry at most ~6 fractional-day digits (~0.1 s precision).
+       The C code treats the conversion as pure calendar arithmetic
+       with no leap-second or UTC/TT distinction.
+
+    Note on integer division: C truncates toward zero, Python floors
+    toward negative infinity.  For months <= 13 the term
+    ``(month - 14) / 12`` is negative, so we use ``int(... / 12)``
+    (float division then truncation) instead of ``// 12``.  The
+    remaining ``z // 4`` etc. terms are safe because *z* (a year
+    number) is always positive.
     """
     flookup = [0, 306, 337, 0, 31, 61, 92, 122, 153, 184, 214, 245, 275]
     z = year + int((month - 14) / 12)  # C-style truncation toward zero
@@ -327,25 +349,11 @@ def _parse_ades_optical(optical, ns: str) -> Optional[Observation]:
 def _iso_to_mjd(iso_str: str) -> float:
     """Convert ISO 8601 datetime string to MJD.
 
-    Handles formats like: 2022-12-25T09:14:20.544Z
+    Handles formats like: ``2022-12-25T09:14:20.544Z``
+
+    Unlike :func:`_date_to_mjd`, there is no C-parity constraint here
+    because ADES XML parsing is done entirely in Python (the C CLI's
+    ``d2ades.c`` is not used by the Python package), so we delegate to
+    astropy for robust time handling.
     """
-    # Remove trailing Z if present
-    iso_str = iso_str.rstrip("Z")
-
-    # Split date and time
-    parts = iso_str.split("T")
-    date_parts = parts[0].split("-")
-    year = int(date_parts[0])
-    month = int(date_parts[1])
-    day_int = int(date_parts[2])
-
-    fractional_day = 0.0
-    if len(parts) > 1:
-        time_parts = parts[1].split(":")
-        hours = int(time_parts[0])
-        minutes = int(time_parts[1]) if len(time_parts) > 1 else 0
-        seconds = float(time_parts[2]) if len(time_parts) > 2 else 0.0
-        fractional_day = (hours + minutes / 60.0 + seconds / 3600.0) / 24.0
-
-    day = day_int + fractional_day
-    return _date_to_mjd(year, month, day)
+    return Time(iso_str, scale="utc").mjd

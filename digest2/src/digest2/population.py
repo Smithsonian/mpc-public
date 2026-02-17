@@ -72,7 +72,7 @@ CLASS_ABBR = [
 # Orbit class test functions (from d2model.c)
 # ---------------------------------------------------------------------------
 
-def is_mpcint(q: float, e: float, i: float, h: float) -> bool:
+def is_of_mpc_interest(q: float, e: float, i: float, h: float) -> bool:
     """MPC interesting: q<1.3 OR e>=0.5 OR i>=40 OR Q>10."""
     if e >= 1.0:
         return True  # parabolic/hyperbolic — always interesting
@@ -204,7 +204,7 @@ def is_jfc(q: float, e: float, i: float, h: float) -> bool:
 
 # Ordered list of class test functions — matches C isClass[] array
 CLASS_TESTS: List[Callable[[float, float, float, float], bool]] = [
-    is_mpcint, is_neo, is_h22neo, is_h18neo, is_mars_crosser,
+    is_of_mpc_interest, is_neo, is_h22neo, is_h18neo, is_mars_crosser,
     is_hungaria, is_phocaea, is_inner_mb, is_pallas, is_hansa,
     is_mid_mb, is_outer_mb, is_hilda, is_trojan, is_jfc,
 ]

@@ -83,7 +83,7 @@ def find_obscodes_path() -> str:
     )
 
 
-def find_config_path() -> Union[str, None]:
+def find_config_path() -> str | None:
     """Locate the MPC.config file with per-site observatory errors.
 
     Search order:
