@@ -29,7 +29,7 @@ from digest2.population import (
     is_jfc,
     is_mars_crosser,
     is_mid_mb,
-    is_mpcint,
+    is_of_mpc_interest,
     is_neo,
     is_h18neo,
     is_h22neo,
@@ -175,21 +175,21 @@ class TestClassTests:
         assert is_h18neo(1.0, 0.3, 10, 17) is True
         assert is_h18neo(1.0, 0.3, 10, 19) is False
 
-    def test_is_mpcint_neo(self):
+    def test_is_of_mpc_interest_neo(self):
         """NEO is always MPC interesting."""
-        assert is_mpcint(1.0, 0.3, 10, 20) is True
+        assert is_of_mpc_interest(1.0, 0.3, 10, 20) is True
 
-    def test_is_mpcint_high_e(self):
+    def test_is_of_mpc_interest_high_e(self):
         """High eccentricity is MPC interesting."""
-        assert is_mpcint(2.0, 0.6, 10, 15) is True
+        assert is_of_mpc_interest(2.0, 0.6, 10, 15) is True
 
-    def test_is_mpcint_high_i(self):
+    def test_is_of_mpc_interest_high_i(self):
         """High inclination is MPC interesting."""
-        assert is_mpcint(2.5, 0.1, 45, 15) is True
+        assert is_of_mpc_interest(2.5, 0.1, 45, 15) is True
 
-    def test_is_mpcint_normal_mb(self):
+    def test_is_of_mpc_interest_normal_mb(self):
         """Normal main belt is NOT MPC interesting."""
-        assert is_mpcint(2.5, 0.1, 5, 15) is False
+        assert is_of_mpc_interest(2.5, 0.1, 5, 15) is False
 
     def test_is_mars_crosser(self):
         # q=1.5, e=0.2 → a=1.875, Q = a*(1+e) = 2.25 > 1.58
