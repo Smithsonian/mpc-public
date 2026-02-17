@@ -21,7 +21,7 @@ def find_model_path() -> str:
     """
     # 1. Environment variable
     env_path = os.environ.get("DIGEST2_MODEL")
-    if env_path and os.path.isfile(env_path):
+    if env_path and Path(env_path).is_file():
         return env_path
 
     # 2. Bundled data directory (works for pip-installed packages)
