@@ -2,8 +2,11 @@
 
 Tutorials on how to use various of the MPC's APIs are linked below.
 
+**Tip:** The [`mpc_api`](https://github.com/Smithsonian/mpc-public/tree/main/mpc_api) Python package (`pip install mpc-api`) wraps all of these APIs into a single `MPCClient` class. Each tutorial below shows both the raw `requests` approach and the equivalent `mpc_api` usage.
+
 <div id="contents-grid"></div>
 
+ - [**Getting Started with `mpc_api`**](notebooks/mpc_tutorial_mpcapi.ipynb)
  - [Designation-Identifier API](notebooks/mpc_tutorial_api_designation_identifier.ipynb)
  - [Submission API](notebooks/mpc_tutorial_api_submission_submission.ipynb)
  - [Submission Status API](notebooks/mpc_tutorial_api_submission_status.ipynb)
