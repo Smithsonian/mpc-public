@@ -586,7 +586,7 @@ void dRange(tracklet *tk, double d1, double d2, int age) {
  * operates on arrays of coordinate tuples. first parameter is length of
  * arrays. 
  */
-void dSphr2Cart(int len, double s[len][2], double c[len][3]) {
+void dSphr2Cart(int len, double (*s)[2], double (*c)[3]) {
     for (int i = 0; i < len; i++) {
         double t = cos(s[i][1]);
         c[i][0] = t * cos(s[i][0]);
@@ -595,7 +595,7 @@ void dSphr2Cart(int len, double s[len][2], double c[len][3]) {
     }
 }
 
-void dCart2Sphr(int len, double c[len][3], double s[len][2]) {
+void dCart2Sphr(int len, double (*c)[3], double (*s)[2]) {
     for (int i = 0; i < len; i++) {
         s[i][0] = fmod(atan2(c[i][1], c[i][0]) + TWO_PI, TWO_PI);
         s[i][1] = asin(c[i][2]);
@@ -613,7 +613,7 @@ void dCart2Sphr(int len, double c[len][3], double s[len][2]) {
  * 
  * Result: rm x a -- n by 3 again. 
  */
-void mult3(int n, double result[n][3], double rm[3][3], double a[n][3]) {
+void mult3(int n, double (*result)[3], double rm[3][3], double (*a)[3]) {
     for (int i = 0; i < n; i++)
         for (int r = 0; r < 3; r++) {
             double s = 0;
@@ -644,11 +644,11 @@ void transpose3(double m[3][3]) {
  * calls to statistics functions mjd -- mjd times of observations sphr --
  * ra, dec, in radians 
  */
-void gcFit(gcfparam *gcf, double mjd[gcf->nObs], double sphr[gcf->nObs][2]) {
+void gcFit(gcfparam *gcf, double *mjd, double (*sphr)[2]) {
     int nObs = gcf->nObs;
 
     // convert obs to cartesian
-    double cart[nObs][3];
+    double (*cart)[3] = (double (*)[3])malloc(nObs * sizeof(double[3]));
     dSphr2Cart(nObs, sphr, cart);
 
     // vector normal to motion
@@ -686,7 +686,7 @@ void gcFit(gcfparam *gcf, double mjd[gcf->nObs], double sphr[gcf->nObs][2]) {
     gcf->mRot[2][2] = cosa;
 
     // rotate all of cart
-    double rotated[nObs][3];
+    double (*rotated)[3] = (double (*)[3])malloc(nObs * sizeof(double[3]));
     mult3(nObs, rotated, gcf->mRot, cart);
 
     // transpose rotation array so it will derotate, after least-squares
@@ -698,11 +698,13 @@ void gcFit(gcfparam *gcf, double mjd[gcf->nObs], double sphr[gcf->nObs][2]) {
     if (fabs(rotated[0][2]) > rtol || fabs(rotated[nObs - 1][2]) > rtol) {
         fprintf(stderr, "%f %f %f\n", rotated[0][2], rotated[nObs - 1][2], rtol);
         fputs("*** rotation failed ***\n", stderr);
+        free(cart);
+        free(rotated);
         exit(-1);
     }
     // convert back to spherical coordinates for adjustment.
     // (this does the cylindrical projection.)
-    double rs[nObs][2];
+    double (*rs)[2] = (double (*)[2])malloc(nObs * sizeof(double[2]));
     dCart2Sphr(nObs, rotated, rs);
 
     // normalize ra to near 0 to avoid wraparound problems
@@ -713,14 +715,14 @@ void gcFit(gcfparam *gcf, double mjd[gcf->nObs], double sphr[gcf->nObs][2]) {
 
     // normalize time to near 0 to maintain precision
     double t0;
-    double ntime[nObs];
+    double *ntime = (double *)malloc(nObs * sizeof(double));
     gcf->t0 = t0 = mjd[0];
     for (int i = 0; i < nObs; i++)
         ntime[i] = mjd[i] - t0;
 
     // save copies of rs and ntime;
-    memcpy(gcf->rs, rs, sizeof(rs));
-    memcpy(gcf->ntime, ntime, sizeof(ntime));
+    memcpy(gcf->rs, rs, nObs * sizeof(double[2]));
+    memcpy(gcf->ntime, ntime, nObs * sizeof(double));
 
     if (nObs == 2) {
         gcf->r0 = 0;
@@ -749,6 +751,11 @@ void gcFit(gcfparam *gcf, double mjd[gcf->nObs], double sphr[gcf->nObs][2]) {
         gcf->d0 = invd * (sumdec * sumt2 - sumtdec * sumt);
         gcf->dr = invd * (nObs * sumtdec - sumdec * sumt);
     }
+
+    free(cart);
+    free(rotated);
+    free(rs);
+    free(ntime);
 }
 
 void gcPos(gcfparam *gcf, double t, double *ra, double *dec) {
@@ -771,11 +778,11 @@ void gcPos(gcfparam *gcf, double t, double *ra, double *dec) {
     *dec = sc[1];
 }
 
-void gcRes(gcfparam *gcf, double res[gcf->nObs][2]) {
+void gcRes(gcfparam *gcf, double (*res)[2]) {
     int nObs = gcf->nObs;
 
     // computed positions on fitted great circle
-    double rsc[nObs][2];
+    double (*rsc)[2] = (double (*)[2])malloc(nObs * sizeof(double[2]));
     for (int i = 0; i < nObs; i++) {
         rsc[i][0] = gcf->r0 + gcf->rr * gcf->ntime[i];
         rsc[i][1] = gcf->d0 + gcf->dr * gcf->ntime[i];
@@ -792,16 +799,16 @@ void gcRes(gcfparam *gcf, double res[gcf->nObs][2]) {
     }
 
     // rotate both back up to original place in the sky
-    double rco[nObs][3];
-    double rcc[nObs][3];
+    double (*rco)[3] = (double (*)[3])malloc(nObs * sizeof(double[3]));
+    double (*rcc)[3] = (double (*)[3])malloc(nObs * sizeof(double[3]));
     dSphr2Cart(nObs, gcf->rs, rco);
     dSphr2Cart(nObs, rsc, rcc);
-    double co[nObs][3];
-    double cc[nObs][3];
+    double (*co)[3] = (double (*)[3])malloc(nObs * sizeof(double[3]));
+    double (*cc)[3] = (double (*)[3])malloc(nObs * sizeof(double[3]));
     mult3(nObs, co, gcf->mRot, rco);
     mult3(nObs, cc, gcf->mRot, rcc);
-    double so[nObs][2];
-    double sc[nObs][2];
+    double (*so)[2] = (double (*)[2])malloc(nObs * sizeof(double[2]));
+    double (*sc)[2] = (double (*)[2])malloc(nObs * sizeof(double[2]));
     dCart2Sphr(nObs, co, so);
     dCart2Sphr(nObs, cc, sc);
 
@@ -809,6 +816,14 @@ void gcRes(gcfparam *gcf, double res[gcf->nObs][2]) {
         res[i][1] = (so[i][1] - sc[i][1]) / arcsecrad;
         res[i][0] = (so[i][0] - sc[i][0]) * cos(sc[i][1]) / arcsecrad;
     }
+
+    free(rsc);
+    free(rco);
+    free(rcc);
+    free(co);
+    free(cc);
+    free(so);
+    free(sc);
 }
 
 /*
@@ -820,7 +835,7 @@ void gcRes(gcfparam *gcf, double res[gcf->nObs][2]) {
  * The rms of the ra and dec residuals considered as separate values--if
  * that's what you are looking for--is smaller by a factor of sqrt(2). 
  */
-double gcRmsRes(gcfparam *gcf, double res[gcf->nObs][2]) {
+double gcRmsRes(gcfparam *gcf, double (*res)[2]) {
     int nObs = gcf->nObs;
     gcRes(gcf, res);
     double s = 0;
@@ -835,8 +850,10 @@ double gcRmsRes(gcfparam *gcf, double res[gcf->nObs][2]) {
  * just return the Rms, never mind the residuals. 
  */
 double gcRms(gcfparam *gcf) {
-    double res[gcf->nObs][2];
-    return gcRmsRes(gcf, res);
+    double (*res)[2] = (double (*)[2])malloc(gcf->nObs * sizeof(double[2]));
+    double result = gcRmsRes(gcf, res);
+    free(res);
+    return result;
 }
 
 double gcRmsPrimeAdes(tracklet *tk) {
@@ -957,8 +974,8 @@ oneObs(int o1, int o2, _Bool arcsUseAllObs, double pt,
 
     // gc fit, result is computed obs at time tr
     int np = o2 - o1 + 1;
-    double t[np];
-    double c[np][2];
+    double *t = (double *)malloc(np * sizeof(double));
+    double (*c)[2] = (double (*)[2])malloc(np * sizeof(double[2]));
     observation *obsp = olist + o1;
     for (int i = 0; i < np; i++, obsp++) {
         t[i] = obsp->mjd;
@@ -967,15 +984,20 @@ oneObs(int o1, int o2, _Bool arcsUseAllObs, double pt,
     }
     gcfparam gcf;
     gcf.nObs = np;
-    double nt[np];
-    double rs[np][2];
+    double *nt = (double *)malloc(np * sizeof(double));
+    double (*rs)[2] = (double (*)[2])malloc(np * sizeof(double[2]));
     gcf.ntime = nt;
     gcf.rs = rs;
     gcFit(&gcf, t, c);
     memcpy(result, olist + o1, sizeof(observation));
     result->mjd = tr;
     gcPos(&gcf, tr, &result->ra, &result->dec);
-    return gcRms(&gcf);
+    double rms_val = gcRms(&gcf);
+    free(t);
+    free(c);
+    free(nt);
+    free(rs);
+    return rms_val;
 }
 
 // twoObs selects or synthesizes two observations defining the motion
@@ -997,8 +1019,8 @@ void twoObs(tracklet *tk, double rms[]) {
     // > 2 obs, do a great circle fit over all obs to get rms return
     // value.
     // Fit may also be used in some cases for synthesizing observations.
-    double t[nObs];
-    double c[nObs][2];
+    double *t = (double *)malloc(nObs * sizeof(double));
+    double (*c)[2] = (double (*)[2])malloc(nObs * sizeof(double[2]));
     observation *obsp = olist;
     for (int i = 0; i < nObs; i++, obsp++) {
         t[i] = obsp->mjd;
@@ -1007,8 +1029,8 @@ void twoObs(tracklet *tk, double rms[]) {
     }
     gcfparam gcf;
     gcf.nObs = nObs;
-    double nt[nObs];
-    double rs[nObs][2];
+    double *nt = (double *)malloc(nObs * sizeof(double));
+    double (*rs)[2] = (double (*)[2])malloc(nObs * sizeof(double[2]));
     gcf.ntime = nt;
     gcf.rs = rs;
     gcFit(&gcf, t, c);
@@ -1042,7 +1064,7 @@ void twoObs(tracklet *tk, double rms[]) {
     if (spaceBased) {
         memcpy(&tk->obsPair[0], olist + is, sizeof(observation));
         memcpy(&tk->obsPair[1], olist + nObs - 1 - is, sizeof(observation));
-        return;
+        goto twoObs_cleanup;
     }
     // compute times t17 and t83 at these points of interest.
     // the times will be used in a few different ways.
@@ -1064,7 +1086,7 @@ void twoObs(tracklet *tk, double rms[]) {
         obsp->mjd = t83;
         gcPos(&gcf, t83, &obsp->ra, &obsp->dec);
         rms[0] = rms[1] = tk->rms;
-        return;
+        goto twoObs_cleanup;
     }
     // remaining case is involved.  not appropriate to gc fit the entire
     // arc, but probably possible to derive better endpoints than just
@@ -1114,6 +1136,12 @@ void twoObs(tracklet *tk, double rms[]) {
     // handle each arc
     rms[0] = oneObs(0, o1, o2 == o1 + 1, t17, olist, &tk->obsPair[0]);
     rms[1] = oneObs(o2, nObs - 1, o2 == o1 + 1, t83, olist, &tk->obsPair[1]);
+
+twoObs_cleanup:
+    free(t);
+    free(c);
+    free(nt);
+    free(rs);
 }
 
 double clipErr(double computedRms, site *sitep) {
