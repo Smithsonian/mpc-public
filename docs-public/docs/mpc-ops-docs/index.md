@@ -12,6 +12,5 @@ This page provides an entry point for MPC documentation and services.
 - [Observatory and Program Codes](observatory-and-program-codes.md)
 - [APIs](apis/index.md)
 - [Identifications](identifications.md)
-- [Artificial Satellites](artificial-satellites.md)
-- [Data and Services](data-and-services.md)
-- [Miscellaneous](miscellaneous.md)
+- [Data and Services](data-and-services/index.md)
+- [Miscellaneous](miscellaneous/index.md)

@@ -1,9 +1,13 @@
 /* ============================================
-   Turn the first list after #contents-grid into a button grid
+   Turn the first list after #contents-grid or .contents-grid
+   into a button grid.
+   Use the ID (#contents-grid) for pages with a single grid.
+   Use the class (.contents-grid) for pages with multiple grids.
    ============================================ */
 
-/* The UL immediately after the heading becomes the grid */
-#contents-grid + ul {
+/* The UL immediately after the grid marker becomes the grid */
+#contents-grid + ul,
+.contents-grid + ul {
   display: grid !important;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)) !important;
   gap: 0.75rem;
@@ -13,14 +17,16 @@
 }
 
 /* Remove bullets */
-#contents-grid + ul > li {
+#contents-grid + ul > li,
+.contents-grid + ul > li {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
 /* Style links as buttons */
-#contents-grid + ul > li > a {
+#contents-grid + ul > li > a,
+.contents-grid + ul > li > a {
   display: block;
   width: 100%;
   padding: 0.9rem 1rem;
@@ -43,7 +49,9 @@
 }
 
 #contents-grid + ul > li > a:hover,
-#contents-grid + ul > li > a:focus {
+#contents-grid + ul > li > a:focus,
+.contents-grid + ul > li > a:hover,
+.contents-grid + ul > li > a:focus {
   background-color: rgba(0, 0, 0, 0.08);
   border-color: rgba(0, 0, 0, 0.28);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
@@ -51,7 +59,8 @@
 }
 
 /* Optional emphasis for first tile */
-#contents-grid + ul > li:first-child > a {
+#contents-grid + ul > li:first-child > a,
+.contents-grid + ul > li:first-child > a {
   background-color: rgba(0, 0, 0, 0.12);
   border-color: rgba(0, 0, 0, 0.35);
 }
