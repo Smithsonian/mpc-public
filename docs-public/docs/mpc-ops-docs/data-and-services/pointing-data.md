@@ -2,7 +2,11 @@
 
 This page gives details on how to access the raw pointing files that are used to prepare the Sky Coverage plots. The raw pointing files are released only when the observers give permission to do so.
 
-The complete data files are available as a gzip'ed tar file [here](https://minorplanetcenter.net/iau/data/skycov.tgz) (use the browser's "Save as" option to download the file).
+Further details on the Sky Coverage plots and the underlying data can be found on the 
+[Sky Coverage Submission page](https://minorplanetcenter.net/iau/info/Coverage.html) and 
+[Sky Coverage Plots](https://www.minorplanetcenter.net/iau/SkyCoverage.html) pages.
+
+The complete data files are available as a gzip'ed tar file [here](https://minorplanetcenter.net/iau/data/skycov.tgz) (N.B. this tar file is large).
 
 If observers notice that data files are not available for a particular date, the data can simply be [resubmitted](https://minorplanetcenter.net/iau/info/Coverage.html).
 
