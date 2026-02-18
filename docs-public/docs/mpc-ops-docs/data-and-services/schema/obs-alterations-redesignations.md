@@ -15,7 +15,7 @@ The observations alterations redesignations table records observations that have
 | status | integer | Publication status: 0=Unpublished, 1=DOU, 2=Monthly Circular |
 | packed_provisional_designation_to | text | New packed provisional designation |
 | unpacked_provisional_designation_to | text | New unpacked provisional designation |
-| id | integer | PostgreSQL automatically generated identifier |
+| id | integer | PostgreSQL automatically generated identifier for row of data |
 | packed_provisional_designation_from | text | Previous packed provisional designation |
 | unpacked_provisional_designation_from | text | Previous unpacked provisional designation |
 | obsid | text | MPC observation ID |

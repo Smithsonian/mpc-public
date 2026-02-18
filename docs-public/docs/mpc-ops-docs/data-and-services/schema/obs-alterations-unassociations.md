@@ -11,7 +11,7 @@ The observations alterations unassociations table records observations that were
 | created_at | timestamp(6) without time zone | Date and time of initial row insert |
 | updated_at | timestamp(6) without time zone | Date and time of latest row update |
 | trkmpc_to | text | New MPC object identifier used to label observations in the ITF |
-| id | integer | PostgreSQL automatically generated identifier |
+| id | integer | PostgreSQL automatically generated identifier for row of data |
 | packed_provisional_designation_from | text | Previous packed provisional designation |
 | unpacked_provisional_designation_from | text | Previous unpacked provisional designation |
 | obsid | text | MPC observation ID |

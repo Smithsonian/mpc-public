@@ -11,7 +11,7 @@ The observations alterations deletions table records observations that were publ
 | created_at | timestamp(6) without time zone | Date and time of initial row insert |
 | updated_at | timestamp(6) without time zone | Date and time of latest row update |
 | status | integer | Publication status: 0=Unpublished, 1=Published in DOU, 2=Published in Monthly Circular |
-| id | integer | PostgreSQL automatically generated identifier |
+| id | integer | PostgreSQL automatically generated identifier for row of data |
 | obsid | text | MPC observation ID of the deleted observation |
 
 [Back to schema overview](../replicated-tables-schema.md)

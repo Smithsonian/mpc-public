@@ -26,7 +26,7 @@ The primary objects table contains all objects designated by the MPC: minor plan
 | orbfit_epoch | boolean | Whether mid-observation epoch orbit is populated |
 | object_type | integer | Object type classification |
 | packed_primary_provisional_designation | text | Packed primary provisional designation (e.g. K17P08M) |
-| id | integer | PostgreSQL automatically generated identifier |
+| id | integer | PostgreSQL automatically generated identifier for row of data |
 | status | integer | Result of orbit fitting (not currently used) |
 | unpacked_primary_provisional_designation | text | Unpacked primary provisional designation (e.g. 2017 PM8) |
 

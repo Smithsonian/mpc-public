@@ -10,7 +10,7 @@ The previous NEOCP objects table contains a list of objects previously listed on
 | pkd_desig | text | Extended packed provisional designation |
 | ref | text | MPEC reference |
 | desig | text | Observer-assigned object identifier |
-| id | integer | PostgreSQL automatically generated identifier |
+| id | integer | PostgreSQL automatically generated identifier for row of data |
 | status | text | Reasons for removal |
 | iau_desig | text | Unpacked provisional designation (IAU format) |
 

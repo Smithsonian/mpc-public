@@ -16,6 +16,6 @@ The NEOCP elements table contains the nominal orbital elements for every trackle
 | prep | character(1) | Flag=P for object being prepared for removal |
 | desig | character varying(16) | Observer-assigned object identifier |
 | els | character varying(255) | Orbital elements in MPC ele220 format |
-| id | integer | PostgreSQL automatically generated identifier |
+| id | integer | PostgreSQL automatically generated identifier for row of data |
 
 [Back to schema overview](../replicated-tables-schema.md)

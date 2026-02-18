@@ -14,7 +14,7 @@ The numbered identifications table contains all numbered objects (minor planets,
 | updated_at | timestamp(6) without time zone | Date and time of latest row update |
 | numbered_publication_references | text[] | References to MPC publication(s) about the numbering |
 | packed_primary_provisional_designation | text | Packed primary provisional designation (e.g. J81E29H) |
-| id | integer | PostgreSQL automatically generated identifier |
+| id | integer | PostgreSQL automatically generated identifier for row of data |
 | iau_designation | text | Currently unused |
 | iau_name | text | Currently unused (MPC not responsible for naming) |
 | named_publication_references | text[] | Currently unused |

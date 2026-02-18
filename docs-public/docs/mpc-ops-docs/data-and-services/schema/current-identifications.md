@@ -22,7 +22,7 @@ The current identification table contains all the primary objects (minor planets
 | object_type | integer | Object classification based on orbital elements |
 | packed_secondary_provisional_designation | text | Packed form of a secondary provisional designation (e.g. K06Sf5M) |
 | packed_primary_provisional_designation | text | Packed form of the primary provisional designation (e.g. K17P08M) |
-| id | integer | PostgreSQL automatically generated identifier |
+| id | integer | PostgreSQL automatically generated identifier for row of data |
 | unpacked_secondary_provisional_designation | text | Unpacked form of a secondary provisional designation (e.g. 2006 SM415) |
 | unpacked_primary_provisional_designation | text | Unpacked form of the primary provisional designation (e.g. 2017 PM8) |
 

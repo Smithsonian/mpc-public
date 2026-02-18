@@ -8,6 +8,6 @@ The NEOCP variant orbits table contains variant orbits for every object on the N
 | updated_at | timestamp(6) without time zone | Date and time of latest row update |
 | desig | character varying(16) | Observer-assigned object identifier |
 | els | character varying(255) | Variant orbit in ele220 format |
-| id | integer | PostgreSQL automatically generated identifier |
+| id | integer | PostgreSQL automatically generated identifier for row of data |
 
 [Back to schema overview](../replicated-tables-schema.md)

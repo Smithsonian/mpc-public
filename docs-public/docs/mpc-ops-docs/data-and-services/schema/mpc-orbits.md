@@ -63,7 +63,7 @@ The MPC orbits table contains orbits and orbital related information of minor pl
 | a_unc | double precision | 1-sigma uncertainty in semi-major axis |
 | srp_unc | double precision | 1-sigma uncertainty in solar radiation pressure |
 | peri_time_unc | double precision | 1-sigma uncertainty in pericenter passage time |
-| id | integer | PostgreSQL automatically generated identifier |
+| id | integer | PostgreSQL automatically generated identifier for row of data |
 | a | double precision | Semi-major axis [au] |
 | g | double precision | Slope parameter |
 | srp | double precision | Solar radiation pressure [m^2/ton] |

@@ -23,6 +23,6 @@ The obscodes table is a replica of the MPC internal PostgreSQL table. It contain
 | rhocosphi | numeric | Parallax constant (rho*cos(phi)) |
 | short_name | character varying(255) | Short name for MPC publications |
 | firstdate | character varying(10) | Start date for the observatory code |
-| id | integer | PostgreSQL automatically generated identifier |
+| id | integer | PostgreSQL automatically generated identifier for row of data |
 
 [Back to schema overview](../replicated-tables-schema.md)

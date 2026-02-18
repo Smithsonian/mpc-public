@@ -9,7 +9,7 @@ The minor planet names table contains the names, unpacked permanent designation 
 | updated_at | timestamp(6) without time zone | Date and time of latest row update |
 | discoverers | json | List of discoverers in JSON format (can be null) |
 | name | text | Minor planet name (UTF-8) |
-| id | integer | PostgreSQL automatically generated identifier |
+| id | integer | PostgreSQL automatically generated identifier for row of data |
 | reference | text | Publication references to WGSBN or MPC |
 | mp_number | text | Unpacked permanent designation (e.g. 101955) |
 

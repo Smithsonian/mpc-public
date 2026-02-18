@@ -16,7 +16,7 @@ The NEOCP observations table contains observations and corresponding ADES uncert
 | updated_at | timestamp(6) without time zone | Date and time of latest row update |
 | trkid | text | Globally unique tracklet identifier (MPC) |
 | desig | character varying(16) | Observer-assigned object identifier |
-| id | integer | PostgreSQL automatically generated identifier |
+| id | integer | PostgreSQL automatically generated identifier for row of data |
 | force_code | text | Currently unused |
 
 [Back to schema overview](../replicated-tables-schema.md)

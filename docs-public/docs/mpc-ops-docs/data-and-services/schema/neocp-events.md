@@ -9,7 +9,7 @@ The NEOCP events table contains information about main processing events that ch
 | updated_at | timestamp(6) without time zone | Date and time of latest row update |
 | event_type | text | Event type (e.g. update, add, remove object) |
 | desig | text | Observer-assigned object identifier |
-| id | integer | PostgreSQL automatically generated identifier |
+| id | integer | PostgreSQL automatically generated identifier for row of data |
 | event_user | text | User or process that handled the event (e.g. process_newneo, dbell) |
 
 [Back to schema overview](../replicated-tables-schema.md)
