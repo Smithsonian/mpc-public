@@ -15,7 +15,7 @@ Common questions and answers about MPC operations and services.
     <details id="faq-submit-observations">
         <summary>How do I submit observations?</summary>
             <div class="faq-answer">
-                <p>There are submission instructions <a href="https://www.minorplanetcenter.net/iau/info/TechInfo.html">here</a>.</p>
+                <p>There are submission instructions <a href="../astrometry.md">here</a>.</p>
                 <p>After you submit your observations, you can confirm they were received using <a href="https://minorplanetcenter.net/wamo/wamo.html">WAMO</a> (Where Are My Observations).</p>
         </div>
     </details>
