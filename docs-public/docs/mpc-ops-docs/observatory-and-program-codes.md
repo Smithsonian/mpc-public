@@ -12,7 +12,7 @@ Documentation related to observatory codes, program codes, and associated polici
 - [New Observatory Code Request Form](https://minorplanetcenter.net/new_obscode_request)
 - [How do I update my observatory code?](https://minorplanetcenter.net/iau/info/Astrometry.html#UpdateObsCode)
 - [Roving Observers](https://minorplanetcenter.net/iau/info/RovingObs.html)
-- [Observatory codes API](https://minorplanetcenter.net/mpcops/documentation/obscodes-api/)
+- [Observatory codes API](https://docs.minorplanetcenter.net/mpc-ops-docs/apis/obscodes)
 
 
 ## Program Codes
