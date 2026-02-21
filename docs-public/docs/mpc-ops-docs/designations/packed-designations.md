@@ -12,48 +12,15 @@ for the new base-62 scheme designed for the LSST era.
 
 ## Provisional Designations
 
-The provisional designation stored on the orbit and observations is stored in a
-7-character packed format that saves space and makes sorting easier.
+The provisional designation stored in the orbit and observations uses a
+7-character packed format that saves space.
 
 ### Minor Planets
 
-A description of the format of
-[unpacked provisional designations](provisional-designations.md) is available.
+A fulsome description of the packed format for the provisional designations of minor planets is provided on 
+the [provisional-designations](../provisional-designations/#packed-provisional-designations)
+page. 
 
-The first two digits of the year are packed into a single character in column 1
-(I = 18, J = 19, K = 20). Columns 2-3 contain the last two digits of the year.
-Column 4 contains the half-month letter and column 7 contains the second letter. The
-cycle count (the number of times that the second letter has cycled through the alphabet)
-is coded in columns 5-6, using a letter in column 5 when the cycle count is larger than
-99. The uppercase letters are used, followed by the lowercase letters.
-
-Where possible, the cycle count should be displayed as a subscript when the designation
-is written out in unpacked format.
-
-```
-   Examples:
-   J95X00A = 1995 XA
-   J95X01L = 1995 XL1
-   J95F13B = 1995 FB13
-   J98SA8Q = 1998 SQ108
-   J98SC7V = 1998 SV127
-   J98SG2S = 1998 SS162
-   K99AJ3Z = 2099 AZ193
-   K08Aa0A = 2008 AA360
-   K07Tf8A = 2007 TA418
-```
-
-Survey designations of the form 2040 P-L, 3138 T-1, 1010 T-2 and 4101 T-3 are packed
-differently. Columns 1-3 contain the code indicating the survey and columns 4-7 contain
-the number within the survey.
-
-```
-   Examples:
-   2040 P-L  = PLS2040
-   3138 T-1  = T1S3138
-   1010 T-2  = T2S1010
-   4101 T-3  = T3S4101
-```
 
 ### Comets
 

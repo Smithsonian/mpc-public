@@ -286,7 +286,4 @@ The MPC will not publish any designations using this extended packed provisional
 designation format before June 2024. After that date the MPC will begin publishing
 designations in the extended format as necessary in any publications.
 
-!!! note "November 2024 Update"
-    The MPC is still working on updating our internal systems to support the extended
-    packed provisional designation format. We will provide an update on the status of
-    this work in the next few months.
+
