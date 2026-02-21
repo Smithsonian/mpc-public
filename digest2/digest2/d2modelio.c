@@ -3,7 +3,9 @@
 // Public domain.
 
 // posix source added for fileno()
+#ifndef _MSC_VER
 #define _POSIX_SOURCE
+#endif
 
 #include <math.h>
 #include <stdbool.h>
@@ -11,6 +13,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+
+// MSVC names POSIX functions with underscore prefix
+#ifdef _MSC_VER
+#define fileno _fileno
+#define fstat  _fstat
+#define stat   _stat
+#endif
 
 #include "digest2.h"
 

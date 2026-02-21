@@ -1,0 +1,7 @@
+include README.md
+include digest2/*.c
+include digest2/*.h
+recursive-include src/digest2 *.c *.py
+recursive-include src/digest2/data *
+include population/digest2.model.csv
+include population/MPC.config
