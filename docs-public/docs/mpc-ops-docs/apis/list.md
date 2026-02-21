@@ -157,4 +157,4 @@ second_page = response.json()['items']
 
 ## See Also
 
-- [PostgreSQL Pattern Matching](PSQLLIKE)
+- [PostgreSQL Pattern Matching](https://www.postgresql.org/docs/current/functions-matching.html)

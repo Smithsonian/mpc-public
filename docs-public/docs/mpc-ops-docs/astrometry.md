@@ -50,7 +50,7 @@ This guide covers observing minor planets, comets and natural satellites, and re
 - [MPC ADES webpage](https://minorplanetcenter.net/mpcops/documentation/ades/)
 - [MPC1992 observation format](https://minorplanetcenter.net/iau/info/ObsFormat.html)
 - [Indication of observational details (headers)](https://minorplanetcenter.net/iau/info/ObsDetails.html)
-- [Packed designation format](https://minorplanetcenter.net/mpcops/documentation/provisional-designation-definition/)
+- [Packed designation format](designations/packed-designations.md)
 
 ## Observatory Codes
 
@@ -77,7 +77,7 @@ This guide covers observing minor planets, comets and natural satellites, and re
 - [What's the best way to get my discovery numbered?](https://minorplanetcenter.net/iau/info/Astrometry.html#number)
 - [When can I name my discovery?](https://minorplanetcenter.net/iau/info/Astrometry.html#name)
 - [Editorial Note on discovery credit (MPEC 2010-U20)](https://minorplanetcenter.net/mpec/K10/K10U20.html)
-- [How asteroids are named](https://minorplanetcenter.net/iau/info/HowNamed.html)
+- [How asteroids are named](designations/how-asteroids-are-named.md)
 - [WGSBN naming rules and guidelines](https://www.wgsbn-iau.org/documentation/NamesAndCitations.pdf)
 
 ## MPC Processing

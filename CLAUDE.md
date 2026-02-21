@@ -101,3 +101,35 @@ The `iau-ades` pip package is used for local ADES validation and PSV/XML convers
 
 - mpc_orb requires: numpy<2.0.0, jsonschema, json5
 - Python >= 3.6
+
+## Documentation Migration Notes
+
+### Completed Migrations
+
+The following documentation pages have been migrated from MPC legacy pages into local markdown:
+
+**designations/** (migrated from `designations.md`):
+
+- `designations/index.md` - Index page with button links to local pages, text links to external/dynamic resources
+- `designations/provisional-designations.md` - Consolidated from `mpcops/documentation/provisional-designation-definition/` and `/iau/info/OldDesDoc.html`
+- `designations/temporary-designations.md` - From `/iau/info/TempDesDoc.html`
+- `designations/how-asteroids-are-named.md` - From `/iau/info/HowNamed.html`
+- `designations/cometary-designation-system.md` - From `/iau/lists/CometResolution.html`
+- `designations/packed-designations.md` - Consolidated from `/iau/info/PackedDes.html` + extended packed format from mpcops page
+- `designations/packed-dates.md` - From `/iau/info/PackedDates.html`
+- `designations/dual-status-objects.md` - From `/iau/lists/DualStatus.html`
+
+**identifications/** (migrated from `identifications.md`):
+
+- `identifications/index.md` - Full overview content from `mpcops/documentation/identifications/` + links
+- `identifications/submission-format.md` - From `mpcops/documentation/identifications/submission-format/`
+- `identifications/acceptance-criteria.md` - From `mpcops/documentation/identifications/additional/`
+
+### Migration Conventions
+
+- Pages with many links become sub-folders with an `index.md` and individual content pages
+- Button-style links (using `<div class="contents-grid">`) point to locally-hosted pages within mpc-public
+- Standard text links point to external/dynamic/service pages that remain on the legacy MPC site
+- MPEC pages (e.g. `https://minorplanetcenter.net/mpec/...`) are never imported
+- Service/API endpoints are never imported
+- Auto-generated data lists (e.g. MPNames, NumberedMPs) are left as external links
