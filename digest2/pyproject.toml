@@ -30,8 +30,9 @@ dependencies = ["numpy", "astropy"]
 
 [project.optional-dependencies]
 filters = ["pandas"]
-test = ["pytest", "numpy", "astropy"]
-all = ["pandas", "pytest", "numpy", "astropy"]
+truth = ["matplotlib"]
+test = ["pytest", "numpy", "astropy", "matplotlib"]
+all = ["pandas", "matplotlib", "pytest", "numpy", "astropy"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
