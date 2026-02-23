@@ -32,7 +32,13 @@ with Digest2() as d2:
         print(r.designation, r.noid.NEO, r.noid.MB1)
 ```
 
-The Python package wraps the C scoring engine via a CPython extension. No libxml2 or pthreads required -- XML parsing is done in Python, and scoring is single-threaded. Cross-platform wheels are available for Linux, macOS, and Windows.
+The `digest2` Python package wraps a C scoring engine. 
+Pre-built wheels are available on PyPI for common platforms 
+(Linux, macOS, Windows), so most users get a ready-to-use binary with `pip install digest2`. 
+If no wheel matches your platform or Python version, 
+pip will automatically compile the C code from the source distribution - 
+this requires a local C compiler (e.g., gcc or clang) but no external C libraries such as libxml2.
+
 
 ### Python API
 
