@@ -1,0 +1,108 @@
+name: digest2-testpypi
+
+# Publish test builds to TestPyPI on every push to a PR branch that
+# modifies digest2/ code.  This lets reviewers install and verify
+# pre-release wheels before merging:
+#
+#   pip install -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ digest2
+#
+# The version is automatically suffixed with ".devN" (where N is the
+# GitHub run number) so each push produces a unique, installable version
+# that won't collide with production releases on PyPI.
+
+on:
+  push:
+    branches-ignore: [main]
+    paths:
+      - "digest2/**"
+      - ".github/workflows/digest2-python-testpypi.yml"
+
+jobs:
+  build-wheels:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Append dev version suffix
+        shell: bash
+        run: |
+          cd digest2
+          # Append .devN to the version so each build is unique on TestPyPI
+          sed -i.bak "s/^version = \"\\(.*\\)\"/version = \"\\1.dev${{ github.run_number }}\"/" pyproject.toml
+          echo "Version set to:"
+          grep '^version' pyproject.toml
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.21
+        with:
+          package-dir: digest2
+        env:
+          CIBW_BUILD: "cp312-*"
+          CIBW_SKIP: "*-musllinux_*"
+
+      - name: Upload wheels
+        uses: actions/upload-artifact@v4
+        with:
+          name: testpypi-wheels-${{ matrix.os }}
+          path: wheelhouse/*.whl
+
+  build-sdist:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Append dev version suffix
+        run: |
+          cd digest2
+          sed -i "s/^version = \"\\(.*\\)\"/version = \"\\1.dev${{ github.run_number }}\"/" pyproject.toml
+          echo "Version set to:"
+          grep '^version' pyproject.toml
+
+      - name: Build source distribution
+        run: |
+          cd digest2
+          pip install build
+          python -m build --sdist
+
+      - name: Upload sdist
+        uses: actions/upload-artifact@v4
+        with:
+          name: testpypi-sdist
+          path: digest2/dist/*.tar.gz
+
+  publish-testpypi:
+    needs: [build-wheels, build-sdist]
+    runs-on: ubuntu-latest
+    environment: testpypi
+    permissions:
+      id-token: write
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: testpypi-*
+          path: dist
+          merge-multiple: true
+
+      - name: Publish to TestPyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+          packages-dir: dist/
