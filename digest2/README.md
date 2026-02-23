@@ -63,6 +63,29 @@ curl -o digest2/digest2.obscodes https://minorplanetcenter.net/iau/lists/ObsCode
 pytest tests/ -v
 ```
 
+### Releasing to PyPI
+
+Three GitHub Actions workflows handle CI and publishing for the Python package:
+
+1. **Tests** (`digest2-python-test.yml`) -- Runs `pytest` on every pull request and on pushes to `main` that modify `digest2/` files.
+
+2. **TestPyPI** (`digest2-python-testpypi.yml`) -- On every push to a PR branch that modifies `digest2/`, wheels and an sdist are built for Linux, macOS, and Windows, version-suffixed with `.devN`, and published to [TestPyPI](https://test.pypi.org/project/digest2/). Reviewers can install a pre-release build with:
+   ```bash
+   pip install -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ digest2
+   ```
+
+3. **PyPI release** (`digest2-python-release.yml`) -- Triggered when a GitHub Release is published with a tag matching `digest2-v*`. Builds production wheels and sdist, then publishes to [PyPI](https://pypi.org/project/digest2/).
+
+**To release a new version:**
+
+1. Update the version in `pyproject.toml` (e.g., `version = "2.2.0"`).
+2. Open a PR with the version bump (and any other changes) and merge it into `main`.
+3. Go to the repository's [Releases page](https://github.com/Smithsonian/mpc-public/releases) and create a new release:
+   - **Tag:** `digest2-v2.2.0` (must start with `digest2-v`)
+   - **Target:** `main`
+   - **Title/notes:** Describe what changed in this release.
+4. Publishing the release automatically triggers the workflow, which builds wheels for all platforms and uploads them to PyPI.
+
 ### Python Package Structure
 
 ```
