@@ -40,7 +40,7 @@ SAMPLE_ORBITS = {
 
 @pytest.fixture
 def ground_truth_csv(tmp_path):
-    """Create a sample ground-truth CSV file."""
+    """Create a sample ground-truth CSV file: does NOT contain the orbit_type."""
     csv_path = tmp_path / "truth.csv"
     lines = [
         "designation,q,e,i,H",
@@ -190,6 +190,56 @@ class TestGroundTruthRecord:
         assert isinstance(rec.all_classes, list)
         assert len(rec.all_classes) > 0
 
+    def test_a_field_stored(self):
+        """GroundTruthRecord should store a, e, and q."""
+        rec = GroundTruthRecord(
+            designation="test", q=0.9, e=0.4, i=10.0, H=20.0
+        )
+        # a should be derived: q / (1 - e) = 0.9 / 0.6 = 1.5
+        assert abs(rec.a - 1.5) < 1e-10
+        assert rec.q == 0.9
+        assert rec.e == 0.4
+
+    def test_derive_q_from_a_e(self):
+        """Given a and e, q should be derived."""
+        rec = GroundTruthRecord(
+            designation="test", a=1.5, e=0.4, i=10.0, H=20.0
+        )
+        # q = a * (1 - e) = 1.5 * 0.6 = 0.9
+        assert abs(rec.q - 0.9) < 1e-10
+        assert rec.a == 1.5
+        assert rec.e == 0.4
+
+    def test_derive_e_from_a_q(self):
+        """Given a and q, e should be derived."""
+        rec = GroundTruthRecord(
+            designation="test", a=1.5, q=0.9, i=10.0, H=20.0
+        )
+        # e = 1 - q / a = 1 - 0.9 / 1.5 = 0.4
+        assert abs(rec.e - 0.4) < 1e-10
+        assert rec.a == 1.5
+        assert rec.q == 0.9
+
+    def test_all_three_supplied(self):
+        """Given a, e, and q, all should be stored as-is."""
+        rec = GroundTruthRecord(
+            designation="test", a=1.5, e=0.4, q=0.9, i=10.0, H=20.0
+        )
+        assert rec.a == 1.5
+        assert rec.e == 0.4
+        assert rec.q == 0.9
+
+    def test_consistency_q_e_to_a(self):
+        """Verify that q,e -> a is consistent with a,e -> q."""
+        rec_qe = GroundTruthRecord(
+            designation="t1", q=1.8, e=0.18, i=5.0, H=17.0
+        )
+        rec_ae = GroundTruthRecord(
+            designation="t2", a=rec_qe.a, e=0.18, i=5.0, H=17.0
+        )
+        assert abs(rec_ae.q - 1.8) < 1e-10
+        assert abs(rec_ae.a - rec_qe.a) < 1e-10
+
 
 # ── Tests: File loading ───────────────────────────────────────────────
 
@@ -215,11 +265,67 @@ class TestLoadGroundTruth:
         assert rec.e == 0.4
         assert rec.i == 10.0
         assert rec.H == 20.0
+        # a should be derived: 0.9 / (1 - 0.4) = 1.5
+        assert abs(rec.a - 1.5) < 1e-10
 
-    def test_missing_column(self, tmp_path):
+    def test_load_a_e_format(self, tmp_path):
+        """CSV with a,e columns (no q) should derive q."""
+        csv_path = tmp_path / "truth_ae.csv"
+        lines = [
+            "designation,a,e,i,H",
+            "2024 AA,1.5,0.4,10.0,20.0",   # q = 1.5 * 0.6 = 0.9 -> NEO
+            "2024 BB,2.195,0.18,5.0,17.0",  # q = 2.195 * 0.82 = 1.7999 -> MB1
+        ]
+        csv_path.write_text("\n".join(lines) + "\n")
+        records = load_ground_truth(str(csv_path))
+        assert len(records) == 2
+        assert abs(records["2024 AA"].q - 0.9) < 1e-10
+        assert abs(records["2024 AA"].a - 1.5) < 1e-10
+        assert records["2024 AA"].orbit_type == "NEO"
+        assert abs(records["2024 BB"].q - 2.195 * 0.82) < 1e-10
+        assert records["2024 BB"].orbit_type == "MB1"
+
+    def test_load_a_q_format(self, tmp_path):
+        """CSV with a,q columns (no e) should derive e."""
+        csv_path = tmp_path / "truth_aq.csv"
+        lines = [
+            "designation,a,q,i,H",
+            "2024 AA,1.5,0.9,10.0,20.0",   # e = 1 - 0.9/1.5 = 0.4
+        ]
+        csv_path.write_text("\n".join(lines) + "\n")
+        records = load_ground_truth(str(csv_path))
+        rec = records["2024 AA"]
+        assert abs(rec.e - 0.4) < 1e-10
+        assert rec.a == 1.5
+        assert rec.q == 0.9
+        assert rec.orbit_type == "NEO"
+
+    def test_load_a_q_e_format(self, tmp_path):
+        """CSV with all three a,q,e columns."""
+        csv_path = tmp_path / "truth_aqe.csv"
+        lines = [
+            "designation,a,q,e,i,H",
+            "2024 AA,1.5,0.9,0.4,10.0,20.0",
+        ]
+        csv_path.write_text("\n".join(lines) + "\n")
+        records = load_ground_truth(str(csv_path))
+        rec = records["2024 AA"]
+        assert rec.a == 1.5
+        assert rec.q == 0.9
+        assert rec.e == 0.4
+
+    def test_missing_required_column(self, tmp_path):
+        """Missing i or H should raise ValueError."""
         bad_csv = tmp_path / "bad.csv"
         bad_csv.write_text("designation,q,e\ntest,0.9,0.4\n")
-        with pytest.raises(ValueError, match="missing columns"):
+        with pytest.raises(ValueError, match="missing required columns"):
+            load_ground_truth(str(bad_csv))
+
+    def test_missing_orbital_columns(self, tmp_path):
+        """Only one of a/e/q should raise ValueError."""
+        bad_csv = tmp_path / "bad.csv"
+        bad_csv.write_text("designation,q,i,H\ntest,0.9,10.0,20.0\n")
+        with pytest.raises(ValueError, match="at least two"):
             load_ground_truth(str(bad_csv))
 
     def test_empty_file(self, tmp_path):
