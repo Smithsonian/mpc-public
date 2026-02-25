@@ -14,18 +14,29 @@ labelled dataset.  Typical workflow:
 
 File formats
 ------------
-**Ground-truth CSV** — one row per object, with columns:
+**Ground-truth CSV** — one row per object.  A header row is **required**
+and is used to determine which columns are present.  The CSV must contain
+``designation``, ``i``, ``H``, and at least two of ``a``, ``e``, ``q``
+so that the missing one can be derived (``q = a * (1 - e)``).
 
-    designation,q,e,i,H[,orbit_type]
+Supported column combinations (plus ``designation``, ``i``, ``H``):
 
-    ``designation``:
-        - object name / provisional designation.
-    ``q``, ``e``, ``i``, ``H``:
-        - orbital elements
-        (perihelion AU, eccentricity, inclination degrees, absolute magnitude).
+    (i)   ``q``, ``e``          — ``a`` is computed as ``q / (1 - e)``
+    (ii)  ``a``, ``e``          — ``q`` is computed as ``a * (1 - e)``
+    (iii) ``a``, ``q``          — ``e`` is computed as ``1 - q / a``
+    (iv)  ``a``, ``q``, ``e``   — all three supplied, no derivation needed
+
+N.B. Internally digest2 uses the (``q, e``) pair as the primary orbital elements,
+so the ability to supply ``a`` is primarily for user convenience.
+If only two of (``a``, ``e``, ``q``) are supplied, the third is derived automatically.
+
+An optional ``orbit_type`` column can supply explicit class labels.
+
     ``orbit_type`` (optional):
-        - if supplied, this label is used directly instead of being derived from the orbital elements.
-        - Must be one of the digest2 class abbreviations (``NEO``, ``MB1``, etc.).
+        - if supplied, this label is used directly instead of being
+          derived from the orbital elements.
+        - Must be one of the digest2 class abbreviations
+          (``NEO``, ``MB1``, etc.).
 
 **Trksub mapping CSV** — one row per tracklet, with columns:
 
@@ -33,7 +44,7 @@ File formats
 
     ``trksub``:
         - the tracklet sub-ID used in the observation file.
-    ``designation``: 
+    ``designation``:
         - the object name in the ground-truth file.
 """
 
@@ -77,9 +88,12 @@ _PRIMARY_PRIORITY: List[int] = [
 def classify_orbit(q: float, e: float, i: float, H: float) -> str:
     """Return the primary digest2 class abbreviation for an orbit.
 
-    Uses the same boundary definitions as the C scoring engine
-    (``population.CLASS_TESTS``).  If no specific class matches,
-    returns ``"Other"``.
+    Note the possible orbit categories are non-overlapping:
+     - we do not consider categories such as `Int` or `N22` when assigning a single primary label.
+
+    Uses the same boundary definitions as the C scoring engine (``population.CLASS_TESTS``).
+
+    If no specific class matches, returns ``"Other"``.
     """
     for idx in _PRIMARY_PRIORITY:
         if CLASS_TESTS[idx](q, e, i, H):
@@ -90,8 +104,8 @@ def classify_orbit(q: float, e: float, i: float, H: float) -> str:
 def classify_orbit_all(q: float, e: float, i: float, H: float) -> List[str]:
     """Return *all* digest2 class abbreviations that match an orbit.
 
-    An orbit can belong to multiple overlapping classes (e.g. NEO and
-    N22 and Int simultaneously).
+    N.B. An orbit can belong to multiple overlapping classes
+    (e.g. NEO and N22 and Int simultaneously).
     """
     return [CLASS_ABBR[c] for c in range(len(CLASS_TESTS))
             if CLASS_TESTS[c](q, e, i, H)]
@@ -103,24 +117,63 @@ def classify_orbit_all(q: float, e: float, i: float, H: float) -> List[str]:
 class GroundTruthRecord:
     """Ground truth for a single object.
 
+    Construct with any two of ``a``, ``e``, ``q``,
+    plus ``i`` and ``H``;
+    the missing element is derived automatically using ``q = a * (1 - e)``.
+
+    Pass ``None`` for any of ``a``, ``e``, ``q`` that should be derived
+    from the other two.
+
     Attributes:
         designation: Object name / provisional designation.
-        q: Perihelion distance (AU).
+        a: Semi-major axis (AU).
         e: Eccentricity.
+        q: Perihelion distance (AU).
         i: Inclination (degrees).
         H: Absolute magnitude.
         orbit_type: Primary digest2 class label (derived or explicit).
         all_classes: All matching digest2 classes.
     """
     designation: str
-    q: float
-    e: float
     i: float
     H: float
+    a: Optional[float] = None
+    e: Optional[float] = None
+    q: Optional[float] = None
     orbit_type: str = ""
     all_classes: List[str] = field(default_factory=list)
 
     def __post_init__(self):
+        # Derive whichever of a, e, q is missing from the other two.
+        # None means "not supplied"; 0.0 is a valid value (e.g. e=0
+        # for a circular orbit).
+        has_a = self.a is not None
+        has_e = self.e is not None
+        has_q = self.q is not None
+        n_supplied = sum([has_a, has_e, has_q])
+
+        if n_supplied < 2:
+            raise ValueError(
+                f"GroundTruthRecord '{self.designation}': need at least two "
+                f"of (a, e, q) to derive the third. "
+                f"Got a={self.a}, e={self.e}, q={self.q}."
+            )
+
+        if has_a and has_e and not has_q:
+            # Derive q from a and e.
+            self.q = self.a * (1.0 - self.e)
+        elif has_q and has_e and not has_a:
+            # Derive a from q and e.
+            if self.e < 1.0:
+                self.a = self.q / (1.0 - self.e)
+            else:
+                self.a = float("inf")  # parabolic
+        elif has_a and has_q and not has_e:
+            # Derive e from a and q.
+            self.e = 1.0 - self.q / self.a if self.a > 0 else 0.0
+
+        # If all three were supplied, nothing to derive.
+
         if not self.orbit_type:
             self.orbit_type = classify_orbit(self.q, self.e, self.i, self.H)
         if not self.all_classes:
@@ -134,7 +187,15 @@ def load_ground_truth(filepath: str) -> Dict[str, GroundTruthRecord]:
     """Load ground-truth orbital elements from a CSV file.
 
     The CSV must have a header row.  Required columns: ``designation``,
-    ``q``, ``e``, ``i``, ``H``.  Optional column: ``orbit_type``.
+    ``i``, ``H``, and at least two of ``a``, ``e``, ``q``.
+    Optional column: ``orbit_type``.
+
+    Supported orbital-element column combinations:
+
+    * ``q``, ``e``        — ``a`` is derived as ``q / (1 - e)``
+    * ``a``, ``e``        — ``q`` is derived as ``a * (1 - e)``
+    * ``a``, ``q``        — ``e`` is derived as ``1 - q / a``
+    * ``a``, ``q``, ``e`` — all three supplied directly
 
     Returns:
         Dict mapping designation -> GroundTruthRecord.
@@ -143,26 +204,55 @@ def load_ground_truth(filepath: str) -> Dict[str, GroundTruthRecord]:
     with open(filepath, "r", newline="") as f:
         reader = csv.DictReader(f)
 
-        # Validate required columns
-        required = {"designation", "q", "e", "i", "H"}
         if reader.fieldnames is None:
             raise ValueError("CSV file appears to be empty")
-        missing = required - set(reader.fieldnames)
-        if missing:
-            raise ValueError(f"Ground-truth CSV missing columns: {missing}")
 
-        has_orbit_type = "orbit_type" in reader.fieldnames
+        cols = set(reader.fieldnames)
+
+        # Always required
+        always_required = {"designation", "i", "H"}
+        missing_always = always_required - cols
+        if missing_always:
+            raise ValueError(
+                f"Ground-truth CSV missing required columns: {missing_always}"
+            )
+
+        # Check that at least two of a, e, q are present
+        orbital_cols = {"a", "e", "q"} & cols
+        if len(orbital_cols) < 2:
+            raise ValueError(
+                f"Ground-truth CSV must contain at least two of "
+                f"'a', 'e', 'q' (found: {orbital_cols or 'none'}). "
+                f"Header: {reader.fieldnames}"
+            )
+
+        has_a = "a" in cols
+        has_e = "e" in cols
+        has_q = "q" in cols
+        has_orbit_type = "orbit_type" in cols
 
         for row in reader:
             desig = row["designation"].strip()
-            q = float(row["q"])
-            e = float(row["e"])
             inc = float(row["i"])
             H = float(row["H"])
-            orbit_type = row["orbit_type"].strip() if has_orbit_type and row.get("orbit_type") else ""
+
+            a_val = float(row["a"]) if has_a else None
+            e_val = float(row["e"]) if has_e else None
+            q_val = float(row["q"]) if has_q else None
+
+            orbit_type = (
+                row["orbit_type"].strip()
+                if has_orbit_type and row.get("orbit_type")
+                else ""
+            )
 
             rec = GroundTruthRecord(
-                designation=desig, q=q, e=e, i=inc, H=H,
+                designation=desig,
+                i=inc,
+                H=H,
+                a=a_val,
+                e=e_val,
+                q=q_val,
                 orbit_type=orbit_type,
             )
             records[desig] = rec
