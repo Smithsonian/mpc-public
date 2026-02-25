@@ -39,6 +39,12 @@ If no wheel matches your platform or Python version,
 pip will automatically compile the C code from the source distribution - 
 this requires a local C compiler (e.g., gcc or clang) but no external C libraries such as libxml2.
 
+### Python Tutorials
+
+There are demonstration notebooks in 
+[digest2/notebooks/](https://github.com/Smithsonian/mpc-public/tree/main/digest2/notebooks) that show how to use the Python API to classify tracklets, 
+parse input files, and apply NEOCP filters. 
+These are a great starting point for new users.
 
 ### Python API
 

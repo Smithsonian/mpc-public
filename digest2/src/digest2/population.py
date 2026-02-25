@@ -69,7 +69,7 @@ CLASS_ABBR = [
 ]
 
 # ---------------------------------------------------------------------------
-# Orbit class test functions (from d2model.c)
+# Orbit class boolean class-member evaluation functions (from d2model.c)
 # ---------------------------------------------------------------------------
 
 def is_of_mpc_interest(q: float, e: float, i: float, h: float) -> bool:

@@ -25,6 +25,15 @@ from digest2.core import Digest2, classify
 from digest2.observation import Observation, parse_mpc80, parse_mpc80_file
 from digest2.population import build_model, read_model_csv
 from digest2.result import ClassificationResult, Scores
+from digest2.truth import (
+    GroundTruthRecord,
+    MatchedResult,
+    TruthEvaluator,
+    classify_orbit,
+    classify_orbit_all,
+    load_ground_truth,
+    load_trksub_mapping,
+)
 
 __all__ = [
     "Digest2",
@@ -36,4 +45,11 @@ __all__ = [
     "parse_mpc80_file",
     "build_model",
     "read_model_csv",
+    "GroundTruthRecord",
+    "MatchedResult",
+    "TruthEvaluator",
+    "classify_orbit",
+    "classify_orbit_all",
+    "load_ground_truth",
+    "load_trksub_mapping",
 ]

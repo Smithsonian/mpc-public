@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "digest2"
-version = "2.2.1"
+version = "2.3.0"
 description = "NEO orbit classification from short-arc astrometric tracklets"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -30,8 +30,9 @@ dependencies = ["numpy", "astropy"]
 
 [project.optional-dependencies]
 filters = ["pandas"]
-test = ["pytest", "numpy", "astropy"]
-all = ["pandas", "pytest", "numpy", "astropy"]
+truth = ["matplotlib"]
+test = ["pytest", "numpy", "astropy", "matplotlib"]
+all = ["pandas", "matplotlib", "pytest", "numpy", "astropy"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
