@@ -1,12 +1,23 @@
 name: Build and publish mpc-api to PyPI
 
 on:
+  # Auto-release when mpc-api changes are merged to main
+  push:
+    branches: [main]
+    paths:
+      - "mpc-api/**"
+      - ".github/workflows/mpc_api_release.yml"
+  # Keep manual release trigger as a fallback
   release:
     types: [created]
+  workflow_dispatch:
 
 jobs:
   deploy:
-    if: startsWith(github.event.release.tag_name, 'mpc-api-v')
+    # Skip if this is a release event that doesn't match our tag pattern
+    if: >
+      github.event_name != 'release' ||
+      startsWith(github.event.release.tag_name, 'mpc-api-v')
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -24,11 +35,33 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install build
 
+      - name: Check if version already exists on PyPI
+        id: version_check
+        working-directory: ./mpc-api
+        run: |
+          VERSION=$(python -c "
+          import re
+          text = open('pyproject.toml').read()
+          print(re.search(r'version\s*=\s*\"(.+?)\"', text).group(1))
+          ")
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://pypi.org/pypi/mpc-api/$VERSION/json")
+          if [ "$STATUS" = "200" ]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "Version $VERSION already exists on PyPI — skipping publish"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "Version $VERSION not found on PyPI — will publish"
+          fi
+
       - name: Build package
+        if: steps.version_check.outputs.exists == 'false'
         working-directory: ./mpc-api
         run: python -m build --sdist --wheel --outdir dist/ .
 
       - name: Publish to PyPI
+        if: steps.version_check.outputs.exists == 'false'
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           packages-dir: mpc-api/dist
