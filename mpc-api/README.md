@@ -68,3 +68,14 @@ cd mpc_api
 pip install -e '.[test]'
 pytest -v
 ```
+
+## Testing / Reviewing 
+
+The `.github` workflow should release a new version of `mpc_api` to `TestPyPI` every time 
+a PR is opened or updated. 
+If reviews would like to test the latest version of `mpc_api` from TestPyPI, you can run:
+```bash
+pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ mpc-api                                                                                                                
+```
+where `--index-url` points to TestPyPI for mpc-api itself, while `--extra-index-url` falls back to real PyPI for its 
+dependencies (requests, pandas, etc.) which aren't on TestPyPI.       
