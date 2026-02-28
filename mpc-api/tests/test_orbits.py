@@ -9,6 +9,12 @@ from mpc_api import MPCClient, MPCValidationError
 ORBITS_URL = "https://data.minorplanetcenter.net/api/get-orb"
 
 
+@pytest.fixture
+def require_api(check_api):
+    """Allow tests to skip if the Orbits API is unreachable."""
+    check_api(ORBITS_URL)
+
+
 SAMPLE_MPC_ORB = {
     "COM": {
         "coefficient_names": ["q", "e", "i", "node", "argperi", "tp"],
@@ -27,6 +33,41 @@ SAMPLE_MPC_ORB = {
     "magnitude_data": {"H": 3.34, "G": 0.12},
 }
 
+
+
+# --- REAL TESTS THAT REALLY HIT THE API --------------
+# -----------------------------------------------------
+
+def test_get_orbit_real(require_api, client):
+    """Hit the real API for Ceres orbit and verify structure."""
+    result = client.get_orbit("Ceres")
+    assert result is not None
+    assert "COM" in result
+    assert "CAR" in result
+    assert "designation_data" in result
+    assert result["designation_data"]["permid"] == "1"
+
+
+def test_get_orbit_raw_real(require_api, client):
+    """Hit the real API and verify raw orbit response structure."""
+    result = client.get_orbit_raw("Ceres")
+    assert isinstance(result, list)
+    assert len(result) > 0
+    assert "mpc_orb" in result[0]
+    assert len(result[0]["mpc_orb"]) > 0
+
+
+
+# --- MOCKED TESTS THAT FAKE THE RETURNED API RESPONSE ---
+#     In the tests below, we mock the expected API response, and then verify that
+#     the MPCClient correctly handles/passes-through that response.
+#
+#     `@responses.activate` - intercepts all requests HTTP calls in this test
+#      `responses.get(URL, json=[...])` -- registers a fake GET response
+#
+#     This allows us to test the client's handling of the API responses, without
+#     relying on the actual API, which may be unavailable during testing.
+# ---------------------------------------------------------
 
 @responses.activate
 def test_get_orbit(client):
@@ -62,6 +103,12 @@ def test_get_orbit_raw(client):
     assert isinstance(result, list)
     assert "mpc_orb" in result[0]
 
+
+
+# --- PURE TESTS OF INPUT VALIDATION LOGIC (NO API CALLS) ------
+#     These tests verify that the client raises appropriate
+#     exceptions when given invalid input parameters.
+# ---------------------------------------------------------------
 
 def test_get_orbit_empty_raises(client):
     with pytest.raises(MPCValidationError):

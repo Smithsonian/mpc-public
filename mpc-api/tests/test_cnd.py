@@ -11,6 +11,53 @@ CND_URL = "https://data.minorplanetcenter.net/api/cnd"
 SAMPLE_OBS = "f9671         C2020 02 21.46921410 05 10.27 +04 52 25.7          19.37oV~3n2UT08"
 
 
+@pytest.fixture
+def require_api(check_api):
+    """Allow tests to skip if the CND API is unreachable."""
+    check_api(CND_URL)
+
+
+# --- REAL TESTS THAT REALLY HIT THE API --------------
+# -----------------------------------------------------
+
+def test_check_near_duplicates_real(require_api, client):
+    """Hit the real CND API with the sample observation.
+
+    We verify the response has the expected structure (a dict mapping
+    the obs string to either a list of matches or a 'no results' string),
+    without asserting a specific number of matches since the database
+    content may change.
+    """
+    result = client.check_near_duplicates(SAMPLE_OBS)
+    assert isinstance(result, dict)
+    assert SAMPLE_OBS in result
+    value = result[SAMPLE_OBS]
+    if isinstance(value, list):
+        for match in value:
+            assert "obs80" in match
+
+
+def test_count_near_duplicates_real(require_api, client):
+    """Hit the real CND API and verify the count is a non-negative integer."""
+    counts = client.count_near_duplicates(SAMPLE_OBS)
+    assert isinstance(counts, dict)
+    assert SAMPLE_OBS in counts
+    assert isinstance(counts[SAMPLE_OBS], int)
+    assert counts[SAMPLE_OBS] >= 0
+
+
+
+# --- MOCKED TESTS THAT FAKE THE RETURNED API RESPONSE ---
+#     In the tests below, we mock the expected API response, and then verify that
+#     the MPCClient correctly handles/passes-through that response.
+#
+#     `@responses.activate` - intercepts all requests HTTP calls in this test
+#      `responses.get(URL, json=[...])` -- registers a fake GET response
+#
+#     This allows us to test the client's handling of the API responses, without
+#     relying on the actual API, which may be unavailable during testing.
+# ---------------------------------------------------------
+
 @responses.activate
 def test_check_near_duplicates_match(client):
     responses.get(
@@ -84,6 +131,12 @@ def test_count_near_duplicates_no_match(client):
     counts = client.count_near_duplicates(obs)
     assert counts[obs] == 0
 
+
+
+# --- PURE TESTS OF INPUT VALIDATION LOGIC (NO API CALLS) ------
+#     These tests verify that the client raises appropriate
+#     exceptions when given invalid input parameters.
+# ---------------------------------------------------------------
 
 def test_check_near_duplicates_empty_raises(client):
     with pytest.raises(MPCValidationError):

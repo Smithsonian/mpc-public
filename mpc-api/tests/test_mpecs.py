@@ -9,6 +9,48 @@ from mpc_api import MPCClient, MPCValidationError
 MPECS_URL = "https://data.minorplanetcenter.net/api/mpecs"
 
 
+@pytest.fixture
+def require_api(check_api):
+    """Allow tests to skip if the MPECs API is unreachable."""
+    check_api(MPECS_URL)
+
+
+# --- REAL TESTS THAT REALLY HIT THE API --------------
+# -----------------------------------------------------
+
+def test_get_mpecs_real(require_api, client):
+    """Hit the real API for MPECs mentioning Apophis."""
+    result = client.get_mpecs("Apophis")
+    assert "Apophis" in result
+    assert isinstance(result["Apophis"], list)
+    assert len(result["Apophis"]) > 0
+    mpec = result["Apophis"][0]
+    assert "fullname" in mpec
+    assert "title" in mpec
+    assert "pubdate" in mpec
+    assert "link" in mpec
+
+
+def test_get_discovery_mpec_real(require_api, client):
+    """Hit the real API and find the discovery MPEC for Apophis."""
+    mpec = client.get_discovery_mpec("Apophis")
+    assert mpec is not None
+    assert "fullname" in mpec
+    assert "pubdate" in mpec
+
+
+
+# --- MOCKED TESTS THAT FAKE THE RETURNED API RESPONSE ---
+#     In the tests below, we mock the expected API response, and then verify that
+#     the MPCClient correctly handles/passes-through that response.
+#
+#     `@responses.activate` - intercepts all requests HTTP calls in this test
+#      `responses.get(URL, json=[...])` -- registers a fake GET response
+#
+#     This allows us to test the client's handling of the API responses, without
+#     relying on the actual API, which may be unavailable during testing.
+# ---------------------------------------------------------
+
 @responses.activate
 def test_get_mpecs_single(client):
     responses.get(
@@ -68,6 +110,12 @@ def test_get_discovery_mpec_not_found(client):
     result = client.get_discovery_mpec("unknown")
     assert result is None
 
+
+
+# --- PURE TESTS OF INPUT VALIDATION LOGIC (NO API CALLS) ------
+#     These tests verify that the client raises appropriate
+#     exceptions when given invalid input parameters.
+# ---------------------------------------------------------------
 
 def test_get_mpecs_empty_raises(client):
     with pytest.raises(MPCValidationError):

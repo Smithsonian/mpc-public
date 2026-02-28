@@ -10,6 +10,50 @@ from mpc_api import MPCClient, MPCValidationError
 OBS_URL = "https://data.minorplanetcenter.net/api/get-obs"
 
 
+@pytest.fixture
+def require_api(check_api):
+    """Allow tests to skip if the Observations API is unreachable."""
+    check_api(OBS_URL)
+
+
+# --- REAL TESTS THAT REALLY HIT THE API --------------
+# -----------------------------------------------------
+
+def test_get_observations_obs80_real(require_api, client):
+    """Hit the real API for Ceres observations in OBS80 format."""
+    result = client.get_observations("Ceres", output_format="OBS80")
+    assert "OBS80" in result
+    assert isinstance(result["OBS80"], str)
+    assert len(result["OBS80"]) > 0
+
+
+def test_get_observations_xml_real(require_api, client):
+    """Hit the real API for Ceres observations in XML format."""
+    result = client.get_observations("Ceres", output_format="XML")
+    assert "XML" in result
+    assert "<optical>" in result["XML"]
+
+
+def test_get_observations_df_real(require_api, client):
+    """Hit the real API for Ceres observations as a DataFrame."""
+    df = client.get_observations_df("Ceres")
+    assert isinstance(df, pd.DataFrame)
+    assert len(df) > 0
+    assert "ra" in df.columns or "raStar" in df.columns
+
+
+
+# --- MOCKED TESTS THAT FAKE THE RETURNED API RESPONSE ---
+#     In the tests below, we mock the expected API response, and then verify that
+#     the MPCClient correctly handles/passes-through that response.
+#
+#     `@responses.activate` - intercepts all requests HTTP calls in this test
+#      `responses.get(URL, json=[...])` -- registers a fake GET response
+#
+#     This allows us to test the client's handling of the API responses, without
+#     relying on the actual API, which may be unavailable during testing.
+# ---------------------------------------------------------
+
 @responses.activate
 def test_get_observations_obs80(client):
     responses.get(
@@ -64,6 +108,12 @@ def test_get_observations_df(client):
     assert len(df) == 2
     assert "ra" in df.columns
 
+
+
+# --- PURE TESTS OF INPUT VALIDATION LOGIC (NO API CALLS) ------
+#     These tests verify that the client raises appropriate
+#     exceptions when given invalid input parameters.
+# ---------------------------------------------------------------
 
 def test_get_observations_empty_desig_raises(client):
     with pytest.raises(MPCValidationError):

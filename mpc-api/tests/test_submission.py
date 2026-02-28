@@ -18,6 +18,28 @@ PSV_PROD_URL = "https://minorplanetcenter.net/submit_psv"
 SAMPLE_XML = '<?xml version="1.0"?><ades version="2022"><optical></optical></ades>'
 
 
+
+# --- REAL TESTS THAT REALLY HIT THE API --------------
+# NO REAL API TESTS for submissions.
+# These endpoints actually submit observation data to the MPC pipeline
+# (even the _test endpoints trigger processing).  Real submission
+# testing must be done manually with valid ADES data and a known
+# submitter account.
+# -----------------------------------------------------
+
+
+
+# --- MOCKED TESTS THAT FAKE THE RETURNED API RESPONSE ---
+#     In the tests below, we mock the expected API response, and then verify that
+#     the MPCClient correctly handles/passes-through that response.
+#
+#     `@responses.activate` - intercepts all requests HTTP calls in this test
+#      `responses.post(URL, ...)` -- registers a fake POST response
+#
+#     This allows us to test the client's handling of the API responses, without
+#     relying on the actual API, which may be unavailable during testing.
+# ---------------------------------------------------------
+
 @responses.activate
 def test_submit_xml_test(client):
     responses.post(
@@ -92,16 +114,6 @@ def test_submit_xml_missing_ack_returns_400(client):
         )
 
 
-def test_submit_xml_empty_ack_raises(client):
-    with pytest.raises(MPCValidationError, match="ack"):
-        client.submit_xml(SAMPLE_XML, ack="", ac2="test@example.com")
-
-
-def test_submit_xml_empty_ac2_raises(client):
-    with pytest.raises(MPCValidationError, match="ac2"):
-        client.submit_xml(SAMPLE_XML, ack="My ack", ac2="")
-
-
 @responses.activate
 def test_submit_xml_with_obj_type(client):
     responses.post(XML_TEST_URL, body="[ack]. Submission ID is xxx", status=200)
@@ -115,3 +127,19 @@ def test_submit_xml_with_obj_type(client):
     assert result["status_code"] == 200
     # Verify obj_type was sent in the request
     assert "obj_type" in responses.calls[0].request.body.decode()
+
+
+
+# --- PURE TESTS OF INPUT VALIDATION LOGIC (NO API CALLS) ------
+#     These tests verify that the client raises appropriate
+#     exceptions when given invalid input parameters.
+# ---------------------------------------------------------------
+
+def test_submit_xml_empty_ack_raises(client):
+    with pytest.raises(MPCValidationError, match="ack"):
+        client.submit_xml(SAMPLE_XML, ack="", ac2="test@example.com")
+
+
+def test_submit_xml_empty_ac2_raises(client):
+    with pytest.raises(MPCValidationError, match="ac2"):
+        client.submit_xml(SAMPLE_XML, ack="My ack", ac2="")

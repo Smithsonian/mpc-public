@@ -1,5 +1,6 @@
 """Tests for the Observatory Codes API."""
 
+import pytest
 import responses
 import pandas as pd
 
@@ -8,6 +9,60 @@ from mpc_api import MPCClient
 
 OBSCODES_URL = "https://data.minorplanetcenter.net/api/obscodes"
 
+
+@pytest.fixture
+def require_api(check_api):
+    """Allow tests to skip if the Observatory Codes API is unreachable."""
+    check_api(OBSCODES_URL)
+
+
+# --- REAL TESTS THAT REALLY HIT THE API --------------
+# -----------------------------------------------------
+
+def test_get_observatory_real(require_api, client):
+    """Hit the real API and verify observatory '500' (Geocentric) exists."""
+    result = client.get_observatory("500")
+    assert result["obscode"] == "500"
+    assert result["name"] == "Geocentric"
+
+
+def test_get_all_observatories_real(require_api, client):
+    """Hit the real API and verify the full observatory list is returned."""
+    result = client.get_all_observatories()
+    assert isinstance(result, dict)
+    assert "500" in result
+    assert "F51" in result
+    assert len(result) > 100
+
+
+def test_get_all_observatories_df_real(require_api, client):
+    """Hit the real API and verify the DataFrame format."""
+    df = client.get_all_observatories_df()
+    assert isinstance(df, pd.DataFrame)
+    assert len(df) > 100
+    assert "name" in df.columns
+    assert "500" in df.index
+
+
+def test_search_observatories_real(require_api, client):
+    """Hit the real API and search for 'Mauna'."""
+    df = client.search_observatories("Mauna")
+    assert isinstance(df, pd.DataFrame)
+    assert len(df) >= 1
+    assert "568" in df.index  # 568 is "Maunakea"
+
+
+
+# --- MOCKED TESTS THAT FAKE THE RETURNED API RESPONSE ---
+#     In the tests below, we mock the expected API response, and then verify that
+#     the MPCClient correctly handles/passes-through that response.
+#
+#     `@responses.activate` - intercepts all requests HTTP calls in this test
+#      `responses.get(URL, json=[...])` -- registers a fake GET response
+#
+#     This allows us to test the client's handling of the API responses, without
+#     relying on the actual API, which may be unavailable during testing.
+# ---------------------------------------------------------
 
 @responses.activate
 def test_get_observatory(client):
