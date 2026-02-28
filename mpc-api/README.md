@@ -86,3 +86,18 @@ dependencies (requests, pandas, etc.) which aren't on TestPyPI.
 A `.github` workflow will release a new version of `mpc_api` to `PyPI` 
 every time a PR that touches `mpc_api` is merged into `main`, 
 **as long as the version is updated in `pyproject.toml`**.
+
+
+### To-Do
+
+There are a number of MPC APIs that are not yet implemented in `mpc_api`. 
+These include (but are not limited to):
+ - Pointings Submission
+ - Pointings Retrieval
+ - Submission of Identifications
+ - NEO Rating == digest2: https://minorplanetcenter.net/iau/NEO/PossNEO.html
+ - ...
+
+Each of these APIs should:
+1. Have documentation and a tutorial notebook added to the [MPC docs website](https://docs.minorplanetcenter.net/) 
+2. Have a corresponding method added to `mpc_api` that is tested and documented.
