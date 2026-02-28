@@ -17,3 +17,4 @@ Tutorials on how to use various of the MPC's APIs are linked below.
  - [Check Near-Duplicates (CND) API](notebooks/mpc_tutorial_api_cnd.ipynb)
  - [MPECs API](notebooks/mpc_tutorial_api_mpecs.ipynb)
  - [Action Codes API](notebooks/mpc_tutorial_api_action_codes.ipynb)
+ - [WAMO API](notebooks/mpc_tutorial_api_wamo.ipynb)

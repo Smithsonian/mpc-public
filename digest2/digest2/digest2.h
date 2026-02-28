@@ -2,12 +2,16 @@
 //
 // Public domain.
 
-#include <regex.h>
 #include <stdint.h>
+#ifndef D2_NO_REGEX
+#include <regex.h>
+#endif
 #include <sys/stat.h>
+#ifndef D2_NO_LIBXML
 #include <libxml/tree.h>
 #include <libxml/parser.h>
 #include <libxml/xpath.h>
+#endif
 #include "common.h"
 #include "d2model.h"
 
@@ -168,8 +172,10 @@ extern double arcsecrad;
 extern int nClassCompute;
 extern int classCompute[D2CLASSES];
 extern double obsErr;
+#ifndef D2_NO_REGEX
 extern regex_t rxObsErr;
 extern regex_t rxLimit;
+#endif
 extern int cores;
 extern int limit;
 void fatal(char *msg);
@@ -217,8 +223,10 @@ double tkRand(tracklet * tk);
 double *roving_position(double x, double y, double altitiude);
 
 // functions in d2ades.c
+#ifndef D2_NO_LIBXML
 tracklet * parse_ades(const char * filepath);
 void parseOpticalNodes(xmlNodeSetPtr nodes, tracklet * tk, observation * obs1);
+#endif
 
 void eval(tracklet * tk);
 tracklet *resetInvalid(void);

@@ -1,0 +1,121 @@
+name: digest2-python-release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  # Only run for digest2 releases (tags starting with "digest2-v")
+  check-tag:
+    runs-on: ubuntu-latest
+    outputs:
+      is_digest2: ${{ steps.check.outputs.is_digest2 }}
+    steps:
+      - name: Check release tag
+        id: check
+        run: |
+          if [[ "${{ github.event.release.tag_name }}" == digest2-v* ]]; then
+            echo "is_digest2=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "is_digest2=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  build-wheels:
+    needs: check-tag
+    if: needs.check-tag.outputs.is_digest2 == 'true'
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Resolve data symlinks
+        shell: bash
+        run: |
+          # Replace symlinks in src/digest2/data/ with real file copies
+          # so that wheels contain the actual model data, not dangling links.
+          cd digest2/src/digest2/data
+          for f in *; do
+            if [ -L "$f" ]; then
+              target="$(readlink "$f")"
+              rm "$f"
+              cp "$target" "$f"
+            fi
+          done
+          echo "Data files after resolve:"
+          ls -la
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.21
+        with:
+          package-dir: digest2
+        env:
+          CIBW_BUILD: "cp312-*"
+          CIBW_SKIP: "*-musllinux_*"
+
+      - name: Upload wheels
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheels-${{ matrix.os }}
+          path: wheelhouse/*.whl
+
+  build-sdist:
+    needs: check-tag
+    if: needs.check-tag.outputs.is_digest2 == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Resolve data symlinks
+        run: |
+          # Replace symlinks in src/digest2/data/ with real file copies
+          # so that the sdist contains the actual model data, not dangling links.
+          cd digest2/src/digest2/data
+          for f in *; do
+            if [ -L "$f" ]; then
+              target="$(readlink "$f")"
+              rm "$f"
+              cp "$target" "$f"
+            fi
+          done
+          echo "Data files after resolve:"
+          ls -la
+
+      - name: Build source distribution
+        run: |
+          cd digest2
+          pip install build
+          python -m build --sdist
+
+      - name: Upload sdist
+        uses: actions/upload-artifact@v4
+        with:
+          name: sdist
+          path: digest2/dist/*.tar.gz
+
+  publish:
+    needs: [build-wheels, build-sdist]
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist/

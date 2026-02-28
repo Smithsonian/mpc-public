@@ -104,6 +104,11 @@ mkdocs gh-deploy
   - These use ADES v2017; the current `iau-ades` package (v0.1.1) validates against v2022
   - When using these samples, update: `version` attribute to `2022`, remove `+` prefix from `<ra>`/`<dec>` values in XML, fix `+` prefixed values in PSV
 
+### mpc_orb Package Quirks
+
+- **`M.CAR.eigenvalues` is misleading**: The `eigenvalues` attribute stored in the JSON (and exposed by `MPCORB`) does **not** correspond to eigenvalues of `M.CAR.covariance_array`. Use `np.linalg.eigvalsh(M.CAR.covariance_array)` to compute the actual covariance eigenvalues.
+- **Rebound unit mismatch**: MPC Cartesian elements use AU and AU/day, but Rebound's default Horizons units use yr/(2π) for time. When combining MPC state vectors with Horizons-loaded planets, set `sim.units = ('AU', 'day', 'Msun')` before adding any particles to ensure consistent units.
+
 ### iau-ades Package Quirks
 
 The `iau-ades` pip package is used for local ADES validation and PSV/XML conversion:
@@ -136,3 +141,37 @@ The `iau-ades` pip package is used for local ADES validation and PSV/XML convers
 
 - mpc_orb requires: numpy<2.0.0, jsonschema, json5 (Python >= 3.6)
 - mpc_api requires: requests>=2.20.0 (Python >= 3.8); optional: pandas>=1.0.0
+- mpc_orb requires: numpy<2.0.0, jsonschema, json5
+- Python >= 3.6
+
+## Documentation Migration Notes
+
+### Completed Migrations
+
+The following documentation pages have been migrated from MPC legacy pages into local markdown:
+
+**designations/** (migrated from `designations.md`):
+
+- `designations/index.md` - Index page with button links to local pages, text links to external/dynamic resources
+- `designations/provisional-designations.md` - Consolidated from `mpcops/documentation/provisional-designation-definition/` and `/iau/info/OldDesDoc.html`
+- `designations/temporary-designations.md` - From `/iau/info/TempDesDoc.html`
+- `designations/how-asteroids-are-named.md` - From `/iau/info/HowNamed.html`
+- `designations/cometary-designation-system.md` - From `/iau/lists/CometResolution.html`
+- `designations/packed-designations.md` - Consolidated from `/iau/info/PackedDes.html` + extended packed format from mpcops page
+- `designations/packed-dates.md` - From `/iau/info/PackedDates.html`
+- `designations/dual-status-objects.md` - From `/iau/lists/DualStatus.html`
+
+**identifications/** (migrated from `identifications.md`):
+
+- `identifications/index.md` - Full overview content from `mpcops/documentation/identifications/` + links
+- `identifications/submission-format.md` - From `mpcops/documentation/identifications/submission-format/`
+- `identifications/acceptance-criteria.md` - From `mpcops/documentation/identifications/additional/`
+
+### Migration Conventions
+
+- Pages with many links become sub-folders with an `index.md` and individual content pages
+- Button-style links (using `<div class="contents-grid">`) point to locally-hosted pages within mpc-public
+- Standard text links point to external/dynamic/service pages that remain on the legacy MPC site
+- MPEC pages (e.g. `https://minorplanetcenter.net/mpec/...`) are never imported
+- Service/API endpoints are never imported
+- Auto-generated data lists (e.g. MPNames, NumberedMPs) are left as external links

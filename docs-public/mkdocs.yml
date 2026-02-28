@@ -4,6 +4,7 @@ repo_url: https://github.com/Smithsonian/mpc-public
 
 theme:
   name: material
+  custom_dir: overrides
   logo: images/mpc-logo.jpeg
   features:
     - navigation.top
@@ -24,9 +25,11 @@ plugins:
 
 nav:
   - Home: index.md
-  - MPC Documentation:
+  - Documentation:
     - mpc-ops-docs/index.md
-  - MPC Tutorials:
+  - Services:
+    - services/index.md
+  - Tutorials:
     - tutorials/index.md
 
 markdown_extensions:

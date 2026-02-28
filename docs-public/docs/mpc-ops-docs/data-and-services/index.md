@@ -1,12 +1,15 @@
 # Data and Services
 
-Documentation related to MPC data products, database access, subscriptions.
+Documentation related to MPC data products, database access, and subscriptions.
 
 
 ## Database Access
 
-- [Replicated PostgreSQL tables: introduction and examples](https://minorplanetcenter.net/mpcops/documentation/replicated-tables-info-general/)
-- [Replicated PostgreSQL tables: schema](https://minorplanetcenter.net/mpcops/documentation/replicated-tables-schema/)
+<div class="contents-grid"></div>
+
+- [Replicated PostgreSQL Tables: Introduction and Examples](replicated-tables-intro.md)
+- [Replicated PostgreSQL Tables: Schema](replicated-tables-schema.md)
+- [Replicated PostgreSQL Tables: Sample Queries](replicated-tables-queries.md)
 
 
 ## Subscriptions
@@ -16,7 +19,18 @@ Documentation related to MPC data products, database access, subscriptions.
 
 ## Singletons and Archival Observations
 
-- [Singletons and archival observations committee (SARC)](https://minorplanetcenter.net/mpcops/documentation/sarc/)
+<div class="contents-grid"></div>
+
+- [Singletons and Archival Observations Committee (SARC)](sarc.md)
+
+
+## Other
+
+<div class="contents-grid"></div>
+
+- [Pointing Data](pointing-data.md)
+- [MPEC Orbit Computers](mpec-computers.md)
+- [Representing Non-English Characters](non-english-characters.md)
 
 
 [//]: # (TODO: I'm deliberately leaving this commented-out section here as a reminder to our future selves that we )
@@ -39,10 +53,3 @@ Documentation related to MPC data products, database access, subscriptions.
 [//]: # (- [Statistics on residuals from observations of minor planets, by observatory code]&#40;https://minorplanetcenter.net/iau/special/residuals.txt&#41;)
 
 [//]: # (- [Statistics on residuals from observations of numbered minor planets, by observatory code]&#40;https://minorplanetcenter.net/iau/special/residuals2.txt&#41;)
-
-
-## Other
-
-- [Pointing Data](https://minorplanetcenter.net/iau/info/PointingData.html)
-- [List of orbit computers (and other codes) on the Daily Orbit Update MPECs](https://minorplanetcenter.net/iau/info/MPECComputers.html)
-- [Representing Non-English Characters](https://minorplanetcenter.net/iau/info/NonEnglish.html)

@@ -34,8 +34,16 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install test dependencies
-        run: pip install pytest
+      - name: Download observatory codes
+        run: |
+          curl -X GET -H "Content-Type: application/json" -d '{"format": "ObsCodes.html"}' https://data.minorplanetcenter.net/api/obscodes  > digest2/digest2/digest2.obscodes
+
+      - name: Install package in dev mode
+        run: |
+          cd digest2
+          pip install -e '.[test]'
 
       - name: Run pytest
-        run: pytest digest2/tests
+        run: |
+          cd digest2
+          pytest tests/ -v
