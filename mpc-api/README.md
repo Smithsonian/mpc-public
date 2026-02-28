@@ -69,7 +69,7 @@ pip install -e '.[test]'
 pytest -v
 ```
 
-## Testing / Reviewing 
+### Testing / Reviewing 
 
 The `.github` workflow should release a new version of `mpc_api` to `TestPyPI` every time 
 a PR is opened or updated. 
@@ -79,3 +79,10 @@ pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://
 ```
 where `--index-url` points to TestPyPI for mpc-api itself, while `--extra-index-url` falls back to real PyPI for its 
 dependencies (requests, pandas, etc.) which aren't on TestPyPI.       
+
+
+### Release 
+
+A `.github` workflow will release a new version of `mpc_api` to `PyPI` 
+every time a PR that touches `mpc_api` is merged into `main`, 
+**as long as the version is updated in `pyproject.toml`**.
