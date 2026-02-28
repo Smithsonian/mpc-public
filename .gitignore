@@ -126,7 +126,7 @@ venv.bak/
 # Rope project settings
 .ropeproject
 
-# mkdocs documentation
+# mkdocs documentation (root level — see also "site/" below for subdirs)
 /site
 
 # mypy
@@ -140,3 +140,18 @@ dmypy.json
 
 # PyCharm
 .idea
+
+# Editor / AI tool config
+.claude/
+.opencode/
+
+# C build artifacts
+*.o
+
+# mkdocs build output (any subdirectory)
+site/
+
+# digest2 build artifacts
+digest2/digest2/digest2
+digest2/digest2/digest2.model
+digest2/digest2/digest2.obscodes
