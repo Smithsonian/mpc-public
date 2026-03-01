@@ -25,7 +25,7 @@ in accepting identifications, in order to minimize the number of false positives
 
 <div class="contents-grid"></div>
 
-- [Submission format for identifications](submission-format.md)
+- [Identifications API](../apis/identifications.md)
 - [MPC criteria for accepting or rejecting identifications](acceptance-criteria.md)
 - [Tutorial on Identification Submission API](https://docs.minorplanetcenter.net/tutorials/notebooks/mpc_tutorial_api_identifications)
 
@@ -101,11 +101,11 @@ slow down the ID pipeline.
 
 Identifications can be submitted using the
 [file upload form](https://minorplanetcenter.net/mpcops/submissions/identifications/) or
-using the API ([tutorial](https://docs.minorplanetcenter.net/tutorials/notebooks/mpc_tutorial_api_identifications.html)).
+using the API ([documentation](../apis/identifications.md), [tutorial](https://docs.minorplanetcenter.net/tutorials/notebooks/mpc_tutorial_api_identifications.html)).
 Before submitting your identifications please read through the documentation on the
 required format. See below for various links.
 
-- [Submission format for identifications](submission-format.md)
+- [Identifications API](../apis/identifications.md)
 - [Submit identifications](https://minorplanetcenter.net/mpcops/submissions/identifications/)
 - [MPC criteria for accepting identifications](acceptance-criteria.md)
 
@@ -123,7 +123,7 @@ required format. See below for various links.
 If you'd like to receive an automated message when your submitted linkage failed in the
 ID pipeline, please add the following text in the comment section: `REPLY_EMAIL` and
 don't forget to submit your email address as well in the
-[submission header](submission-format.md).
+[submission header](../apis/identifications.md).
 
 Potential reasons for failures:
 
