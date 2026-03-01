@@ -1,6 +1,9 @@
 # Use of MPC APIs
 
-Tutorials on how to use various of the MPC's APIs are linked below.
+We have created some Jupyter Notebooks to act as tutorials on how to use various of the MPC's APIs. 
+These notebooks are linked below.
+
+Further API documentation can be found on the [MPC APIs](../mpc-ops-docs/apis/index.md) page.
 
 <div id="contents-grid"></div>
 

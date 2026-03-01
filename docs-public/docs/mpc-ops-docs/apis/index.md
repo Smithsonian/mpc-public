@@ -3,7 +3,7 @@
 This page provides links to documentation for the MPC's REST APIs.
 
 A set of tutorial jupyter notebooks is also available to demonstrate how to use the APIs. 
-See the [MPC API Tutorials](mpc-api-tutorials.md) page for more information.
+See the [MPC API Tutorials](../../tutorials/api_tutorials.md) page for more information.
 
 <div id="contents-grid"></div>
 
