@@ -125,6 +125,15 @@ The following documentation pages have been migrated from MPC legacy pages into 
 - `identifications/submission-format.md` - From `mpcops/documentation/identifications/submission-format/`
 - `identifications/acceptance-criteria.md` - From `mpcops/documentation/identifications/additional/`
 
+**astrometry/** (migrated from `astrometry.md`):
+
+- `astrometry/index.md` - Hub page with links to sub-pages and external services
+- `astrometry/getting-started.md` - From `/iau/info/Astrometry.html` (equipment through timing sections)
+- `astrometry/observatory-codes.md` - From `/iau/info/Astrometry.html` (observatory code sections)
+- `astrometry/reporting-observations.md` - From `/iau/info/Astrometry.html` (reporting and checking sections)
+- `astrometry/discoveries-and-credit.md` - From `/iau/info/Astrometry.html` (discoveries, coverage, naming sections)
+- `astrometry/mpc-processing.md` - From `/iau/info/Astrometry.html` (processing and publication sections)
+
 ### Migration Conventions
 
 - Pages with many links become sub-folders with an `index.md` and individual content pages

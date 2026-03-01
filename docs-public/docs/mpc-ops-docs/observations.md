@@ -5,8 +5,8 @@ Documentation related to making, formatting, and submitting astrometric observat
 
 ## Getting Started
 
-- [Guide to Minor Body Astrometry](astrometry.md) — comprehensive guide covering equipment, submission methods, observatory codes, discoveries and MPC processing
-- [How do I get an observatory code?](https://minorplanetcenter.net/iau/info/Astrometry.html#HowObsCode)
+- [Guide to Minor Body Astrometry](astrometry/index.md) — comprehensive guide covering equipment, submission methods, observatory codes, discoveries and MPC processing
+- [How do I get an observatory code?](astrometry/observatory-codes.md#how-do-i-get-an-observatory-code)
 - [How do I submit my astrometry using Tycho Tracker?](https://minorplanetcenter.net/mpcops/documentation/tycho-tracker/)
 
 
