@@ -15,3 +15,4 @@ This page provides links to documentation for the MPC's REST APIs.
 - [MPECs](mpecs.md)
 - [Action Codes](action-codes.md)
 - [Lists of Objects](list.md)
+- [Pointings](pointings.md)
