@@ -128,6 +128,7 @@ The following documentation pages have been migrated from MPC legacy pages into 
 **apis/**:
 
 - `apis/pointings.md` - Pointings Database submission API - From `/pointings/`
+- `apis/mag-bands.md` - Mag Bands API - From `mpcops/documentation/mag-band-api/`
 
 ### Migration Conventions
 

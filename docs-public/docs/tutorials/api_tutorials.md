@@ -17,3 +17,4 @@ Tutorials on how to use various of the MPC's APIs are linked below.
  - [WAMO API](notebooks/mpc_tutorial_api_wamo.ipynb)
  - [Identifications API](notebooks/mpc_tutorial_api_identifications.ipynb)
  - [Pointings API](notebooks/mpc_tutorial_api_pointings.ipynb)
+ - [Mag Bands API](notebooks/mpc_tutorial_api_mag_bands.ipynb)
