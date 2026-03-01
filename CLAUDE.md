@@ -7,6 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 This is the Minor Planet Center's public repository containing:
 - **mpc_orb**: Python package for standardized orbit data exchange using JSON format
 - **docs-public**: MkDocs-based documentation site deployed to https://docs.minorplanetcenter.net/
+- **MIGRATION_TRACKER.md**: Tracks the status of all legacy page migrations (see `/migrate-docs-project-man` skill)
 
 ## Common Commands
 
