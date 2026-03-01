@@ -12,7 +12,7 @@ The MPC will reject ITF-to-ITF identifications without performing any orbit fitt
 any of the following is true:
 
 - The submission format is incorrect. See the
-  [submission format description](submission-format.md).
+  [submission format description](../apis/identifications.md).
 - The submitted tracklets cover less than 3 distinct nights.
 - The arc length covered by the tracklets is less than 3 days.
 - The number of nights is 3 and the arc length is larger than 15 days.
@@ -28,7 +28,7 @@ The MPC will reject ITF-to-DES identifications without performing any orbit fitt
 any of the following is true:
 
 - The submission format is incorrect. See the
-  [submission format description](submission-format.md).
+  [submission format description](../apis/identifications.md).
 - You are trying to extend the orbit of a one-apparition non-NEO to a two-apparitions
   non-NEO using only one single tracklet over one night (arc length < 0.75 days). Please
   note that this criteria does not apply to NEOs. See the
@@ -42,7 +42,7 @@ The MPC will reject DES-to-DES identifications without performing any orbit fitt
 any of the following is true:
 
 - The submission format is incorrect. See the
-  [submission format description](submission-format.md).
+  [submission format description](../apis/identifications.md).
 - You are attempting to link together two only one-opposition distant objects (q>5.5).
 
 

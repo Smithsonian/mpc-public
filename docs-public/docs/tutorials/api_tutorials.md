@@ -1,6 +1,9 @@
 # Use of MPC APIs
 
-Tutorials on how to use various of the MPC's APIs are linked below.
+We have created some Jupyter Notebooks to act as tutorials on how to use various of the MPC's APIs. 
+These notebooks are linked below.
+
+Further API documentation can be found on the [MPC APIs](../mpc-ops-docs/apis/index.md) page.
 
 <div id="contents-grid"></div>
 
@@ -15,3 +18,6 @@ Tutorials on how to use various of the MPC's APIs are linked below.
  - [MPECs API](notebooks/mpc_tutorial_api_mpecs.ipynb)
  - [Action Codes API](notebooks/mpc_tutorial_api_action_codes.ipynb)
  - [WAMO API](notebooks/mpc_tutorial_api_wamo.ipynb)
+ - [Identifications API](notebooks/mpc_tutorial_api_identifications.ipynb)
+ - [Pointings API](notebooks/mpc_tutorial_api_pointings.ipynb)
+ - [Mag Bands API](notebooks/mpc_tutorial_api_mag_bands.ipynb)

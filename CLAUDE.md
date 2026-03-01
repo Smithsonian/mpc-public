@@ -125,6 +125,11 @@ The following documentation pages have been migrated from MPC legacy pages into 
 - `identifications/submission-format.md` - From `mpcops/documentation/identifications/submission-format/`
 - `identifications/acceptance-criteria.md` - From `mpcops/documentation/identifications/additional/`
 
+**apis/**:
+
+- `apis/pointings.md` - Pointings Database submission API - From `/pointings/`
+- `apis/mag-bands.md` - Mag Bands API - From `mpcops/documentation/mag-band-api/`
+
 ### Migration Conventions
 
 - Pages with many links become sub-folders with an `index.md` and individual content pages
