@@ -4,7 +4,7 @@ The quick version: the discoverer of a particular object has the privilege of su
 a name to a committee that judges its suitability. Contrary to some recent media reports
 it is not possible to buy a minor planet. If you have a name you would like to apply,
 the best advice is "Go out and discover one!".
-[Information on how this might be achieved is available](https://minorplanetcenter.net/iau/info/Astrometry.html).
+[Information on how this might be achieved is available](../astrometry/index.md).
 
 ---
 
