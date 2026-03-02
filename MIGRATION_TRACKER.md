@@ -18,6 +18,12 @@ other `https://minorplanetcenter.net/` pages not already tracked.
 This two-level crawl is not exhaustive — newly migrated pages or previously unvisited legacy pages 
 may introduce further links — so this process should be repeated periodically.
 
+**WIP**
+Note that some open PRs (such as [PR39](https://github.com/Smithsonian/mpc-public/pull/39) 
+at the time of writing) may have already migrated content 
+that is still tracked here as `to-migrate` until the PR is merged 
+and the tracker is updated.
+
 ## Summary
 
 | Status | Count |
