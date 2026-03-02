@@ -2,7 +2,21 @@
 
 Last updated: 2026-03-01
 
-**Discovery methodology (2026-03-01):** This tracker was populated by (a) searching all pages under `docs/mpc-ops-docs/` for outbound links to `https://minorplanetcenter.net/`, then (b) fetching each of those legacy pages and extracting any additional links to other `https://minorplanetcenter.net/` pages not already tracked. This two-level crawl is not exhaustive — newly migrated pages or previously unvisited legacy pages may introduce further links — so this process should be repeated periodically.
+The purpose of this tracker is to audit and track the migration of documentation pages 
+from the legacy MPC website (https://minorplanetcenter.net/) 
+to the new docs site (https://docs.minorplanet.net/). 
+This migration is primarily being performed by Matt P. using claude-code. 
+This tracker categorizes pages by topic, tracks their migration status, 
+and notes any necessary legacy banners or deprecation plans.
+
+**Discovery methodology (2026-03-01):** 
+This tracker was populated by 
+(a) searching all pages under `docs/mpc-ops-docs/` for outbound links to `https://minorplanetcenter.net/`, 
+then 
+(b) fetching each of those legacy pages and extracting any additional links to 
+other `https://minorplanetcenter.net/` pages not already tracked. 
+This two-level crawl is not exhaustive — newly migrated pages or previously unvisited legacy pages 
+may introduce further links — so this process should be repeated periodically.
 
 ## Summary
 
