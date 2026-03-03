@@ -49,33 +49,11 @@ static PyObject *py_is_initialized(PyObject *self, PyObject *noargs) {
     return PyBool_FromLong(d2_is_initialized());
 }
 
-static PyObject *py_score(PyObject *self, PyObject *args) {
-    PyObject *obs_list;
-    PyObject *classes_obj = Py_None;
-    int is_ades = 0;
+// --- Shared helpers for observation and class parsing ---
 
-    if (!PyArg_ParseTuple(args, "O|Oi", &obs_list, &classes_obj, &is_ades))
-        return NULL;
-
-    if (!module_initialized) {
-        PyErr_SetString(PyExc_RuntimeError,
-                        "digest2 not initialized. Call init() first.");
-        return NULL;
-    }
-
-    if (!PyList_Check(obs_list)) {
-        PyErr_SetString(PyExc_TypeError, "observations must be a list");
-        return NULL;
-    }
-
-    Py_ssize_t n_obs = PyList_Size(obs_list);
-    if (n_obs < 2) {
-        PyErr_SetString(PyExc_ValueError,
-                        "At least 2 observations required");
-        return NULL;
-    }
-
-    // Parse observations
+// Parse a Python list of observation tuples/dicts into a C array.
+// Returns allocated d2_observation array, or NULL with Python exception set.
+static d2_observation *parse_obs_list(PyObject *obs_list, Py_ssize_t n_obs) {
     d2_observation *obs = (d2_observation *)calloc(n_obs, sizeof(d2_observation));
     if (!obs) {
         PyErr_NoMemory();
@@ -151,28 +129,105 @@ static PyObject *py_score(PyObject *self, PyObject *args) {
         }
     }
 
-    // Parse classes filter
-    int *class_indices = NULL;
-    int n_classes = 0;
+    return obs;
+}
 
-    if (classes_obj != Py_None && PyList_Check(classes_obj)) {
-        n_classes = (int)PyList_Size(classes_obj);
-        if (n_classes > 0) {
-            class_indices = (int *)malloc(n_classes * sizeof(int));
-            if (!class_indices) {
-                free(obs);
-                PyErr_NoMemory();
-                return NULL;
-            }
-            for (int i = 0; i < n_classes; i++) {
-                class_indices[i] = (int)PyLong_AsLong(PyList_GetItem(classes_obj, i));
-                if (PyErr_Occurred()) {
-                    free(obs);
-                    free(class_indices);
-                    return NULL;
-                }
-            }
+// Parse a Python list of class indices into a C array with bounds validation.
+// Sets *n_classes_out to the number of classes.
+// Returns allocated int array (caller must free), or NULL.
+// When NULL is returned:
+//   - If PyErr_Occurred() is true, an error was raised (caller should propagate).
+//   - If PyErr_Occurred() is false, classes_obj was None or empty (means "all classes").
+static int *parse_class_filter(PyObject *classes_obj, int *n_classes_out) {
+    *n_classes_out = 0;
+
+    if (classes_obj == Py_None || !PyList_Check(classes_obj))
+        return NULL;
+
+    int n = (int)PyList_Size(classes_obj);
+    if (n <= 0)
+        return NULL;
+
+    if (n > D2CLASSES) {
+        PyErr_Format(PyExc_ValueError,
+            "Too many classes (%d > %d maximum)", n, D2CLASSES);
+        return NULL;
+    }
+
+    int *indices = (int *)malloc(n * sizeof(int));
+    if (!indices) {
+        PyErr_NoMemory();
+        return NULL;
+    }
+
+    for (int i = 0; i < n; i++) {
+        indices[i] = (int)PyLong_AsLong(PyList_GetItem(classes_obj, i));
+        if (PyErr_Occurred()) {
+            free(indices);
+            return NULL;
         }
+        if (indices[i] < 0 || indices[i] >= D2CLASSES) {
+            free(indices);
+            PyErr_Format(PyExc_ValueError,
+                "Class index %d out of range [0, %d)", indices[i], D2CLASSES);
+            return NULL;
+        }
+    }
+
+    *n_classes_out = n;
+    return indices;
+}
+
+// Raise a RuntimeError for a d2_result status code.
+static void raise_scoring_error(int status) {
+    const char *msg;
+    switch (status) {
+        case D2_ERR_INPUT:  msg = "Invalid input (need >=2 obs with motion and time span)"; break;
+        case D2_ERR_MEMORY: msg = "Memory allocation failed"; break;
+        case D2_ERR_NOINIT: msg = "Library not initialized"; break;
+        default:            msg = "Scoring error"; break;
+    }
+    PyErr_SetString(PyExc_RuntimeError, msg);
+}
+
+// --- Scoring functions ---
+
+static PyObject *py_score(PyObject *self, PyObject *args) {
+    PyObject *obs_list;
+    PyObject *classes_obj = Py_None;
+    int is_ades = 0;
+
+    if (!PyArg_ParseTuple(args, "O|Oi", &obs_list, &classes_obj, &is_ades))
+        return NULL;
+
+    if (!module_initialized) {
+        PyErr_SetString(PyExc_RuntimeError,
+                        "digest2 not initialized. Call init() first.");
+        return NULL;
+    }
+
+    if (!PyList_Check(obs_list)) {
+        PyErr_SetString(PyExc_TypeError, "observations must be a list");
+        return NULL;
+    }
+
+    Py_ssize_t n_obs = PyList_Size(obs_list);
+    if (n_obs < 2) {
+        PyErr_SetString(PyExc_ValueError,
+                        "At least 2 observations required");
+        return NULL;
+    }
+
+    // Parse observations
+    d2_observation *obs = parse_obs_list(obs_list, n_obs);
+    if (!obs) return NULL;
+
+    // Parse classes filter (with bounds validation)
+    int n_classes = 0;
+    int *class_indices = parse_class_filter(classes_obj, &n_classes);
+    if (PyErr_Occurred()) {
+        free(obs);
+        return NULL;
     }
 
     // Call the C scoring function
@@ -182,14 +237,7 @@ static PyObject *py_score(PyObject *self, PyObject *args) {
     if (class_indices) free(class_indices);
 
     if (res.status != D2_OK) {
-        const char *msg;
-        switch (res.status) {
-            case D2_ERR_INPUT:  msg = "Invalid input (need >=2 obs with motion and time span)"; break;
-            case D2_ERR_MEMORY: msg = "Memory allocation failed"; break;
-            case D2_ERR_NOINIT: msg = "Library not initialized"; break;
-            default:            msg = "Scoring error"; break;
-        }
-        PyErr_SetString(PyExc_RuntimeError, msg);
+        raise_scoring_error(res.status);
         return NULL;
     }
 
@@ -245,101 +293,16 @@ static PyObject *py_score_orbits(PyObject *self, PyObject *args) {
         return NULL;
     }
 
-    // Parse observations (same as py_score)
-    d2_observation *obs = (d2_observation *)calloc(n_obs, sizeof(d2_observation));
-    if (!obs) {
-        PyErr_NoMemory();
-        return NULL;
-    }
+    // Parse observations
+    d2_observation *obs = parse_obs_list(obs_list, n_obs);
+    if (!obs) return NULL;
 
-    for (Py_ssize_t i = 0; i < n_obs; i++) {
-        PyObject *item = PyList_GetItem(obs_list, i);
-        if (!PyTuple_Check(item) && !PyDict_Check(item)) {
-            free(obs);
-            PyErr_SetString(PyExc_TypeError,
-                            "Each observation must be a tuple or dict");
-            return NULL;
-        }
-
-        if (PyTuple_Check(item)) {
-            Py_ssize_t tlen = PyTuple_Size(item);
-            if (tlen < 5) {
-                free(obs);
-                PyErr_SetString(PyExc_ValueError,
-                    "Observation tuple must have at least 5 elements: "
-                    "(mjd, ra_rad, dec_rad, vmag, site_int)");
-                return NULL;
-            }
-            obs[i].mjd  = PyFloat_AsDouble(PyTuple_GetItem(item, 0));
-            obs[i].ra   = PyFloat_AsDouble(PyTuple_GetItem(item, 1));
-            obs[i].dec  = PyFloat_AsDouble(PyTuple_GetItem(item, 2));
-            obs[i].vmag = PyFloat_AsDouble(PyTuple_GetItem(item, 3));
-            obs[i].site = (int)PyLong_AsLong(PyTuple_GetItem(item, 4));
-            if (tlen > 5)
-                obs[i].rmsRA = PyFloat_AsDouble(PyTuple_GetItem(item, 5));
-            if (tlen > 6)
-                obs[i].rmsDec = PyFloat_AsDouble(PyTuple_GetItem(item, 6));
-            if (tlen > 7)
-                obs[i].spacebased = (int)PyLong_AsLong(PyTuple_GetItem(item, 7));
-        } else {
-            PyObject *val;
-            val = PyDict_GetItemString(item, "mjd");
-            if (!val) { free(obs); PyErr_SetString(PyExc_KeyError, "mjd"); return NULL; }
-            obs[i].mjd = PyFloat_AsDouble(val);
-
-            val = PyDict_GetItemString(item, "ra");
-            if (!val) { free(obs); PyErr_SetString(PyExc_KeyError, "ra"); return NULL; }
-            obs[i].ra = PyFloat_AsDouble(val);
-
-            val = PyDict_GetItemString(item, "dec");
-            if (!val) { free(obs); PyErr_SetString(PyExc_KeyError, "dec"); return NULL; }
-            obs[i].dec = PyFloat_AsDouble(val);
-
-            val = PyDict_GetItemString(item, "vmag");
-            obs[i].vmag = val ? PyFloat_AsDouble(val) : 0.0;
-
-            val = PyDict_GetItemString(item, "site");
-            if (!val) { free(obs); PyErr_SetString(PyExc_KeyError, "site"); return NULL; }
-            obs[i].site = (int)PyLong_AsLong(val);
-
-            val = PyDict_GetItemString(item, "rmsRA");
-            obs[i].rmsRA = val ? PyFloat_AsDouble(val) : 0.0;
-
-            val = PyDict_GetItemString(item, "rmsDec");
-            obs[i].rmsDec = val ? PyFloat_AsDouble(val) : 0.0;
-
-            val = PyDict_GetItemString(item, "spacebased");
-            obs[i].spacebased = val ? (int)PyLong_AsLong(val) : 0;
-        }
-
-        if (PyErr_Occurred()) {
-            free(obs);
-            return NULL;
-        }
-    }
-
-    // Parse classes filter
-    int *class_indices = NULL;
+    // Parse classes filter (with bounds validation)
     int n_classes = 0;
-
-    if (classes_obj != Py_None && PyList_Check(classes_obj)) {
-        n_classes = (int)PyList_Size(classes_obj);
-        if (n_classes > 0) {
-            class_indices = (int *)malloc(n_classes * sizeof(int));
-            if (!class_indices) {
-                free(obs);
-                PyErr_NoMemory();
-                return NULL;
-            }
-            for (int i = 0; i < n_classes; i++) {
-                class_indices[i] = (int)PyLong_AsLong(PyList_GetItem(classes_obj, i));
-                if (PyErr_Occurred()) {
-                    free(obs);
-                    free(class_indices);
-                    return NULL;
-                }
-            }
-        }
+    int *class_indices = parse_class_filter(classes_obj, &n_classes);
+    if (PyErr_Occurred()) {
+        free(obs);
+        return NULL;
     }
 
     // Call the extended C scoring function
@@ -351,19 +314,12 @@ static PyObject *py_score_orbits(PyObject *self, PyObject *args) {
     if (class_indices) free(class_indices);
 
     if (ext.base.status != D2_OK) {
-        const char *msg;
-        switch (ext.base.status) {
-            case D2_ERR_INPUT:  msg = "Invalid input (need >=2 obs with motion and time span)"; break;
-            case D2_ERR_MEMORY: msg = "Memory allocation failed"; break;
-            case D2_ERR_NOINIT: msg = "Library not initialized"; break;
-            default:            msg = "Scoring error"; break;
-        }
         d2_free_result_ext(&ext);
-        PyErr_SetString(PyExc_RuntimeError, msg);
+        raise_scoring_error(ext.base.status);
         return NULL;
     }
 
-    // Build score lists (same as py_score)
+    // Build score lists
     PyObject *raw_list = PyList_New(D2CLASSES);
     PyObject *noid_list = PyList_New(D2CLASSES);
     if (!raw_list || !noid_list) {

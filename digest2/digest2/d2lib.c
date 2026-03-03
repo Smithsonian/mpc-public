@@ -223,8 +223,14 @@ static void lib_restore_classes(lib_class_save *save) {
     memcpy(classCompute, save->save_classCompute, sizeof(classCompute));
 }
 
-static void lib_setup_classes(int *classes, int n_classes) {
+static int lib_setup_classes(int *classes, int n_classes) {
     if (classes != NULL && n_classes > 0) {
+        if (n_classes > D2CLASSES)
+            return D2_ERR_INPUT;
+        for (int i = 0; i < n_classes; i++) {
+            if (classes[i] < 0 || classes[i] >= D2CLASSES)
+                return D2_ERR_INPUT;
+        }
         nClassCompute = n_classes;
         for (int i = 0; i < n_classes; i++) {
             classCompute[i] = classes[i];
@@ -235,6 +241,7 @@ static void lib_setup_classes(int *classes, int n_classes) {
             classCompute[i] = i;
         }
     }
+    return D2_OK;
 }
 
 // Allocate and populate a tracklet from input observations.
@@ -367,7 +374,11 @@ d2_result d2_score_observations(d2_observation *obs, int n_obs,
 
     lib_class_save save;
     lib_save_classes(&save);
-    lib_setup_classes(classes, n_classes);
+    if (lib_setup_classes(classes, n_classes) != D2_OK) {
+        result.status = D2_ERR_INPUT;
+        lib_restore_classes(&save);
+        return result;
+    }
 
     int status;
     tracklet *tk = lib_alloc_tracklet(obs, n_obs, is_ades, &status);
@@ -404,7 +415,11 @@ d2_result_ext d2_score_observations_ext(d2_observation *obs, int n_obs,
 
     lib_class_save save;
     lib_save_classes(&save);
-    lib_setup_classes(classes, n_classes);
+    if (lib_setup_classes(classes, n_classes) != D2_OK) {
+        ext.base.status = D2_ERR_INPUT;
+        lib_restore_classes(&save);
+        return ext;
+    }
 
     int status;
     tracklet *tk = lib_alloc_tracklet(obs, n_obs, is_ades, &status);
