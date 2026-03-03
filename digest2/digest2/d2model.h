@@ -2,6 +2,9 @@
 //
 // Public domain.
 
+#ifndef D2MODEL_H
+#define D2MODEL_H
+
 // extents for model
 #define D2CLASSES 15
 #define QX 29
@@ -30,3 +33,5 @@ extern classtest isClass[D2CLASSES];
 _Bool qeihToBin(double q, double e, double i, double h, int bin[4]);
 _Bool qeiToBin(double q, double e, double i, int bin[3]);
 int hToBin(double h);
+
+#endif // D2MODEL_H

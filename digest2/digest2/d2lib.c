@@ -206,28 +206,24 @@ void d2_set_no_threshold(int flag) {
     noThreshold = flag ? 1 : 0;
 }
 
-d2_result d2_score_observations(d2_observation *obs, int n_obs,
-                                int *classes, int n_classes,
-                                int is_ades) {
-    d2_result result;
-    memset(&result, 0, sizeof(result));
-    result.n_classes = D2CLASSES;
+// --- Internal helpers for tracklet setup/teardown ---
 
-    if (!lib_initialized) {
-        result.status = D2_ERR_NOINIT;
-        return result;
-    }
-
-    if (n_obs < 2) {
-        result.status = D2_ERR_INPUT;
-        return result;
-    }
-
-    // Set up which classes to compute
-    int save_nClassCompute = nClassCompute;
+typedef struct {
+    int save_nClassCompute;
     int save_classCompute[D2CLASSES];
-    memcpy(save_classCompute, classCompute, sizeof(classCompute));
+} lib_class_save;
 
+static void lib_save_classes(lib_class_save *save) {
+    save->save_nClassCompute = nClassCompute;
+    memcpy(save->save_classCompute, classCompute, sizeof(classCompute));
+}
+
+static void lib_restore_classes(lib_class_save *save) {
+    nClassCompute = save->save_nClassCompute;
+    memcpy(classCompute, save->save_classCompute, sizeof(classCompute));
+}
+
+static void lib_setup_classes(int *classes, int n_classes) {
     if (classes != NULL && n_classes > 0) {
         nClassCompute = n_classes;
         for (int i = 0; i < n_classes; i++) {
@@ -239,42 +235,38 @@ d2_result d2_score_observations(d2_observation *obs, int n_obs,
             classCompute[i] = i;
         }
     }
+}
 
-    // Allocate a tracklet
+// Allocate and populate a tracklet from input observations.
+// Returns NULL on error (sets *status to the error code).
+static tracklet *lib_alloc_tracklet(d2_observation *obs, int n_obs,
+                                     int is_ades, int *status) {
     tracklet *tk = (tracklet *)calloc(1, sizeof(tracklet));
     if (!tk) {
-        nClassCompute = save_nClassCompute;
-        memcpy(classCompute, save_classCompute, sizeof(classCompute));
-        result.status = D2_ERR_MEMORY;
-        return result;
+        *status = D2_ERR_MEMORY;
+        return NULL;
     }
 
     tk->olist = (observation *)malloc(n_obs * sizeof(observation));
     if (!tk->olist) {
         free(tk);
-        nClassCompute = save_nClassCompute;
-        memcpy(classCompute, save_classCompute, sizeof(classCompute));
-        result.status = D2_ERR_MEMORY;
-        return result;
+        *status = D2_ERR_MEMORY;
+        return NULL;
     }
 
     tk->class = (perClass *)calloc(nClassCompute, sizeof(perClass));
     if (!tk->class) {
         free(tk->olist);
         free(tk);
-        nClassCompute = save_nClassCompute;
-        memcpy(classCompute, save_classCompute, sizeof(classCompute));
-        result.status = D2_ERR_MEMORY;
-        return result;
+        *status = D2_ERR_MEMORY;
+        return NULL;
     }
 
-    // Populate the tracklet from the input observations
     tk->status = UNPROC;
     tk->obsCap = n_obs;
     tk->lines = n_obs;
     tk->isAdes = is_ades ? 1 : 0;
 
-    // Set up random seed
     if (repeatable) {
         tk->rand64 = 3;
     } else {
@@ -294,12 +286,10 @@ d2_result d2_score_observations(d2_observation *obs, int n_obs,
         if (o->spacebased) {
             memcpy(o->earth_observer, obs[i].earth_obs, sizeof(o->earth_observer));
         }
-        // Convert RMS from arcsec to radians for storage
         o->rmsRA  = obs[i].rmsRA * arcsecrad;
         o->rmsDec = obs[i].rmsDec * arcsecrad;
     }
 
-    // Compute average magnitude (same logic as eval() in digest2.c)
     double msum = 0;
     int mcount = 0;
     for (int i = 0; i < n_obs; i++) {
@@ -310,47 +300,162 @@ d2_result d2_score_observations(d2_observation *obs, int n_obs,
     }
     tk->vmag = mcount > 0 ? msum / mcount : 21.;
 
-    // Validate: check that observations span some time and show motion
     observation *first = &tk->olist[0];
     observation *last  = &tk->olist[n_obs - 1];
 
     if (last->mjd < first->mjd) {
-        result.status = D2_ERR_INPUT;  // out of order
-        goto cleanup;
+        *status = D2_ERR_INPUT;
+        free(tk->class);
+        free(tk->olist);
+        free(tk);
+        return NULL;
     }
 
     if (first->ra == last->ra && first->dec == last->dec) {
-        result.status = D2_ERR_INPUT;  // no motion
-        goto cleanup;
+        *status = D2_ERR_INPUT;
+        free(tk->class);
+        free(tk->olist);
+        free(tk);
+        return NULL;
     }
 
-    // Call the core scoring function
-    score(tk);
+    *status = D2_OK;
+    return tk;
+}
 
-    // Extract results
-    result.rms = tk->rms;
-    result.rms_prime = tk->rmsPrime;
+static void lib_extract_scores(tracklet *tk, d2_result *result) {
+    result->rms = tk->rms;
+    result->rms_prime = tk->rmsPrime;
 
-    // Map computed class scores to the full D2CLASSES array
     for (int c = 0; c < nClassCompute; c++) {
         int ci = classCompute[c];
         if (ci >= 0 && ci < D2CLASSES) {
-            result.raw_scores[ci]  = tk->class[c].rawScore;
-            result.noid_scores[ci] = tk->class[c].noIdScore;
+            result->raw_scores[ci]  = tk->class[c].rawScore;
+            result->noid_scores[ci] = tk->class[c].noIdScore;
         }
     }
 
-    result.status = D2_OK;
+    result->status = D2_OK;
+}
 
-cleanup:
-    free(tk->class);
-    free(tk->olist);
-    free(tk);
+static void lib_free_tracklet(tracklet *tk) {
+    if (tk) {
+        free(tk->class);
+        free(tk->olist);
+        free(tk);
+    }
+}
 
-    nClassCompute = save_nClassCompute;
-    memcpy(classCompute, save_classCompute, sizeof(classCompute));
+// --- Public scoring API ---
+
+d2_result d2_score_observations(d2_observation *obs, int n_obs,
+                                int *classes, int n_classes,
+                                int is_ades) {
+    d2_result result;
+    memset(&result, 0, sizeof(result));
+    result.n_classes = D2CLASSES;
+
+    if (!lib_initialized) {
+        result.status = D2_ERR_NOINIT;
+        return result;
+    }
+
+    if (n_obs < 2) {
+        result.status = D2_ERR_INPUT;
+        return result;
+    }
+
+    lib_class_save save;
+    lib_save_classes(&save);
+    lib_setup_classes(classes, n_classes);
+
+    int status;
+    tracklet *tk = lib_alloc_tracklet(obs, n_obs, is_ades, &status);
+    if (!tk) {
+        result.status = status;
+        lib_restore_classes(&save);
+        return result;
+    }
+
+    score(tk);
+    lib_extract_scores(tk, &result);
+    lib_free_tracklet(tk);
+    lib_restore_classes(&save);
 
     return result;
+}
+
+d2_result_ext d2_score_observations_ext(d2_observation *obs, int n_obs,
+                                         int *classes, int n_classes,
+                                         int is_ades) {
+    d2_result_ext ext;
+    memset(&ext, 0, sizeof(ext));
+    ext.base.n_classes = D2CLASSES;
+
+    if (!lib_initialized) {
+        ext.base.status = D2_ERR_NOINIT;
+        return ext;
+    }
+
+    if (n_obs < 2) {
+        ext.base.status = D2_ERR_INPUT;
+        return ext;
+    }
+
+    lib_class_save save;
+    lib_save_classes(&save);
+    lib_setup_classes(classes, n_classes);
+
+    int status;
+    tracklet *tk = lib_alloc_tracklet(obs, n_obs, is_ades, &status);
+    if (!tk) {
+        ext.base.status = status;
+        lib_restore_classes(&save);
+        return ext;
+    }
+
+    // Allocate orbit buffer and attach to tracklet
+    d2_orbit_buffer *buf = (d2_orbit_buffer *)malloc(sizeof(d2_orbit_buffer));
+    if (!buf) {
+        lib_free_tracklet(tk);
+        ext.base.status = D2_ERR_MEMORY;
+        lib_restore_classes(&save);
+        return ext;
+    }
+    buf->capacity = 1024;
+    buf->count = 0;
+    buf->orbits = (d2_trial_orbit *)malloc(buf->capacity * sizeof(d2_trial_orbit));
+    if (!buf->orbits) {
+        free(buf);
+        lib_free_tracklet(tk);
+        ext.base.status = D2_ERR_MEMORY;
+        lib_restore_classes(&save);
+        return ext;
+    }
+    tk->orbit_buf = buf;
+
+    score(tk);
+    lib_extract_scores(tk, &ext.base);
+
+    // Transfer orbit data to result
+    ext.orbits = buf->orbits;
+    ext.n_orbits = buf->count;
+    buf->orbits = NULL;  // prevent double-free
+    free(buf);
+    tk->orbit_buf = NULL;
+
+    lib_free_tracklet(tk);
+    lib_restore_classes(&save);
+
+    return ext;
+}
+
+void d2_free_result_ext(d2_result_ext *result) {
+    if (result && result->orbits) {
+        free(result->orbits);
+        result->orbits = NULL;
+        result->n_orbits = 0;
+    }
 }
 
 int d2_parse_obscode(const char *code3) {

@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include "d2lib.h"    // for d2_trial_orbit, d2_orbit_buffer (orbit collection)
 #include "digest2.h"
 // near distance limit of .05 is kind of arbitrary, but seems to work.
 #define MIN_DISTANCE .05        // AU
@@ -234,6 +235,35 @@ _Bool tagAngle(tracklet *tk, double an) {
     int ii = bin[2];
     int ih = tk->hmag_bin;
 
+    // Collect trial orbit if buffer is active
+    if (tk->orbit_buf) {
+        d2_orbit_buffer *buf = tk->orbit_buf;
+        if (buf->count >= buf->capacity) {
+            int new_cap = buf->capacity * 2;
+            d2_trial_orbit *new_orbits = realloc(buf->orbits,
+                new_cap * sizeof(d2_trial_orbit));
+            if (new_orbits) {
+                buf->orbits = new_orbits;
+                buf->capacity = new_cap;
+            }
+        }
+        if (buf->count < buf->capacity) {
+            d2_trial_orbit *rec = &buf->orbits[buf->count];
+            rec->q = q;
+            rec->e = orbit_e;
+            rec->i = orbit_i;
+            rec->H = tk->hmag;
+            rec->d = tk->observer_object0_mag;
+            rec->an = an;
+            rec->iq = iq;
+            rec->ie = ie;
+            rec->ii = ii;
+            rec->ih = ih;
+            rec->new_tag = 0;
+            buf->count++;
+        }
+    }
+
     _Bool newTag = 0;
 
     for (int c = 0; c < nClassCompute; c++) {
@@ -254,6 +284,10 @@ _Bool tagAngle(tracklet *tk, double an) {
     if (newTag) {
         tk->dAnyTag = 1;
         tk->dTag[iq][ie][ii][ih] = 1;
+        // Mark the collected orbit as tagging a new bin
+        if (tk->orbit_buf && tk->orbit_buf->count > 0) {
+            tk->orbit_buf->orbits[tk->orbit_buf->count - 1].new_tag = 1;
+        }
     }
 
     return newTag;
