@@ -1,6 +1,6 @@
 """Dataclasses for digest2 classification results."""
 
-from dataclasses import dataclass, fields
+from dataclasses import dataclass, field, fields
 from typing import Optional, Tuple
 
 
@@ -94,6 +94,9 @@ class ClassificationResult:
     rms_prime: float
     designation: str = ""
     trial_orbits: Optional[Tuple[TrialOrbit, ...]] = None
+    _orbit_elements_cache: Optional[dict] = field(
+        default=None, init=False, repr=False, compare=False
+    )
 
     @property
     def top_class(self) -> str:
@@ -116,6 +119,9 @@ class ClassificationResult:
         """
         if self.trial_orbits is None:
             return None
+
+        if self._orbit_elements_cache is not None:
+            return self._orbit_elements_cache
 
         import numpy as np
 
@@ -145,4 +151,5 @@ class ClassificationResult:
             result["ii"][j] = orb.ii
             result["ih"][j] = orb.ih
             result["new_tag"][j] = orb.new_tag
+        object.__setattr__(self, "_orbit_elements_cache", result)
         return result
