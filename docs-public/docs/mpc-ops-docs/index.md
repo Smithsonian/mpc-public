@@ -6,7 +6,7 @@ This page provides an entry point for MPC documentation and services.
 
 - [FAQs](faqs.md)
 - [Observations](observations.md)
-- [Astrometry Guide](astrometry.md)
+- [Astrometry Guide](astrometry/index.md)
 - [Orbits](orbits.md)
 - [Designations](designations/index.md)
 - [Observatory and Program Codes](observatory-and-program-codes.md)
