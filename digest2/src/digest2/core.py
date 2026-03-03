@@ -16,7 +16,7 @@ from digest2.observation import (
     parse_ades_xml,
     parse_mpc80_file,
 )
-from digest2.result import ClassificationResult, Scores
+from digest2.result import ClassificationResult, Scores, TrialOrbit
 
 
 def _parse_config_file(config_path: str) -> dict:
@@ -163,6 +163,7 @@ class Digest2:
         observations: List[Observation],
         classes: Optional[List[str]] = None,
         is_ades: bool = False,
+        collect_orbits: bool = False,
     ) -> ClassificationResult:
         """Classify a single tracklet.
 
@@ -172,11 +173,14 @@ class Digest2:
                      e.g., ["NEO", "MC", "MB1"]
             is_ades: Whether these observations come from ADES format
                      (affects RMS computation).
+            collect_orbits: If True, collect individual trial orbit elements
+                (q, e, i, H) in the result's trial_orbits field.
 
         Returns:
             ClassificationResult with raw/noid Scores, rms, and rms_prime.
         """
-        return self._score(observations, classes=classes, is_ades=is_ades)
+        return self._score(observations, classes=classes, is_ades=is_ades,
+                           collect_orbits=collect_orbits)
 
     def _score(
         self,
@@ -184,6 +188,7 @@ class Digest2:
         classes: Optional[List[str]] = None,
         is_ades: bool = False,
         designation: str = "",
+        collect_orbits: bool = False,
     ) -> ClassificationResult:
         """Internal: score a tracklet with an optional designation."""
         self._check_open()
@@ -204,18 +209,27 @@ class Digest2:
             site_idx = _extension.parse_obscode(obs.obscode)
             obs_tuples.append(obs.to_tuple(site_idx))
 
-        raw_result = _extension.score(
-            obs_tuples,
-            class_indices,
-            1 if is_ades else 0,
-        )
+        if collect_orbits:
+            raw_result = _extension.score_orbits(
+                obs_tuples,
+                class_indices,
+                1 if is_ades else 0,
+            )
+        else:
+            raw_result = _extension.score(
+                obs_tuples,
+                class_indices,
+                1 if is_ades else 0,
+            )
 
-        return self._format_result(raw_result, designation=designation)
+        return self._format_result(raw_result, designation=designation,
+                                   collect_orbits=collect_orbits)
 
     def classify_file(
         self,
         filepath: str,
         classes: Optional[List[str]] = None,
+        collect_orbits: bool = False,
     ) -> List[ClassificationResult]:
         """Classify all tracklets in an observation file.
 
@@ -224,6 +238,7 @@ class Digest2:
         Args:
             filepath: Path to the observation file.
             classes: List of class abbreviations to compute (default: all).
+            collect_orbits: If True, collect trial orbit elements per tracklet.
 
         Returns:
             List of ClassificationResult objects, one per tracklet.
@@ -246,6 +261,7 @@ class Digest2:
                 result = self._score(
                     obs_list, classes=classes, is_ades=is_xml,
                     designation=desig.strip(),
+                    collect_orbits=collect_orbits,
                 )
                 results.append(result)
             except RuntimeError:
@@ -258,12 +274,14 @@ class Digest2:
         self,
         tracklets: List[List[Observation]],
         classes: Optional[List[str]] = None,
+        collect_orbits: bool = False,
     ) -> List[Optional[ClassificationResult]]:
         """Classify multiple tracklets.
 
         Args:
             tracklets: List of tracklets, each a list of Observations.
             classes: List of class abbreviations to compute.
+            collect_orbits: If True, collect trial orbit elements per tracklet.
 
         Returns:
             List of ClassificationResult objects (None for failed tracklets).
@@ -271,7 +289,8 @@ class Digest2:
         results = []
         for obs_list in tracklets:
             try:
-                result = self.classify_tracklet(obs_list, classes=classes)
+                result = self.classify_tracklet(obs_list, classes=classes,
+                                                collect_orbits=collect_orbits)
                 results.append(result)
             except RuntimeError:
                 results.append(None)
@@ -279,6 +298,7 @@ class Digest2:
 
     def _format_result(
         self, raw_result: dict, designation: str = "",
+        collect_orbits: bool = False,
     ) -> ClassificationResult:
         """Format raw C extension result into a ClassificationResult."""
         raw_scores = raw_result["raw_scores"]
@@ -291,12 +311,25 @@ class Digest2:
             raw_kwargs[abbr] = raw_scores[i]
             noid_kwargs[abbr] = noid_scores[i]
 
+        trial_orbits = None
+        if collect_orbits and "trial_orbits" in raw_result:
+            trial_orbits = tuple(
+                TrialOrbit(
+                    q=t[0], e=t[1], i=t[2], H=t[3],
+                    d=t[4], an=t[5],
+                    iq=t[6], ie=t[7], ii=t[8], ih=t[9],
+                    new_tag=bool(t[10]),
+                )
+                for t in raw_result["trial_orbits"]
+            )
+
         return ClassificationResult(
             raw=Scores(**raw_kwargs),
             noid=Scores(**noid_kwargs),
             rms=raw_result["rms"],
             rms_prime=raw_result["rms_prime"],
             designation=designation,
+            trial_orbits=trial_orbits,
         )
 
 
@@ -308,6 +341,7 @@ def classify(
     classes: Optional[List[str]] = None,
     repeatable: bool = True,
     no_threshold: bool = False,
+    collect_orbits: bool = False,
 ) -> Union[ClassificationResult, List[ClassificationResult]]:
     """One-shot classification. Accepts a filepath, tracklet, or batch.
 
@@ -322,6 +356,7 @@ def classify(
         classes: List of class abbreviations to compute.
         repeatable: Use fixed random seed for deterministic results.
         no_threshold: If True, disable per-observation RMS ceiling clamping.
+        collect_orbits: If True, collect trial orbit elements per tracklet.
 
     Returns:
         ClassificationResult for a single tracklet, or list of
@@ -335,7 +370,10 @@ def classify(
         no_threshold=no_threshold,
     ) as d2:
         if isinstance(input, (str, Path)):
-            return d2.classify_file(str(input), classes=classes)
+            return d2.classify_file(str(input), classes=classes,
+                                    collect_orbits=collect_orbits)
         if isinstance(input, list) and input and isinstance(input[0], list):
-            return d2.classify_batch(input, classes=classes)
-        return d2.classify_tracklet(input, classes=classes)
+            return d2.classify_batch(input, classes=classes,
+                                     collect_orbits=collect_orbits)
+        return d2.classify_tracklet(input, classes=classes,
+                                    collect_orbits=collect_orbits)
