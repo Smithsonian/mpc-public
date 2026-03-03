@@ -17,7 +17,6 @@ This guide covers observing minor planets, comets and natural satellites, and re
 - [Observer Target List](https://minorplanetcenter.net/whatsup)
 - [Observable-Object List Customizer](https://minorplanetcenter.net/iau/lists/Customize.html)
 - [NEOfixer](https://neofixer.arizona.edu/) (external)
-- [ESA Priority List](https://neo.ssa.esa.int/priority-list) (external)
 - [Follow-Up Observing Sites](https://minorplanetcenter.net/iau/MPEph/FollowUp.html)
 - [Minor Planet Ephemeris Service](https://minorplanetcenter.net/iau/MPEph/MPEph.html)
 
@@ -26,7 +25,6 @@ This guide covers observing minor planets, comets and natural satellites, and re
 
 - [ADES PSV Submission Form](https://minorplanetcenter.net/submit_psv)
 - [ADES XML Submission Form](https://minorplanetcenter.net/submit_xml)
-- [MPC1992 Observation Submission Form](https://minorplanetcenter.net/cgi-bin/feedback_submit_obs.cgi?S=Observation%20submission%20via%20website&D=O)
 - [cURL submission instructions](https://minorplanetcenter.net/iau/info/commandlinesubmissions.html) <!-- TODO: update link when migrated -->
 - E-mail submissions (MPC1992 only): [obs@cfa.harvard.edu](mailto:obs@cfa.harvard.edu)
 - [Report Cometary Activity](https://minorplanetcenter.net/mpcops/submissions/cometary/)
@@ -44,7 +42,6 @@ This guide covers observing minor planets, comets and natural satellites, and re
 
 - [ADES Data Submission page](https://www.minorplanetcenter.net/mpcops/documentation/ades/)
 - [ADES format description (PDF)](https://github.com/IAU-ADES/ADES-Master/blob/master/ADES_Description.pdf)
-- [MPC ADES webpage](https://minorplanetcenter.net/mpcops/documentation/ades/)
 - [MPC1992 observation format](https://minorplanetcenter.net/iau/info/ObsFormat.html) <!-- TODO: update link when migrated -->
 - [Indication of observational details (headers)](https://minorplanetcenter.net/iau/info/ObsDetails.html) <!-- TODO: update link when migrated -->
 - [Packed designation format](../designations/packed-designations.md)
