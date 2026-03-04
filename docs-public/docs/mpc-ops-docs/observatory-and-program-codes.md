@@ -8,9 +8,9 @@ Documentation related to observatory codes, program codes, and associated polici
 - [Observatory codes (interactive list)](https://data.minorplanetcenter.net/explorer/?tab=Lists&list=Observatory+Codes)
 - [Observatory codes (plain text)](https://minorplanetcenter.net/iau/lists/ObsCodes.html)
 - [Observatory codes (documentation)](https://minorplanetcenter.net/iau/info/ObservatoryCodes.html)
-- [How do I obtain an observatory code?](https://minorplanetcenter.net/iau/info/Astrometry.html#HowObsCode)
+- [How do I obtain an observatory code?](astrometry/observatory-codes.md#how-do-i-get-an-observatory-code)
 - [New Observatory Code Request Form](https://minorplanetcenter.net/new_obscode_request)
-- [How do I update my observatory code?](https://minorplanetcenter.net/iau/info/Astrometry.html#UpdateObsCode)
+- [How do I update my observatory code?](astrometry/observatory-codes.md#how-do-i-update-my-observatory-code-information)
 - [Roving Observers](https://minorplanetcenter.net/iau/info/RovingObs.html)
 - [Observatory codes API](apis/obscodes.md)
 
