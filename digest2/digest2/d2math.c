@@ -1278,8 +1278,7 @@ void score(tracklet *tk) {
     }
 }
 
-double *roving_position(double x, double y, double altitude){
-    static double result[3];
+void roving_position(double x, double y, double altitude, double result[3]){
     double a = 6378137.0;
     double b  = 6356752.314245;
     double numerator = pow(a*a*cos(y),2) + pow(b*b*sin(y),2);
@@ -1288,5 +1287,4 @@ double *roving_position(double x, double y, double altitude){
     result[0] = R * cos(x) * cos(y);
     result[1] = R * cos(x) * sin(y);
     result[2] = R * sin(x);
-    return result;
 }

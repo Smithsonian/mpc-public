@@ -201,7 +201,8 @@ _Bool parseMpcRoving(char *line, observation * obsp){
     if (errno)
         return 0;
 
-    double *pos = roving_position(x,y,z);
+    double pos[3];
+    roving_position(x,y,z, pos);
     x = pos[0];
     y = pos[1];
     z = pos[2];

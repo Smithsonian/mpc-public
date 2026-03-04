@@ -103,7 +103,8 @@ Notes:
 tracklet *resetValid(char *desig, observation *obsp) {
     tracklet *tk = resetInvalid();
     tk->status = UNPROC;
-    strcpy(tk->desig, desig);
+    strncpy(tk->desig, desig, sizeof(tk->desig) - 1);
+    tk->desig[sizeof(tk->desig) - 1] = '\0';
     memcpy(tk->olist, obsp, sizeof(observation));
     memset(tk->class, 0, nClassCompute * sizeof(perClass));
     return tk;
@@ -115,7 +116,7 @@ call for subsequent observations of a tracklet
 */
 void continueValid(tracklet *tk, char *desig, observation *obsp) {
     if (tk->lines == tk->obsCap) {
-        tk->obsCap += 10;
+        tk->obsCap = tk->obsCap < 8 ? 8 : tk->obsCap + tk->obsCap / 2;
         tk->olist = (observation *) realloc(tk->olist,
                                             tk->obsCap * sizeof(observation));
         if (!tk->olist)

@@ -227,7 +227,7 @@ _Bool parseMpcRoving(char *line, observation * obsp);
 void initGlobals(void);
 void score(tracklet * tk);
 double tkRand(tracklet * tk);
-double *roving_position(double x, double y, double altitiude);
+void roving_position(double x, double y, double altitude, double result[3]);
 
 // functions in d2ades.c
 #ifndef D2_NO_LIBXML
