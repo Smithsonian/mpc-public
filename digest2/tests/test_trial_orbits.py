@@ -208,6 +208,10 @@ class TestOrbitElements:
         assert elems["new_tag"].shape == (n,)
         assert elems["new_tag"].dtype == np.bool_
 
+        # Repeated access should reuse the cached arrays.
+        elems2 = result.orbit_elements
+        assert elems2 is elems
+
     def test_orbit_elements_none_when_no_orbits(
         self, model_path, obscodes_path, empty_config_path
     ):

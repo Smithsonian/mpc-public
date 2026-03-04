@@ -234,6 +234,7 @@ _Bool tagAngle(tracklet *tk, double an) {
     int ie = bin[1];
     int ii = bin[2];
     int ih = tk->hmag_bin;
+    int appended_idx = -1;
 
     // Collect trial orbit if buffer is active
     if (tk->orbit_buf) {
@@ -248,6 +249,7 @@ _Bool tagAngle(tracklet *tk, double an) {
             }
         }
         if (buf->count < buf->capacity) {
+            appended_idx = buf->count;
             d2_trial_orbit *rec = &buf->orbits[buf->count];
             rec->q = q;
             rec->e = orbit_e;
@@ -285,8 +287,8 @@ _Bool tagAngle(tracklet *tk, double an) {
         tk->dAnyTag = 1;
         tk->dTag[iq][ie][ii][ih] = 1;
         // Mark the collected orbit as tagging a new bin
-        if (tk->orbit_buf && tk->orbit_buf->count > 0) {
-            tk->orbit_buf->orbits[tk->orbit_buf->count - 1].new_tag = 1;
+        if (tk->orbit_buf && appended_idx >= 0) {
+            tk->orbit_buf->orbits[appended_idx].new_tag = 1;
         }
     }
 
