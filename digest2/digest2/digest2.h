@@ -55,6 +55,13 @@ typedef enum {
   SUCCESS
 } tkstatus;
 
+// Bin index for sparse bin tracking (performance optimization).
+// Instead of iterating all QX*EX*IX*HX bins in searchAngles, only the
+// bins tagged at the current distance are recorded and iterated.
+typedef struct {
+  int iq, ie, ii, ih;
+} binIndex;
+
 typedef struct {
   double rawScore;
   double noIdScore;
@@ -122,6 +129,12 @@ typedef struct {
   int hmag_bin;
   _Bool dAnyTag;
   _Bool dTag[QX][EX][IX][HX];
+
+  // Sparse bin tracking: records which bins were tagged at the current
+  // distance, so searchAngles iterates only those instead of all 45936.
+  binIndex *dTaggedBins;        // array of tagged bin indices
+  int nDTaggedBins;             // count of tagged bins this distance
+  int dTaggedBinsCap;           // allocated capacity
 
   double rmsPrime;
   _Bool isAdes;

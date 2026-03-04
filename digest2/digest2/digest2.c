@@ -82,11 +82,15 @@ tracklet *resetInvalid(void) {
     observation *saveOlist = tk->olist;
     uint64_t saveRand = tk->rand64;
     perClass *saveClass = tk->class;
+    binIndex *saveDTaggedBins = tk->dTaggedBins;
+    int saveDTaggedBinsCap = tk->dTaggedBinsCap;
     memset(tk, 0, sizeof(tracklet));
     tk->obsCap = saveObsCap;
     tk->olist = saveOlist;
     tk->rand64 = saveRand;
     tk->class = saveClass;
+    tk->dTaggedBins = saveDTaggedBins;
+    tk->dTaggedBinsCap = saveDTaggedBinsCap;
     tk->lines = 1;
     return tk;
 }
@@ -557,6 +561,10 @@ void setup(char *fnObs) {
         ring[th] = tk;
         tk->class = (perClass *) calloc(nClassCompute, sizeof(perClass));
         if (!tk->class)
+            fatal(msgMemory);
+        tk->dTaggedBinsCap = 64;
+        tk->dTaggedBins = (binIndex *) malloc(tk->dTaggedBinsCap * sizeof(binIndex));
+        if (!tk->dTaggedBins)
             fatal(msgMemory);
     }
 
