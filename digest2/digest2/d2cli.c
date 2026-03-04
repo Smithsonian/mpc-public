@@ -352,9 +352,9 @@ Digest2 help\n\
 \n\
 Digest2 uses statistical ranging techniques on short arc astrometry to\n\
 compute probabilities that observed objects are of various orbit classes.\n\
-Input is an observations file either in ADES XML or 80 column MPC-format,\n\
-with at least two observations per object. Output is orbit class scores for\n\
-each object.\n\
+Input is one or more observation files in ADES XML or 80 column MPC-format\n\
+(formats may be mixed), with at least two observations per object.\n\
+Output is orbit class scores for each object.\n\
 \n\
 Config file keywords:\n\
    headings\n\
@@ -412,9 +412,9 @@ Orbit classes:");
                 if (optind == argc && (modelSpec || ocdSpec)) {
                     return 0;
                 }
-                char *fnObs = argv[optind];
-                if (optind == argc - 1 && (fnObs[0] != '-' || fnObs[1] == 0)) {
-                    return fnObs;
+                if (optind < argc) {
+                    // one or more input files remain
+                    return argv[optind];
                 }
                 // else fall through
             default:

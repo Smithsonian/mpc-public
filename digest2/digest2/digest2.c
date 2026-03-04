@@ -367,7 +367,7 @@ void readAdes(char *fnObs) {
     pthread_mutex_lock(&mRing);
     while (ringFree < cores)
         pthread_cond_wait(&cDone, &mRing);
-
+    pthread_mutex_unlock(&mRing);
 }
 
 void readMPC80(char *fnObs) {
@@ -443,8 +443,7 @@ void readMPC80(char *fnObs) {
     pthread_mutex_lock(&mRing);
     while (ringFree < cores)
         pthread_cond_wait(&cDone, &mRing);
-
-
+    pthread_mutex_unlock(&mRing);
 }
 
 /* Performs some setup, common to both readMPC and readADES */
@@ -614,26 +613,27 @@ int main(int argc, char** argv) {
         return 0;
     }
 
-    //If a file is specified, read it and process it
-    if (fnObs != NULL) {
+    // Regular setup stuff (once, before processing any files)
+    setup(fnObs);
 
-        // Get the file extension
-        char* extension = strrchr(fnObs, '.');
-        if (extension != NULL) {
-            extension++; // Move the pointer to the character after '.'
-        }
+    // Process each input file.  getopt_long leaves optind pointing at
+    // the first non-option arg (the first filename).
+    extern int optind;
+    for (int fi = optind; fi < argc; fi++) {
+        fnObs = argv[fi];
 
-        // Regular setup stuff
-        setup(fnObs);
+        // Determine format from file extension
+        char *extension = strrchr(fnObs, '.');
+        if (extension != NULL)
+            extension++;
 
         _Bool xml = (extension != NULL && strcmp(extension, "xml") == 0);
 
-       if (xml) {
+        if (xml) {
             readAdes(fnObs);
         } else {
             readMPC80(fnObs);
         }
-
     }
 
     return 0;
