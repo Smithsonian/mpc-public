@@ -7,7 +7,9 @@ This page covers nightly observation coverage, discovery procedures, how credit 
 
 You should always supply at least two observations of each object on each night. If you are observing objects in dense starfields, you should plan your observing session with this recommendation in mind.
 
-If you are stacking images, try and ensure that you produce at least two stacks, remembering that the stacks have to be independent, so an image cannot be used in more than one stack. If you can produce only one stack, ensure that the observation is marked as a stack ("K" in column 14). If you produce more than one stack, mark the observations as stacked unless there is another note you wish to use. If you are observing at a site that uses codes to distinguish between different programs, the "K" should appear on the submitted observation, but will be replaced by the program code during processing.
+If you are stacking images, try and ensure that you produce at least two stacks, remembering that the stacks have to be independent, so an image cannot be used in more than one stack. 
+If you can produce only one stack, ensure that the observation is marked as a stack (for 80-column format this means a `K` in column 14, for ADES this means including a `<notes>K</notes>` field for each stacked observation). 
+If you produce more than one stack, mark the observations as stacked unless there is another note you wish to use. If you are observing at a site that uses codes to distinguish between different programs, the "K" should appear on the submitted observation, but will be replaced by the program code during processing.
 
 
 ## Two-nighter vs. single-nighter new objects
@@ -32,13 +34,27 @@ If you wish someone else to follow up your new discovery, you may use the [New O
 If someone does follow up for your new objects, you will get credit for the discovery even if you have obtained only one night's observations. However, there is nothing preventing your colleague from getting two nights on your new object and then reporting it to us as a new object. In such a case, credit will be given to your colleague. For this reason, you should not distribute observations of the new object and you should only send ephemerides to colleagues that you trust (see also [Who gets credit when single nighters are linked?](#who-gets-credit-when-single-nighters-are-linked)).
 
 
-## When should I use a discovery asterisk?
+## When should I mark a discovery?
 
-Discovery asterisks are placed in column 13 of the observation record to indicate the discovery observations of an unidentified object. It is permissible for there to be no discovery asterisk, in which case the MPC will assume that the chronologically earliest observation is to be treated as the discovery observation. There must not be more than one discovery observation per object (a common error is to put a discovery asterisk on every observation on the discovery night).
 
-Discovery asterisks on submitted observations must only appear on observations with observer-assigned temporary designations. They must never appear on submitted observations with MPC-assigned designations.
+Discovery asterisks are placed in column 13 of 
 
-There can be more than one discovery asterisk for objects that have not yet been numbered. The MPC will assign the final asterisk when the number and the discovery credits are assigned. See also this [Editorial Note](https://minorplanetcenter.net/mpec/K10/K10U20.html) for a more extensive explanation.
+Submitters may mark an observation record to indicate the discovery observations of an unidentified object. 
+
+In 80-column format, the discovery asterisk is placed in column 13 of the observation record. 
+In ADES format, the discovery asterisk is indicated by including a `<disc>*</disc>` field for the discovery observation.
+
+It is permissible for there to be no discovery asterisk/field, in which case the MPC will assume that 
+the chronologically earliest observation is to be treated as the discovery observation. 
+There must not be more than one discovery observation per object 
+(a common error is to mark every observation on the discovery night).
+
+Discovery asterisks/fields on submitted observations must only appear on observations with observer-assigned temporary designations. 
+They must never appear on submitted observations with MPC-assigned designations.
+
+There can be more than one discovery asterisk/field for objects that have not yet been numbered. 
+The MPC will assign the final asterisk/field when the number and the discovery credits are assigned. 
+See also this [Editorial Note](https://minorplanetcenter.net/mpec/K10/K10U20.html) for a more extensive explanation.
 
 The information is published in the monthly [_Minor Planet Circulars (MPCs)_](https://minorplanetcenter.net/iau/services/MPCServices.html). <!-- TODO: update link when migrated -->
 
