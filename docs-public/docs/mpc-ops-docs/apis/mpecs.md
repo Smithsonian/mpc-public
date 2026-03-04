@@ -28,12 +28,12 @@ The API accepts a JSON object with the following fields:
 
 Up to 1,000 MPECs may be returned for each search term, depending on the number of matching MPECs. Search terms are case-insensitive, and may be any of the following:
 
-1. **Object Designations** - Any designation resolvable by the [Designation Identifier API](query-identifier.md). For now, this is only resolved into the "Unpacked Primary" and "Secondary" "Provisional Designations". Unpacked designations are the most common title format of MPECs. For example, searching by any identifier below will only return the MPEC titled [1992 BB](https://www.minorplanetcenter.net/mpec/J93/J93S13.html). Future versions of this search tool will be able to identify MPECs where a given object is mentioned among others, in the title or within the MPEC text itself. For instance, in Daily Orbit Updates or identifications MPECs ([example](https://www.minorplanetcenter.net/mpec/K14/K14A37.html)). 
+1. **Object Designations** - Any designation resolvable by the [Designation Identifier API](query-identifier.md). For example, the following search terms will each return the MPEC titled [1992 BB](https://www.minorplanetcenter.net/mpec/J93/J93S13.html), as these aliases all resolve to the same object:
    ```
    1992 BB, J92B00B, 6564, Asher
    ```
 
-2. **MPEC Names**
+2. **MPEC Names** - The "full name" of an MPEC. For example:
    ```
    1993-S13  (unpacked) 
    J93S13    (packed)
@@ -44,6 +44,9 @@ Up to 1,000 MPECs may be returned for each search term, depending on the number 
    1992%     (all MPECs starting with "1992")
    %=%       (most identification MPECs)
    ```
+
+!!! note
+    Currently, object designations are resolved into the "Unpacked Primary" and "Secondary" "Provisional Designations". See the documentation on [designations](../designations/provisional-designations.md) and [identifications](../identifications/index.md) for more information. Unpacked designations are the most common title format of MPECs that refer to specific objects. Future versions of this search tool will be able to identify MPECs where a given object is mentioned among others, in the title or within the MPEC text itself. For instance, in Daily Orbit Updates or identifications MPECs. For example, [MPEC 2014-A37](https://www.minorplanetcenter.net/mpec/K14/K14A37.html). 
 
 ## Response Format
 
@@ -66,6 +69,8 @@ Each MPEC result is enumerated with the following values. Note that if the MPEC 
 | `link` | String | URL to the MPEC                                                                                     |
 
 ## Examples
+
+Note that a Python Notebook tutorial is also available [here](../../../tutorials/notebooks/mpc_tutorial_api_mpecs/).
 
 ### Python
 
@@ -170,5 +175,6 @@ curl -X GET -H "Accept: application/json" \
 
 ## See Also
 
-- [Recent MPECs](https://minorplanetcenter.net/mpec/RecentMPECs.html)
+- [MPEC API Tutorial](../../../tutorials/notebooks/mpc_tutorial_api_mpecs/)
 - [MPEC Search Tool](https://minorplanetcenter.net/mpcops/mpecs/)
+- [Recent MPECs](https://minorplanetcenter.net/mpec/RecentMPECs.html)
