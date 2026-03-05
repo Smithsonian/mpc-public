@@ -13,7 +13,7 @@
 //#include <stdbool.h>
 
 char msgVersion[] =
-        "Digest2 version v1.0.0\n";
+        "Digest2 version v2.5.0\n";
 char msgCopyright[] = "Public domain.";
 
 // stuff used for parsing command line
@@ -85,11 +85,13 @@ char msgLimitLimit[] = "--limit value must be in range [1,100]: %s\n";
 char msgLimitClassNotConfig[] = "--limit orbit class not configured\n";
 char msgLimitScoreNotConfig[] = "--limit score not configured\n";
 char msgUsage[] = "\
-Usage: digest2 [options] <obs file>    score observations in file\n\
+Usage: digest2 [options] <obs file> [obs file2 ...]   score observations\n\
        digest2 [options] -             score observations from stdin\n\
        digest2 -m <binary model file>  generate binary model from CSV\n\
        digest2 -h or --help            display help and quick reference\n\
        digest2 -v or --version         display program version and model date\n\
+\n\
+Multiple input files may be given; formats (.obs, .xml) may be mixed.\n\
 \n\
 Options:\n\
        -c or --config <config file>\n\

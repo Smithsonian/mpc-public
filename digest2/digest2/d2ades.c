@@ -5,6 +5,9 @@
  * @Return tracklet -- the tracklet
  */
 
+// Required for strptime() and timegm() declarations on glibc (e.g. RHEL)
+#define _GNU_SOURCE
+
 #include <libxml/tree.h>
 #include <libxml/parser.h>
 #include <libxml/xpath.h>
