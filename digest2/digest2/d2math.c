@@ -285,7 +285,20 @@ _Bool tagAngle(tracklet *tk, double an) {
 
     if (newTag) {
         tk->dAnyTag = 1;
-        tk->dTag[iq][ie][ii][ih] = 1;
+        if (!tk->dTag[iq][ie][ii][ih]) {
+            tk->dTag[iq][ie][ii][ih] = 1;
+            // Record this bin in sparse list for efficient iteration
+            if (tk->nDTaggedBins >= tk->dTaggedBinsCap) {
+                tk->dTaggedBinsCap *= 2;
+                tk->dTaggedBins = realloc(tk->dTaggedBins,
+                    tk->dTaggedBinsCap * sizeof(binIndex));
+            }
+            binIndex *bi = &tk->dTaggedBins[tk->nDTaggedBins++];
+            bi->iq = iq;
+            bi->ie = ie;
+            bi->ii = ii;
+            bi->ih = ih;
+        }
         // Mark the collected orbit as tagging a new bin
         if (tk->orbit_buf && appended_idx >= 0) {
             tk->orbit_buf->orbits[appended_idx].new_tag = 1;
@@ -339,6 +352,7 @@ void aRange(tracklet *tk, double ang1, double ang2, int age) {
 
 void clearDTags(tracklet *tk) {
     memset(tk->dTag, 0, sizeof(tk->dTag));
+    tk->nDTaggedBins = 0;
     int c = 0;
     perClass *cl = tk->class;
     do {
@@ -501,6 +515,19 @@ _Bool solveAngleRange(tracklet *tk, double *ang1, double *ang2) {
     return 1;
 }
 
+// Compare binIndex entries in coordinate order (iq, ie, ii, ih) to match
+// the nested-loop iteration order of the original searchAngles.
+// This ensures floating-point sums are accumulated in the same order,
+// producing bit-identical scores despite sparse iteration.
+static int compareBinIndex(const void *a, const void *b) {
+    const binIndex *ba = (const binIndex *)a;
+    const binIndex *bb = (const binIndex *)b;
+    if (ba->iq != bb->iq) return ba->iq - bb->iq;
+    if (ba->ie != bb->ie) return ba->ie - bb->ie;
+    if (ba->ii != bb->ii) return ba->ii - bb->ii;
+    return ba->ih - bb->ih;
+}
+
 _Bool searchAngles(tracklet *tk) {
     double ang1, ang2;
     if (!solveAngleRange(tk, &ang1, &ang2))
@@ -511,37 +538,47 @@ _Bool searchAngles(tracklet *tk) {
     if (!tk->dAnyTag)
         return 0;
 
+    // Sort tagged bins in coordinate order (iq, ie, ii, ih) to match the
+    // accumulation order of the original nested-loop iteration.
+    // This ensures floating-point sums are identical despite sparse iteration.
+    if (tk->nDTaggedBins > 1)
+        qsort(tk->dTaggedBins, tk->nDTaggedBins, sizeof(binIndex),
+              compareBinIndex);
+
     _Bool newTag = 0;
 
-    for (int iq = 0; iq < QX; iq++)
-        for (int ie = 0; ie < EX; ie++)
-            for (int ii = 0; ii < IX; ii++)
-                for (int ih = 0; ih < HX; ih++)
-                    if (tk->dTag[iq][ie][ii][ih]) {
-                        perClass *cl = tk->class;
-                        for (int c = 0; c < nClassCompute; c++, cl++) {
-                            if (cl->dInClass[iq][ie]
-                                [ii][ih] && !cl->tagInClass[iq][ie][ii][ih]) {
-                                newTag = 1;
-                                cl->tagInClass[iq][ie][ii][ih] = 1;
-                                cl->sumAllInClass +=
-                                        modelAllClass[classCompute[c]][iq][ie][ii][ih];
-                                cl->sumUnkInClass +=
-                                        modelUnkClass[classCompute[c]][iq][ie][ii][ih];
-                            }
-                            if (cl->dOutOfClass[iq]
-                                [ie][ii][ih] && !cl->tagOutOfClass[iq][ie][ii][ih]) {
-                                newTag = 1;
-                                cl->tagOutOfClass[iq][ie][ii][ih] = 1;
-                                cl->sumAllOutOfClass += (modelAllSS[iq][ie][ii][ih]
-                                                         - modelAllClass[classCompute[c]]
-                                                         [iq][ie][ii][ih]);
-                                cl->sumUnkOutOfClass +=
-                                        (modelUnkSS[iq][ie][ii][ih] -
-                                         modelUnkClass[classCompute[c]][iq][ie][ii][ih]);
-                            }
-                        }
-                    }
+    // Iterate over sparse list of tagged bins instead of all QX*EX*IX*HX.
+    for (int t = 0; t < tk->nDTaggedBins; t++) {
+        binIndex *bi = &tk->dTaggedBins[t];
+        int iq = bi->iq;
+        int ie = bi->ie;
+        int ii = bi->ii;
+        int ih = bi->ih;
+
+        perClass *cl = tk->class;
+        for (int c = 0; c < nClassCompute; c++, cl++) {
+            if (cl->dInClass[iq][ie]
+                [ii][ih] && !cl->tagInClass[iq][ie][ii][ih]) {
+                newTag = 1;
+                cl->tagInClass[iq][ie][ii][ih] = 1;
+                cl->sumAllInClass +=
+                        modelAllClass[classCompute[c]][iq][ie][ii][ih];
+                cl->sumUnkInClass +=
+                        modelUnkClass[classCompute[c]][iq][ie][ii][ih];
+            }
+            if (cl->dOutOfClass[iq]
+                [ie][ii][ih] && !cl->tagOutOfClass[iq][ie][ii][ih]) {
+                newTag = 1;
+                cl->tagOutOfClass[iq][ie][ii][ih] = 1;
+                cl->sumAllOutOfClass += (modelAllSS[iq][ie][ii][ih]
+                                         - modelAllClass[classCompute[c]]
+                                         [iq][ie][ii][ih]);
+                cl->sumUnkOutOfClass +=
+                        (modelUnkSS[iq][ie][ii][ih] -
+                         modelUnkClass[classCompute[c]][iq][ie][ii][ih]);
+            }
+        }
+    }
 
     return newTag;
 }
@@ -1278,8 +1315,7 @@ void score(tracklet *tk) {
     }
 }
 
-double *roving_position(double x, double y, double altitude){
-    static double result[3];
+void roving_position(double x, double y, double altitude, double result[3]){
     double a = 6378137.0;
     double b  = 6356752.314245;
     double numerator = pow(a*a*cos(y),2) + pow(b*b*sin(y),2);
@@ -1288,5 +1324,4 @@ double *roving_position(double x, double y, double altitude){
     result[0] = R * cos(x) * cos(y);
     result[1] = R * cos(x) * sin(y);
     result[2] = R * sin(x);
-    return result;
 }

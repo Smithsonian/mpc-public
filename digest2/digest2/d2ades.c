@@ -5,6 +5,9 @@
  * @Return tracklet -- the tracklet
  */
 
+// Required for strptime() and timegm() declarations on glibc (e.g. RHEL)
+#define _GNU_SOURCE
+
 #include <libxml/tree.h>
 #include <libxml/parser.h>
 #include <libxml/xpath.h>
@@ -15,6 +18,42 @@
 #include "d2ades.h"
 #include <time.h>
 #include <math.h>
+
+/**
+    free_optical - free all xmlNodeGetContent-allocated fields and the struct
+*/
+static void free_optical(opticalPtr opt) {
+    if (!opt) return;
+    xmlFree(opt->provID);
+    xmlFree(opt->trkSub);
+    xmlFree(opt->obsID);
+    xmlFree(opt->trkID);
+    xmlFree(opt->mode);
+    xmlFree(opt->stn);
+    xmlFree(opt->obsTime);
+    xmlFree(opt->ra);
+    xmlFree(opt->dec);
+    xmlFree(opt->rmsRA);
+    xmlFree(opt->rmsDec);
+    xmlFree(opt->astCat);
+    xmlFree(opt->mag);
+    xmlFree(opt->rmsMag);
+    xmlFree(opt->band);
+    xmlFree(opt->logSNR);
+    xmlFree(opt->seeing);
+    xmlFree(opt->exp);
+    xmlFree(opt->subFmt);
+    xmlFree(opt->sys);
+    xmlFree(opt->pos1);
+    xmlFree(opt->pos2);
+    xmlFree(opt->pos3);
+    xmlFree(opt->ref);
+    xmlFree(opt->ctr);
+    xmlFree(opt->precTime);
+    xmlFree(opt->precRA);
+    xmlFree(opt->precDec);
+    free(opt);
+}
 
 /**
     parse_optical - function to parse the optical elements in an XML document
@@ -44,7 +83,7 @@ static opticalPtr parse_optical(xmlNodePtr cur) {
         if ((!xmlStrcmp(cur->name, (const xmlChar *) "trkID"))) {
             ret->trkID = xmlNodeGetContent(cur);
             int numToRemove = 3;
-            int trkIDLen = strlen(ret->trkID);
+            int trkIDLen = xmlStrlen(ret->trkID);
             if (trkIDLen > numToRemove) {
                 memmove(ret->trkID, ret->trkID + numToRemove,
                         trkIDLen - numToRemove + 1); // +1 to include the null terminator
@@ -179,7 +218,8 @@ _Bool processOptical(opticalPtr optical, observation *obsp) {
 
         if (isRoving){
 
-            double *pos = roving_position(x,y,z);
+            double pos[3];
+            roving_position(x,y,z, pos);
             x = pos[0];
             y = pos[1];
             z = pos[2];
@@ -240,6 +280,7 @@ tracklet *parse_nodes(xmlXPathObjectPtr optical_nodes) {
             tk = resetInvalid();
             tk->isAdes = 1;
         }
+        free_optical(opt);
         i++;
 
     }
@@ -262,7 +303,7 @@ tracklet *parse_ades(const char *filepath) {
     }
 
     xmlXPathContextPtr xpathCtx = xmlXPathNewContext(doc);
-    xmlXPathObjectPtr optical_nodes = xmlXPathEvalExpression("//optical", xpathCtx);
+    xmlXPathObjectPtr optical_nodes = xmlXPathEvalExpression((const xmlChar *)"//optical", xpathCtx);
 
     if (optical_nodes == NULL) {
         fprintf(stderr, "Error: Nothing found...");

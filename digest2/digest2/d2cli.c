@@ -13,7 +13,7 @@
 //#include <stdbool.h>
 
 char msgVersion[] =
-        "Digest2 version v1.0.0\n";
+        "Digest2 version v2.5.0\n";
 char msgCopyright[] = "Public domain.";
 
 // stuff used for parsing command line
@@ -85,11 +85,13 @@ char msgLimitLimit[] = "--limit value must be in range [1,100]: %s\n";
 char msgLimitClassNotConfig[] = "--limit orbit class not configured\n";
 char msgLimitScoreNotConfig[] = "--limit score not configured\n";
 char msgUsage[] = "\
-Usage: digest2 [options] <obs file>    score observations in file\n\
+Usage: digest2 [options] <obs file> [obs file2 ...]   score observations\n\
        digest2 [options] -             score observations from stdin\n\
        digest2 -m <binary model file>  generate binary model from CSV\n\
        digest2 -h or --help            display help and quick reference\n\
        digest2 -v or --version         display program version and model date\n\
+\n\
+Multiple input files may be given; formats (.obs, .xml) may be mixed.\n\
 \n\
 Options:\n\
        -c or --config <config file>\n\
@@ -352,9 +354,9 @@ Digest2 help\n\
 \n\
 Digest2 uses statistical ranging techniques on short arc astrometry to\n\
 compute probabilities that observed objects are of various orbit classes.\n\
-Input is an observations file either in ADES XML or 80 column MPC-format,\n\
-with at least two observations per object. Output is orbit class scores for\n\
-each object.\n\
+Input is one or more observation files in ADES XML or 80 column MPC-format\n\
+(formats may be mixed), with at least two observations per object.\n\
+Output is orbit class scores for each object.\n\
 \n\
 Config file keywords:\n\
    headings\n\
@@ -412,9 +414,9 @@ Orbit classes:");
                 if (optind == argc && (modelSpec || ocdSpec)) {
                     return 0;
                 }
-                char *fnObs = argv[optind];
-                if (optind == argc - 1 && (fnObs[0] != '-' || fnObs[1] == 0)) {
-                    return fnObs;
+                if (optind < argc) {
+                    // one or more input files remain
+                    return argv[optind];
                 }
                 // else fall through
             default:
