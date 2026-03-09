@@ -131,6 +131,8 @@ typedef struct {
   perClass *class;              // array, extent = nClassesComputed
   int *classFilter;             // per-tracklet class indices (NULL = use globals)
   int nClassFilter;             // number of entries in classFilter
+  char *outputBuf;              // per-tracklet formatted output buffer
+  int outputBufSize;            // allocated size of outputBuf
 } tracklet;
 
 typedef struct {

@@ -19,30 +19,22 @@ See external file README for additional information.
 //-----------------------------------------------------------------------------
 
 int cores;
-tracklet *stage;                // staging for tracklet to be scored
 tracklet **ring;                // ring data structure
 int ringFree;                   // number of free trackets
 int ringNext;                   // index of next free tracklet
 
+// bounded work queue for true parallel scoring
+tracklet **workQueue;
+int wqHead, wqTail, wqCount, wqCap;
 
-// deadlock avoidance:
-// a thread holding one never asks for the other.
-pthread_mutex_t mStage = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t mQueue = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t mRing = PTHREAD_MUTEX_INITIALIZER;
 
-// signaled by main thread when data is staged.
-// mutex: mStage
-// pre-condition:  stage == 0
-// while locked:  set stage
-// post-condition:  stage non-zero
-pthread_cond_t cReady = PTHREAD_COND_INITIALIZER;
+// signaled when work is available in the queue
+pthread_cond_t cWorkAvail = PTHREAD_COND_INITIALIZER;
 
-// signaled by scoring thread when it begins work.
-// mutex: mStage
-// pre-condition:  stage non-zero
-// while locked:  zero stage
-// post-condition:  stage == 0
-pthread_cond_t cFree = PTHREAD_COND_INITIALIZER;
+// signaled when a slot opens in the queue
+pthread_cond_t cSlotAvail = PTHREAD_COND_INITIALIZER;
 
 // signaled by scoring thread when it returns a token to the ring
 // mutex: mRing
@@ -55,8 +47,7 @@ pthread_cond_t cDone = PTHREAD_COND_INITIALIZER;
 // can be shared by threads.
 
 site siteTable[obscodeNamespaceSize];
-int outputLineSize;
-char *outputLine;
+int outputLineSize;  // computed once in setup(), used for per-tracklet buffer allocation
 
 /* resetInvalid
 
@@ -82,11 +73,15 @@ tracklet *resetInvalid(void) {
     observation *saveOlist = tk->olist;
     uint64_t saveRand = tk->rand64;
     perClass *saveClass = tk->class;
+    char *saveOutputBuf = tk->outputBuf;
+    int saveOutputBufSize = tk->outputBufSize;
     memset(tk, 0, sizeof(tracklet));
     tk->obsCap = saveObsCap;
     tk->olist = saveOlist;
     tk->rand64 = saveRand;
     tk->class = saveClass;
+    tk->outputBuf = saveOutputBuf;
+    tk->outputBufSize = saveOutputBufSize;
     tk->lines = 1;
     return tk;
 }
@@ -131,36 +126,35 @@ void continueInvalid(tracklet *tk) {
 }
 
 void fmtScores(tracklet *tk) {
+    char *buf = tk->outputBuf;
+    int bufSize = tk->outputBufSize;
     // test any --limit
     perClass *cl;
     if (limitSpec) {
         cl = tk->class + limitClass;
         if ((int) ((limitRaw ? cl->rawScore : cl->noIdScore) + .5) < limit) {
             // no output if below limit
-            *outputLine = 0;
+            *buf = 0;
             return;
         }
     }
     // build line for atomic write and print results.
     int len = 0;
-    outputLineSize = outputLineSize + 10;
     if (tk->isAdes) {
-        len = snprintf(outputLine, outputLineSize, "%s", tk->desig);
+        len = snprintf(buf, bufSize, "%s", tk->desig);
     } else {
-        len = snprintf(outputLine, outputLineSize, "%s", tk->desig + 5);
+        len = snprintf(buf, bufSize, "%s", tk->desig + 5);
     }
     if (rms) {
         // we expect 6 new bytes.  more than that means field overflow
-        if (snprintf
-                    (outputLine + len, outputLineSize - len, " %5.2f", tk->rms) != 6)
-            strcpy(outputLine + len, " **.**");
+        if (snprintf(buf + len, bufSize - len, " %5.2f", tk->rms) != 6)
+            strcpy(buf + len, " **.**");
         len += 6;
     }
     if (rmsPrime) {
         // we expect 6 new bytes.  more than that means field overflow
-        if (snprintf
-                    (outputLine + len, outputLineSize - len, " %5.2f", tk->rmsPrime) != 6)
-            strcpy(outputLine + len, " **.**");
+        if (snprintf(buf + len, bufSize - len, " %5.2f", tk->rmsPrime) != 6)
+            strcpy(buf + len, " **.**");
         len += 6;
     }
 
@@ -171,12 +165,10 @@ void fmtScores(tracklet *tk) {
             cl = tk->class + classColumn[c];
             if (raw)
                 len +=
-                        snprintf(outputLine + len,
-                                 outputLineSize - len, " %3.0f", cl->rawScore);
+                        snprintf(buf + len, bufSize - len, " %3.0f", cl->rawScore);
             if (noid)
                 len +=
-                        snprintf(outputLine + len,
-                                 outputLineSize - len, " %3.0f", cl->noIdScore);
+                        snprintf(buf + len, bufSize - len, " %3.0f", cl->noIdScore);
         }
         // then other possibilities
         for (c = 0; c < D2CLASSES; c++) {
@@ -189,12 +181,12 @@ void fmtScores(tracklet *tk) {
             double pScore = noid ? cl->noIdScore : cl->rawScore;
             if (pScore > .5)
                 len +=
-                        snprintf(outputLine + len,
-                                 outputLineSize - len, " (%s %.0f)", classAbbr[c], pScore);
+                        snprintf(buf + len, bufSize - len,
+                                 " (%s %.0f)", classAbbr[c], pScore);
             else if (pScore > 0)
                 len +=
-                        snprintf(outputLine + len,
-                                 outputLineSize - len, " (%s <1)", classAbbr[c]);
+                        snprintf(buf + len, bufSize - len,
+                                 " (%s <1)", classAbbr[c]);
 
         }
     } else {
@@ -202,26 +194,24 @@ void fmtScores(tracklet *tk) {
         for (c = 0, cl = tk->class; c < nClassCompute; c++, cl++) {
             if (raw)
                 len +=
-                        snprintf(outputLine + len,
-                                 outputLineSize - len, " %3.0f", cl->rawScore);
+                        snprintf(buf + len, bufSize - len, " %3.0f", cl->rawScore);
             if (noid)
                 len +=
-                        snprintf(outputLine + len,
-                                 outputLineSize - len, " %3.0f", cl->noIdScore);
+                        snprintf(buf + len, bufSize - len, " %3.0f", cl->noIdScore);
         }
     }
 }
 
 // ringAdd is called when a tracklet is completed.  it outputs a result
 // to stdout and recycles the tracklet struct by returning it to the ring.
-// note the global variable outputLine is a required input.
 void ringAdd(tracklet *tk) {
-    pthread_mutex_lock(&mRing);
-    // The formatting need to be in the mutex as outputLine is global
+    // format into per-tracklet buffer — no mutex needed
     fmtScores(tk);
-    // puts needs to be in mutex too because it is not thread safe
-    if (*outputLine)              // empty line means --limit
-        puts(outputLine);
+
+    pthread_mutex_lock(&mRing);
+    // puts is not thread safe, so protect it with the ring mutex
+    if (tk->outputBuf[0])
+        puts(tk->outputBuf);
     ring[(ringNext + ringFree) % cores] = tk;
     ringFree++;
     pthread_cond_signal(&cDone);
@@ -312,32 +302,28 @@ void eval(tracklet *tk) {
 
     tk->vmag = mcount > 0 ? msum / mcount : 21.;
 
-    // wait for stage to be free
-    pthread_mutex_lock(&mStage);
-    while (stage)
-        pthread_cond_wait(&cFree, &mStage);
-
-    // stage tk
-    stage = tk;
-
-    // precondition met for cReady
-    pthread_cond_signal(&cReady);
-    pthread_mutex_unlock(&mStage);
+    // enqueue onto work queue
+    pthread_mutex_lock(&mQueue);
+    while (wqCount == wqCap)
+        pthread_cond_wait(&cSlotAvail, &mQueue);
+    workQueue[wqTail] = tk;
+    wqTail = (wqTail + 1) % wqCap;
+    wqCount++;
+    pthread_cond_signal(&cWorkAvail);
+    pthread_mutex_unlock(&mQueue);
 }
 
 void *scoreStaged(void *id) {
     while (1) {
-        pthread_mutex_lock(&mStage);
-        while (!stage)
-            pthread_cond_wait(&cReady, &mStage);
+        pthread_mutex_lock(&mQueue);
+        while (wqCount == 0)
+            pthread_cond_wait(&cWorkAvail, &mQueue);
 
-        // process cReady
-        tracklet *tk = stage;
-        stage = NULL;
-
-        // pre-condition met for cFree
-        pthread_cond_signal(&cFree);
-        pthread_mutex_unlock(&mStage);
+        tracklet *tk = workQueue[wqHead];
+        wqHead = (wqHead + 1) % wqCap;
+        wqCount--;
+        pthread_cond_signal(&cSlotAvail);
+        pthread_mutex_unlock(&mQueue);
 
         // do math, not holding any mutex
         if (repeatable)
@@ -356,11 +342,11 @@ void readAdes(char *fnObs) {
 
     eval(tk);
 
-    // wait for that last job to start
-    pthread_mutex_lock(&mStage);
-    while (stage)
-        pthread_cond_wait(&cFree, &mStage);
-    pthread_mutex_unlock(&mStage);
+    // wait for work queue to drain
+    pthread_mutex_lock(&mQueue);
+    while (wqCount > 0)
+        pthread_cond_wait(&cSlotAvail, &mQueue);
+    pthread_mutex_unlock(&mQueue);
 
     // wait for all jobs to finish
     pthread_mutex_lock(&mRing);
@@ -432,11 +418,11 @@ void readMPC80(char *fnObs) {
     eval(tk);
     fclose(fobs);
 
-    // wait for that last job to start
-    pthread_mutex_lock(&mStage);
-    while (stage)
-        pthread_cond_wait(&cFree, &mStage);
-    pthread_mutex_unlock(&mStage);
+    // wait for work queue to drain
+    pthread_mutex_lock(&mQueue);
+    while (wqCount > 0)
+        pthread_cond_wait(&cSlotAvail, &mQueue);
+    pthread_mutex_unlock(&mQueue);
 
     // wait for all jobs to finish
     pthread_mutex_lock(&mRing);
@@ -522,6 +508,12 @@ void setup(char *fnObs) {
     if (!(ring = malloc(sizeof(tracklet *) * cores)))
         fatal(msgMemory);
 
+    // work queue setup
+    wqCap = cores;
+    wqHead = wqTail = wqCount = 0;
+    if (!(workQueue = malloc(sizeof(tracklet *) * wqCap)))
+        fatal(msgMemory);
+
     pthread_t *thPool;
     if (!(thPool = malloc(sizeof(pthread_t) * cores)))
         fatal(msgMemory);
@@ -591,10 +583,16 @@ void setup(char *fnObs) {
     outputLineSize = 13 + (nClassColumns) * 14;
     if (classPossible)
         outputLineSize += (D2CLASSES - nClassColumns) * 9;
+    outputLineSize += 16;  // safety margin
 
-    outputLine = malloc(outputLineSize);
-    if (!outputLine)
-        fatal(msgMemory);
+    // allocate per-tracklet output buffers
+    for (int th = 0; th < cores; th++) {
+        ring[th]->outputBufSize = outputLineSize;
+        ring[th]->outputBuf = malloc(outputLineSize);
+        if (!ring[th]->outputBuf)
+            fatal(msgMemory);
+        ring[th]->outputBuf[0] = 0;
+    }
 }
 
 /* main
