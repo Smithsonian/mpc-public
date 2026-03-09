@@ -122,6 +122,8 @@ typedef struct {
   int hmag_bin;
   _Bool dAnyTag;
   _Bool dTag[QX][EX][IX][HX];
+  int dTagList[512];            // flat indices of tagged bins for sparse clearing
+  int dTagCount;                // number of entries in dTagList
 
   double rmsPrime;
   _Bool isAdes;

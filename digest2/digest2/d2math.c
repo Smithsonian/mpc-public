@@ -32,6 +32,37 @@ double obsErr;
 regex_t rxObsErr;
 #endif
 
+// Lookup tables for fast pow() approximation in H magnitude computation
+#define POW_TABLE_SIZE 1024
+#define POW_TABLE_MAX 20.0
+static double pow063_table[POW_TABLE_SIZE + 1];
+static double pow122_table[POW_TABLE_SIZE + 1];
+
+static void initPowTables(void) {
+    double step = POW_TABLE_MAX / POW_TABLE_SIZE;
+    for (int i = 0; i <= POW_TABLE_SIZE; i++) {
+        double x = i * step;
+        pow063_table[i] = pow(x, 0.63);
+        pow122_table[i] = pow(x, 1.22);
+    }
+}
+
+static inline double fast_pow063(double x) {
+    if (x >= POW_TABLE_MAX) return pow(x, 0.63);
+    double idx = x * (POW_TABLE_SIZE / POW_TABLE_MAX);
+    int i = (int)idx;
+    double frac = idx - i;
+    return pow063_table[i] + frac * (pow063_table[i+1] - pow063_table[i]);
+}
+
+static inline double fast_pow122(double x) {
+    if (x >= POW_TABLE_MAX) return pow(x, 1.22);
+    double idx = x * (POW_TABLE_SIZE / POW_TABLE_MAX);
+    int i = (int)idx;
+    double frac = idx - i;
+    return pow122_table[i] + frac * (pow122_table[i+1] - pow122_table[i]);
+}
+
 void initGlobals(void) {
     // a little bit of one time setup
     K = .01720209895;
@@ -54,6 +85,7 @@ void initGlobals(void) {
     invLCGM = 1. / LCGM;
     LCGM--;
     obsErr = 1 * arcsecrad;
+    initPowTables();
 #ifndef D2_NO_REGEX
     assert(regcomp
                    (&rxObsErr, "^[ \t]*([^ \t=]*)[ \t]*=[ \t]*(.+)$", REG_EXTENDED) == 0);
@@ -287,7 +319,12 @@ _Bool tagAngle(tracklet *tk, double an) {
 
     if (newTag) {
         tk->dAnyTag = 1;
-        tk->dTag[iq][ie][ii][ih] = 1;
+        if (!tk->dTag[iq][ie][ii][ih]) {
+            tk->dTag[iq][ie][ii][ih] = 1;
+            if (tk->dTagCount < 512)
+                tk->dTagList[tk->dTagCount++] =
+                    ((iq * EX + ie) * IX + ii) * HX + ih;
+        }
         // Mark the collected orbit as tagging a new bin
         if (tk->orbit_buf && appended_idx >= 0) {
             tk->orbit_buf->orbits[appended_idx].new_tag = 1;
@@ -340,16 +377,31 @@ void aRange(tracklet *tk, double ang1, double ang2, int age) {
 }
 
 void clearDTags(tracklet *tk) {
-    memset(tk->dTag, 0, sizeof(tk->dTag));
     int _nCC = tk->classFilter ? tk->nClassFilter : nClassCompute;
-    int c = 0;
-    perClass *cl = tk->class;
-    do {
-        memset(cl->dInClass, 0, sizeof(cl->dInClass));
-        memset(cl->dOutOfClass, 0, sizeof(cl->dOutOfClass));
-        cl++;
-        c++;
-    } while (c < _nCC);
+    if (tk->dTagCount >= 512) {
+        // Overflow: fall back to full memset
+        memset(tk->dTag, 0, sizeof(tk->dTag));
+        perClass *cl = tk->class;
+        for (int c = 0; c < _nCC; c++, cl++) {
+            memset(cl->dInClass, 0, sizeof(cl->dInClass));
+            memset(cl->dOutOfClass, 0, sizeof(cl->dOutOfClass));
+        }
+    } else {
+        for (int t = 0; t < tk->dTagCount; t++) {
+            int idx = tk->dTagList[t];
+            int ih = idx % HX; idx /= HX;
+            int ii = idx % IX;  idx /= IX;
+            int ie = idx % EX;
+            int iq = idx / EX;
+            tk->dTag[iq][ie][ii][ih] = 0;
+            perClass *cl = tk->class;
+            for (int c = 0; c < _nCC; c++, cl++) {
+                cl->dInClass[iq][ie][ii][ih] = 0;
+                cl->dOutOfClass[iq][ie][ii][ih] = 0;
+            }
+        }
+    }
+    tk->dTagCount = 0;
 }
 
 void updateRMSValues(double *rmsRA, double *rmsDec, double *errorFromConfig) {
@@ -452,8 +504,8 @@ void setupDistanceDependentVectors(tracklet *tk, double d) {
 
     if (cospsi > -.9999) {
         tanhalf = sqrt(1. - cospsi * cospsi) / (1. + cospsi);
-        phi1 = exp(-3.33 * pow(tanhalf, 0.63));
-        phi2 = exp(-1.87 * pow(tanhalf, 1.22));
+        phi1 = exp(-3.33 * fast_pow063(tanhalf));
+        phi2 = exp(-1.87 * fast_pow122(tanhalf));
         tk->hmag = tk->vmag - 5. * log10(rdelta)
                    + 2.5 * log10(.85 * phi1 + .15 * phi2);
     } else
@@ -518,35 +570,69 @@ _Bool searchAngles(tracklet *tk) {
     int _nCC = tk->classFilter ? tk->nClassFilter : nClassCompute;
     int *_cC = tk->classFilter ? tk->classFilter : classCompute;
 
-    for (int iq = 0; iq < QX; iq++)
-        for (int ie = 0; ie < EX; ie++)
-            for (int ii = 0; ii < IX; ii++)
-                for (int ih = 0; ih < HX; ih++)
-                    if (tk->dTag[iq][ie][ii][ih]) {
-                        perClass *cl = tk->class;
-                        for (int c = 0; c < _nCC; c++, cl++) {
-                            if (cl->dInClass[iq][ie]
-                                [ii][ih] && !cl->tagInClass[iq][ie][ii][ih]) {
-                                newTag = 1;
-                                cl->tagInClass[iq][ie][ii][ih] = 1;
-                                cl->sumAllInClass +=
-                                        modelAllClass[_cC[c]][iq][ie][ii][ih];
-                                cl->sumUnkInClass +=
-                                        modelUnkClass[_cC[c]][iq][ie][ii][ih];
-                            }
-                            if (cl->dOutOfClass[iq]
-                                [ie][ii][ih] && !cl->tagOutOfClass[iq][ie][ii][ih]) {
-                                newTag = 1;
-                                cl->tagOutOfClass[iq][ie][ii][ih] = 1;
-                                cl->sumAllOutOfClass += (modelAllSS[iq][ie][ii][ih]
-                                                         - modelAllClass[_cC[c]]
-                                                         [iq][ie][ii][ih]);
-                                cl->sumUnkOutOfClass +=
-                                        (modelUnkSS[iq][ie][ii][ih] -
-                                         modelUnkClass[_cC[c]][iq][ie][ii][ih]);
+    if (tk->dTagCount >= 512) {
+        // Overflow: fall back to dense scan
+        for (int iq = 0; iq < QX; iq++)
+            for (int ie = 0; ie < EX; ie++)
+                for (int ii = 0; ii < IX; ii++)
+                    for (int ih = 0; ih < HX; ih++)
+                        if (tk->dTag[iq][ie][ii][ih]) {
+                            perClass *cl = tk->class;
+                            for (int c = 0; c < _nCC; c++, cl++) {
+                                if (cl->dInClass[iq][ie][ii][ih]
+                                    && !cl->tagInClass[iq][ie][ii][ih]) {
+                                    newTag = 1;
+                                    cl->tagInClass[iq][ie][ii][ih] = 1;
+                                    cl->sumAllInClass +=
+                                            modelAllClass[_cC[c]][iq][ie][ii][ih];
+                                    cl->sumUnkInClass +=
+                                            modelUnkClass[_cC[c]][iq][ie][ii][ih];
+                                }
+                                if (cl->dOutOfClass[iq][ie][ii][ih]
+                                    && !cl->tagOutOfClass[iq][ie][ii][ih]) {
+                                    newTag = 1;
+                                    cl->tagOutOfClass[iq][ie][ii][ih] = 1;
+                                    cl->sumAllOutOfClass +=
+                                            (modelAllSS[iq][ie][ii][ih]
+                                             - modelAllClass[_cC[c]][iq][ie][ii][ih]);
+                                    cl->sumUnkOutOfClass +=
+                                            (modelUnkSS[iq][ie][ii][ih]
+                                             - modelUnkClass[_cC[c]][iq][ie][ii][ih]);
+                                }
                             }
                         }
-                    }
+    } else {
+        for (int t = 0; t < tk->dTagCount; t++) {
+            int idx = tk->dTagList[t];
+            int ih = idx % HX; idx /= HX;
+            int ii = idx % IX;  idx /= IX;
+            int ie = idx % EX;
+            int iq = idx / EX;
+            perClass *cl = tk->class;
+            for (int c = 0; c < _nCC; c++, cl++) {
+                if (cl->dInClass[iq][ie][ii][ih]
+                    && !cl->tagInClass[iq][ie][ii][ih]) {
+                    newTag = 1;
+                    cl->tagInClass[iq][ie][ii][ih] = 1;
+                    cl->sumAllInClass +=
+                            modelAllClass[_cC[c]][iq][ie][ii][ih];
+                    cl->sumUnkInClass +=
+                            modelUnkClass[_cC[c]][iq][ie][ii][ih];
+                }
+                if (cl->dOutOfClass[iq][ie][ii][ih]
+                    && !cl->tagOutOfClass[iq][ie][ii][ih]) {
+                    newTag = 1;
+                    cl->tagOutOfClass[iq][ie][ii][ih] = 1;
+                    cl->sumAllOutOfClass +=
+                            (modelAllSS[iq][ie][ii][ih]
+                             - modelAllClass[_cC[c]][iq][ie][ii][ih]);
+                    cl->sumUnkOutOfClass +=
+                            (modelUnkSS[iq][ie][ii][ih]
+                             - modelUnkClass[_cC[c]][iq][ie][ii][ih]);
+                }
+            }
+        }
+    }
 
     return newTag;
 }
