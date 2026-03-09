@@ -9,6 +9,7 @@ import pytest
 from digest2.observation import (
     Observation,
     _date_to_mjd,
+    _iso_to_mjd,
     _update_magnitude,
     parse_mpc80,
     parse_mpc80_file,
@@ -39,6 +40,33 @@ class TestDateToMjd:
         # Verify C-style division is used
         mjd = _date_to_mjd(2022, 12, 25.384965)
         assert abs(mjd - 59938.384965) < 0.001
+
+
+class TestIsoToMjd:
+    """Test ISO 8601 to MJD conversion."""
+
+    def test_known_date_with_z(self):
+        """2022-12-25T09:14:20.544Z -> MJD ~59938.385."""
+        mjd = _iso_to_mjd("2022-12-25T09:14:20.544Z")
+        # 9h 14m 20.544s = 0.38498 days
+        expected = 59938.0 + (9 + 14 / 60.0 + 20.544 / 3600.0) / 24.0
+        assert abs(mjd - expected) < 0.0001
+
+    def test_known_date_without_z(self):
+        """Same date without trailing Z."""
+        mjd = _iso_to_mjd("2022-12-25T09:14:20.544")
+        expected = 59938.0 + (9 + 14 / 60.0 + 20.544 / 3600.0) / 24.0
+        assert abs(mjd - expected) < 0.0001
+
+    def test_midnight(self):
+        """Midnight should give integer MJD."""
+        mjd = _iso_to_mjd("2022-12-25T00:00:00Z")
+        assert abs(mjd - 59938.0) < 0.0001
+
+    def test_j2000(self):
+        """J2000.0 = 2000-01-01T12:00:00 -> MJD 51544.5."""
+        mjd = _iso_to_mjd("2000-01-01T12:00:00Z")
+        assert abs(mjd - 51544.5) < 0.0001
 
 
 class TestUpdateMagnitude:

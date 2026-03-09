@@ -44,7 +44,7 @@ typedef struct {
 } d2_result;
 
 // Lifecycle
-int  d2_init(const char *model_csv_path, const char *obscodes_path);
+int  d2_init(const char *model_path, const char *obscodes_path);
 void d2_cleanup(void);
 int  d2_is_initialized(void);
 

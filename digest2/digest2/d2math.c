@@ -268,9 +268,11 @@ _Bool tagAngle(tracklet *tk, double an) {
 
     _Bool newTag = 0;
 
-    for (int c = 0; c < nClassCompute; c++) {
+    int _nCC = tk->classFilter ? tk->nClassFilter : nClassCompute;
+    int *_cC = tk->classFilter ? tk->classFilter : classCompute;
+    for (int c = 0; c < _nCC; c++) {
         perClass *cl = tk->class + c;
-        if ((*isClass[classCompute[c]])(q, orbit_e, orbit_i, tk->hmag)) {
+        if ((*isClass[_cC[c]])(q, orbit_e, orbit_i, tk->hmag)) {
             if (!cl->dInClass[iq][ie][ii][ih]) {
                 cl->dInClass[iq][ie][ii][ih] = 1;
                 newTag = 1;
@@ -339,6 +341,7 @@ void aRange(tracklet *tk, double ang1, double ang2, int age) {
 
 void clearDTags(tracklet *tk) {
     memset(tk->dTag, 0, sizeof(tk->dTag));
+    int _nCC = tk->classFilter ? tk->nClassFilter : nClassCompute;
     int c = 0;
     perClass *cl = tk->class;
     do {
@@ -346,7 +349,7 @@ void clearDTags(tracklet *tk) {
         memset(cl->dOutOfClass, 0, sizeof(cl->dOutOfClass));
         cl++;
         c++;
-    } while (c < nClassCompute);
+    } while (c < _nCC);
 }
 
 void updateRMSValues(double *rmsRA, double *rmsDec, double *errorFromConfig) {
@@ -512,6 +515,8 @@ _Bool searchAngles(tracklet *tk) {
         return 0;
 
     _Bool newTag = 0;
+    int _nCC = tk->classFilter ? tk->nClassFilter : nClassCompute;
+    int *_cC = tk->classFilter ? tk->classFilter : classCompute;
 
     for (int iq = 0; iq < QX; iq++)
         for (int ie = 0; ie < EX; ie++)
@@ -519,26 +524,26 @@ _Bool searchAngles(tracklet *tk) {
                 for (int ih = 0; ih < HX; ih++)
                     if (tk->dTag[iq][ie][ii][ih]) {
                         perClass *cl = tk->class;
-                        for (int c = 0; c < nClassCompute; c++, cl++) {
+                        for (int c = 0; c < _nCC; c++, cl++) {
                             if (cl->dInClass[iq][ie]
                                 [ii][ih] && !cl->tagInClass[iq][ie][ii][ih]) {
                                 newTag = 1;
                                 cl->tagInClass[iq][ie][ii][ih] = 1;
                                 cl->sumAllInClass +=
-                                        modelAllClass[classCompute[c]][iq][ie][ii][ih];
+                                        modelAllClass[_cC[c]][iq][ie][ii][ih];
                                 cl->sumUnkInClass +=
-                                        modelUnkClass[classCompute[c]][iq][ie][ii][ih];
+                                        modelUnkClass[_cC[c]][iq][ie][ii][ih];
                             }
                             if (cl->dOutOfClass[iq]
                                 [ie][ii][ih] && !cl->tagOutOfClass[iq][ie][ii][ih]) {
                                 newTag = 1;
                                 cl->tagOutOfClass[iq][ie][ii][ih] = 1;
                                 cl->sumAllOutOfClass += (modelAllSS[iq][ie][ii][ih]
-                                                         - modelAllClass[classCompute[c]]
+                                                         - modelAllClass[_cC[c]]
                                                          [iq][ie][ii][ih]);
                                 cl->sumUnkOutOfClass +=
                                         (modelUnkSS[iq][ie][ii][ih] -
-                                         modelUnkClass[classCompute[c]][iq][ie][ii][ih]);
+                                         modelUnkClass[_cC[c]][iq][ie][ii][ih]);
                             }
                         }
                     }
@@ -1266,15 +1271,17 @@ void score(tracklet *tk) {
 
 
 
+    int _nCC = tk->classFilter ? tk->nClassFilter : nClassCompute;
+    int *_cC = tk->classFilter ? tk->classFilter : classCompute;
     perClass *cl = tk->class;
-    for (int c = 0; c < nClassCompute; c++, cl++) {
+    for (int c = 0; c < _nCC; c++, cl++) {
         double d = cl->sumAllInClass + cl->sumAllOutOfClass;
         cl->rawScore = d > 0.
-                       ? 100. * cl->sumAllInClass / d : classCompute[c] < 2 ? 100. : 0.;
+                       ? 100. * cl->sumAllInClass / d : _cC[c] < 2 ? 100. : 0.;
 
         d = cl->sumUnkInClass + cl->sumUnkOutOfClass;
         cl->noIdScore = d > 0.
-                        ? 100. * cl->sumUnkInClass / d : classCompute[c] < 2 ? 100. : 0.;
+                        ? 100. * cl->sumUnkInClass / d : _cC[c] < 2 ? 100. : 0.;
     }
 }
 

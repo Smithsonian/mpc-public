@@ -127,6 +127,8 @@ typedef struct {
   _Bool isAdes;
   d2_orbit_buffer *orbit_buf;   // NULL when not collecting (default via calloc)
   perClass *class;              // array, extent = nClassesComputed
+  int *classFilter;             // per-tracklet class indices (NULL = use globals)
+  int nClassFilter;             // number of entries in classFilter
 } tracklet;
 
 typedef struct {
