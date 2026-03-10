@@ -108,16 +108,19 @@ static opticalPtr parse_optical(xmlNodePtr cur) {
 
 /**
  * convert_to_modified_julian_date - Convert a date and time string in ISO format to the modified Julian date
- * @iso_string: A string in the format "YYYY-MM-DDTHH:MM:SS" that represents a date and time in the ISO format
+ * @iso_string: A string in the format "YYYY-MM-DDTHH:MM:SS[.fff...]Z" that represents a date and time in the ISO format
  * Returns the modified Julian date (MJD) as a double. The MJD is calculated by dividing the number of seconds since
  * the Unix epoch by 86400.0 and adding 40587.0
  * The function assumes the input is in the UTC timezone and it will fail if the input string is in different format.
  */
 double convert_to_modified_julian_date(const char* iso_string) {
     struct tm tm;
-    strptime(iso_string, "%Y-%m-%dT%H:%M:%S", &tm);
+    char *rest = strptime(iso_string, "%Y-%m-%dT%H:%M:%S", &tm);
+    double frac_sec = 0.0;
+    if (rest && *rest == '.')
+        frac_sec = atof(rest);  // parses ".991Z" as 0.991, stops at 'Z'
     time_t t = timegm(&tm);
-    return (double)(t / 86400.0) + 40587.0;
+    return (double)(t / 86400.0) + 40587.0 + frac_sec / 86400.0;
 }
 
 /**

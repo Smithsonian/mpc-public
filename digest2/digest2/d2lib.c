@@ -104,24 +104,41 @@ FILE *openCP(char *fn, _Bool spec, char *mode) {
 
 // --- Library-internal read functions that return error codes ---
 
-// Read CSV model file. Returns 0 on success, -1 on failure.
-static int lib_read_model_csv(const char *csv_path) {
-    // Save and set fnCSV for the existing readCSV code
+// Read population model using smart binary/CSV loading.
+// Accepts either a CSV path (*.csv) or binary path; derives the other.
+// Uses mustReadModelStatCSV() which prefers binary for speed, falls back
+// to CSV, and auto-generates binary cache.
+// Returns 0 on success, -1 on failure.
+static int lib_read_model(const char *path) {
     char *save_fnCSV = fnCSV;
-    fnCSV = (char *)csv_path;
-
-    struct stat csv_stat;
+    char *save_fnModel = fnModel;
     lib_fatal_flag = 0;
 
-    // mustReadCSV calls fatal() on error; we catch it via our override
-    mustReadCSV(&csv_stat);
+    static char csv_buf[1024];
+    static char model_buf[1024];
+    size_t len = strlen(path);
+
+    if (len >= 4 && strcmp(path + len - 4, ".csv") == 0) {
+        // Path is CSV; derive binary by stripping ".csv"
+        strncpy(csv_buf, path, sizeof(csv_buf) - 1);
+        csv_buf[sizeof(csv_buf) - 1] = '\0';
+        size_t model_len = len - 4 < sizeof(model_buf) - 1 ? len - 4 : sizeof(model_buf) - 1;
+        memcpy(model_buf, path, model_len);
+        model_buf[model_len] = '\0';
+    } else {
+        // Path is binary; derive CSV by appending ".csv"
+        strncpy(model_buf, path, sizeof(model_buf) - 1);
+        model_buf[sizeof(model_buf) - 1] = '\0';
+        snprintf(csv_buf, sizeof(csv_buf), "%s.csv", path);
+    }
+
+    fnCSV = csv_buf;
+    fnModel = model_buf;
+    mustReadModelStatCSV();
 
     fnCSV = save_fnCSV;
-
-    if (lib_fatal_flag) {
-        return -1;
-    }
-    return 0;
+    fnModel = save_fnModel;
+    return lib_fatal_flag ? -1 : 0;
 }
 
 // Read observatory codes file. Returns 0 on success, -1 on failure.
@@ -144,7 +161,7 @@ static int lib_read_obscodes(const char *ocd_path) {
 
 // --- Public API implementation ---
 
-int d2_init(const char *model_csv_path, const char *obscodes_path) {
+int d2_init(const char *model_path, const char *obscodes_path) {
     if (lib_initialized) {
         d2_cleanup();
     }
@@ -164,8 +181,8 @@ int d2_init(const char *model_csv_path, const char *obscodes_path) {
     noid = 1;
     rms = 1;
 
-    // Read population model from CSV
-    if (lib_read_model_csv(model_csv_path) != 0) {
+    // Read population model (binary preferred, CSV fallback)
+    if (lib_read_model(model_path) != 0) {
         return D2_ERR_MODEL;
     }
 
@@ -208,22 +225,8 @@ void d2_set_no_threshold(int flag) {
 
 // --- Internal helpers for tracklet setup/teardown ---
 
-typedef struct {
-    int save_nClassCompute;
-    int save_classCompute[D2CLASSES];
-} lib_class_save;
-
-static void lib_save_classes(lib_class_save *save) {
-    save->save_nClassCompute = nClassCompute;
-    memcpy(save->save_classCompute, classCompute, sizeof(classCompute));
-}
-
-static void lib_restore_classes(lib_class_save *save) {
-    nClassCompute = save->save_nClassCompute;
-    memcpy(classCompute, save->save_classCompute, sizeof(classCompute));
-}
-
-static int lib_setup_classes(int *classes, int n_classes) {
+// Validate class filter indices. Returns D2_OK or D2_ERR_INPUT.
+static int lib_validate_classes(int *classes, int n_classes) {
     if (classes != NULL && n_classes > 0) {
         if (n_classes > D2CLASSES)
             return D2_ERR_INPUT;
@@ -231,22 +234,15 @@ static int lib_setup_classes(int *classes, int n_classes) {
             if (classes[i] < 0 || classes[i] >= D2CLASSES)
                 return D2_ERR_INPUT;
         }
-        nClassCompute = n_classes;
-        for (int i = 0; i < n_classes; i++) {
-            classCompute[i] = classes[i];
-        }
-    } else {
-        nClassCompute = D2CLASSES;
-        for (int i = 0; i < D2CLASSES; i++) {
-            classCompute[i] = i;
-        }
     }
     return D2_OK;
 }
 
 // Allocate and populate a tracklet from input observations.
+// classes/n_classes: per-tracklet class filter (NULL/0 = all classes).
 // Returns NULL on error (sets *status to the error code).
 static tracklet *lib_alloc_tracklet(d2_observation *obs, int n_obs,
+                                     int *classes, int n_classes,
                                      int is_ades, int *status) {
     tracklet *tk = (tracklet *)calloc(1, sizeof(tracklet));
     if (!tk) {
@@ -254,16 +250,33 @@ static tracklet *lib_alloc_tracklet(d2_observation *obs, int n_obs,
         return NULL;
     }
 
+    // Set up per-tracklet class filter
+    if (classes != NULL && n_classes > 0) {
+        tk->classFilter = (int *)malloc(n_classes * sizeof(int));
+        if (!tk->classFilter) {
+            free(tk);
+            *status = D2_ERR_MEMORY;
+            return NULL;
+        }
+        memcpy(tk->classFilter, classes, n_classes * sizeof(int));
+        tk->nClassFilter = n_classes;
+    }
+    // else: classFilter = NULL, nClassFilter = 0 (from calloc) -> uses globals
+
+    int nCC = tk->classFilter ? tk->nClassFilter : nClassCompute;
+
     tk->olist = (observation *)malloc(n_obs * sizeof(observation));
     if (!tk->olist) {
+        free(tk->classFilter);
         free(tk);
         *status = D2_ERR_MEMORY;
         return NULL;
     }
 
-    tk->class = (perClass *)calloc(nClassCompute, sizeof(perClass));
+    tk->class = (perClass *)calloc(nCC, sizeof(perClass));
     if (!tk->class) {
         free(tk->olist);
+        free(tk->classFilter);
         free(tk);
         *status = D2_ERR_MEMORY;
         return NULL;
@@ -334,8 +347,11 @@ static void lib_extract_scores(tracklet *tk, d2_result *result) {
     result->rms = tk->rms;
     result->rms_prime = tk->rmsPrime;
 
-    for (int c = 0; c < nClassCompute; c++) {
-        int ci = classCompute[c];
+    int nCC = tk->classFilter ? tk->nClassFilter : nClassCompute;
+    int *cC = tk->classFilter ? tk->classFilter : classCompute;
+
+    for (int c = 0; c < nCC; c++) {
+        int ci = cC[c];
         if (ci >= 0 && ci < D2CLASSES) {
             result->raw_scores[ci]  = tk->class[c].rawScore;
             result->noid_scores[ci] = tk->class[c].noIdScore;
@@ -347,6 +363,7 @@ static void lib_extract_scores(tracklet *tk, d2_result *result) {
 
 static void lib_free_tracklet(tracklet *tk) {
     if (tk) {
+        free(tk->classFilter);
         free(tk->class);
         free(tk->olist);
         free(tk);
@@ -372,26 +389,22 @@ d2_result d2_score_observations(d2_observation *obs, int n_obs,
         return result;
     }
 
-    lib_class_save save;
-    lib_save_classes(&save);
-    if (lib_setup_classes(classes, n_classes) != D2_OK) {
+    if (lib_validate_classes(classes, n_classes) != D2_OK) {
         result.status = D2_ERR_INPUT;
-        lib_restore_classes(&save);
         return result;
     }
 
     int status;
-    tracklet *tk = lib_alloc_tracklet(obs, n_obs, is_ades, &status);
+    tracklet *tk = lib_alloc_tracklet(obs, n_obs, classes, n_classes,
+                                       is_ades, &status);
     if (!tk) {
         result.status = status;
-        lib_restore_classes(&save);
         return result;
     }
 
     score(tk);
     lib_extract_scores(tk, &result);
     lib_free_tracklet(tk);
-    lib_restore_classes(&save);
 
     return result;
 }
@@ -413,19 +426,16 @@ d2_result_ext d2_score_observations_ext(d2_observation *obs, int n_obs,
         return ext;
     }
 
-    lib_class_save save;
-    lib_save_classes(&save);
-    if (lib_setup_classes(classes, n_classes) != D2_OK) {
+    if (lib_validate_classes(classes, n_classes) != D2_OK) {
         ext.base.status = D2_ERR_INPUT;
-        lib_restore_classes(&save);
         return ext;
     }
 
     int status;
-    tracklet *tk = lib_alloc_tracklet(obs, n_obs, is_ades, &status);
+    tracklet *tk = lib_alloc_tracklet(obs, n_obs, classes, n_classes,
+                                       is_ades, &status);
     if (!tk) {
         ext.base.status = status;
-        lib_restore_classes(&save);
         return ext;
     }
 
@@ -434,7 +444,6 @@ d2_result_ext d2_score_observations_ext(d2_observation *obs, int n_obs,
     if (!buf) {
         lib_free_tracklet(tk);
         ext.base.status = D2_ERR_MEMORY;
-        lib_restore_classes(&save);
         return ext;
     }
     buf->capacity = 1024;
@@ -444,7 +453,6 @@ d2_result_ext d2_score_observations_ext(d2_observation *obs, int n_obs,
         free(buf);
         lib_free_tracklet(tk);
         ext.base.status = D2_ERR_MEMORY;
-        lib_restore_classes(&save);
         return ext;
     }
     tk->orbit_buf = buf;
@@ -460,7 +468,6 @@ d2_result_ext d2_score_observations_ext(d2_observation *obs, int n_obs,
     tk->orbit_buf = NULL;
 
     lib_free_tracklet(tk);
-    lib_restore_classes(&save);
 
     return ext;
 }

@@ -27,7 +27,7 @@ libraries = []
 if platform.system() == "Windows":
     extra_compile_args = ["/std:c11", "/O2"]
 else:
-    extra_compile_args = ["-std=c99", "-O2"]
+    extra_compile_args = ["-std=c99", "-O3"]
     libraries = ["m"]
 
 ext = Extension(

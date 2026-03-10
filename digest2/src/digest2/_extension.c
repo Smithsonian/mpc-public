@@ -26,7 +26,7 @@ static PyObject *py_init(PyObject *self, PyObject *args) {
     if (rc != D2_OK) {
         const char *msg;
         switch (rc) {
-            case D2_ERR_MODEL:    msg = "Failed to load population model CSV"; break;
+            case D2_ERR_MODEL:    msg = "Failed to load population model"; break;
             case D2_ERR_OBSCODES: msg = "Failed to load observatory codes file"; break;
             case D2_ERR_MEMORY:   msg = "Memory allocation failed"; break;
             default:              msg = "Unknown initialization error"; break;
@@ -317,13 +317,17 @@ static PyObject *py_score_common(PyObject *args, int collect_orbits) {
         goto cleanup;
     }
 
+    // Release the GIL during scoring — the C scoring engine is thread-safe
+    // (each call operates on its own tracklet with per-tracklet class filter).
     if (collect_orbits) {
-        // Call the extended C scoring function
+        Py_BEGIN_ALLOW_THREADS
         ext = d2_score_observations_ext(obs, (int)n_obs, class_indices, n_classes, is_ades);
+        Py_END_ALLOW_THREADS
         status = ext.base.status;
     } else {
-        // Call the C scoring function
+        Py_BEGIN_ALLOW_THREADS
         res = d2_score_observations(obs, (int)n_obs, class_indices, n_classes, is_ades);
+        Py_END_ALLOW_THREADS
         status = res.status;
     }
 
@@ -466,8 +470,9 @@ static PyMethodDef methods[] = {
     {"init",
     py_init,
     METH_VARARGS,
-     "init(model_csv_path, obscodes_path)\n"
-     "Initialize digest2 with model and observatory data."},
+     "init(model_path, obscodes_path)\n"
+     "Initialize digest2 with model and observatory data.\n"
+     "model_path can be a CSV (.csv) or binary model file."},
     {"cleanup",
     py_cleanup,
     METH_NOARGS,
