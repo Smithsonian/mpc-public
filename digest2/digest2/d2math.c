@@ -289,9 +289,13 @@ _Bool tagAngle(tracklet *tk, double an) {
             tk->dTag[iq][ie][ii][ih] = 1;
             // Record this bin in sparse list for efficient iteration
             if (tk->nDTaggedBins >= tk->dTaggedBinsCap) {
-                tk->dTaggedBinsCap *= 2;
-                tk->dTaggedBins = realloc(tk->dTaggedBins,
-                    tk->dTaggedBinsCap * sizeof(binIndex));
+                int newCap = tk->dTaggedBinsCap > 0 ? tk->dTaggedBinsCap * 2 : 64;
+                binIndex *tmp = realloc(tk->dTaggedBins, (size_t)newCap * sizeof(*tmp));
+                if (!tmp) {
+                    fatal(msgMemory);
+                }
+                tk->dTaggedBins = tmp;
+                tk->dTaggedBinsCap = newCap;
             }
             binIndex *bi = &tk->dTaggedBins[tk->nDTaggedBins++];
             bi->iq = iq;

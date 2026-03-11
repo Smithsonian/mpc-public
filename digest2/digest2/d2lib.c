@@ -322,6 +322,7 @@ static tracklet *lib_alloc_tracklet(d2_observation *obs, int n_obs,
 
     if (last->mjd < first->mjd) {
         *status = D2_ERR_INPUT;
+        free(tk->dTaggedBins);
         free(tk->class);
         free(tk->olist);
         free(tk);
@@ -330,6 +331,7 @@ static tracklet *lib_alloc_tracklet(d2_observation *obs, int n_obs,
 
     if (first->ra == last->ra && first->dec == last->dec) {
         *status = D2_ERR_INPUT;
+        free(tk->dTaggedBins);
         free(tk->class);
         free(tk->olist);
         free(tk);

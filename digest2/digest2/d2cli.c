@@ -13,7 +13,7 @@
 //#include <stdbool.h>
 
 char msgVersion[] =
-        "Digest2 version v2.5.0\n";
+        "Digest2 version v1.0.0\n";
 char msgCopyright[] = "Public domain.";
 
 // stuff used for parsing command line

@@ -100,7 +100,7 @@ class TestMultiFile:
             # Same file passed twice as two args (each tracklet appears once
             # from each file, but designations will match themselves)
             r2 = subprocess.run(
-                [str(binary), "-c", config, str(obs_path)],
+                [str(binary), "-c", config, str(obs_path), str(obs_path)],
                 cwd=data_dir, check=False, capture_output=True, text=True,
                 timeout=120,
             )

@@ -75,7 +75,7 @@ static opticalPtr parse_optical(xmlNodePtr cur) {
     cur = cur->xmlChildrenNode;
     while (cur != NULL) {
         if ((!xmlStrcmp(cur->name, (const xmlChar *) "provID")))
-            ret->trkSub = xmlNodeGetContent(cur);
+            ret->provID = xmlNodeGetContent(cur);
         if ((!xmlStrcmp(cur->name, (const xmlChar *) "trkSub")))
             ret->trkSub = xmlNodeGetContent(cur);
         if ((!xmlStrcmp(cur->name, (const xmlChar *) "obsID")))
