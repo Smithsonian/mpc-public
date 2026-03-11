@@ -26,13 +26,22 @@ K16S99K 1C2022 12 25.40040208 32 35.473+17 10 37.38         21.31GV     G96
 Regardless of the format, digest2 is run the same way:
 
 ``` bash
-digest2 <file_name>
+digest2 <file_name> [file_name2 ...]
 ```
+
+One or more input files may be given on the command line, and formats may be
+mixed (e.g., `.obs` and `.xml` files in the same invocation).
 
 Replace `<file_name>` with the name of the file you want to run digest2 on. For example, to run digest2 on `sample.obs`:
 
-```bash 
+```bash
 digest2 sample.obs
+```
+
+To score observations from multiple files at once:
+
+```bash
+digest2 sample.obs sample.xml three-hr-tracklets.obs
 ```
 
 Running the above should produce the following output:
@@ -86,11 +95,13 @@ Invoking digest2 without command line arguments (or with invalid arguments)
 shows this usage prompt.
 
 ``` bash
-Usage: digest2 [options] <obs file>    score observations in file
+Usage: digest2 [options] <obs file> [obs file2 ...]   score observations
        digest2 [options] -             score observations from stdin
        digest2 -m <binary model file>  generate binary model from CSV
        digest2 -h or --help            display help and quick reference
        digest2 -v or --version         display program version and model date
+
+Multiple input files may be given; formats (.obs, .xml) may be mixed.
 
 Options:
        -c or --config <config file>
@@ -98,6 +109,7 @@ Options:
        -o or --obscodes <obscode file>
        -p or --config-path <path>
        -u or --cpu <n-cores>
+       -l or --limit <class>/<score>=<limit>
 ```
 
 The help information lists a quick reference to keywords and orbit classes

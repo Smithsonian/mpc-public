@@ -269,6 +269,16 @@ static tracklet *lib_alloc_tracklet(d2_observation *obs, int n_obs,
         return NULL;
     }
 
+    tk->dTaggedBinsCap = 64;
+    tk->dTaggedBins = (binIndex *)malloc(tk->dTaggedBinsCap * sizeof(binIndex));
+    if (!tk->dTaggedBins) {
+        free(tk->class);
+        free(tk->olist);
+        free(tk);
+        *status = D2_ERR_MEMORY;
+        return NULL;
+    }
+
     tk->status = UNPROC;
     tk->obsCap = n_obs;
     tk->lines = n_obs;
@@ -312,6 +322,7 @@ static tracklet *lib_alloc_tracklet(d2_observation *obs, int n_obs,
 
     if (last->mjd < first->mjd) {
         *status = D2_ERR_INPUT;
+        free(tk->dTaggedBins);
         free(tk->class);
         free(tk->olist);
         free(tk);
@@ -320,6 +331,7 @@ static tracklet *lib_alloc_tracklet(d2_observation *obs, int n_obs,
 
     if (first->ra == last->ra && first->dec == last->dec) {
         *status = D2_ERR_INPUT;
+        free(tk->dTaggedBins);
         free(tk->class);
         free(tk->olist);
         free(tk);
@@ -347,6 +359,7 @@ static void lib_extract_scores(tracklet *tk, d2_result *result) {
 
 static void lib_free_tracklet(tracklet *tk) {
     if (tk) {
+        free(tk->dTaggedBins);
         free(tk->class);
         free(tk->olist);
         free(tk);
