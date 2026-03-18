@@ -98,7 +98,8 @@ Notes:
 tracklet *resetValid(char *desig, observation *obsp) {
     tracklet *tk = resetInvalid();
     tk->status = UNPROC;
-    strcpy(tk->desig, desig);
+    strncpy(tk->desig, desig, sizeof(tk->desig) - 1);
+    tk->desig[sizeof(tk->desig) - 1] = '\0';
     memcpy(tk->olist, obsp, sizeof(observation));
     memset(tk->class, 0, nClassCompute * sizeof(perClass));
     return tk;
@@ -110,7 +111,7 @@ call for subsequent observations of a tracklet
 */
 void continueValid(tracklet *tk, char *desig, observation *obsp) {
     if (tk->lines == tk->obsCap) {
-        tk->obsCap += 10;
+        tk->obsCap = tk->obsCap < 8 ? 8 : tk->obsCap + tk->obsCap / 2;
         tk->olist = (observation *) realloc(tk->olist,
                                             tk->obsCap * sizeof(observation));
         if (!tk->olist)
@@ -352,6 +353,7 @@ void readAdes(char *fnObs) {
     pthread_mutex_lock(&mRing);
     while (ringFree < cores)
         pthread_cond_wait(&cDone, &mRing);
+    pthread_mutex_unlock(&mRing);
 
 }
 
@@ -428,7 +430,7 @@ void readMPC80(char *fnObs) {
     pthread_mutex_lock(&mRing);
     while (ringFree < cores)
         pthread_cond_wait(&cDone, &mRing);
-
+    pthread_mutex_unlock(&mRing);
 
 }
 
@@ -611,26 +613,27 @@ int main(int argc, char** argv) {
         return 0;
     }
 
-    //If a file is specified, read it and process it
-    if (fnObs != NULL) {
+    // Regular setup stuff (once, before processing any files)
+    setup(fnObs);
 
-        // Get the file extension
-        char* extension = strrchr(fnObs, '.');
-        if (extension != NULL) {
-            extension++; // Move the pointer to the character after '.'
-        }
+    // Process each input file.  getopt_long leaves optind pointing at
+    // the first non-option arg (the first filename).
+    extern int optind;
+    for (int fi = optind; fi < argc; fi++) {
+        fnObs = argv[fi];
 
-        // Regular setup stuff
-        setup(fnObs);
+        // Determine format from file extension
+        char *extension = strrchr(fnObs, '.');
+        if (extension != NULL)
+            extension++;
 
         _Bool xml = (extension != NULL && strcmp(extension, "xml") == 0);
 
-       if (xml) {
+        if (xml) {
             readAdes(fnObs);
         } else {
             readMPC80(fnObs);
         }
-
     }
 
     return 0;
