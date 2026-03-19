@@ -167,7 +167,7 @@ void writeModel(struct stat *csv)
     // not fatal
     printf(msgWrite, fnModel);
   }
-  fclose(fmod);
+  if (fmod) fclose(fmod);
      }
 }
 
@@ -191,8 +191,11 @@ void convertCSV(FILE * fmod)
 {
   struct stat csv;
   if (!fmod) {
-    mustReadCSV(&csv);          // with no fallback, this has to work
-    writeModel(&csv);
+    if (readCSV(&csv)) {        // with no fallback, CSV must work
+      writeModel(&csv);
+    } else {
+      fatal(line);              // sets error flag; don't call writeModel
+    }
     return;
   }
   if (!readCSV(&csv)) {
