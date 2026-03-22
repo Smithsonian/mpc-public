@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+title: mpc_client
+message: "If you use this software, please cite it as below."
+type: software
+authors:
+  - name: Minor Planet Center
+    affiliation: Smithsonian Astrophysical Observatory
+    email: mpc@cfa.harvard.edu
+repository-code: https://github.com/Smithsonian/mpc-public
+url: https://mpc-client.readthedocs.io/
+license: MIT
+version: 0.1.0
