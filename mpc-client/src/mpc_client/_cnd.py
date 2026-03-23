@@ -2,12 +2,12 @@
 
 from __future__ import annotations
 
-from typing import Any, Dict, List, Union
+from typing import Any, Dict, List, Optional, Union
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from ._base import _MixinBase
-from ._requests import _validate
+from ._requests import DictCompatModel, _validate
 
 
 # ---------- Request model ----------
@@ -28,6 +28,23 @@ class CNDRequest(BaseModel):
         return v
 
 
+# ---------- Response model ----------
+
+class NearDuplicateMatch(DictCompatModel):
+    """A single near-duplicate match returned by the CND API."""
+
+    model_config = ConfigDict(extra="allow")
+
+    obs80: str
+    """The matching observation in MPC 80-column format."""
+
+    time_separation_s: Optional[float] = None
+    """Temporal separation in seconds (omitted when ``omit_separation=True``)."""
+
+    angle_separation_arcsec: Optional[float] = None
+    """Angular separation in arcseconds (omitted when ``omit_separation=True``)."""
+
+
 class CNDMixin(_MixinBase):
 
     def check_near_duplicates(
@@ -37,7 +54,7 @@ class CNDMixin(_MixinBase):
         time_separation_s: float = 60,
         angle_separation_arcsec: float = 5,
         omit_separation: bool = False,
-    ) -> Dict[str, Any]:
+    ) -> Dict[str, List[NearDuplicateMatch]]:
         """Check whether observations have near-duplicates in the MPC database.
 
         Parameters
@@ -54,7 +71,8 @@ class CNDMixin(_MixinBase):
         Returns
         -------
         dict
-            Mapping of each input observation to its list of near-duplicate matches.
+            Mapping of each input observation to its list of
+            :class:`NearDuplicateMatch` objects.
         """
         req = _validate(
             CNDRequest,
@@ -71,7 +89,11 @@ class CNDMixin(_MixinBase):
             "omit_separation": req.omit_separation,
         }
         result = self._get("/api/cnd", json=payload)
-        return result.get("results", {})
+        raw = result.get("results", {})
+        return {
+            k: [NearDuplicateMatch(**m) for m in v] if isinstance(v, list) else []
+            for k, v in raw.items()
+        }
 
     def count_near_duplicates(self, obs: Union[str, List[str]], **kwargs: Any) -> Dict[str, int]:
         """Count near-duplicates for each input observation.
@@ -84,7 +106,4 @@ class CNDMixin(_MixinBase):
             Mapping of each input observation to the number of matches found.
         """
         results = self.check_near_duplicates(obs, **kwargs)
-        return {
-            k: len(v) if isinstance(v, list) else 0
-            for k, v in results.items()
-        }
+        return {k: len(v) for k, v in results.items()}

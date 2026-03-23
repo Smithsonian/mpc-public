@@ -7,9 +7,7 @@ from typing import Any, Dict, List, Optional, Union
 from pydantic import BaseModel, ConfigDict, field_validator
 
 from ._base import _MixinBase
-from ._requests import _validate
-from .exceptions import MPCValidationError
-from ._requests import DictCompatModel
+from ._requests import DictCompatModel, _validate
 
 
 # ---------- Request model ----------

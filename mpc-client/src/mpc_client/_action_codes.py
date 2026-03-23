@@ -2,13 +2,12 @@
 
 from __future__ import annotations
 
-from typing import Any, Dict
+from typing import Optional
 
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel, ConfigDict, field_validator
 
 from ._base import _MixinBase
-from ._requests import _validate
-from .exceptions import MPCValidationError
+from ._requests import DictCompatModel, _validate
 
 
 # ---------- Request model ----------
@@ -24,9 +23,23 @@ class ActionCodeRequest(BaseModel):
         return v
 
 
+# ---------- Response model ----------
+
+class ActionCodeResponse(DictCompatModel):
+    """Response from an action code retrieval request."""
+
+    model_config = ConfigDict(extra="allow")
+
+    status: Optional[str] = None
+    """Status of the request (e.g. ``"ok"``)."""
+
+    message: Optional[str] = None
+    """Human-readable message from the API."""
+
+
 class ActionCodesMixin(_MixinBase):
 
-    def request_action_code(self, label: str) -> Dict[str, Any]:
+    def request_action_code(self, label: str) -> ActionCodeResponse:
         """Request retrieval of an action code for a submission.
 
         The action code will be **emailed** to the original submitter's
@@ -40,11 +53,12 @@ class ActionCodesMixin(_MixinBase):
 
         Returns
         -------
-        dict
+        ActionCodeResponse
             API response confirming the request.
         """
         req = _validate(ActionCodeRequest, label=label)
-        return self._post(
+        result = self._post(
             "/api/action-codes/retrieve",
             json={"label": req.label},
         )
+        return ActionCodeResponse(**result)

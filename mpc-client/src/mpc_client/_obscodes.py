@@ -4,11 +4,35 @@ from __future__ import annotations
 
 from typing import Dict, Optional
 
-from pydantic import ConfigDict
+from pydantic import BaseModel, ConfigDict, field_validator
 
 from ._base import _MixinBase
 from ._compat import require_pandas
-from ._requests import DictCompatModel
+from ._requests import DictCompatModel, _validate
+
+
+# ---------- Request models ----------
+
+class ObscodeRequest(BaseModel):
+    obscode: str
+
+    @field_validator("obscode")
+    @classmethod
+    def _obscode_not_empty(cls, v):
+        if not v:
+            raise ValueError("obscode must be a non-empty string")
+        return v
+
+
+class ObscodeSearchRequest(BaseModel):
+    name_pattern: str
+
+    @field_validator("name_pattern")
+    @classmethod
+    def _pattern_not_empty(cls, v):
+        if not v:
+            raise ValueError("name_pattern must be a non-empty string")
+        return v
 
 
 # ---------- Response model ----------
@@ -52,7 +76,8 @@ class ObscodesMixin(_MixinBase):
         Observatory
             Observatory data including name, longitude, parallax constants.
         """
-        data = self._get("/api/obscodes", json={"obscode": obscode})
+        req = _validate(ObscodeRequest, obscode=obscode)
+        data = self._get("/api/obscodes", json={"obscode": req.obscode})
         return Observatory(**data)
 
     def get_all_observatories(self) -> Dict[str, Observatory]:
@@ -94,6 +119,7 @@ class ObscodesMixin(_MixinBase):
         pandas.DataFrame
             Matching observatories.
         """
+        req = _validate(ObscodeSearchRequest, name_pattern=name_pattern)
         df = self.get_all_observatories_df()
-        mask = df["name"].str.lower().str.contains(name_pattern.lower(), na=False)
+        mask = df["name"].str.lower().str.contains(req.name_pattern.lower(), na=False)
         return df[mask]

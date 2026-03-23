@@ -3,13 +3,13 @@
 Python client for the [Minor Planet Center](https://minorplanetcenter.net/) APIs.
 
 `mpc_client` wraps every MPC public REST API into a single `MPCClient` class
-with input validation, structured error handling, and optional pandas DataFrame
-output.
+with typed response models, input validation, structured error handling, and
+optional pandas DataFrame output.
 
 ## Installation
 
 ```bash
-pip install mpc-client              # core (returns dicts)
+pip install mpc-client              # core (returns typed objects)
 pip install mpc-client[dataframe]   # adds pandas DataFrame methods
 ```
 
@@ -23,8 +23,9 @@ mpc = MPCClient()
 # Identify an object
 info = mpc.identify("Ceres")
 
-# Get orbital elements
+# Get orbital elements (returns OrbitalElements object)
 orbit = mpc.get_orbit("Bennu")
+print(orbit.designation_data.permid)
 
 # Get observations as a DataFrame
 df = mpc.get_observations_df("Bennu")
@@ -32,18 +33,18 @@ df = mpc.get_observations_df("Bennu")
 
 ## API Coverage
 
-| API | Methods |
-|-----|---------|
-| Designation Identifier | `identify()` |
-| Observatory Codes | `get_observatory()`, `get_all_observatories()`, `search_observatories()` |
-| Observations | `get_observations()`, `get_observations_df()` |
-| NEOCP Observations | `get_neocp_observations()`, `get_neocp_observations_df()` |
-| Orbits | `get_orbit()`, `get_orbit_raw()` |
-| MPECs | `get_mpecs()`, `get_discovery_mpec()` |
-| Check Near-Duplicates | `check_near_duplicates()`, `count_near_duplicates()` |
-| Submission Status | `get_submission_status()` |
-| Action Codes | `request_action_code()` |
-| Submission | `submit_xml()`, `submit_psv()` |
+| API | Methods | Returns |
+|-----|---------|---------|
+| Designation Identifier | `identify()` | `Dict[str, DesignationInfo]` |
+| Observatory Codes | `get_observatory()`, `get_all_observatories()`, `search_observatories()` | `Observatory` |
+| Observations | `get_observations()`, `get_observations_df()` | `ObservationsResult` / DataFrame |
+| NEOCP Observations | `get_neocp_observations()`, `get_neocp_observations_df()` | `ObservationsResult` / DataFrame |
+| Orbits | `get_orbit()`, `get_orbit_raw()` | `OrbitalElements` |
+| MPECs | `get_mpecs()`, `get_discovery_mpec()` | `MPEC` |
+| Check Near-Duplicates | `check_near_duplicates()`, `count_near_duplicates()` | `Dict[str, List[NearDuplicateMatch]]` |
+| Submission Status | `get_submission_status()` | `SubmissionStatus` |
+| Action Codes | `request_action_code()` | `ActionCodeResponse` |
+| Submission | `submit_xml()`, `submit_psv()` | `SubmissionResponse` |
 
 ## Contact
 

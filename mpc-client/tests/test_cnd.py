@@ -24,17 +24,17 @@ def test_check_near_duplicates_real(require_api, client):
     """Hit the real CND API with the sample observation.
 
     We verify the response has the expected structure (a dict mapping
-    the obs string to either a list of matches or a 'no results' string),
+    the obs string to a list of NearDuplicateMatch objects),
     without asserting a specific number of matches since the database
     content may change.
     """
     result = client.check_near_duplicates(SAMPLE_OBS)
     assert isinstance(result, dict)
     assert SAMPLE_OBS in result
-    value = result[SAMPLE_OBS]
-    if isinstance(value, list):
-        for match in value:
-            assert "obs80" in match
+    matches = result[SAMPLE_OBS]
+    assert isinstance(matches, list)
+    for match in matches:
+        assert hasattr(match, "obs80")
 
 
 def test_count_near_duplicates_real(require_api, client):

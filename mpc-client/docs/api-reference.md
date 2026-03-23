@@ -35,6 +35,14 @@
 
 ::: mpc_client._mpecs.MPEC
 
+::: mpc_client._observations.ObservationsResult
+
+::: mpc_client._cnd.NearDuplicateMatch
+
+::: mpc_client._submission.SubmissionResponse
+
+::: mpc_client._action_codes.ActionCodeResponse
+
 ::: mpc_client._submission_status.SubmissionStatus
 
 ::: mpc_client._submission_status.FaultEvent

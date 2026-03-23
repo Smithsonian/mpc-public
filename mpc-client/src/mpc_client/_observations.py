@@ -2,13 +2,13 @@
 
 from __future__ import annotations
 
-from typing import Any, Dict, List, Union
+from typing import Any, Dict, List, Optional, Union
 
-from pydantic import field_validator
+from pydantic import ConfigDict, field_validator
 
 from ._base import _MixinBase
 from ._compat import require_pandas
-from ._requests import _ObsFormatMixin, _validate
+from ._requests import DictCompatModel, _ObsFormatMixin, _validate
 from .exceptions import MPCValidationError
 
 
@@ -25,6 +25,29 @@ class ObservationsRequest(_ObsFormatMixin):
         return v
 
 
+# ---------- Response model ----------
+
+class ObservationsResult(DictCompatModel):
+    """Observations returned by the MPC Observations API.
+
+    Which fields are populated depends on the ``output_format`` requested.
+    """
+
+    model_config = ConfigDict(extra="allow")
+
+    XML: Optional[str] = None
+    """ADES XML string (when ``"XML"`` format is requested)."""
+
+    OBS80: Optional[str] = None
+    """Observations in MPC 80-column format (when ``"OBS80"`` is requested)."""
+
+    ADES_DF: Optional[List[Dict[str, Any]]] = None
+    """ADES observations as a list of dicts (when ``"ADES_DF"`` is requested)."""
+
+    OBS_DF: Optional[List[Dict[str, Any]]] = None
+    """Observations as a list of dicts (when ``"OBS_DF"`` is requested)."""
+
+
 class ObservationsMixin(_MixinBase):
 
     def get_observations(
@@ -33,7 +56,7 @@ class ObservationsMixin(_MixinBase):
         *,
         output_format: Union[str, List[str]] = "XML",
         ades_version: str = "2022",
-    ) -> Dict[str, Any]:
+    ) -> ObservationsResult:
         """Retrieve observations for a solar-system object.
 
         Parameters
@@ -47,8 +70,8 @@ class ObservationsMixin(_MixinBase):
 
         Returns
         -------
-        dict
-            Response dict keyed by the requested format(s).
+        ObservationsResult
+            Response with attributes for each requested format.
         """
         req = _validate(ObservationsRequest, desig=desig, output_format=output_format, ades_version=ades_version)
 
@@ -62,8 +85,8 @@ class ObservationsMixin(_MixinBase):
         )
         # API returns a list; return the first element for single-desig queries
         if isinstance(result, list) and result:
-            return result[0]
-        return result
+            return ObservationsResult(**result[0])
+        return ObservationsResult(**(result if isinstance(result, dict) else {}))
 
     def get_observations_df(self, desig: str, *, fmt: str = "ADES_DF", ades_version: str = "2022"):
         """Retrieve observations as a pandas DataFrame.

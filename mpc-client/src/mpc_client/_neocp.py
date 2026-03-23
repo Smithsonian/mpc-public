@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
-from typing import Any, Dict, List, Union
+from typing import List, Union
 
 from pydantic import field_validator
 
 from ._base import _MixinBase
 from ._compat import require_pandas
+from ._observations import ObservationsResult
 from ._requests import _ObsFormatMixin, _validate
 from .exceptions import MPCValidationError
 
@@ -24,6 +25,7 @@ class NEOCPRequest(_ObsFormatMixin):
             raise ValueError("trksub must be a non-empty string")
         return v
 
+# ---------- Response model ----------
 
 class NEOCPMixin(_MixinBase):
 
@@ -33,7 +35,7 @@ class NEOCPMixin(_MixinBase):
         *,
         output_format: Union[str, List[str]] = "XML",
         ades_version: str = "2022",
-    ) -> Dict[str, Any]:
+    ) -> ObservationsResult:
         """Retrieve observations for an object currently on the NEOCP.
 
         Parameters
@@ -47,8 +49,8 @@ class NEOCPMixin(_MixinBase):
 
         Returns
         -------
-        dict
-            Response dict keyed by the requested format(s).
+        ObservationsResult
+            Response with attributes for each requested format.
         """
         req = _validate(NEOCPRequest, trksub=trksub, output_format=output_format, ades_version=ades_version)
 
@@ -61,8 +63,8 @@ class NEOCPMixin(_MixinBase):
             },
         )
         if isinstance(result, list) and result:
-            return result[0]
-        return result
+            return ObservationsResult(**result[0])
+        return ObservationsResult(**(result if isinstance(result, dict) else {}))
 
     def get_neocp_observations_df(
         self, trksub: str, *, fmt: str = "ADES_DF", ades_version: str = "2022"

@@ -1,4 +1,7 @@
-"""Shared HTTP logic for all API mixins."""
+"""Shared HTTP logic for all API mixins.
+
+All API mixin classes inherit from BaseAPI and use its HTTP methods to make requests,
+so all shared logic (session management, error handling, etc.) is implemented here."""
 
 from __future__ import annotations
 

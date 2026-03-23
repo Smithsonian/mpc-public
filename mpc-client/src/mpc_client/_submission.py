@@ -3,13 +3,12 @@
 from __future__ import annotations
 
 import os
-from typing import Any, Dict, Optional, Union
+from typing import Optional, Union
 
 from pydantic import BaseModel, field_validator
 
 from ._base import _MixinBase, SUBMIT_BASE_URL
-from ._requests import _validate
-from .exceptions import MPCValidationError, MPCResponseError
+from ._requests import DictCompatModel, _validate
 
 
 # ---------- Request model ----------
@@ -26,6 +25,18 @@ class SubmitRequest(BaseModel):
         return v
 
 
+# ---------- Response model ----------
+
+class SubmissionResponse(DictCompatModel):
+    """Response from an observation submission."""
+
+    status_code: int
+    """HTTP status code returned by the MPC submission endpoint."""
+
+    message: str
+    """Raw response text (typically contains the Submission ID)."""
+
+
 class SubmissionMixin(_MixinBase):
 
     def submit_xml(
@@ -36,7 +47,7 @@ class SubmissionMixin(_MixinBase):
         ac2: str,
         obj_type: Optional[str] = None,
         test: bool = True,
-    ) -> Dict[str, Any]:
+    ) -> SubmissionResponse:
         """Submit an ADES XML file of observations.
 
         Parameters
@@ -55,9 +66,8 @@ class SubmissionMixin(_MixinBase):
 
         Returns
         -------
-        dict
-            ``{"status_code": int, "message": str}`` where *message*
-            is the raw response text (typically contains the Submission ID).
+        SubmissionResponse
+            Response with ``status_code`` and ``message`` attributes.
         """
         return self._submit(
             source, ack=ack, ac2=ac2, obj_type=obj_type,
@@ -72,7 +82,7 @@ class SubmissionMixin(_MixinBase):
         ac2: str,
         obj_type: Optional[str] = None,
         test: bool = True,
-    ) -> Dict[str, Any]:
+    ) -> SubmissionResponse:
         """Submit an ADES PSV file of observations.
 
         Parameters are identical to :meth:`submit_xml`.
@@ -93,7 +103,7 @@ class SubmissionMixin(_MixinBase):
         obj_type: Optional[str],
         test: bool,
         fmt: str,
-    ) -> Dict[str, Any]:
+    ) -> SubmissionResponse:
         req = _validate(SubmitRequest, ack=ack, ac2=ac2)
 
         suffix = "_test" if test else ""
@@ -119,4 +129,4 @@ class SubmissionMixin(_MixinBase):
             base_url=SUBMIT_BASE_URL,
         )
 
-        return {"status_code": resp.status_code, "message": resp.text}
+        return SubmissionResponse(status_code=resp.status_code, message=resp.text)
