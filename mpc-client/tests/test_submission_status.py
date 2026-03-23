@@ -3,7 +3,7 @@
 import pytest
 import responses
 
-from mpc_client import MPCClient, MPCValidationError, MPCNotFoundError
+from mpc_client import MPCClient, MPCValidationError, MPCNotFoundError, SubmissionStatus
 
 
 STATUS_URL = "https://data.minorplanetcenter.net/api/submission-status"
@@ -43,7 +43,8 @@ def test_get_submission_status_not_found_real(require_api, client):
 
 @responses.activate
 def test_get_submission_status_accepted(client):
-    responses.get(
+    """Verify get_submission_status correctly returns SubmissionStatus for an accepted submission."""
+    responses.get(  # register fake GET response
         STATUS_URL,
         json={
             "accepted": True,
@@ -53,13 +54,17 @@ def test_get_submission_status_accepted(client):
     )
 
     result = client.get_submission_status("2026-01-01T00:05:07.453_0000BhCE")
+    assert isinstance(result, SubmissionStatus)
+    assert result.accepted is True
+    assert result.fault_events == []
+    # Verify dict-style access works alongside attribute access
     assert result["accepted"] is True
-    assert result["fault_events"] == []
 
 
 @responses.activate
 def test_get_submission_status_rejected(client):
-    responses.get(
+    """Verify get_submission_status correctly handles a rejected submission with fault events."""
+    responses.get(  # register fake GET response
         STATUS_URL,
         json={
             "accepted": False,
@@ -71,13 +76,15 @@ def test_get_submission_status_rejected(client):
     )
 
     result = client.get_submission_status("2025-11-12T21:11:49.579_0000Ba8V")
-    assert result["accepted"] is False
-    assert len(result["fault_events"]) == 1
+    assert isinstance(result, SubmissionStatus)
+    assert result.accepted is False
+    assert len(result.fault_events) == 1
 
 
 @responses.activate
 def test_get_submission_status_not_found(client):
-    responses.get(STATUS_URL, status=404)
+    """Verify get_submission_status raises MPCNotFoundError for 404 response."""
+    responses.get(STATUS_URL, status=404)  # register fake GET response
 
     with pytest.raises(MPCNotFoundError):
         client.get_submission_status("2022-02-02T22:22:22.222_0000AaCC")
@@ -90,5 +97,6 @@ def test_get_submission_status_not_found(client):
 # ---------------------------------------------------------------
 
 def test_get_submission_status_empty_raises(client):
+    """Verify get_submission_status raises MPCValidationError for empty submission ID."""
     with pytest.raises(MPCValidationError):
         client.get_submission_status("")

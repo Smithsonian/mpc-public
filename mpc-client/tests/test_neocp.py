@@ -5,7 +5,7 @@ import requests
 import responses
 import pandas as pd
 
-from mpc_client import MPCClient, MPCValidationError
+from mpc_client import MPCClient, MPCValidationError, ObservationsResult
 
 
 NEOCP_URL = "https://data.minorplanetcenter.net/api/get-obs-neocp"
@@ -35,14 +35,16 @@ def test_get_neocp_observations_obs80_real(require_api, client):
     the returned OBS80 string starts with the expected `trksub` value."""
     trksub = grab_neocp_trksub()
     result = client.get_neocp_observations(trksub, output_format="OBS80")
-    assert "OBS80" in result and result["OBS80"].startswith("     " + trksub)
+    assert isinstance(result, ObservationsResult)
+    assert result.OBS80.startswith("     " + trksub)
 
 def test_get_neocp_observations_xml_real(require_api, client):
     """This test actually hits the real API, and verifies that
     the returned XML string contains the expected `<optical>` tag."""
     trksub = grab_neocp_trksub()
     result = client.get_neocp_observations(trksub, output_format="XML")
-    assert "XML" in result and "<optical>" in result["XML"]
+    assert isinstance(result, ObservationsResult)
+    assert "<optical>" in result.XML
 
 def test_get_neocp_observations_df_real(require_api, client):
     """This test actually hits the real API, and verifies that
@@ -71,31 +73,35 @@ def test_get_neocp_observations_df_real(require_api, client):
 def test_get_neocp_observations_obs80(client):
     """ This test verifies that when the API returns an OBS80 string, the client correctly extracts and returns it.
     """
-    responses.get(
+    responses.get(  # register fake GET response
         NEOCP_URL,
         json=[{"OBS80": "     P21Eetc  C2025 02 10.12345 ..."}],
     )
 
     result = client.get_neocp_observations("P21Eetc", output_format="OBS80")
-    assert "OBS80" in result and result["OBS80"].startswith("     P21Eetc")
+    assert isinstance(result, ObservationsResult)
+    assert result.OBS80.startswith("     P21Eetc")
+    # Verify dict-style access works alongside attribute access
+    assert result["OBS80"] is not None
 
 
 @responses.activate
 def test_get_neocp_observations_xml(client):
     """ This test verifies that when the API returns an XML string, the client correctly extracts and returns it."""
-    responses.get(
+    responses.get(  # register fake GET response
         NEOCP_URL,
         json=[{"XML": "<ades version='2022'>...</ades>"}],
     )
 
     result = client.get_neocp_observations("P21Eetc", output_format="XML")
-    assert "XML" in result
+    assert isinstance(result, ObservationsResult)
+    assert result.XML is not None
 
 
 @responses.activate
 def test_get_neocp_observations_df(client):
     """ This test verifies that when the API returns a JSON response with an 'ADES_DF' key, the client correctly converts it to a DataFrame."""
-    responses.get(
+    responses.get(  # register fake GET response
         NEOCP_URL,
         json=[{
             "ADES_DF": [

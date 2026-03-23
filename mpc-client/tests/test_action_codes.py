@@ -3,7 +3,7 @@
 import pytest
 import responses
 
-from mpc_client import MPCClient, MPCValidationError
+from mpc_client import MPCClient, MPCValidationError, ActionCodeResponse
 
 
 ACTION_URL = "https://data.minorplanetcenter.net/api/action-codes/retrieve"
@@ -31,24 +31,31 @@ ACTION_URL = "https://data.minorplanetcenter.net/api/action-codes/retrieve"
 
 @responses.activate
 def test_request_action_code(client):
-    responses.post(
+    """Verify request_action_code correctly returns ActionCodeResponse from mocked API response."""
+    responses.post(  # register fake POST response
         ACTION_URL,
         json={"status": "ok", "message": "Action code email sent"},
     )
 
     result = client.request_action_code("2026-01-01T00:05:07.453_0000BhCE")
-    assert "status" in result
+    assert isinstance(result, ActionCodeResponse)
+    assert result.status == "ok"
+    assert result.message == "Action code email sent"
+    # Verify dict-style access works alongside attribute access
+    assert result["status"] == "ok"
 
 
 @responses.activate
 def test_request_action_code_with_trksub(client):
-    responses.post(
+    """Verify request_action_code works with a trksub-style identifier."""
+    responses.post(  # register fake POST response
         ACTION_URL,
         json={"status": "ok"},
     )
 
     result = client.request_action_code("ABC12345")
-    assert result is not None
+    assert isinstance(result, ActionCodeResponse)
+    assert result.status == "ok"
 
 
 
@@ -58,5 +65,6 @@ def test_request_action_code_with_trksub(client):
 # ---------------------------------------------------------------
 
 def test_request_action_code_empty_raises(client):
+    """Verify request_action_code raises MPCValidationError for empty identifier."""
     with pytest.raises(MPCValidationError):
         client.request_action_code("")

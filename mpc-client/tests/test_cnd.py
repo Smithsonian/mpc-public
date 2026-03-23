@@ -3,7 +3,7 @@
 import pytest
 import responses
 
-from mpc_client import MPCClient, MPCValidationError
+from mpc_client import MPCClient, MPCValidationError, NearDuplicateMatch
 
 
 CND_URL = "https://data.minorplanetcenter.net/api/cnd"
@@ -60,7 +60,8 @@ def test_count_near_duplicates_real(require_api, client):
 
 @responses.activate
 def test_check_near_duplicates_match(client):
-    responses.get(
+    """Verify check_near_duplicates correctly returns NearDuplicateMatch from mocked API response."""
+    responses.get(  # register fake GET response
         CND_URL,
         json={
             "request": {"obs": [SAMPLE_OBS]},
@@ -79,12 +80,20 @@ def test_check_near_duplicates_match(client):
     result = client.check_near_duplicates(SAMPLE_OBS)
     assert SAMPLE_OBS in result
     assert len(result[SAMPLE_OBS]) == 1
+    match = result[SAMPLE_OBS][0]
+    assert isinstance(match, NearDuplicateMatch)
+    assert match.obs80 == SAMPLE_OBS
+    assert match.time_separation_s == 0.0
+    assert match.angle_separation_arcsec == 0.021
+    # Verify dict-style access works alongside attribute access
+    assert match["obs80"] == SAMPLE_OBS
 
 
 @responses.activate
 def test_check_near_duplicates_no_match(client):
+    """Verify check_near_duplicates returns an empty list when no matches are found."""
     obs = "     abc123   C2020 03 23.46921410 05 13.27 +04 52 25.9          19.37oV     T08"
-    responses.get(
+    responses.get(  # register fake GET response
         CND_URL,
         json={
             "request": {"obs": [obs]},
@@ -96,11 +105,13 @@ def test_check_near_duplicates_no_match(client):
 
     result = client.check_near_duplicates(obs)
     assert obs in result
+    assert result[obs] == []
 
 
 @responses.activate
 def test_count_near_duplicates(client):
-    responses.get(
+    """Verify count_near_duplicates returns the correct match count."""
+    responses.get(  # register fake GET response
         CND_URL,
         json={
             "request": {"obs": [SAMPLE_OBS]},
@@ -119,8 +130,9 @@ def test_count_near_duplicates(client):
 
 @responses.activate
 def test_count_near_duplicates_no_match(client):
+    """Verify count_near_duplicates returns zero when no matches are found."""
     obs = "     abc123   C2020 03 23.46921410 05 13.27 +04 52 25.9          19.37oV     T08"
-    responses.get(
+    responses.get(  # register fake GET response
         CND_URL,
         json={
             "request": {"obs": [obs]},
@@ -139,15 +151,18 @@ def test_count_near_duplicates_no_match(client):
 # ---------------------------------------------------------------
 
 def test_check_near_duplicates_empty_raises(client):
+    """Verify check_near_duplicates raises MPCValidationError for empty input."""
     with pytest.raises(MPCValidationError):
         client.check_near_duplicates([])
 
 
 def test_check_near_duplicates_bad_time_raises(client):
+    """Verify check_near_duplicates raises MPCValidationError for out-of-range time_separation_s."""
     with pytest.raises(MPCValidationError, match="time_separation_s"):
         client.check_near_duplicates(SAMPLE_OBS, time_separation_s=100)
 
 
 def test_check_near_duplicates_bad_angle_raises(client):
+    """Verify check_near_duplicates raises MPCValidationError for out-of-range angle_separation_arcsec."""
     with pytest.raises(MPCValidationError, match="angle_separation_arcsec"):
         client.check_near_duplicates(SAMPLE_OBS, angle_separation_arcsec=20)

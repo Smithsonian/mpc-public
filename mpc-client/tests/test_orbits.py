@@ -3,7 +3,7 @@
 import pytest
 import responses
 
-from mpc_client import MPCClient, MPCValidationError
+from mpc_client import MPCClient, MPCValidationError, OrbitalElements
 
 
 ORBITS_URL = "https://data.minorplanetcenter.net/api/get-orb"
@@ -41,11 +41,11 @@ SAMPLE_MPC_ORB = {
 def test_get_orbit_real(require_api, client):
     """Hit the real API for Ceres orbit and verify structure."""
     result = client.get_orbit("Ceres")
-    assert result is not None
-    assert "COM" in result
-    assert "CAR" in result
-    assert "designation_data" in result
-    assert result["designation_data"]["permid"] == "1"
+    assert isinstance(result, OrbitalElements)
+    assert result.COM is not None
+    assert result.CAR is not None
+    assert result.designation_data is not None
+    assert result.designation_data.permid == "1"
 
 
 def test_get_orbit_raw_real(require_api, client):
@@ -71,21 +71,25 @@ def test_get_orbit_raw_real(require_api, client):
 
 @responses.activate
 def test_get_orbit(client):
-    responses.get(
+    """Verify get_orbit correctly returns OrbitalElements from mocked API response."""
+    responses.get(  # register fake GET response
         ORBITS_URL,
         json=[{"mpc_orb": [SAMPLE_MPC_ORB]}],
     )
 
     result = client.get_orbit("Ceres")
-    assert result is not None
-    assert "COM" in result
-    assert "CAR" in result
+    assert isinstance(result, OrbitalElements)
+    assert result.COM is not None
+    assert result.CAR is not None
+    assert result.designation_data.permid == "1"
+    # Verify dict-style access works alongside attribute access
     assert result["designation_data"]["permid"] == "1"
 
 
 @responses.activate
 def test_get_orbit_not_found(client):
-    responses.get(
+    """Verify get_orbit returns None when the object is not found."""
+    responses.get(  # register fake GET response
         ORBITS_URL,
         json=[{"mpc_orb": []}],
     )
@@ -96,8 +100,9 @@ def test_get_orbit_not_found(client):
 
 @responses.activate
 def test_get_orbit_raw(client):
+    """Verify get_orbit_raw returns the raw API response as a list."""
     raw_response = [{"mpc_orb": [SAMPLE_MPC_ORB]}]
-    responses.get(ORBITS_URL, json=raw_response)
+    responses.get(ORBITS_URL, json=raw_response)  # register fake GET response
 
     result = client.get_orbit_raw("Ceres")
     assert isinstance(result, list)
@@ -111,10 +116,12 @@ def test_get_orbit_raw(client):
 # ---------------------------------------------------------------
 
 def test_get_orbit_empty_raises(client):
+    """Verify get_orbit raises MPCValidationError for empty designation."""
     with pytest.raises(MPCValidationError):
         client.get_orbit("")
 
 
 def test_get_orbit_raw_empty_raises(client):
+    """Verify get_orbit_raw raises MPCValidationError for empty designation."""
     with pytest.raises(MPCValidationError):
         client.get_orbit_raw("")

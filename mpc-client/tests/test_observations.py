@@ -4,7 +4,7 @@ import pytest
 import responses
 import pandas as pd
 
-from mpc_client import MPCClient, MPCValidationError
+from mpc_client import MPCClient, MPCValidationError, ObservationsResult
 
 
 OBS_URL = "https://data.minorplanetcenter.net/api/get-obs"
@@ -22,16 +22,16 @@ def require_api(check_api):
 def test_get_observations_obs80_real(require_api, client):
     """Hit the real API for Ceres observations in OBS80 format."""
     result = client.get_observations("Ceres", output_format="OBS80")
-    assert "OBS80" in result
-    assert isinstance(result["OBS80"], str)
-    assert len(result["OBS80"]) > 0
+    assert isinstance(result, ObservationsResult)
+    assert isinstance(result.OBS80, str)
+    assert len(result.OBS80) > 0
 
 
 def test_get_observations_xml_real(require_api, client):
     """Hit the real API for Ceres observations in XML format."""
     result = client.get_observations("Ceres", output_format="XML")
-    assert "XML" in result
-    assert "<optical>" in result["XML"]
+    assert isinstance(result, ObservationsResult)
+    assert "<optical>" in result.XML
 
 
 def test_get_observations_df_real(require_api, client):
@@ -56,29 +56,36 @@ def test_get_observations_df_real(require_api, client):
 
 @responses.activate
 def test_get_observations_obs80(client):
-    responses.get(
+    """Verify get_observations correctly returns ObservationsResult with OBS80 format."""
+    responses.get(  # register fake GET response
         OBS_URL,
         json=[{"OBS80": "     K99RQ36  C1999 09 11.12345 ..."}],
     )
 
     result = client.get_observations("Bennu", output_format="OBS80")
-    assert "OBS80" in result
+    assert isinstance(result, ObservationsResult)
+    assert result.OBS80 is not None
+    # Verify dict-style access works alongside attribute access
+    assert result["OBS80"] is not None
 
 
 @responses.activate
 def test_get_observations_xml(client):
-    responses.get(
+    """Verify get_observations correctly returns ObservationsResult with XML format."""
+    responses.get(  # register fake GET response
         OBS_URL,
         json=[{"XML": "<ades version='2022'>...</ades>"}],
     )
 
     result = client.get_observations("Bennu", output_format="XML")
-    assert "XML" in result
+    assert isinstance(result, ObservationsResult)
+    assert result.XML is not None
 
 
 @responses.activate
 def test_get_observations_multiple_formats(client):
-    responses.get(
+    """Verify get_observations handles multiple output formats simultaneously."""
+    responses.get(  # register fake GET response
         OBS_URL,
         json=[{
             "ADES_DF": [{"obsTime": "2023-01-01", "ra": 10.0, "dec": 20.0}],
@@ -87,13 +94,15 @@ def test_get_observations_multiple_formats(client):
     )
 
     result = client.get_observations("Bennu", output_format=["ADES_DF", "OBS_DF"])
-    assert "ADES_DF" in result
-    assert "OBS_DF" in result
+    assert isinstance(result, ObservationsResult)
+    assert result.ADES_DF is not None
+    assert result.OBS_DF is not None
 
 
 @responses.activate
 def test_get_observations_df(client):
-    responses.get(
+    """Verify get_observations_df correctly converts mocked response to a DataFrame."""
+    responses.get(  # register fake GET response
         OBS_URL,
         json=[{
             "ADES_DF": [
@@ -116,15 +125,18 @@ def test_get_observations_df(client):
 # ---------------------------------------------------------------
 
 def test_get_observations_empty_desig_raises(client):
+    """Verify get_observations raises MPCValidationError for empty designation."""
     with pytest.raises(MPCValidationError):
         client.get_observations("")
 
 
 def test_get_observations_invalid_format_raises(client):
+    """Verify get_observations raises MPCValidationError for invalid output_format."""
     with pytest.raises(MPCValidationError, match="Invalid output_format"):
         client.get_observations("Bennu", output_format="INVALID")
 
 
 def test_get_observations_df_invalid_fmt_raises(client):
+    """Verify get_observations_df raises MPCValidationError for unsupported format."""
     with pytest.raises(MPCValidationError, match="'ADES_DF' or 'OBS_DF'"):
         client.get_observations_df("Bennu", fmt="XML")

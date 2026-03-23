@@ -6,7 +6,7 @@ import tempfile
 import pytest
 import responses
 
-from mpc_client import MPCClient, MPCValidationError, MPCResponseError
+from mpc_client import MPCClient, MPCValidationError, MPCResponseError, SubmissionResponse
 
 
 XML_TEST_URL = "https://minorplanetcenter.net/submit_xml_test"
@@ -42,7 +42,8 @@ SAMPLE_XML = '<?xml version="1.0"?><ades version="2022"><optical></optical></ade
 
 @responses.activate
 def test_submit_xml_test(client):
-    responses.post(
+    """Verify submit_xml correctly returns SubmissionResponse from mocked API response."""
+    responses.post(  # register fake POST response
         XML_TEST_URL,
         body="[My ack].  Submission ID is 2026-02-09T11:42:17.655_00000FrY",
         status=200,
@@ -51,13 +52,18 @@ def test_submit_xml_test(client):
     result = client.submit_xml(
         SAMPLE_XML, ack="My ack", ac2="test@example.com", test=True,
     )
+    assert isinstance(result, SubmissionResponse)
+    assert result.status_code == 200
+    assert "Submission ID" in result.message
+    # Verify dict-style access works alongside attribute access
     assert result["status_code"] == 200
     assert "Submission ID" in result["message"]
 
 
 @responses.activate
 def test_submit_psv_test(client):
-    responses.post(
+    """Verify submit_psv correctly returns SubmissionResponse from mocked API response."""
+    responses.post(  # register fake POST response
         PSV_TEST_URL,
         body="[My ack].  Submission ID is 2026-02-09T11:42:17.976_00000FrZ",
         status=200,
@@ -69,12 +75,14 @@ def test_submit_psv_test(client):
         ac2="test@example.com",
         test=True,
     )
-    assert result["status_code"] == 200
+    assert isinstance(result, SubmissionResponse)
+    assert result.status_code == 200
 
 
 @responses.activate
 def test_submit_xml_production(client):
-    responses.post(
+    """Verify submit_xml works with test=False targeting the production URL."""
+    responses.post(  # register fake POST response
         XML_PROD_URL,
         body="[My ack].  Submission ID is 2026-02-09T11:42:18.000_00000FrA",
         status=200,
@@ -83,12 +91,13 @@ def test_submit_xml_production(client):
     result = client.submit_xml(
         SAMPLE_XML, ack="My ack", ac2="test@example.com", test=False,
     )
-    assert result["status_code"] == 200
+    assert result.status_code == 200
 
 
 @responses.activate
 def test_submit_xml_from_file(client):
-    responses.post(XML_TEST_URL, body="[ok]. Submission ID is xxx", status=200)
+    """Verify submit_xml reads XML from a file path and submits it."""
+    responses.post(XML_TEST_URL, body="[ok]. Submission ID is xxx", status=200)  # register fake POST response
 
     with tempfile.NamedTemporaryFile(mode="w", suffix=".xml", delete=False) as f:
         f.write(SAMPLE_XML)
@@ -99,14 +108,15 @@ def test_submit_xml_from_file(client):
         result = client.submit_xml(
             filepath, ack="My ack", ac2="test@example.com",
         )
-        assert result["status_code"] == 200
+        assert result.status_code == 200
     finally:
         os.unlink(filepath)
 
 
 @responses.activate
 def test_submit_xml_missing_ack_returns_400(client):
-    responses.post(XML_TEST_URL, body="error: no `ack` value provided", status=400)
+    """Verify submit_xml raises MPCResponseError when the API returns 400."""
+    responses.post(XML_TEST_URL, body="error: no `ack` value provided", status=400)  # register fake POST response
 
     with pytest.raises(MPCResponseError):
         client.submit_xml(
@@ -116,7 +126,8 @@ def test_submit_xml_missing_ack_returns_400(client):
 
 @responses.activate
 def test_submit_xml_with_obj_type(client):
-    responses.post(XML_TEST_URL, body="[ack]. Submission ID is xxx", status=200)
+    """Verify submit_xml includes obj_type in the request body."""
+    responses.post(XML_TEST_URL, body="[ack]. Submission ID is xxx", status=200)  # register fake POST response
 
     result = client.submit_xml(
         SAMPLE_XML,
@@ -124,7 +135,7 @@ def test_submit_xml_with_obj_type(client):
         ac2="test@example.com",
         obj_type="NEO",
     )
-    assert result["status_code"] == 200
+    assert result.status_code == 200
     # Verify obj_type was sent in the request
     assert "obj_type" in responses.calls[0].request.body.decode()
 
@@ -136,10 +147,12 @@ def test_submit_xml_with_obj_type(client):
 # ---------------------------------------------------------------
 
 def test_submit_xml_empty_ack_raises(client):
+    """Verify submit_xml raises MPCValidationError for empty ack parameter."""
     with pytest.raises(MPCValidationError, match="ack"):
         client.submit_xml(SAMPLE_XML, ack="", ac2="test@example.com")
 
 
 def test_submit_xml_empty_ac2_raises(client):
+    """Verify submit_xml raises MPCValidationError for empty ac2 parameter."""
     with pytest.raises(MPCValidationError, match="ac2"):
         client.submit_xml(SAMPLE_XML, ack="My ack", ac2="")

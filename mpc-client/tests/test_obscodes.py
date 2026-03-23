@@ -4,7 +4,7 @@ import pytest
 import responses
 import pandas as pd
 
-from mpc_client import MPCClient
+from mpc_client import MPCClient, Observatory
 
 
 OBSCODES_URL = "https://data.minorplanetcenter.net/api/obscodes"
@@ -22,8 +22,9 @@ def require_api(check_api):
 def test_get_observatory_real(require_api, client):
     """Hit the real API and verify observatory '500' (Geocentric) exists."""
     result = client.get_observatory("500")
-    assert result["obscode"] == "500"
-    assert result["name"] == "Geocentric"
+    assert isinstance(result, Observatory)
+    assert result.obscode == "500"
+    assert result.name == "Geocentric"
 
 
 def test_get_all_observatories_real(require_api, client):
@@ -66,7 +67,8 @@ def test_search_observatories_real(require_api, client):
 
 @responses.activate
 def test_get_observatory(client):
-    responses.get(
+    """Verify get_observatory correctly returns Observatory from mocked API response."""
+    responses.get(  # register fake GET response
         OBSCODES_URL,
         json={
             "obscode": "500",
@@ -79,12 +81,16 @@ def test_get_observatory(client):
     )
 
     result = client.get_observatory("500")
+    assert isinstance(result, Observatory)
+    assert result.name == "Geocentric"
+    # Verify dict-style access works alongside attribute access
     assert result["name"] == "Geocentric"
 
 
 @responses.activate
 def test_get_all_observatories(client):
-    responses.get(
+    """Verify get_all_observatories returns a dict of Observatory objects."""
+    responses.get(  # register fake GET response
         OBSCODES_URL,
         json={
             "500": {"obscode": "500", "name": "Geocentric", "observations_type": "optical"},
@@ -99,7 +105,8 @@ def test_get_all_observatories(client):
 
 @responses.activate
 def test_get_all_observatories_df(client):
-    responses.get(
+    """Verify get_all_observatories_df returns a DataFrame with expected columns."""
+    responses.get(  # register fake GET response
         OBSCODES_URL,
         json={
             "500": {"obscode": "500", "name": "Geocentric", "observations_type": "optical"},
@@ -115,7 +122,8 @@ def test_get_all_observatories_df(client):
 
 @responses.activate
 def test_search_observatories(client):
-    responses.get(
+    """Verify search_observatories filters results by name substring."""
+    responses.get(  # register fake GET response
         OBSCODES_URL,
         json={
             "568": {"obscode": "568", "name": "Mauna Kea", "observations_type": "optical"},

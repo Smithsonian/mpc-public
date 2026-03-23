@@ -3,7 +3,7 @@
 import pytest
 import responses
 
-from mpc_client import MPCClient, MPCValidationError
+from mpc_client import MPCClient, MPCValidationError, DesignationInfo
 
 
 IDENTIFIER_URL = "https://data.minorplanetcenter.net/api/query-identifier"
@@ -22,8 +22,9 @@ def test_identify_single_real(require_api, client):
     """Hit the real API with 'Ceres' and verify the response structure."""
     result = client.identify("Ceres")
     assert "Ceres" in result
-    assert result["Ceres"]["found"] == 1
-    assert result["Ceres"]["permid"] == "1"
+    assert isinstance(result["Ceres"], DesignationInfo)
+    assert result["Ceres"].found == 1
+    assert result["Ceres"].permid == "1"
 
 
 def test_identify_multiple_real(require_api, client):
@@ -31,8 +32,8 @@ def test_identify_multiple_real(require_api, client):
     result = client.identify(["Ceres", "Vesta"])
     assert "Ceres" in result
     assert "Vesta" in result
-    assert result["Ceres"]["found"] == 1
-    assert result["Vesta"]["found"] == 1
+    assert result["Ceres"].found == 1
+    assert result["Vesta"].found == 1
 
 
 
@@ -49,7 +50,8 @@ def test_identify_multiple_real(require_api, client):
 
 @responses.activate
 def test_identify_single(client):
-    responses.get(
+    """Verify identify correctly returns DesignationInfo from mocked API response."""
+    responses.get(  # register fake GET response
         IDENTIFIER_URL,
         json={
             "Sedna": {
@@ -64,12 +66,16 @@ def test_identify_single(client):
 
     result = client.identify("Sedna")
     assert "Sedna" in result
+    assert isinstance(result["Sedna"], DesignationInfo)
+    assert result["Sedna"].permid == "90377"
+    # Verify dict-style access works alongside attribute access
     assert result["Sedna"]["permid"] == "90377"
 
 
 @responses.activate
 def test_identify_multiple(client):
-    responses.get(
+    """Verify identify handles multiple designations in a single request."""
+    responses.get(  # register fake GET response
         IDENTIFIER_URL,
         json={
             "Ceres": {"found": 1, "permid": "1"},
@@ -89,10 +95,12 @@ def test_identify_multiple(client):
 # ---------------------------------------------------------------
 
 def test_identify_empty_raises(client):
+    """Verify identify raises MPCValidationError for empty list input."""
     with pytest.raises(MPCValidationError):
         client.identify([])
 
 
 def test_identify_empty_string_raises(client):
+    """Verify identify raises MPCValidationError for empty string input."""
     with pytest.raises(MPCValidationError):
         client.identify("")

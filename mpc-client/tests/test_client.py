@@ -4,11 +4,13 @@ from mpc_client import MPCClient
 
 
 def test_client_repr():
+    """Verify MPCClient has the expected string representation."""
     client = MPCClient()
     assert repr(client) == "MPCClient()"
 
 
 def test_client_has_all_methods():
+    """Verify MPCClient exposes all expected public API methods."""
     client = MPCClient()
     expected_methods = [
         "identify",
@@ -37,10 +39,12 @@ def test_client_has_all_methods():
 
 
 def test_client_default_timeout():
+    """Verify MPCClient uses 60-second default timeout."""
     client = MPCClient()
     assert client._timeout == 60
 
 
 def test_client_custom_timeout():
+    """Verify MPCClient accepts a custom timeout value."""
     client = MPCClient(timeout=120)
     assert client._timeout == 120

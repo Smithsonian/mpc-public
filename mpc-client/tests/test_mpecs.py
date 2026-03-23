@@ -3,7 +3,7 @@
 import pytest
 import responses
 
-from mpc_client import MPCClient, MPCValidationError
+from mpc_client import MPCClient, MPCValidationError, MPEC
 
 
 MPECS_URL = "https://data.minorplanetcenter.net/api/mpecs"
@@ -25,18 +25,19 @@ def test_get_mpecs_real(require_api, client):
     assert isinstance(result["Apophis"], list)
     assert len(result["Apophis"]) > 0
     mpec = result["Apophis"][0]
-    assert "fullname" in mpec
-    assert "title" in mpec
-    assert "pubdate" in mpec
-    assert "link" in mpec
+    assert isinstance(mpec, MPEC)
+    assert mpec.fullname is not None
+    assert mpec.title is not None
+    assert mpec.pubdate is not None
+    assert mpec.link is not None
 
 
 def test_get_discovery_mpec_real(require_api, client):
     """Hit the real API and find the discovery MPEC for Apophis."""
     mpec = client.get_discovery_mpec("Apophis")
-    assert mpec is not None
-    assert "fullname" in mpec
-    assert "pubdate" in mpec
+    assert isinstance(mpec, MPEC)
+    assert mpec.fullname is not None
+    assert mpec.pubdate is not None
 
 
 
@@ -53,7 +54,8 @@ def test_get_discovery_mpec_real(require_api, client):
 
 @responses.activate
 def test_get_mpecs_single(client):
-    responses.get(
+    """Verify get_mpecs correctly returns MPEC list from mocked API response."""
+    responses.get(  # register fake GET response
         MPECS_URL,
         json={
             "Apophis": [
@@ -74,7 +76,8 @@ def test_get_mpecs_single(client):
 
 @responses.activate
 def test_get_mpecs_multiple(client):
-    responses.get(
+    """Verify get_mpecs handles multiple designations in a single request."""
+    responses.get(  # register fake GET response
         MPECS_URL,
         json={
             "Sedna": [{"fullname": "2003-V25", "title": "2003 VB12", "pubdate": "2003-11-15", "link": "link1"}],
@@ -89,7 +92,8 @@ def test_get_mpecs_multiple(client):
 
 @responses.activate
 def test_get_discovery_mpec(client):
-    responses.get(
+    """Verify get_discovery_mpec returns the earliest MPEC for a designation."""
+    responses.get(  # register fake GET response
         MPECS_URL,
         json={
             "Bennu": [
@@ -100,12 +104,16 @@ def test_get_discovery_mpec(client):
     )
 
     mpec = client.get_discovery_mpec("Bennu")
+    assert isinstance(mpec, MPEC)
+    assert mpec.fullname == "1999-S43"
+    # Verify dict-style access works alongside attribute access
     assert mpec["fullname"] == "1999-S43"
 
 
 @responses.activate
 def test_get_discovery_mpec_not_found(client):
-    responses.get(MPECS_URL, json={"unknown": []})
+    """Verify get_discovery_mpec returns None when no MPECs exist."""
+    responses.get(MPECS_URL, json={"unknown": []})  # register fake GET response
 
     result = client.get_discovery_mpec("unknown")
     assert result is None
@@ -118,5 +126,6 @@ def test_get_discovery_mpec_not_found(client):
 # ---------------------------------------------------------------
 
 def test_get_mpecs_empty_raises(client):
+    """Verify get_mpecs raises MPCValidationError for empty list input."""
     with pytest.raises(MPCValidationError):
         client.get_mpecs([])
