@@ -57,8 +57,8 @@ def test_get_submission_status_accepted(client):
     assert isinstance(result, SubmissionStatus)
     assert result.accepted is True
     assert result.fault_events == []
-    # Verify dict-style access works alongside attribute access
-    assert result["accepted"] is True
+    # Verify attribute access
+    assert result.accepted is True
 
 
 @responses.activate

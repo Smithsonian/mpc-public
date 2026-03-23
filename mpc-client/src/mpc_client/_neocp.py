@@ -90,4 +90,4 @@ class NEOCPMixin(_MixinBase):
         result = self.get_neocp_observations(
             trksub, output_format=fmt, ades_version=ades_version,
         )
-        return pd.DataFrame(result[fmt])
+        return pd.DataFrame(getattr(result, fmt))

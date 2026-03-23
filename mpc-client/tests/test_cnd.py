@@ -85,8 +85,7 @@ def test_check_near_duplicates_match(client):
     assert match.obs80 == SAMPLE_OBS
     assert match.time_separation_s == 0.0
     assert match.angle_separation_arcsec == 0.021
-    # Verify dict-style access works alongside attribute access
-    assert match["obs80"] == SAMPLE_OBS
+    assert match.obs80 == SAMPLE_OBS
 
 
 @responses.activate

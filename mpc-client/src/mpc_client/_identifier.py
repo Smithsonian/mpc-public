@@ -7,7 +7,7 @@ from typing import Any, Dict, List, Optional, Union
 from pydantic import BaseModel, ConfigDict, field_validator
 
 from ._base import _MixinBase
-from ._requests import DictCompatModel, _validate
+from ._requests import _validate
 
 
 # ---------- Request model ----------
@@ -29,7 +29,7 @@ class IdentifierRequest(BaseModel):
 
 # ---------- Response model ----------
 
-class DesignationInfo(DictCompatModel):
+class DesignationInfo(BaseModel):
     """Designation look-up result for a single queried identifier."""
 
     model_config = ConfigDict(extra="allow")

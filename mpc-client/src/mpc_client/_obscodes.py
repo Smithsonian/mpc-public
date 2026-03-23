@@ -8,7 +8,7 @@ from pydantic import BaseModel, ConfigDict, field_validator
 
 from ._base import _MixinBase
 from ._compat import require_pandas
-from ._requests import DictCompatModel, _validate
+from ._requests import _validate
 
 
 # ---------- Request models ----------
@@ -37,7 +37,7 @@ class ObscodeSearchRequest(BaseModel):
 
 # ---------- Response model ----------
 
-class Observatory(DictCompatModel):
+class Observatory(BaseModel):
     """Observatory information from the MPC observatory-codes list."""
 
     model_config = ConfigDict(extra="allow")

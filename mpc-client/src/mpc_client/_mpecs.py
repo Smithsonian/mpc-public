@@ -7,7 +7,7 @@ from typing import Dict, List, Optional, Union
 from pydantic import BaseModel, field_validator
 
 from ._base import _MixinBase
-from ._requests import DictCompatModel, _validate
+from ._requests import _validate
 
 
 # ---------- Request model ----------
@@ -27,7 +27,7 @@ class MPECsRequest(BaseModel):
 
 # ---------- Response model ----------
 
-class MPEC(DictCompatModel):
+class MPEC(BaseModel):
     """A single Minor Planet Electronic Circular entry."""
 
     fullname: str
@@ -87,4 +87,4 @@ class MPECsMixin(_MixinBase):
         mpecs = result.get(designation, [])
         if not mpecs:
             return None
-        return sorted(mpecs, key=lambda m: m.get("pubdate", ""))[0]
+        return sorted(mpecs, key=lambda m: m.pubdate)[0]

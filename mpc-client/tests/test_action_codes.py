@@ -41,8 +41,7 @@ def test_request_action_code(client):
     assert isinstance(result, ActionCodeResponse)
     assert result.status == "ok"
     assert result.message == "Action code email sent"
-    # Verify dict-style access works alongside attribute access
-    assert result["status"] == "ok"
+    assert result.status == "ok"
 
 
 @responses.activate

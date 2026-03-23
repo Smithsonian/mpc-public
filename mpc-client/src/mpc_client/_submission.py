@@ -8,7 +8,7 @@ from typing import Optional, Union
 from pydantic import BaseModel, field_validator
 
 from ._base import _MixinBase, SUBMIT_BASE_URL
-from ._requests import DictCompatModel, _validate
+from ._requests import _validate
 
 
 # ---------- Request model ----------
@@ -27,7 +27,7 @@ class SubmitRequest(BaseModel):
 
 # ---------- Response model ----------
 
-class SubmissionResponse(DictCompatModel):
+class SubmissionResponse(BaseModel):
     """Response from an observation submission."""
 
     status_code: int

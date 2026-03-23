@@ -82,8 +82,7 @@ def test_get_orbit(client):
     assert result.COM is not None
     assert result.CAR is not None
     assert result.designation_data.permid == "1"
-    # Verify dict-style access works alongside attribute access
-    assert result["designation_data"]["permid"] == "1"
+    assert result.designation_data.permid == "1"
 
 
 @responses.activate

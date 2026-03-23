@@ -8,7 +8,6 @@ from pydantic import BaseModel, ConfigDict, field_validator
 
 from ._base import _MixinBase
 from ._requests import _validate
-from ._requests import DictCompatModel
 
 
 # ---------- Request model ----------
@@ -26,7 +25,7 @@ class SubmissionStatusRequest(BaseModel):
 
 # ---------- Response models ----------
 
-class FaultEvent(DictCompatModel):
+class FaultEvent(BaseModel):
     """A single fault event recorded by the MPC observation pipeline."""
 
     model_config = ConfigDict(extra="allow")
@@ -41,7 +40,7 @@ class FaultEvent(DictCompatModel):
     """Numeric code identifying the failure type."""
 
 
-class SubmissionStatus(DictCompatModel):
+class SubmissionStatus(BaseModel):
     """Acceptance status of an MPC observation submission."""
 
     accepted: bool

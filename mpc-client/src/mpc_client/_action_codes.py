@@ -7,7 +7,7 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict, field_validator
 
 from ._base import _MixinBase
-from ._requests import DictCompatModel, _validate
+from ._requests import _validate
 
 
 # ---------- Request model ----------
@@ -25,7 +25,7 @@ class ActionCodeRequest(BaseModel):
 
 # ---------- Response model ----------
 
-class ActionCodeResponse(DictCompatModel):
+class ActionCodeResponse(BaseModel):
     """Response from an action code retrieval request."""
 
     model_config = ConfigDict(extra="allow")

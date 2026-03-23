@@ -106,8 +106,7 @@ def test_get_discovery_mpec(client):
     mpec = client.get_discovery_mpec("Bennu")
     assert isinstance(mpec, MPEC)
     assert mpec.fullname == "1999-S43"
-    # Verify dict-style access works alongside attribute access
-    assert mpec["fullname"] == "1999-S43"
+    assert mpec.fullname == "1999-S43"
 
 
 @responses.activate

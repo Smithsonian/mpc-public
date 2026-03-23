@@ -65,8 +65,7 @@ def test_get_observations_obs80(client):
     result = client.get_observations("Bennu", output_format="OBS80")
     assert isinstance(result, ObservationsResult)
     assert result.OBS80 is not None
-    # Verify dict-style access works alongside attribute access
-    assert result["OBS80"] is not None
+    assert result.OBS80 is not None
 
 
 @responses.activate

@@ -68,8 +68,7 @@ def test_identify_single(client):
     assert "Sedna" in result
     assert isinstance(result["Sedna"], DesignationInfo)
     assert result["Sedna"].permid == "90377"
-    # Verify dict-style access works alongside attribute access
-    assert result["Sedna"]["permid"] == "90377"
+    assert result["Sedna"].permid == "90377"
 
 
 @responses.activate

@@ -4,11 +4,11 @@ from __future__ import annotations
 
 from typing import Any, Dict, List, Optional, Union
 
-from pydantic import ConfigDict, field_validator
+from pydantic import BaseModel, ConfigDict, field_validator
 
 from ._base import _MixinBase
 from ._compat import require_pandas
-from ._requests import DictCompatModel, _ObsFormatMixin, _validate
+from ._requests import _ObsFormatMixin, _validate
 from .exceptions import MPCValidationError
 
 
@@ -27,7 +27,7 @@ class ObservationsRequest(_ObsFormatMixin):
 
 # ---------- Response model ----------
 
-class ObservationsResult(DictCompatModel):
+class ObservationsResult(BaseModel):
     """Observations returned by the MPC Observations API.
 
     Which fields are populated depends on the ``output_format`` requested.
@@ -110,4 +110,4 @@ class ObservationsMixin(_MixinBase):
         result = self.get_observations(
             desig, output_format=fmt, ades_version=ades_version,
         )
-        return pd.DataFrame(result[fmt])
+        return pd.DataFrame(getattr(result, fmt))

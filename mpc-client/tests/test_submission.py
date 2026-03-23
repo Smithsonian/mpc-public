@@ -55,9 +55,8 @@ def test_submit_xml_test(client):
     assert isinstance(result, SubmissionResponse)
     assert result.status_code == 200
     assert "Submission ID" in result.message
-    # Verify dict-style access works alongside attribute access
-    assert result["status_code"] == 200
-    assert "Submission ID" in result["message"]
+    assert result.status_code == 200
+    assert "Submission ID" in result.message
 
 
 @responses.activate

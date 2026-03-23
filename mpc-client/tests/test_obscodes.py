@@ -83,8 +83,7 @@ def test_get_observatory(client):
     result = client.get_observatory("500")
     assert isinstance(result, Observatory)
     assert result.name == "Geocentric"
-    # Verify dict-style access works alongside attribute access
-    assert result["name"] == "Geocentric"
+    assert result.name == "Geocentric"
 
 
 @responses.activate

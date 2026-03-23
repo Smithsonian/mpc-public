@@ -81,8 +81,7 @@ def test_get_neocp_observations_obs80(client):
     result = client.get_neocp_observations("P21Eetc", output_format="OBS80")
     assert isinstance(result, ObservationsResult)
     assert result.OBS80.startswith("     P21Eetc")
-    # Verify dict-style access works alongside attribute access
-    assert result["OBS80"] is not None
+    assert result.OBS80 is not None
 
 
 @responses.activate

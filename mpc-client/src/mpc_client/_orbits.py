@@ -7,7 +7,7 @@ from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, ConfigDict, field_validator
 
 from ._base import _MixinBase
-from ._requests import DictCompatModel, _validate
+from ._requests import _validate
 
 
 # ---------- Request model ----------
@@ -25,7 +25,7 @@ class OrbitRequest(BaseModel):
 
 # ---------- Response models ----------
 
-class OrbitalCoefficients(DictCompatModel):
+class OrbitalCoefficients(BaseModel):
     """A set of orbital coefficients (cometarian or Cartesian)."""
 
     model_config = ConfigDict(extra="allow")
@@ -42,7 +42,7 @@ class OrbitalCoefficients(DictCompatModel):
     """1-σ uncertainties on each element, if available."""
 
 
-class DesignationData(DictCompatModel):
+class DesignationData(BaseModel):
     """Designation metadata embedded in an orbital elements record."""
 
     model_config = ConfigDict(extra="allow")
@@ -57,7 +57,7 @@ class DesignationData(DictCompatModel):
     """Human-readable provisional designation (e.g. ``"A801 AA"``)."""
 
 
-class MagnitudeData(DictCompatModel):
+class MagnitudeData(BaseModel):
     """Photometric parameters for a solar-system object."""
 
     model_config = ConfigDict(extra="allow")
@@ -69,11 +69,11 @@ class MagnitudeData(DictCompatModel):
     """Slope parameter for the H–G magnitude system (Bowell et al. 1989)."""
 
 
-class OrbitalElements(DictCompatModel):
+class OrbitalElements(BaseModel):
     """Orbital elements for a solar-system object (``mpc_orb`` structure).
 
     All fields beyond the declared ones are preserved and accessible
-    via attribute or dict-style access.
+    via attribute access.
     """
 
     model_config = ConfigDict(extra="allow")

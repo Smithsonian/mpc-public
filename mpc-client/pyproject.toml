@@ -23,7 +23,7 @@ dataframe = ["pandas>=1.0.0"]
 all = ["pandas>=1.0.0"]
 test = ["pytest", "responses>=0.20.0", "pandas>=1.0.0", "lxml", "mypy>=1.0", "types-requests"]
 docs = [
-    "mkdocs>=1.5",
+    "mkdocs>=1.5,<2",
     "mkdocs-material>=9.0",
     "mkdocstrings[python]>=0.24",
     "mkdocs-jupyter>=0.24",

@@ -7,7 +7,7 @@ from typing import Any, Dict, List, Optional, Union
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from ._base import _MixinBase
-from ._requests import DictCompatModel, _validate
+from ._requests import _validate
 
 
 # ---------- Request model ----------
@@ -30,7 +30,7 @@ class CNDRequest(BaseModel):
 
 # ---------- Response model ----------
 
-class NearDuplicateMatch(DictCompatModel):
+class NearDuplicateMatch(BaseModel):
     """A single near-duplicate match returned by the CND API."""
 
     model_config = ConfigDict(extra="allow")
