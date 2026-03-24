@@ -68,6 +68,12 @@ typedef struct {
   _Bool dOutOfClass[QX][EX][IX][HX];
 } perClass;
 
+// Forward declaration for orbit collection buffer (defined in d2lib.h).
+// NULL when not collecting orbits (default via calloc).
+#ifndef D2LIB_H
+typedef struct d2_orbit_buffer d2_orbit_buffer;
+#endif
+
 // tracklet.  struct holds working variables and everything associated with
 // computing scores for a single tracklet.
 //
@@ -119,6 +125,7 @@ typedef struct {
 
   double rmsPrime;
   _Bool isAdes;
+  d2_orbit_buffer *orbit_buf;   // NULL when not collecting (default via calloc)
   perClass *class;              // array, extent = nClassesComputed
 } tracklet;
 
