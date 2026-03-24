@@ -1,6 +1,11 @@
 name: Publish mpc-client to TestPyPI
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - "mpc-client/**"
+      - ".github/workflows/mpc_client_testpypi.yml"
   pull_request:
     paths:
       - "mpc-client/**"
@@ -38,6 +43,7 @@ jobs:
         run: python -m build --sdist --wheel --outdir dist/ .
 
       - name: Publish to TestPyPI
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           repository-url: https://test.pypi.org/legacy/
