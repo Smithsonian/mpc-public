@@ -5,5 +5,5 @@ build:
   tools:
     python: "3.11"
   commands:
-    - cd mpc-client && pip install -e ".[all,docs]"
-    - cd mpc-client && mkdocs build --site-dir $READTHEDOCS_OUTPUT/html
+    - pip install -e "${READTHEDOCS_REPOSITORY_PATH}/mpc-client[all,docs]"
+    - cd ${READTHEDOCS_REPOSITORY_PATH}/mpc-client && mkdocs build --site-dir $READTHEDOCS_OUTPUT/html
