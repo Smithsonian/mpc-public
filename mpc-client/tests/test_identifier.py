@@ -3,8 +3,7 @@
 import pytest
 import responses
 
-from mpc_client import MPCClient, MPCValidationError, DesignationInfo
-
+from mpc_client import DesignationInfo, MPCValidationError
 
 IDENTIFIER_URL = "https://data.minorplanetcenter.net/api/query-identifier"
 
@@ -17,6 +16,7 @@ def require_api(check_api):
 
 # --- REAL TESTS THAT REALLY HIT THE API --------------
 # -----------------------------------------------------
+
 
 def test_identify_single_real(require_api, client):
     """Hit the real API with 'Ceres' and verify the response structure."""
@@ -36,7 +36,6 @@ def test_identify_multiple_real(require_api, client):
     assert result["Vesta"].found == 1
 
 
-
 # --- MOCKED TESTS THAT FAKE THE RETURNED API RESPONSE ---
 #     In the tests below, we mock the expected API response, and then verify that
 #     the MPCClient correctly handles/passes-through that response.
@@ -47,6 +46,7 @@ def test_identify_multiple_real(require_api, client):
 #     This allows us to test the client's handling of the API responses, without
 #     relying on the actual API, which may be unavailable during testing.
 # ---------------------------------------------------------
+
 
 @responses.activate
 def test_identify_single(client):
@@ -87,11 +87,11 @@ def test_identify_multiple(client):
     assert "2020 AB1" in result
 
 
-
 # --- PURE TESTS OF INPUT VALIDATION LOGIC (NO API CALLS) ------
 #     These tests verify that the client raises appropriate
 #     exceptions when given invalid input parameters.
 # ---------------------------------------------------------------
+
 
 def test_identify_empty_raises(client):
     """Verify identify raises MPCValidationError for empty list input."""

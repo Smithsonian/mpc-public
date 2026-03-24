@@ -1,11 +1,10 @@
 """Tests for the Observatory Codes API."""
 
+import pandas as pd
 import pytest
 import responses
-import pandas as pd
 
-from mpc_client import MPCClient, Observatory
-
+from mpc_client import Observatory
 
 OBSCODES_URL = "https://data.minorplanetcenter.net/api/obscodes"
 
@@ -18,6 +17,7 @@ def require_api(check_api):
 
 # --- REAL TESTS THAT REALLY HIT THE API --------------
 # -----------------------------------------------------
+
 
 def test_get_observatory_real(require_api, client):
     """Hit the real API and verify observatory '500' (Geocentric) exists."""
@@ -53,7 +53,6 @@ def test_search_observatories_real(require_api, client):
     assert "568" in df.index  # 568 is "Maunakea"
 
 
-
 # --- MOCKED TESTS THAT FAKE THE RETURNED API RESPONSE ---
 #     In the tests below, we mock the expected API response, and then verify that
 #     the MPCClient correctly handles/passes-through that response.
@@ -64,6 +63,7 @@ def test_search_observatories_real(require_api, client):
 #     This allows us to test the client's handling of the API responses, without
 #     relying on the actual API, which may be unavailable during testing.
 # ---------------------------------------------------------
+
 
 @responses.activate
 def test_get_observatory(client):
@@ -92,8 +92,16 @@ def test_get_all_observatories(client):
     responses.get(  # register fake GET response
         OBSCODES_URL,
         json={
-            "500": {"obscode": "500", "name": "Geocentric", "observations_type": "optical"},
-            "F51": {"obscode": "F51", "name": "Pan-STARRS 1", "observations_type": "optical"},
+            "500": {
+                "obscode": "500",
+                "name": "Geocentric",
+                "observations_type": "optical",
+            },
+            "F51": {
+                "obscode": "F51",
+                "name": "Pan-STARRS 1",
+                "observations_type": "optical",
+            },
         },
     )
 
@@ -108,8 +116,16 @@ def test_get_all_observatories_df(client):
     responses.get(  # register fake GET response
         OBSCODES_URL,
         json={
-            "500": {"obscode": "500", "name": "Geocentric", "observations_type": "optical"},
-            "F51": {"obscode": "F51", "name": "Pan-STARRS 1", "observations_type": "optical"},
+            "500": {
+                "obscode": "500",
+                "name": "Geocentric",
+                "observations_type": "optical",
+            },
+            "F51": {
+                "obscode": "F51",
+                "name": "Pan-STARRS 1",
+                "observations_type": "optical",
+            },
         },
     )
 
@@ -125,9 +141,21 @@ def test_search_observatories(client):
     responses.get(  # register fake GET response
         OBSCODES_URL,
         json={
-            "568": {"obscode": "568", "name": "Mauna Kea", "observations_type": "optical"},
-            "F51": {"obscode": "F51", "name": "Pan-STARRS 1, Haleakala", "observations_type": "optical"},
-            "G96": {"obscode": "G96", "name": "Mt. Lemmon Survey", "observations_type": "optical"},
+            "568": {
+                "obscode": "568",
+                "name": "Mauna Kea",
+                "observations_type": "optical",
+            },
+            "F51": {
+                "obscode": "F51",
+                "name": "Pan-STARRS 1, Haleakala",
+                "observations_type": "optical",
+            },
+            "G96": {
+                "obscode": "G96",
+                "name": "Mt. Lemmon Survey",
+                "observations_type": "optical",
+            },
         },
     )
 

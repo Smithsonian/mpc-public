@@ -3,8 +3,7 @@
 import pytest
 import responses
 
-from mpc_client import MPCClient, MPCValidationError, NearDuplicateMatch
-
+from mpc_client import MPCValidationError, NearDuplicateMatch
 
 CND_URL = "https://data.minorplanetcenter.net/api/cnd"
 
@@ -19,6 +18,7 @@ def require_api(check_api):
 
 # --- REAL TESTS THAT REALLY HIT THE API --------------
 # -----------------------------------------------------
+
 
 def test_check_near_duplicates_real(require_api, client):
     """Hit the real CND API with the sample observation.
@@ -46,7 +46,6 @@ def test_count_near_duplicates_real(require_api, client):
     assert counts[SAMPLE_OBS] >= 0
 
 
-
 # --- MOCKED TESTS THAT FAKE THE RETURNED API RESPONSE ---
 #     In the tests below, we mock the expected API response, and then verify that
 #     the MPCClient correctly handles/passes-through that response.
@@ -58,9 +57,10 @@ def test_count_near_duplicates_real(require_api, client):
 #     relying on the actual API, which may be unavailable during testing.
 # ---------------------------------------------------------
 
+
 @responses.activate
 def test_check_near_duplicates_match(client):
-    """Verify check_near_duplicates correctly returns NearDuplicateMatch from mocked API response."""
+    """Verify check_near_duplicates returns NearDuplicateMatch from mocked response."""
     responses.get(  # register fake GET response
         CND_URL,
         json={
@@ -97,7 +97,10 @@ def test_check_near_duplicates_no_match(client):
         json={
             "request": {"obs": [obs]},
             "results": {
-                obs: "No results returned which is strange; the search term should be in the database."
+                obs: (
+                    "No results returned which is strange;"
+                    " the search term should be in the database."
+                )
             },
         },
     )
@@ -116,8 +119,16 @@ def test_count_near_duplicates(client):
             "request": {"obs": [SAMPLE_OBS]},
             "results": {
                 SAMPLE_OBS: [
-                    {"obs80": SAMPLE_OBS, "time_separation_s": 0.0, "angle_separation_arcsec": 0.021},
-                    {"obs80": "other_obs", "time_separation_s": 1.0, "angle_separation_arcsec": 2.0},
+                    {
+                        "obs80": SAMPLE_OBS,
+                        "time_separation_s": 0.0,
+                        "angle_separation_arcsec": 0.021,
+                    },
+                    {
+                        "obs80": "other_obs",
+                        "time_separation_s": 1.0,
+                        "angle_separation_arcsec": 2.0,
+                    },
                 ]
             },
         },
@@ -143,11 +154,11 @@ def test_count_near_duplicates_no_match(client):
     assert counts[obs] == 0
 
 
-
 # --- PURE TESTS OF INPUT VALIDATION LOGIC (NO API CALLS) ------
 #     These tests verify that the client raises appropriate
 #     exceptions when given invalid input parameters.
 # ---------------------------------------------------------------
+
 
 def test_check_near_duplicates_empty_raises(client):
     """Verify check_near_duplicates raises MPCValidationError for empty input."""
@@ -162,6 +173,6 @@ def test_check_near_duplicates_bad_time_raises(client):
 
 
 def test_check_near_duplicates_bad_angle_raises(client):
-    """Verify check_near_duplicates raises MPCValidationError for out-of-range angle_separation_arcsec."""
+    """Verify check_near_duplicates raises for out-of-range angle_separation."""
     with pytest.raises(MPCValidationError, match="angle_separation_arcsec"):
         client.check_near_duplicates(SAMPLE_OBS, angle_separation_arcsec=20)

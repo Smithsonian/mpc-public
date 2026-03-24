@@ -10,8 +10,8 @@ from ._base import _MixinBase
 from ._compat import require_pandas
 from ._requests import _validate
 
-
 # ---------- Request models ----------
+
 
 class ObscodeRequest(BaseModel):
     obscode: str
@@ -36,6 +36,7 @@ class ObscodeSearchRequest(BaseModel):
 
 
 # ---------- Response model ----------
+
 
 class Observatory(BaseModel):
     """Observatory information from the MPC observatory-codes list."""
@@ -62,7 +63,6 @@ class Observatory(BaseModel):
 
 
 class ObscodesMixin(_MixinBase):
-
     def get_observatory(self, obscode: str) -> Observatory:
         """Get information about a specific observatory.
 

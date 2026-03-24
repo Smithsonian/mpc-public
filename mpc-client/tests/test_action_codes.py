@@ -3,11 +3,9 @@
 import pytest
 import responses
 
-from mpc_client import MPCClient, MPCValidationError, ActionCodeResponse
-
+from mpc_client import ActionCodeResponse, MPCValidationError
 
 ACTION_URL = "https://data.minorplanetcenter.net/api/action-codes/retrieve"
-
 
 
 # --- REAL TESTS THAT REALLY HIT THE API --------------
@@ -15,7 +13,6 @@ ACTION_URL = "https://data.minorplanetcenter.net/api/action-codes/retrieve"
 # This endpoint triggers real emails to submitters when called.
 # Real testing must be done manually.
 # -----------------------------------------------------
-
 
 
 # --- MOCKED TESTS THAT FAKE THE RETURNED API RESPONSE ---
@@ -28,6 +25,7 @@ ACTION_URL = "https://data.minorplanetcenter.net/api/action-codes/retrieve"
 #     This allows us to test the client's handling of the API responses, without
 #     relying on the actual API, which may be unavailable during testing.
 # ---------------------------------------------------------
+
 
 @responses.activate
 def test_request_action_code(client):
@@ -57,11 +55,11 @@ def test_request_action_code_with_trksub(client):
     assert result.status == "ok"
 
 
-
 # --- PURE TESTS OF INPUT VALIDATION LOGIC (NO API CALLS) ------
 #     These tests verify that the client raises appropriate
 #     exceptions when given invalid input parameters.
 # ---------------------------------------------------------------
+
 
 def test_request_action_code_empty_raises(client):
     """Verify request_action_code raises MPCValidationError for empty identifier."""

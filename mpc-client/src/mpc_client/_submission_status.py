@@ -9,8 +9,8 @@ from pydantic import BaseModel, ConfigDict, field_validator
 from ._base import _MixinBase
 from ._requests import _validate
 
-
 # ---------- Request model ----------
+
 
 class SubmissionStatusRequest(BaseModel):
     submission_id: str
@@ -24,6 +24,7 @@ class SubmissionStatusRequest(BaseModel):
 
 
 # ---------- Response models ----------
+
 
 class FaultEvent(BaseModel):
     """A single fault event recorded by the MPC observation pipeline."""
@@ -54,7 +55,6 @@ class SubmissionStatus(BaseModel):
 
 
 class SubmissionStatusMixin(_MixinBase):
-
     def get_submission_status(self, submission_id: str) -> SubmissionStatus:
         """Check the acceptance status of an MPC observation submission.
 

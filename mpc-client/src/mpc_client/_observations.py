@@ -11,8 +11,8 @@ from ._compat import require_pandas
 from ._requests import _ObsFormatMixin, _validate
 from .exceptions import MPCValidationError
 
-
 # ---------- Request model ----------
+
 
 class ObservationsRequest(_ObsFormatMixin):
     desig: str
@@ -26,6 +26,7 @@ class ObservationsRequest(_ObsFormatMixin):
 
 
 # ---------- Response model ----------
+
 
 class ObservationsResult(BaseModel):
     """Observations returned by the MPC Observations API.
@@ -49,7 +50,6 @@ class ObservationsResult(BaseModel):
 
 
 class ObservationsMixin(_MixinBase):
-
     def get_observations(
         self,
         desig: str,
@@ -73,7 +73,12 @@ class ObservationsMixin(_MixinBase):
         ObservationsResult
             Response with attributes for each requested format.
         """
-        req = _validate(ObservationsRequest, desig=desig, output_format=output_format, ades_version=ades_version)
+        req = _validate(
+            ObservationsRequest,
+            desig=desig,
+            output_format=output_format,
+            ades_version=ades_version,
+        )
 
         result = self._get(
             "/api/get-obs",
@@ -108,6 +113,8 @@ class ObservationsMixin(_MixinBase):
         if fmt not in ("ADES_DF", "OBS_DF"):
             raise MPCValidationError("fmt must be 'ADES_DF' or 'OBS_DF'")
         result = self.get_observations(
-            desig, output_format=fmt, ades_version=ades_version,
+            desig,
+            output_format=fmt,
+            ades_version=ades_version,
         )
         return pd.DataFrame(getattr(result, fmt))

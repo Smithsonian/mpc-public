@@ -3,6 +3,7 @@
 - _validate(): bridges Pydantic ValidationError → MPCValidationError
 - _ObsFormatMixin: shared output_format validation for observations and NEOCP
 """
+
 from __future__ import annotations
 
 from typing import List
@@ -19,8 +20,7 @@ def _validate(model_cls, **kwargs):
         return model_cls(**kwargs)
     except _PydanticValidationError as exc:
         messages = "; ".join(
-            f"{'.'.join(str(loc) for loc in e['loc'])}: {e['msg']}"
-            for e in exc.errors()
+            f"{'.'.join(str(loc) for loc in e['loc'])}: {e['msg']}" for e in exc.errors()
         )
         raise MPCValidationError(messages) from exc
 

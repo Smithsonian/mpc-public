@@ -3,8 +3,7 @@
 import pytest
 import responses
 
-from mpc_client import MPCClient, MPCValidationError, OrbitalElements
-
+from mpc_client import MPCValidationError, OrbitalElements
 
 ORBITS_URL = "https://data.minorplanetcenter.net/api/get-orb"
 
@@ -34,9 +33,9 @@ SAMPLE_MPC_ORB = {
 }
 
 
-
 # --- REAL TESTS THAT REALLY HIT THE API --------------
 # -----------------------------------------------------
+
 
 def test_get_orbit_real(require_api, client):
     """Hit the real API for Ceres orbit and verify structure."""
@@ -57,7 +56,6 @@ def test_get_orbit_raw_real(require_api, client):
     assert len(result[0]["mpc_orb"]) > 0
 
 
-
 # --- MOCKED TESTS THAT FAKE THE RETURNED API RESPONSE ---
 #     In the tests below, we mock the expected API response, and then verify that
 #     the MPCClient correctly handles/passes-through that response.
@@ -68,6 +66,7 @@ def test_get_orbit_raw_real(require_api, client):
 #     This allows us to test the client's handling of the API responses, without
 #     relying on the actual API, which may be unavailable during testing.
 # ---------------------------------------------------------
+
 
 @responses.activate
 def test_get_orbit(client):
@@ -108,11 +107,11 @@ def test_get_orbit_raw(client):
     assert "mpc_orb" in result[0]
 
 
-
 # --- PURE TESTS OF INPUT VALIDATION LOGIC (NO API CALLS) ------
 #     These tests verify that the client raises appropriate
 #     exceptions when given invalid input parameters.
 # ---------------------------------------------------------------
+
 
 def test_get_orbit_empty_raises(client):
     """Verify get_orbit raises MPCValidationError for empty designation."""

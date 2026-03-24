@@ -9,8 +9,8 @@ from pydantic import BaseModel, ConfigDict, field_validator
 from ._base import _MixinBase
 from ._requests import _validate
 
-
 # ---------- Request model ----------
+
 
 class IdentifierRequest(BaseModel):
     ids: List[str]
@@ -28,6 +28,7 @@ class IdentifierRequest(BaseModel):
 
 
 # ---------- Response model ----------
+
 
 class DesignationInfo(BaseModel):
     """Designation look-up result for a single queried identifier."""
@@ -51,7 +52,6 @@ class DesignationInfo(BaseModel):
 
 
 class IdentifierMixin(_MixinBase):
-
     def identify(self, ids: Union[str, List[str]]) -> Dict[str, DesignationInfo]:
         """Look up designation information for one or more objects.
 

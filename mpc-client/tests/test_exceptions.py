@@ -2,9 +2,9 @@
 
 from mpc_client import (
     MPCAPIError,
+    MPCNotFoundError,
     MPCRequestError,
     MPCResponseError,
-    MPCNotFoundError,
     MPCValidationError,
 )
 

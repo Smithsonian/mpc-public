@@ -9,8 +9,8 @@ from pydantic import BaseModel, ConfigDict, field_validator
 from ._base import _MixinBase
 from ._requests import _validate
 
-
 # ---------- Request model ----------
+
 
 class OrbitRequest(BaseModel):
     desig: str
@@ -24,6 +24,7 @@ class OrbitRequest(BaseModel):
 
 
 # ---------- Response models ----------
+
 
 class OrbitalCoefficients(BaseModel):
     """A set of orbital coefficients (cometarian or Cartesian)."""
@@ -92,7 +93,6 @@ class OrbitalElements(BaseModel):
 
 
 class OrbitsMixin(_MixinBase):
-
     def get_orbit(self, desig: str) -> Optional[OrbitalElements]:
         """Retrieve orbital elements for an object.
 
@@ -112,12 +112,7 @@ class OrbitsMixin(_MixinBase):
         """
         req = _validate(OrbitRequest, desig=desig)
         result = self._get("/api/get-orb", json={"desig": req.desig})
-        if (
-            isinstance(result, list)
-            and result
-            and "mpc_orb" in result[0]
-            and result[0]["mpc_orb"]
-        ):
+        if isinstance(result, list) and result and "mpc_orb" in result[0] and result[0]["mpc_orb"]:
             return OrbitalElements(**result[0]["mpc_orb"][0])
         return None
 

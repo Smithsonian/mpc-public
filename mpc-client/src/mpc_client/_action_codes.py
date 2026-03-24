@@ -9,8 +9,8 @@ from pydantic import BaseModel, ConfigDict, field_validator
 from ._base import _MixinBase
 from ._requests import _validate
 
-
 # ---------- Request model ----------
+
 
 class ActionCodeRequest(BaseModel):
     label: str
@@ -25,6 +25,7 @@ class ActionCodeRequest(BaseModel):
 
 # ---------- Response model ----------
 
+
 class ActionCodeResponse(BaseModel):
     """Response from an action code retrieval request."""
 
@@ -38,7 +39,6 @@ class ActionCodeResponse(BaseModel):
 
 
 class ActionCodesMixin(_MixinBase):
-
     def request_action_code(self, label: str) -> ActionCodeResponse:
         """Request retrieval of an action code for a submission.
 

@@ -27,6 +27,7 @@ def check_api():
     fine — it proves the route exists).  Only connection-level failures
     and 404 trigger a skip.
     """
+
     def _check(*urls):
         for url in urls:
             try:
@@ -35,4 +36,5 @@ def check_api():
                 pytest.skip(f"API unavailable: {url}")
             if resp.status_code == 404:
                 pytest.skip(f"API unavailable: {url}")
+
     return _check

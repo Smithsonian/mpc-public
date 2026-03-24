@@ -7,11 +7,11 @@ from typing import Optional, Union
 
 from pydantic import BaseModel, field_validator
 
-from ._base import _MixinBase, SUBMIT_BASE_URL
+from ._base import SUBMIT_BASE_URL, _MixinBase
 from ._requests import _validate
 
-
 # ---------- Request model ----------
+
 
 class SubmitRequest(BaseModel):
     ack: str
@@ -27,6 +27,7 @@ class SubmitRequest(BaseModel):
 
 # ---------- Response model ----------
 
+
 class SubmissionResponse(BaseModel):
     """Response from an observation submission."""
 
@@ -38,7 +39,6 @@ class SubmissionResponse(BaseModel):
 
 
 class SubmissionMixin(_MixinBase):
-
     def submit_xml(
         self,
         source: Union[str, bytes],
@@ -70,8 +70,12 @@ class SubmissionMixin(_MixinBase):
             Response with ``status_code`` and ``message`` attributes.
         """
         return self._submit(
-            source, ack=ack, ac2=ac2, obj_type=obj_type,
-            test=test, fmt="xml",
+            source,
+            ack=ack,
+            ac2=ac2,
+            obj_type=obj_type,
+            test=test,
+            fmt="xml",
         )
 
     def submit_psv(
@@ -88,8 +92,12 @@ class SubmissionMixin(_MixinBase):
         Parameters are identical to :meth:`submit_xml`.
         """
         return self._submit(
-            source, ack=ack, ac2=ac2, obj_type=obj_type,
-            test=test, fmt="psv",
+            source,
+            ack=ack,
+            ac2=ac2,
+            obj_type=obj_type,
+            test=test,
+            fmt="psv",
         )
 
     # ------------------------------------------------------------------

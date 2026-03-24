@@ -1,11 +1,10 @@
 """Tests for the Observations API."""
 
+import pandas as pd
 import pytest
 import responses
-import pandas as pd
 
-from mpc_client import MPCClient, MPCValidationError, ObservationsResult
-
+from mpc_client import MPCValidationError, ObservationsResult
 
 OBS_URL = "https://data.minorplanetcenter.net/api/get-obs"
 
@@ -18,6 +17,7 @@ def require_api(check_api):
 
 # --- REAL TESTS THAT REALLY HIT THE API --------------
 # -----------------------------------------------------
+
 
 def test_get_observations_obs80_real(require_api, client):
     """Hit the real API for Ceres observations in OBS80 format."""
@@ -42,7 +42,6 @@ def test_get_observations_df_real(require_api, client):
     assert "ra" in df.columns or "raStar" in df.columns
 
 
-
 # --- MOCKED TESTS THAT FAKE THE RETURNED API RESPONSE ---
 #     In the tests below, we mock the expected API response, and then verify that
 #     the MPCClient correctly handles/passes-through that response.
@@ -53,6 +52,7 @@ def test_get_observations_df_real(require_api, client):
 #     This allows us to test the client's handling of the API responses, without
 #     relying on the actual API, which may be unavailable during testing.
 # ---------------------------------------------------------
+
 
 @responses.activate
 def test_get_observations_obs80(client):
@@ -86,10 +86,12 @@ def test_get_observations_multiple_formats(client):
     """Verify get_observations handles multiple output formats simultaneously."""
     responses.get(  # register fake GET response
         OBS_URL,
-        json=[{
-            "ADES_DF": [{"obsTime": "2023-01-01", "ra": 10.0, "dec": 20.0}],
-            "OBS_DF": [{"date": "2023-01-01", "RA": "00 40 00.0", "Dec": "+20 00 00.0"}],
-        }],
+        json=[
+            {
+                "ADES_DF": [{"obsTime": "2023-01-01", "ra": 10.0, "dec": 20.0}],
+                "OBS_DF": [{"date": "2023-01-01", "RA": "00 40 00.0", "Dec": "+20 00 00.0"}],
+            }
+        ],
     )
 
     result = client.get_observations("Bennu", output_format=["ADES_DF", "OBS_DF"])
@@ -103,12 +105,14 @@ def test_get_observations_df(client):
     """Verify get_observations_df correctly converts mocked response to a DataFrame."""
     responses.get(  # register fake GET response
         OBS_URL,
-        json=[{
-            "ADES_DF": [
-                {"obsTime": "2023-01-01", "ra": 10.0, "dec": 20.0, "stn": "F51"},
-                {"obsTime": "2023-01-02", "ra": 11.0, "dec": 21.0, "stn": "G96"},
-            ]
-        }],
+        json=[
+            {
+                "ADES_DF": [
+                    {"obsTime": "2023-01-01", "ra": 10.0, "dec": 20.0, "stn": "F51"},
+                    {"obsTime": "2023-01-02", "ra": 11.0, "dec": 21.0, "stn": "G96"},
+                ]
+            }
+        ],
     )
 
     df = client.get_observations_df("Bennu")
@@ -117,11 +121,11 @@ def test_get_observations_df(client):
     assert "ra" in df.columns
 
 
-
 # --- PURE TESTS OF INPUT VALIDATION LOGIC (NO API CALLS) ------
 #     These tests verify that the client raises appropriate
 #     exceptions when given invalid input parameters.
 # ---------------------------------------------------------------
+
 
 def test_get_observations_empty_desig_raises(client):
     """Verify get_observations raises MPCValidationError for empty designation."""

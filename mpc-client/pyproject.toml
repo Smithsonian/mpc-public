@@ -21,7 +21,7 @@ dependencies = [
 [project.optional-dependencies]
 dataframe = ["pandas>=1.0.0"]
 all = ["pandas>=1.0.0"]
-test = ["pytest", "responses>=0.20.0", "pandas>=1.0.0", "lxml", "mypy>=1.0", "types-requests"]
+test = ["pytest", "responses>=0.20.0", "pandas>=1.0.0", "lxml", "mypy>=1.0", "types-requests", "ruff"]
 docs = [
     "mkdocs>=1.5,<2",
     "mkdocs-material>=9.0",
@@ -40,6 +40,13 @@ python_version = "3.8"
 warn_return_any = false
 warn_unused_configs = true
 ignore_missing_imports = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py38"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
 
 [tool.hatch.build.targets.sdist]
 include = ["src/mpc_client"]

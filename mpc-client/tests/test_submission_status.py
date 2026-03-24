@@ -3,8 +3,7 @@
 import pytest
 import responses
 
-from mpc_client import MPCClient, MPCValidationError, MPCNotFoundError, SubmissionStatus
-
+from mpc_client import MPCNotFoundError, MPCValidationError, SubmissionStatus
 
 STATUS_URL = "https://data.minorplanetcenter.net/api/submission-status"
 
@@ -18,6 +17,7 @@ def require_api(check_api):
 # --- REAL TESTS THAT REALLY HIT THE API --------------
 # -----------------------------------------------------
 
+
 def test_get_submission_status_not_found_real(require_api, client):
     """Hit the real API with a fabricated submission ID.
 
@@ -27,7 +27,6 @@ def test_get_submission_status_not_found_real(require_api, client):
     """
     with pytest.raises(MPCNotFoundError):
         client.get_submission_status("1999-01-01T00:00:00.000_0000ZZZZ")
-
 
 
 # --- MOCKED TESTS THAT FAKE THE RETURNED API RESPONSE ---
@@ -41,9 +40,10 @@ def test_get_submission_status_not_found_real(require_api, client):
 #     relying on the actual API, which may be unavailable during testing.
 # ---------------------------------------------------------
 
+
 @responses.activate
 def test_get_submission_status_accepted(client):
-    """Verify get_submission_status correctly returns SubmissionStatus for an accepted submission."""
+    """Verify get_submission_status returns SubmissionStatus for accepted submission."""
     responses.get(  # register fake GET response
         STATUS_URL,
         json={
@@ -69,9 +69,7 @@ def test_get_submission_status_rejected(client):
         json={
             "accepted": False,
             "pipeline_entry_time": None,
-            "fault_events": [
-                {"message": "exact duplicate", "phase": 2, "failure_code": 5}
-            ],
+            "fault_events": [{"message": "exact duplicate", "phase": 2, "failure_code": 5}],
         },
     )
 
@@ -90,11 +88,11 @@ def test_get_submission_status_not_found(client):
         client.get_submission_status("2022-02-02T22:22:22.222_0000AaCC")
 
 
-
 # --- PURE TESTS OF INPUT VALIDATION LOGIC (NO API CALLS) ------
 #     These tests verify that the client raises appropriate
 #     exceptions when given invalid input parameters.
 # ---------------------------------------------------------------
+
 
 def test_get_submission_status_empty_raises(client):
     """Verify get_submission_status raises MPCValidationError for empty submission ID."""

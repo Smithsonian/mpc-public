@@ -9,8 +9,8 @@ from pydantic import BaseModel, field_validator
 from ._base import _MixinBase
 from ._requests import _validate
 
-
 # ---------- Request model ----------
+
 
 class MPECsRequest(BaseModel):
     search_terms: List[str]
@@ -26,6 +26,7 @@ class MPECsRequest(BaseModel):
 
 
 # ---------- Response model ----------
+
 
 class MPEC(BaseModel):
     """A single Minor Planet Electronic Circular entry."""
@@ -44,7 +45,6 @@ class MPEC(BaseModel):
 
 
 class MPECsMixin(_MixinBase):
-
     def get_mpecs(self, search_terms: Union[str, List[str]]) -> Dict[str, List[MPEC]]:
         """Search for Minor Planet Electronic Circulars.
 

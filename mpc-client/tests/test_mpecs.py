@@ -3,8 +3,7 @@
 import pytest
 import responses
 
-from mpc_client import MPCClient, MPCValidationError, MPEC
-
+from mpc_client import MPEC, MPCValidationError
 
 MPECS_URL = "https://data.minorplanetcenter.net/api/mpecs"
 
@@ -17,6 +16,7 @@ def require_api(check_api):
 
 # --- REAL TESTS THAT REALLY HIT THE API --------------
 # -----------------------------------------------------
+
 
 def test_get_mpecs_real(require_api, client):
     """Hit the real API for MPECs mentioning Apophis."""
@@ -40,7 +40,6 @@ def test_get_discovery_mpec_real(require_api, client):
     assert mpec.pubdate is not None
 
 
-
 # --- MOCKED TESTS THAT FAKE THE RETURNED API RESPONSE ---
 #     In the tests below, we mock the expected API response, and then verify that
 #     the MPCClient correctly handles/passes-through that response.
@@ -51,6 +50,7 @@ def test_get_discovery_mpec_real(require_api, client):
 #     This allows us to test the client's handling of the API responses, without
 #     relying on the actual API, which may be unavailable during testing.
 # ---------------------------------------------------------
+
 
 @responses.activate
 def test_get_mpecs_single(client):
@@ -80,8 +80,22 @@ def test_get_mpecs_multiple(client):
     responses.get(  # register fake GET response
         MPECS_URL,
         json={
-            "Sedna": [{"fullname": "2003-V25", "title": "2003 VB12", "pubdate": "2003-11-15", "link": "link1"}],
-            "Bennu": [{"fullname": "1999-S43", "title": "1999 RQ36", "pubdate": "1999-10-01", "link": "link2"}],
+            "Sedna": [
+                {
+                    "fullname": "2003-V25",
+                    "title": "2003 VB12",
+                    "pubdate": "2003-11-15",
+                    "link": "link1",
+                }
+            ],
+            "Bennu": [
+                {
+                    "fullname": "1999-S43",
+                    "title": "1999 RQ36",
+                    "pubdate": "1999-10-01",
+                    "link": "link2",
+                }
+            ],
         },
     )
 
@@ -97,8 +111,18 @@ def test_get_discovery_mpec(client):
         MPECS_URL,
         json={
             "Bennu": [
-                {"fullname": "2020-A01", "title": "Bennu update", "pubdate": "2020-01-01", "link": "link2"},
-                {"fullname": "1999-S43", "title": "1999 RQ36", "pubdate": "1999-10-01", "link": "link1"},
+                {
+                    "fullname": "2020-A01",
+                    "title": "Bennu update",
+                    "pubdate": "2020-01-01",
+                    "link": "link2",
+                },
+                {
+                    "fullname": "1999-S43",
+                    "title": "1999 RQ36",
+                    "pubdate": "1999-10-01",
+                    "link": "link1",
+                },
             ]
         },
     )
@@ -118,11 +142,11 @@ def test_get_discovery_mpec_not_found(client):
     assert result is None
 
 
-
 # --- PURE TESTS OF INPUT VALIDATION LOGIC (NO API CALLS) ------
 #     These tests verify that the client raises appropriate
 #     exceptions when given invalid input parameters.
 # ---------------------------------------------------------------
+
 
 def test_get_mpecs_empty_raises(client):
     """Verify get_mpecs raises MPCValidationError for empty list input."""

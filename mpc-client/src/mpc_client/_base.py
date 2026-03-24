@@ -9,8 +9,7 @@ from typing import Any, Optional
 
 import requests
 
-from .exceptions import MPCRequestError, MPCResponseError, MPCNotFoundError
-
+from .exceptions import MPCNotFoundError, MPCRequestError, MPCResponseError
 
 BASE_URL = "https://data.minorplanetcenter.net"
 SUBMIT_BASE_URL = "https://minorplanetcenter.net"
@@ -55,27 +54,49 @@ class BaseAPI(_MixinBase):
             raise MPCRequestError(str(exc)) from exc
         return self._handle_response(resp)
 
-    def _post(self, path: str, *, json: Any = None, data: Any = None, files: Any = None,
-              base_url: str = BASE_URL, **kwargs: Any) -> Any:
+    def _post(
+        self,
+        path: str,
+        *,
+        json: Any = None,
+        data: Any = None,
+        files: Any = None,
+        base_url: str = BASE_URL,
+        **kwargs: Any,
+    ) -> Any:
         """Send a POST request and return the parsed JSON response."""
         url = f"{base_url}{path}"
         try:
             resp = self._session.post(
-                url, json=json, data=data, files=files,
-                timeout=self._timeout, **kwargs,
+                url,
+                json=json,
+                data=data,
+                files=files,
+                timeout=self._timeout,
+                **kwargs,
             )
         except requests.RequestException as exc:
             raise MPCRequestError(str(exc)) from exc
         return self._handle_response(resp)
 
-    def _post_raw(self, path: str, *, data: Any = None, files: Any = None,
-                  base_url: str = BASE_URL, **kwargs: Any) -> requests.Response:
+    def _post_raw(
+        self,
+        path: str,
+        *,
+        data: Any = None,
+        files: Any = None,
+        base_url: str = BASE_URL,
+        **kwargs: Any,
+    ) -> requests.Response:
         """Send a POST request and return the raw Response object."""
         url = f"{base_url}{path}"
         try:
             resp = self._session.post(
-                url, data=data, files=files,
-                timeout=self._timeout, **kwargs,
+                url,
+                data=data,
+                files=files,
+                timeout=self._timeout,
+                **kwargs,
             )
         except requests.RequestException as exc:
             raise MPCRequestError(str(exc)) from exc
