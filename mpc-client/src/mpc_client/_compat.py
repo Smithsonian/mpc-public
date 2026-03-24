@@ -11,6 +11,5 @@ def require_pandas():
         return pd
     except ImportError:
         raise ImportError(
-            "pandas is required for this method. "
-            "Install it with: pip install mpc-client[dataframe]"
+            "pandas is required for this method. Install it with: pip install mpc-client[dataframe]"
         )
