@@ -122,11 +122,17 @@ typedef struct {
   int hmag_bin;
   _Bool dAnyTag;
   _Bool dTag[QX][EX][IX][HX];
+  int dTagList[512];            // flat indices of tagged bins for sparse clearing
+  int dTagCount;                // number of entries in dTagList
 
   double rmsPrime;
   _Bool isAdes;
   d2_orbit_buffer *orbit_buf;   // NULL when not collecting (default via calloc)
   perClass *class;              // array, extent = nClassesComputed
+  int *classFilter;             // per-tracklet class indices (NULL = use globals)
+  int nClassFilter;             // number of entries in classFilter
+  char *outputBuf;              // per-tracklet formatted output buffer
+  int outputBufSize;            // allocated size of outputBuf
 } tracklet;
 
 typedef struct {

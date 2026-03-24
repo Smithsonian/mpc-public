@@ -494,3 +494,165 @@ class TestCLIvsPythonAPI:
             py_results = d2.classify_file(sample_xml_path)
 
         self._compare_results(cli_results, py_results, tolerance=1)
+
+
+class TestParallelScoring:
+    """Test that parallel scoring produces identical results to sequential."""
+
+    def test_classify_file_parallel_matches_sequential(
+        self, model_path, obscodes_path, sample_obs_path, empty_config_path
+    ):
+        """Parallel and sequential classify_file produce the same results."""
+        with Digest2(
+            model_path=model_path,
+            obscodes_path=obscodes_path,
+            config_path=empty_config_path,
+            repeatable=True,
+        ) as d2:
+            seq_results = d2.classify_file(sample_obs_path, max_workers=1)
+            par_results = d2.classify_file(sample_obs_path, max_workers=4)
+
+        assert len(seq_results) == len(par_results)
+        for sr, pr in zip(seq_results, par_results):
+            assert sr.designation == pr.designation
+            assert sr.rms == pr.rms
+            for cls in ALL_CLASSES:
+                assert sr.noid[cls] == pr.noid[cls], \
+                    f"Mismatch for {sr.designation} class {cls}: " \
+                    f"seq={sr.noid[cls]} par={pr.noid[cls]}"
+
+    def test_classify_batch_parallel_matches_sequential(
+        self, model_path, obscodes_path, empty_config_path
+    ):
+        """Parallel and sequential classify_batch produce the same results."""
+        obs1 = [
+            Observation(mjd=59938.384965, ra=128.15118, dec=17.17665,
+                        mag=22.22, obscode="G96"),
+            Observation(mjd=59938.395273, ra=128.14899, dec=17.17702,
+                        mag=21.96, obscode="G96"),
+        ]
+        obs2 = [
+            Observation(mjd=59938.384965, ra=130.0, dec=20.0,
+                        mag=20.0, obscode="G96"),
+            Observation(mjd=59938.395273, ra=130.01, dec=20.01,
+                        mag=20.0, obscode="G96"),
+        ]
+        obs3 = [
+            Observation(mjd=59938.384965, ra=125.0, dec=15.0,
+                        mag=19.5, obscode="G96"),
+            Observation(mjd=59938.395273, ra=125.02, dec=15.01,
+                        mag=19.5, obscode="G96"),
+        ]
+
+        with Digest2(
+            model_path=model_path,
+            obscodes_path=obscodes_path,
+            config_path=empty_config_path,
+            repeatable=True,
+        ) as d2:
+            seq_results = d2.classify_batch(
+                [obs1, obs2, obs3], max_workers=1,
+            )
+            par_results = d2.classify_batch(
+                [obs1, obs2, obs3], max_workers=3,
+            )
+
+        assert len(seq_results) == len(par_results)
+        for sr, pr in zip(seq_results, par_results):
+            if sr is None:
+                assert pr is None
+                continue
+            for cls in ALL_CLASSES:
+                assert sr.noid[cls] == pr.noid[cls], \
+                    f"Mismatch for class {cls}: seq={sr.noid[cls]} par={pr.noid[cls]}"
+
+    def test_classify_file_parallel_with_class_filter(
+        self, model_path, obscodes_path, sample_obs_path, empty_config_path
+    ):
+        """Parallel scoring with a class filter produces correct results."""
+        with Digest2(
+            model_path=model_path,
+            obscodes_path=obscodes_path,
+            config_path=empty_config_path,
+            repeatable=True,
+        ) as d2:
+            seq_results = d2.classify_file(
+                sample_obs_path, classes=["NEO", "MB1"], max_workers=1,
+            )
+            par_results = d2.classify_file(
+                sample_obs_path, classes=["NEO", "MB1"], max_workers=4,
+            )
+
+        assert len(seq_results) == len(par_results)
+        for sr, pr in zip(seq_results, par_results):
+            assert sr.noid.NEO == pr.noid.NEO
+            assert sr.noid.MB1 == pr.noid.MB1
+
+
+class TestBinaryModelLoading:
+    """Test that digest2 can load binary model files."""
+
+    def test_init_with_binary_model(self, model_path, obscodes_path,
+                                     empty_config_path):
+        """Initialize with CSV, verify binary cache is created, then init with binary."""
+        # First init with CSV to generate binary cache
+        with Digest2(
+            model_path=model_path,
+            obscodes_path=obscodes_path,
+            config_path=empty_config_path,
+        ) as d2:
+            pass
+
+        # The binary model should be alongside the CSV (without .csv extension)
+        binary_path = model_path.replace(".csv", "")
+        if not Path(binary_path).is_file():
+            pytest.skip("Binary model cache was not created (write permission issue?)")
+
+        # Now init with the binary path directly
+        with Digest2(
+            model_path=binary_path,
+            obscodes_path=obscodes_path,
+            config_path=empty_config_path,
+        ) as d2:
+            pass  # Should succeed without error
+
+    def test_binary_model_scores_match_csv(self, model_path, obscodes_path,
+                                            empty_config_path):
+        """Scores from binary model should match scores from CSV model."""
+        binary_path = model_path.replace(".csv", "")
+
+        obs = [
+            Observation(mjd=59938.384965, ra=128.15118, dec=17.17665,
+                        mag=22.22, band="G", obscode="G96"),
+            Observation(mjd=59938.395273, ra=128.14899, dec=17.17702,
+                        mag=21.96, band="G", obscode="G96"),
+            Observation(mjd=59938.400402, ra=128.14780, dec=17.17717,
+                        mag=21.55, band="G", obscode="G96"),
+        ]
+
+        # Score with CSV model
+        with Digest2(
+            model_path=model_path,
+            obscodes_path=obscodes_path,
+            config_path=empty_config_path,
+            repeatable=True,
+        ) as d2:
+            csv_result = d2.classify_tracklet(obs)
+
+        if not Path(binary_path).is_file():
+            pytest.skip("Binary model cache was not created")
+
+        # Score with binary model
+        with Digest2(
+            model_path=binary_path,
+            obscodes_path=obscodes_path,
+            config_path=empty_config_path,
+            repeatable=True,
+        ) as d2:
+            bin_result = d2.classify_tracklet(obs)
+
+        # Scores should be identical
+        for cls in ALL_CLASSES:
+            assert csv_result.noid[cls] == bin_result.noid[cls], \
+                f"Score mismatch for class {cls}: CSV={csv_result.noid[cls]} binary={bin_result.noid[cls]}"
+        assert csv_result.rms == bin_result.rms
