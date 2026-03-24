@@ -5,6 +5,7 @@ build:
   tools:
     python: "3.11"
   commands:
-    - pip install ${READTHEDOCS_REPOSITORY_PATH}/mpc-client
+    - echo "pwd=$(pwd)" && ls -la
+    - pip install ./mpc-client
     - pip install pandas mkdocs mkdocs-material "mkdocstrings[python]" mkdocs-jupyter
-    - cd ${READTHEDOCS_REPOSITORY_PATH}/mpc-client && mkdocs build --site-dir $READTHEDOCS_OUTPUT/html
+    - cd mpc-client && mkdocs build --site-dir $READTHEDOCS_OUTPUT/html
