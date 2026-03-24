@@ -11,6 +11,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
+#include <stdint.h>
 
 #include "d2lib.h"
 #include "digest2.h"
@@ -225,6 +227,8 @@ void d2_set_no_threshold(int flag) {
 
 // --- Internal helpers for tracklet setup/teardown ---
 
+static void lib_free_tracklet(tracklet *tk);
+
 // Validate class filter indices. Returns D2_OK or D2_ERR_INPUT.
 static int lib_validate_classes(int *classes, int n_classes) {
     if (classes != NULL && n_classes > 0) {
@@ -290,7 +294,22 @@ static tracklet *lib_alloc_tracklet(d2_observation *obs, int n_obs,
     if (repeatable) {
         tk->rand64 = 3;
     } else {
+        // rand() is not thread-safe: concurrent calls from multiple threads
+        // (e.g. Python ThreadPoolExecutor with GIL released) race on shared
+        // global state, producing correlated/duplicated seeds.
+        // Use rand_r() with a per-thread seed on POSIX systems.
+#ifdef _WIN32
         tk->rand64 = 2 * (rand() / 2) + 1;
+#else
+        static __thread unsigned int lib_rand_seed;
+        static __thread int lib_rand_seeded = 0;
+        if (!lib_rand_seeded) {
+            lib_rand_seed = (unsigned int)time(NULL)
+                          ^ (unsigned int)(uintptr_t)&lib_rand_seed;
+            lib_rand_seeded = 1;
+        }
+        tk->rand64 = 2 * (rand_r(&lib_rand_seed) / 2) + 1;
+#endif
     }
 
     extern double arcsecrad;
@@ -325,17 +344,13 @@ static tracklet *lib_alloc_tracklet(d2_observation *obs, int n_obs,
 
     if (last->mjd < first->mjd) {
         *status = D2_ERR_INPUT;
-        free(tk->class);
-        free(tk->olist);
-        free(tk);
+        lib_free_tracklet(tk);
         return NULL;
     }
 
     if (first->ra == last->ra && first->dec == last->dec) {
         *status = D2_ERR_INPUT;
-        free(tk->class);
-        free(tk->olist);
-        free(tk);
+        lib_free_tracklet(tk);
         return NULL;
     }
 

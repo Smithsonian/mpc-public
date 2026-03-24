@@ -656,3 +656,82 @@ class TestBinaryModelLoading:
             assert csv_result.noid[cls] == bin_result.noid[cls], \
                 f"Score mismatch for class {cls}: CSV={csv_result.noid[cls]} binary={bin_result.noid[cls]}"
         assert csv_result.rms == bin_result.rms
+
+
+class TestParallelNonRepeatable:
+    """Test parallel scoring with repeatable=False (stochastic mode).
+
+    These tests exercise the thread-safe RNG path to verify no crashes
+    or data corruption when multiple threads call rand_r() concurrently.
+    Scores are stochastic so we check structure and bounds, not exact values.
+    """
+
+    def test_classify_file_parallel_non_repeatable(
+        self, model_path, obscodes_path, sample_obs_path, empty_config_path
+    ):
+        """Parallel classify_file with repeatable=False produces valid results."""
+        with Digest2(
+            model_path=model_path,
+            obscodes_path=obscodes_path,
+            config_path=empty_config_path,
+            repeatable=False,
+        ) as d2:
+            results = d2.classify_file(sample_obs_path, max_workers=4)
+
+        assert len(results) >= 1
+        for r in results:
+            assert isinstance(r, ClassificationResult)
+            assert r.rms >= 0
+            for cls in ALL_CLASSES:
+                assert -0.01 <= r.noid[cls] <= 100.01, \
+                    f"Score out of range for {cls}: {r.noid[cls]}"
+
+    def test_classify_batch_parallel_non_repeatable(
+        self, model_path, obscodes_path, empty_config_path
+    ):
+        """Parallel classify_batch with repeatable=False produces valid results."""
+        tracklets = [
+            [
+                Observation(mjd=59938.384965, ra=128.15118, dec=17.17665,
+                            mag=22.22, obscode="G96"),
+                Observation(mjd=59938.395273, ra=128.14899, dec=17.17702,
+                            mag=21.96, obscode="G96"),
+                Observation(mjd=59938.400402, ra=128.14780, dec=17.17717,
+                            mag=21.55, obscode="G96"),
+            ],
+            [
+                Observation(mjd=59938.384965, ra=130.0, dec=20.0,
+                            mag=20.0, obscode="G96"),
+                Observation(mjd=59938.395273, ra=130.01, dec=20.01,
+                            mag=20.0, obscode="G96"),
+            ],
+            [
+                Observation(mjd=59938.384965, ra=125.0, dec=15.0,
+                            mag=19.5, obscode="G96"),
+                Observation(mjd=59938.395273, ra=125.02, dec=15.01,
+                            mag=19.5, obscode="G96"),
+            ],
+            [
+                Observation(mjd=59938.384965, ra=135.0, dec=25.0,
+                            mag=21.0, obscode="G96"),
+                Observation(mjd=59938.395273, ra=135.005, dec=25.005,
+                            mag=21.0, obscode="G96"),
+            ],
+        ]
+
+        with Digest2(
+            model_path=model_path,
+            obscodes_path=obscodes_path,
+            config_path=empty_config_path,
+            repeatable=False,
+        ) as d2:
+            results = d2.classify_batch(tracklets, max_workers=4)
+
+        assert len(results) == 4
+        for r in results:
+            assert r is not None
+            assert isinstance(r, ClassificationResult)
+            assert r.rms >= 0
+            for cls in ALL_CLASSES:
+                assert -0.01 <= r.noid[cls] <= 100.01, \
+                    f"Score out of range for {cls}: {r.noid[cls]}"
