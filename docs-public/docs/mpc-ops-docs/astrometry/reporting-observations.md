@@ -45,7 +45,7 @@ Observations of minor planets, comets and natural satellites, formatted as speci
     - [ADES PSV Submission Form](https://minorplanetcenter.net/submit_psv)
 3. [MPC1992 cURL instructions](https://minorplanetcenter.net/iau/info/commandlinesubmissions.html) <!-- TODO: update link when migrated -->
 
-Tutorials related to the submission of observations are available in the [Submission Tutorials](../../tutorials/submission_tutorials/) section of the MPC's documentation site.
+Tutorials related to the submission of observations are available in the [Submission Tutorials](../../tutorials/submission_tutorials.md) section of the MPC's documentation site.
 
 In addition to the above points, please also check the following notes:
 

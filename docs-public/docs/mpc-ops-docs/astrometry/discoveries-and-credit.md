@@ -36,9 +36,6 @@ If someone does follow up for your new objects, you will get credit for the disc
 
 ## When should I mark a discovery?
 
-
-Discovery asterisks are placed in column 13 of 
-
 Submitters may mark an observation record to indicate the discovery observations of an unidentified object. 
 
 In 80-column format, the discovery asterisk is placed in column 13 of the observation record. 
