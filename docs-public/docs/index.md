@@ -16,4 +16,5 @@ Use the menu on the left or the buttons below to navigate to topics of interest.
 
 - [Documentation](mpc-ops-docs/index.md)
 - [Services](services/index.md)
+- [mpc-client Package](mpc-client.md)
 - [Tutorials](tutorials/index.md)

@@ -1,0 +1,28 @@
+name: Lint mpc_client
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "mpc-client/**"
+      - ".github/workflows/mpc_client_lint.yml"
+  pull_request:
+    paths:
+      - "mpc-client/**"
+      - ".github/workflows/mpc_client_lint.yml"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install ruff
+      - name: Ruff lint
+        working-directory: ./mpc-client
+        run: ruff check src/ tests/
+      - name: Ruff format check
+        working-directory: ./mpc-client
+        run: ruff format --check src/ tests/

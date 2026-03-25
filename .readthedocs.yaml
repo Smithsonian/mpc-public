@@ -5,5 +5,6 @@ build:
   tools:
     python: "3.11"
   commands:
-    - pip install "mkdocs>=1.5,<2" mkdocs-material "mkdocstrings[python]" "mkdocs-jupyter>=0.24,<0.25" "nbconvert>=7.0,<8"
-    - cd docs-public && mkdocs build --site-dir $READTHEDOCS_OUTPUT/html
+    - pip install ./mpc-client
+    - pip install pandas "mkdocs>=1.5,<2" mkdocs-material "mkdocstrings[python]" "mkdocs-jupyter>=0.24,<0.25" "nbconvert>=7.0,<8"
+    - cd mpc-client && mkdocs build --site-dir $READTHEDOCS_OUTPUT/html
