@@ -168,3 +168,19 @@ class TestExtensionInit:
                 (59938.0, 2.0, 0.3, 21.0, 500, 0.0, 0.0),
                 (59938.1, 2.1, 0.3, 21.0, 500, 0.0, 0.0),
             ])
+
+    def test_init_with_binary_model(self, model_path, obscodes_path):
+        """Test that init works with a binary model path."""
+        # First load from CSV to ensure binary cache exists
+        ext.init(model_path, obscodes_path)
+        ext.cleanup()
+
+        binary_path = model_path.replace(".csv", "")
+        import os
+        if not os.path.exists(binary_path):
+            pytest.skip("Binary model cache not created")
+
+        # Now init with binary path
+        ext.init(binary_path, obscodes_path)
+        assert ext.is_initialized() is True
+        ext.cleanup()

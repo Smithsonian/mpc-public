@@ -6,6 +6,7 @@ one-shot use.
 """
 
 import math
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import Dict, List, Optional, Union
 
@@ -16,7 +17,7 @@ from digest2.observation import (
     parse_ades_xml,
     parse_mpc80_file,
 )
-from digest2.result import ClassificationResult, Scores
+from digest2.result import ClassificationResult, Scores, TrialOrbit
 
 
 def _parse_config_file(config_path: str) -> dict:
@@ -97,7 +98,7 @@ class Digest2:
         """Initialize with model data.
 
         Args:
-            model_path: Path to digest2.model.csv. Auto-discovered if None.
+            model_path: Path to model file (CSV or binary). Auto-discovered if None.
             config_path: Path to MPC.config for per-site errors. Auto-discovered if None.
             obscodes_path: Path to observatory codes file. Auto-discovered if None.
             repeatable: If True, use fixed random seed for deterministic results.
@@ -163,6 +164,7 @@ class Digest2:
         observations: List[Observation],
         classes: Optional[List[str]] = None,
         is_ades: bool = False,
+        collect_orbits: bool = False,
     ) -> ClassificationResult:
         """Classify a single tracklet.
 
@@ -172,11 +174,14 @@ class Digest2:
                      e.g., ["NEO", "MC", "MB1"]
             is_ades: Whether these observations come from ADES format
                      (affects RMS computation).
+            collect_orbits: If True, collect individual trial orbit elements
+                (q, e, i, H) in the result's trial_orbits field.
 
         Returns:
             ClassificationResult with raw/noid Scores, rms, and rms_prime.
         """
-        return self._score(observations, classes=classes, is_ades=is_ades)
+        return self._score(observations, classes=classes, is_ades=is_ades,
+                           collect_orbits=collect_orbits)
 
     def _score(
         self,
@@ -184,6 +189,7 @@ class Digest2:
         classes: Optional[List[str]] = None,
         is_ades: bool = False,
         designation: str = "",
+        collect_orbits: bool = False,
     ) -> ClassificationResult:
         """Internal: score a tracklet with an optional designation."""
         self._check_open()
@@ -204,26 +210,45 @@ class Digest2:
             site_idx = _extension.parse_obscode(obs.obscode)
             obs_tuples.append(obs.to_tuple(site_idx))
 
-        raw_result = _extension.score(
-            obs_tuples,
-            class_indices,
-            1 if is_ades else 0,
-        )
+        if collect_orbits:
+            raw_result = _extension.score_orbits(
+                obs_tuples,
+                class_indices,
+                1 if is_ades else 0,
+            )
+        else:
+            raw_result = _extension.score(
+                obs_tuples,
+                class_indices,
+                1 if is_ades else 0,
+            )
 
-        return self._format_result(raw_result, designation=designation)
+        return self._format_result(raw_result, designation=designation,
+                                   collect_orbits=collect_orbits)
 
     def classify_file(
         self,
         filepath: str,
         classes: Optional[List[str]] = None,
+        collect_orbits: bool = False,
+        max_workers: Optional[int] = None,
     ) -> List[ClassificationResult]:
         """Classify all tracklets in an observation file.
 
         Supports MPC 80-column (.obs) and ADES XML (.xml) formats.
 
+        With ``max_workers`` > 1, tracklets are scored in parallel using
+        threads.  The C scoring engine releases the GIL, so multiple
+        tracklets genuinely execute concurrently on separate CPU cores.
+
         Args:
             filepath: Path to the observation file.
             classes: List of class abbreviations to compute (default: all).
+            collect_orbits: If True, collect trial orbit elements per tracklet.
+            max_workers: Maximum number of threads for parallel scoring.
+                ``None`` (default) lets the runtime choose (typically
+                ``min(32, cpu_count + 4)``).  Use ``1`` to force sequential
+                scoring.
 
         Returns:
             List of ClassificationResult objects, one per tracklet.
@@ -237,48 +262,94 @@ class Digest2:
         else:
             tracklets = parse_mpc80_file(filepath)
 
-        results = []
-        for desig, obs_list in tracklets.items():
-            if len(obs_list) < 2:
-                continue
+        # Build list of (designation, obs_list) pairs with enough observations
+        scoreable = [
+            (desig.strip(), obs_list)
+            for desig, obs_list in tracklets.items()
+            if len(obs_list) >= 2
+        ]
 
+        if not scoreable:
+            return []
+
+        # Sequential path
+        if max_workers == 1 or len(scoreable) <= 1:
+            results = []
+            for desig, obs_list in scoreable:
+                try:
+                    result = self._score(
+                        obs_list, classes=classes, is_ades=is_xml,
+                        designation=desig,
+                        collect_orbits=collect_orbits,
+                    )
+                    results.append(result)
+                except RuntimeError:
+                    continue
+            return results
+
+        # Parallel path — GIL is released during C scoring
+        def _score_one(item):
+            desig, obs_list = item
             try:
-                result = self._score(
+                return self._score(
                     obs_list, classes=classes, is_ades=is_xml,
-                    designation=desig.strip(),
+                    designation=desig,
+                    collect_orbits=collect_orbits,
                 )
-                results.append(result)
             except RuntimeError:
-                # Skip tracklets that can't be scored (no motion, etc.)
-                continue
+                return None
 
-        return results
+        with ThreadPoolExecutor(max_workers=max_workers) as pool:
+            raw_results = list(pool.map(_score_one, scoreable))
+
+        return [r for r in raw_results if r is not None]
 
     def classify_batch(
         self,
         tracklets: List[List[Observation]],
         classes: Optional[List[str]] = None,
+        collect_orbits: bool = False,
+        max_workers: Optional[int] = None,
     ) -> List[Optional[ClassificationResult]]:
         """Classify multiple tracklets.
+
+        With ``max_workers`` > 1, tracklets are scored in parallel using
+        threads (the C engine releases the GIL).
 
         Args:
             tracklets: List of tracklets, each a list of Observations.
             classes: List of class abbreviations to compute.
+            collect_orbits: If True, collect trial orbit elements per tracklet.
+            max_workers: Maximum number of threads for parallel scoring.
+                ``None`` lets the runtime choose.  Use ``1`` for sequential.
 
         Returns:
             List of ClassificationResult objects (None for failed tracklets).
         """
-        results = []
-        for obs_list in tracklets:
+        if max_workers == 1 or len(tracklets) <= 1:
+            results = []
+            for obs_list in tracklets:
+                try:
+                    result = self.classify_tracklet(obs_list, classes=classes,
+                                                    collect_orbits=collect_orbits)
+                    results.append(result)
+                except RuntimeError:
+                    results.append(None)
+            return results
+
+        def _score_one(obs_list):
             try:
-                result = self.classify_tracklet(obs_list, classes=classes)
-                results.append(result)
+                return self.classify_tracklet(obs_list, classes=classes,
+                                              collect_orbits=collect_orbits)
             except RuntimeError:
-                results.append(None)
-        return results
+                return None
+
+        with ThreadPoolExecutor(max_workers=max_workers) as pool:
+            return list(pool.map(_score_one, tracklets))
 
     def _format_result(
         self, raw_result: dict, designation: str = "",
+        collect_orbits: bool = False,
     ) -> ClassificationResult:
         """Format raw C extension result into a ClassificationResult."""
         raw_scores = raw_result["raw_scores"]
@@ -291,12 +362,25 @@ class Digest2:
             raw_kwargs[abbr] = raw_scores[i]
             noid_kwargs[abbr] = noid_scores[i]
 
+        trial_orbits = None
+        if collect_orbits and "trial_orbits" in raw_result:
+            trial_orbits = tuple(
+                TrialOrbit(
+                    q=t[0], e=t[1], i=t[2], H=t[3],
+                    d=t[4], an=t[5],
+                    iq=t[6], ie=t[7], ii=t[8], ih=t[9],
+                    new_tag=bool(t[10]),
+                )
+                for t in raw_result["trial_orbits"]
+            )
+
         return ClassificationResult(
             raw=Scores(**raw_kwargs),
             noid=Scores(**noid_kwargs),
             rms=raw_result["rms"],
             rms_prime=raw_result["rms_prime"],
             designation=designation,
+            trial_orbits=trial_orbits,
         )
 
 
@@ -308,6 +392,8 @@ def classify(
     classes: Optional[List[str]] = None,
     repeatable: bool = True,
     no_threshold: bool = False,
+    collect_orbits: bool = False,
+    max_workers: Optional[int] = None,
 ) -> Union[ClassificationResult, List[ClassificationResult]]:
     """One-shot classification. Accepts a filepath, tracklet, or batch.
 
@@ -316,12 +402,15 @@ def classify(
             - A filepath (str or Path) to an observation file (.obs or .xml)
             - A list of Observation objects (single tracklet)
             - A list of lists of Observation objects (batch of tracklets)
-        model_path: Path to model CSV (auto-discovered if None).
+        model_path: Path to model file, CSV or binary (auto-discovered if None).
         config_path: Path to config file (auto-discovered if None).
         obscodes_path: Path to obscodes file (auto-discovered if None).
         classes: List of class abbreviations to compute.
         repeatable: Use fixed random seed for deterministic results.
         no_threshold: If True, disable per-observation RMS ceiling clamping.
+        collect_orbits: If True, collect trial orbit elements per tracklet.
+        max_workers: Maximum number of threads for parallel scoring.
+            ``None`` lets the runtime choose.  Use ``1`` for sequential.
 
     Returns:
         ClassificationResult for a single tracklet, or list of
@@ -335,7 +424,12 @@ def classify(
         no_threshold=no_threshold,
     ) as d2:
         if isinstance(input, (str, Path)):
-            return d2.classify_file(str(input), classes=classes)
+            return d2.classify_file(str(input), classes=classes,
+                                    collect_orbits=collect_orbits,
+                                    max_workers=max_workers)
         if isinstance(input, list) and input and isinstance(input[0], list):
-            return d2.classify_batch(input, classes=classes)
-        return d2.classify_tracklet(input, classes=classes)
+            return d2.classify_batch(input, classes=classes,
+                                     collect_orbits=collect_orbits,
+                                     max_workers=max_workers)
+        return d2.classify_tracklet(input, classes=classes,
+                                    collect_orbits=collect_orbits)

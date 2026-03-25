@@ -1,7 +1,7 @@
 """Observation data classes and parsers for various astrometric formats."""
 
 import math
-from astropy.time import Time
+from datetime import datetime
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 
@@ -242,7 +242,7 @@ def parse_ades_xml(filepath: str) -> Dict[str, List[Observation]]:
     Returns:
         Dict mapping designation/tracklet ID -> list of Observations.
     """
-    import xml.etree.ElementTree as ET
+    from lxml import etree as ET
 
     tree = ET.parse(filepath)
     root = tree.getroot()
@@ -353,7 +353,17 @@ def _iso_to_mjd(iso_str: str) -> float:
 
     Unlike :func:`_date_to_mjd`, there is no C-parity constraint here
     because ADES XML parsing is done entirely in Python (the C CLI's
-    ``d2ades.c`` is not used by the Python package), so we delegate to
-    astropy for robust time handling.
+    ``d2ades.c`` is not used by the Python package).
+
+    Uses :func:`datetime.fromisoformat` with :func:`_date_to_mjd` for
+    fast conversion (~1 µs) without the astropy dependency (~500 µs).
     """
-    return Time(iso_str, scale="utc").mjd
+    # Strip trailing 'Z' for Python 3.8-3.10 compatibility
+    # (fromisoformat gained timezone suffix support in 3.11)
+    s = iso_str.strip()
+    if s.endswith("Z"):
+        s = s[:-1]
+    dt = datetime.fromisoformat(s)
+    day_fraction = (dt.hour + dt.minute / 60.0 + dt.second / 3600.0
+                    + dt.microsecond / 3_600_000_000.0)
+    return _date_to_mjd(dt.year, dt.month, dt.day + day_fraction / 24.0)

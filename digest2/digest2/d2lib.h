@@ -44,7 +44,7 @@ typedef struct {
 } d2_result;
 
 // Lifecycle
-int  d2_init(const char *model_csv_path, const char *obscodes_path);
+int  d2_init(const char *model_path, const char *obscodes_path);
 void d2_cleanup(void);
 int  d2_is_initialized(void);
 
@@ -58,6 +58,39 @@ void d2_set_no_threshold(int flag);
 d2_result d2_score_observations(d2_observation *obs, int n_obs,
                                 int *classes, int n_classes,
                                 int is_ades);
+
+// Trial orbit data (for orbit element collection)
+typedef struct {
+    double q;       // perihelion distance (AU)
+    double e;       // eccentricity
+    double i;       // inclination (degrees)
+    double H;       // absolute magnitude
+    double d;       // geocentric distance used to generate this orbit (AU)
+    double an;      // angle used in orbit solution (radians)
+    int    iq;      // q bin index (0..QX-1)
+    int    ie;      // e bin index (0..EX-1)
+    int    ii;      // i bin index (0..IX-1)
+    int    ih;      // H bin index (0..HX-1)
+    int    new_tag; // 1 if this orbit tagged a previously unvisited bin
+} d2_trial_orbit;
+
+typedef struct d2_orbit_buffer {
+    d2_trial_orbit *orbits;
+    int count;
+    int capacity;
+} d2_orbit_buffer;
+
+// Extended result with trial orbits
+typedef struct {
+    d2_result base;
+    d2_trial_orbit *orbits;   // caller must free via d2_free_result_ext
+    int n_orbits;
+} d2_result_ext;
+
+d2_result_ext d2_score_observations_ext(d2_observation *obs, int n_obs,
+                                         int *classes, int n_classes,
+                                         int is_ades);
+void d2_free_result_ext(d2_result_ext *result);
 
 // Utilities
 int         d2_parse_obscode(const char *code3);

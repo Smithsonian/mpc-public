@@ -43,6 +43,22 @@ Type `make`, and a `digest2` executable should be built in the current directory
 simplistic and may take minor modifications to work on your system; detailed instructions can be
 found in the "Installation and requirements" section of the `digest2` top-level [README.md](../README.md)
 
+### Platform Notes
+
+The C command-line tool builds on Linux and macOS. It requires:
+- A C99 compiler (`gcc` or `clang`)
+- `libxml2` development headers (for ADES XML parsing)
+- pthreads (standard on Linux/macOS)
+
+Platform-specific installation of libxml2:
+- **Debian/Ubuntu**: `sudo apt-get install libxml2 libxml2-dev`
+- **RHEL/CentOS/Fedora**: `sudo dnf install libxml2 libxml2-devel`
+- **macOS (Homebrew)**: `brew install libxml2`
+
+The C CLI does not build natively on Windows (it requires pthreads and POSIX APIs).
+Windows users should use the Python package (`pip install digest2`), which provides
+pre-built wheels with no external C library dependencies.
+
 ## Model
 
 Digest2 also requires a Solar System model file.  A model file, called `digest2.model` can be

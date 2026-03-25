@@ -5,6 +5,9 @@
  * @Return tracklet -- the tracklet
  */
 
+// Required for strptime() and timegm() declarations on glibc (e.g. RHEL)
+#define _GNU_SOURCE
+
 #include <libxml/tree.h>
 #include <libxml/parser.h>
 #include <libxml/xpath.h>
@@ -15,6 +18,42 @@
 #include "d2ades.h"
 #include <time.h>
 #include <math.h>
+
+/**
+    free_optical - free all xmlNodeGetContent-allocated fields and the struct
+*/
+static void free_optical(opticalPtr opt) {
+    if (!opt) return;
+    xmlFree(opt->provID);
+    xmlFree(opt->trkSub);
+    xmlFree(opt->obsID);
+    xmlFree(opt->trkID);
+    xmlFree(opt->mode);
+    xmlFree(opt->stn);
+    xmlFree(opt->obsTime);
+    xmlFree(opt->ra);
+    xmlFree(opt->dec);
+    xmlFree(opt->rmsRA);
+    xmlFree(opt->rmsDec);
+    xmlFree(opt->astCat);
+    xmlFree(opt->mag);
+    xmlFree(opt->rmsMag);
+    xmlFree(opt->band);
+    xmlFree(opt->logSNR);
+    xmlFree(opt->seeing);
+    xmlFree(opt->exp);
+    xmlFree(opt->subFmt);
+    xmlFree(opt->sys);
+    xmlFree(opt->pos1);
+    xmlFree(opt->pos2);
+    xmlFree(opt->pos3);
+    xmlFree(opt->ref);
+    xmlFree(opt->ctr);
+    xmlFree(opt->precTime);
+    xmlFree(opt->precRA);
+    xmlFree(opt->precDec);
+    free(opt);
+}
 
 /**
     parse_optical - function to parse the optical elements in an XML document
@@ -36,7 +75,7 @@ static opticalPtr parse_optical(xmlNodePtr cur) {
     cur = cur->xmlChildrenNode;
     while (cur != NULL) {
         if ((!xmlStrcmp(cur->name, (const xmlChar *) "provID")))
-            ret->trkSub = xmlNodeGetContent(cur);
+            ret->provID = xmlNodeGetContent(cur);
         if ((!xmlStrcmp(cur->name, (const xmlChar *) "trkSub")))
             ret->trkSub = xmlNodeGetContent(cur);
         if ((!xmlStrcmp(cur->name, (const xmlChar *) "obsID")))
@@ -44,7 +83,7 @@ static opticalPtr parse_optical(xmlNodePtr cur) {
         if ((!xmlStrcmp(cur->name, (const xmlChar *) "trkID"))) {
             ret->trkID = xmlNodeGetContent(cur);
             int numToRemove = 3;
-            int trkIDLen = strlen(ret->trkID);
+            int trkIDLen = xmlStrlen(ret->trkID);
             if (trkIDLen > numToRemove) {
                 memmove(ret->trkID, ret->trkID + numToRemove,
                         trkIDLen - numToRemove + 1); // +1 to include the null terminator
@@ -108,16 +147,19 @@ static opticalPtr parse_optical(xmlNodePtr cur) {
 
 /**
  * convert_to_modified_julian_date - Convert a date and time string in ISO format to the modified Julian date
- * @iso_string: A string in the format "YYYY-MM-DDTHH:MM:SS" that represents a date and time in the ISO format
+ * @iso_string: A string in the format "YYYY-MM-DDTHH:MM:SS[.fff...]Z" that represents a date and time in the ISO format
  * Returns the modified Julian date (MJD) as a double. The MJD is calculated by dividing the number of seconds since
  * the Unix epoch by 86400.0 and adding 40587.0
  * The function assumes the input is in the UTC timezone and it will fail if the input string is in different format.
  */
 double convert_to_modified_julian_date(const char* iso_string) {
     struct tm tm;
-    strptime(iso_string, "%Y-%m-%dT%H:%M:%S", &tm);
+    char *rest = strptime(iso_string, "%Y-%m-%dT%H:%M:%S", &tm);
+    double frac_sec = 0.0;
+    if (rest && *rest == '.')
+        frac_sec = atof(rest);  // parses ".991Z" as 0.991, stops at 'Z'
     time_t t = timegm(&tm);
-    return (double)(t / 86400.0) + 40587.0;
+    return (double)(t / 86400.0) + 40587.0 + frac_sec / 86400.0;
 }
 
 /**
@@ -240,6 +282,7 @@ tracklet *parse_nodes(xmlXPathObjectPtr optical_nodes) {
             tk = resetInvalid();
             tk->isAdes = 1;
         }
+        free_optical(opt);
         i++;
 
     }
@@ -262,7 +305,7 @@ tracklet *parse_ades(const char *filepath) {
     }
 
     xmlXPathContextPtr xpathCtx = xmlXPathNewContext(doc);
-    xmlXPathObjectPtr optical_nodes = xmlXPathEvalExpression("//optical", xpathCtx);
+    xmlXPathObjectPtr optical_nodes = xmlXPathEvalExpression((const xmlChar *)"//optical", xpathCtx);
 
     if (optical_nodes == NULL) {
         fprintf(stderr, "Error: Nothing found...");

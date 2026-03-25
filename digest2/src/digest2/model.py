@@ -6,8 +6,19 @@ import os
 from pathlib import Path
 
 
+def _find_model_in_dir(directory: Path) -> str | None:
+    """Check a directory for model files, preferring CSV over binary."""
+    csv_path = directory / "digest2.model.csv"
+    if csv_path.is_file():
+        return str(csv_path)
+    bin_path = directory / "digest2.model"
+    if bin_path.is_file():
+        return str(bin_path)
+    return None
+
+
 def find_model_path() -> str:
-    """Locate the digest2.model.csv population model file.
+    """Locate the digest2 population model file (CSV or binary).
 
     Search order:
     1. $DIGEST2_MODEL environment variable
@@ -15,8 +26,11 @@ def find_model_path() -> str:
     3. Repository population/ directory (editable installs)
     4. Current working directory
 
+    At each location, prefers digest2.model.csv over digest2.model
+    when both exist.
+
     Returns:
-        Path to digest2.model.csv
+        Path to model file (CSV or binary).
 
     Raises:
         FileNotFoundError: If no model file can be found.
@@ -28,28 +42,25 @@ def find_model_path() -> str:
 
     # 2. Bundled data directory (works for pip-installed packages)
     pkg_dir = Path(__file__).parent
-    bundled_model = pkg_dir / "data" / "digest2.model.csv"
-    if bundled_model.is_file():
-        return str(bundled_model)
+    found = _find_model_in_dir(pkg_dir / "data")
+    if found:
+        return found
 
     # 3. Repository population/ directory (editable installs)
-    repo_model = pkg_dir.parent.parent / "population" / "digest2.model.csv"
-    if repo_model.is_file():
-        return str(repo_model)
-
-    alt_model = pkg_dir.parent.parent.parent / "population" / "digest2.model.csv"
-    if alt_model.is_file():
-        return str(alt_model)
+    for parent in [pkg_dir.parent.parent, pkg_dir.parent.parent.parent]:
+        found = _find_model_in_dir(parent / "population")
+        if found:
+            return found
 
     # 4. Current working directory
-    cwd_model = Path.cwd() / "digest2.model.csv"
-    if cwd_model.is_file():
-        return str(cwd_model)
+    found = _find_model_in_dir(Path.cwd())
+    if found:
+        return found
 
     raise FileNotFoundError(
-        "Cannot find digest2.model.csv. Set DIGEST2_MODEL environment "
-        "variable or ensure the file is in the current directory or "
-        "the package data/ directory."
+        "Cannot find digest2.model.csv or digest2.model. Set DIGEST2_MODEL "
+        "environment variable or ensure the file is in the current directory "
+        "or the package data/ directory."
     )
 
 

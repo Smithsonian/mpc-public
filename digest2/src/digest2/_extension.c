@@ -26,7 +26,7 @@ static PyObject *py_init(PyObject *self, PyObject *args) {
     if (rc != D2_OK) {
         const char *msg;
         switch (rc) {
-            case D2_ERR_MODEL:    msg = "Failed to load population model CSV"; break;
+            case D2_ERR_MODEL:    msg = "Failed to load population model"; break;
             case D2_ERR_OBSCODES: msg = "Failed to load observatory codes file"; break;
             case D2_ERR_MEMORY:   msg = "Memory allocation failed"; break;
             default:              msg = "Unknown initialization error"; break;
@@ -49,33 +49,11 @@ static PyObject *py_is_initialized(PyObject *self, PyObject *noargs) {
     return PyBool_FromLong(d2_is_initialized());
 }
 
-static PyObject *py_score(PyObject *self, PyObject *args) {
-    PyObject *obs_list;
-    PyObject *classes_obj = Py_None;
-    int is_ades = 0;
+// --- Shared helpers for observation and class parsing ---
 
-    if (!PyArg_ParseTuple(args, "O|Oi", &obs_list, &classes_obj, &is_ades))
-        return NULL;
-
-    if (!module_initialized) {
-        PyErr_SetString(PyExc_RuntimeError,
-                        "digest2 not initialized. Call init() first.");
-        return NULL;
-    }
-
-    if (!PyList_Check(obs_list)) {
-        PyErr_SetString(PyExc_TypeError, "observations must be a list");
-        return NULL;
-    }
-
-    Py_ssize_t n_obs = PyList_Size(obs_list);
-    if (n_obs < 2) {
-        PyErr_SetString(PyExc_ValueError,
-                        "At least 2 observations required");
-        return NULL;
-    }
-
-    // Parse observations
+// Parse a Python list of observation tuples/dicts into a C array.
+// Returns allocated d2_observation array, or NULL with Python exception set.
+static d2_observation *parse_obs_list(PyObject *obs_list, Py_ssize_t n_obs) {
     d2_observation *obs = (d2_observation *)calloc(n_obs, sizeof(d2_observation));
     if (!obs) {
         PyErr_NoMemory();
@@ -151,72 +129,259 @@ static PyObject *py_score(PyObject *self, PyObject *args) {
         }
     }
 
-    // Parse classes filter
-    int *class_indices = NULL;
-    int n_classes = 0;
+    return obs;
+}
 
-    if (classes_obj != Py_None && PyList_Check(classes_obj)) {
-        n_classes = (int)PyList_Size(classes_obj);
-        if (n_classes > 0) {
-            class_indices = (int *)malloc(n_classes * sizeof(int));
-            if (!class_indices) {
-                free(obs);
-                PyErr_NoMemory();
-                return NULL;
-            }
-            for (int i = 0; i < n_classes; i++) {
-                class_indices[i] = (int)PyLong_AsLong(PyList_GetItem(classes_obj, i));
-                if (PyErr_Occurred()) {
-                    free(obs);
-                    free(class_indices);
-                    return NULL;
-                }
-            }
-        }
-    }
+// Parse a Python list of class indices into a C array with bounds validation.
+// Sets *n_classes_out to the number of classes.
+// Returns allocated int array (caller must free), or NULL.
+// When NULL is returned:
+//   - If PyErr_Occurred() is true, an error was raised (caller should propagate).
+//   - If PyErr_Occurred() is false, classes_obj was None or empty (means "all classes").
+static int *parse_class_filter(PyObject *classes_obj, int *n_classes_out) {
+    *n_classes_out = 0;
 
-    // Call the C scoring function
-    d2_result res = d2_score_observations(obs, (int)n_obs, class_indices, n_classes, is_ades);
+    if (classes_obj == Py_None || !PyList_Check(classes_obj))
+        return NULL;
 
-    free(obs);
-    if (class_indices) free(class_indices);
+    int n = (int)PyList_Size(classes_obj);
+    if (n <= 0)
+        return NULL;
 
-    if (res.status != D2_OK) {
-        const char *msg;
-        switch (res.status) {
-            case D2_ERR_INPUT:  msg = "Invalid input (need >=2 obs with motion and time span)"; break;
-            case D2_ERR_MEMORY: msg = "Memory allocation failed"; break;
-            case D2_ERR_NOINIT: msg = "Library not initialized"; break;
-            default:            msg = "Scoring error"; break;
-        }
-        PyErr_SetString(PyExc_RuntimeError, msg);
+    if (n > D2CLASSES) {
+        PyErr_Format(PyExc_ValueError,
+            "Too many classes (%d > %d maximum)", n, D2CLASSES);
         return NULL;
     }
 
-    // Build result dict
+    int *indices = (int *)malloc(n * sizeof(int));
+    if (!indices) {
+        PyErr_NoMemory();
+        return NULL;
+    }
+
+    for (int i = 0; i < n; i++) {
+        indices[i] = (int)PyLong_AsLong(PyList_GetItem(classes_obj, i));
+        if (PyErr_Occurred()) {
+            free(indices);
+            return NULL;
+        }
+        if (indices[i] < 0 || indices[i] >= D2CLASSES) {
+            free(indices);
+            PyErr_Format(PyExc_ValueError,
+                "Class index %d out of range [0, %d)", indices[i], D2CLASSES);
+            return NULL;
+        }
+    }
+
+    *n_classes_out = n;
+    return indices;
+}
+
+// Raise a RuntimeError for a d2_result status code.
+static void raise_scoring_error(int status) {
+    const char *msg;
+    switch (status) {
+        case D2_ERR_INPUT:  msg = "Invalid input (need >=2 obs with motion and time span)"; break;
+        case D2_ERR_MEMORY: msg = "Memory allocation failed"; break;
+        case D2_ERR_NOINIT: msg = "Library not initialized"; break;
+        default:            msg = "Scoring error"; break;
+    }
+    PyErr_SetString(PyExc_RuntimeError, msg);
+}
+
+// --- Scoring functions ---
+
+static int add_float_item(PyObject *dict, const char *key, double value) {
+    PyObject *obj = PyFloat_FromDouble(value);
+    if (!obj) return -1;
+    if (PyDict_SetItemString(dict, key, obj) < 0) {
+        Py_DECREF(obj);
+        return -1;
+    }
+    Py_DECREF(obj);
+    return 0;
+}
+
+static int add_int_item(PyObject *dict, const char *key, int value) {
+    PyObject *obj = PyLong_FromLong(value);
+    if (!obj) return -1;
+    if (PyDict_SetItemString(dict, key, obj) < 0) {
+        Py_DECREF(obj);
+        return -1;
+    }
+    Py_DECREF(obj);
+    return 0;
+}
+
+static int add_score_lists(PyObject *dict, const double *raw_scores,
+                           const double *noid_scores) {
     PyObject *raw_list = PyList_New(D2CLASSES);
     PyObject *noid_list = PyList_New(D2CLASSES);
     if (!raw_list || !noid_list) {
         Py_XDECREF(raw_list);
         Py_XDECREF(noid_list);
-        return PyErr_NoMemory();
+        return -1;
     }
 
     for (int i = 0; i < D2CLASSES; i++) {
-        PyList_SET_ITEM(raw_list, i, PyFloat_FromDouble(res.raw_scores[i]));
-        PyList_SET_ITEM(noid_list, i, PyFloat_FromDouble(res.noid_scores[i]));
+        PyObject *raw_val = PyFloat_FromDouble(raw_scores[i]);
+        PyObject *noid_val = PyFloat_FromDouble(noid_scores[i]);
+        if (!raw_val || !noid_val) {
+            Py_XDECREF(raw_val);
+            Py_XDECREF(noid_val);
+            Py_DECREF(raw_list);
+            Py_DECREF(noid_list);
+            return -1;
+        }
+        PyList_SET_ITEM(raw_list, i, raw_val);
+        PyList_SET_ITEM(noid_list, i, noid_val);
     }
 
-    PyObject *result = Py_BuildValue("{sOsOsdsd}",
-        "raw_scores", raw_list,
-        "noid_scores", noid_list,
-        "rms", res.rms,
-        "rms_prime", res.rms_prime);
+    if (PyDict_SetItemString(dict, "raw_scores", raw_list) < 0 ||
+        PyDict_SetItemString(dict, "noid_scores", noid_list) < 0) {
+        Py_DECREF(raw_list);
+        Py_DECREF(noid_list);
+        return -1;
+    }
 
     Py_DECREF(raw_list);
     Py_DECREF(noid_list);
+    return 0;
+}
 
+static PyObject *build_trial_orbits_list(const d2_result_ext *ext) {
+    PyObject *orbits_list = PyList_New(ext->n_orbits);
+    if (!orbits_list) return NULL;
+
+    for (int i = 0; i < ext->n_orbits; i++) {
+        const d2_trial_orbit *orb = &ext->orbits[i];
+        PyObject *tup = Py_BuildValue("(ddddddiiiii)",
+            orb->q, orb->e, orb->i, orb->H,
+            orb->d, orb->an,
+            orb->iq, orb->ie, orb->ii, orb->ih,
+            orb->new_tag);
+        if (!tup) {
+            Py_DECREF(orbits_list);
+            return NULL;
+        }
+        PyList_SET_ITEM(orbits_list, i, tup);
+    }
+    return orbits_list;
+}
+
+static PyObject *py_score_common(PyObject *args, int collect_orbits) {
+    PyObject *obs_list;
+    PyObject *classes_obj = Py_None;
+    int is_ades = 0;
+    d2_observation *obs = NULL;
+    int *class_indices = NULL;
+    int n_classes = 0;
+    PyObject *result = NULL;
+    PyObject *orbits_list = NULL;
+    d2_result res;
+    d2_result_ext ext;
+    int status;
+
+    memset(&res, 0, sizeof(res));
+    memset(&ext, 0, sizeof(ext));
+
+    if (!PyArg_ParseTuple(args, "O|Oi", &obs_list, &classes_obj, &is_ades))
+        return NULL;
+
+    if (!module_initialized) {
+        PyErr_SetString(PyExc_RuntimeError,
+                        "digest2 not initialized. Call init() first.");
+        return NULL;
+    }
+
+    if (!PyList_Check(obs_list)) {
+        PyErr_SetString(PyExc_TypeError, "observations must be a list");
+        return NULL;
+    }
+
+    Py_ssize_t n_obs = PyList_Size(obs_list);
+    if (n_obs < 2) {
+        PyErr_SetString(PyExc_ValueError,
+                        "At least 2 observations required");
+        return NULL;
+    }
+
+    // Parse observations
+    obs = parse_obs_list(obs_list, n_obs);
+    if (!obs) goto cleanup;
+
+    // Parse classes filter (with bounds validation)
+    class_indices = parse_class_filter(classes_obj, &n_classes);
+    if (PyErr_Occurred()) {
+        goto cleanup;
+    }
+
+    // Release the GIL during scoring — the C scoring engine is thread-safe
+    // (each call operates on its own tracklet with per-tracklet class filter).
+    if (collect_orbits) {
+        Py_BEGIN_ALLOW_THREADS
+        ext = d2_score_observations_ext(obs, (int)n_obs, class_indices, n_classes, is_ades);
+        Py_END_ALLOW_THREADS
+        status = ext.base.status;
+    } else {
+        Py_BEGIN_ALLOW_THREADS
+        res = d2_score_observations(obs, (int)n_obs, class_indices, n_classes, is_ades);
+        Py_END_ALLOW_THREADS
+        status = res.status;
+    }
+
+    if (status != D2_OK) {
+        raise_scoring_error(status);
+        goto cleanup;
+    }
+
+    result = PyDict_New();
+    if (!result) goto cleanup;
+
+    if (collect_orbits) {
+        if (add_score_lists(result, ext.base.raw_scores, ext.base.noid_scores) < 0 ||
+            add_float_item(result, "rms", ext.base.rms) < 0 ||
+            add_float_item(result, "rms_prime", ext.base.rms_prime) < 0 ||
+            add_int_item(result, "n_orbits", ext.n_orbits) < 0) {
+            goto cleanup;
+        }
+
+        orbits_list = build_trial_orbits_list(&ext);
+        if (!orbits_list) goto cleanup;
+        if (PyDict_SetItemString(result, "trial_orbits", orbits_list) < 0) {
+            goto cleanup;
+        }
+    } else {
+        if (add_score_lists(result, res.raw_scores, res.noid_scores) < 0 ||
+            add_float_item(result, "rms", res.rms) < 0 ||
+            add_float_item(result, "rms_prime", res.rms_prime) < 0) {
+            goto cleanup;
+        }
+    }
+
+cleanup:
+    free(obs);
+    free(class_indices);
+    if (collect_orbits) {
+        d2_free_result_ext(&ext);
+    }
+    Py_XDECREF(orbits_list);
+    if (PyErr_Occurred()) {
+        Py_XDECREF(result);
+        return NULL;
+    }
     return result;
+}
+
+static PyObject *py_score(PyObject *self, PyObject *args) {
+    (void)self;
+    return py_score_common(args, 0);
+}
+
+static PyObject *py_score_orbits(PyObject *self, PyObject *args) {
+    (void)self;
+    return py_score_common(args, 1);
 }
 
 static PyObject *py_configure(PyObject *self, PyObject *args, PyObject *kwargs) {
@@ -305,8 +470,9 @@ static PyMethodDef methods[] = {
     {"init",
     py_init,
     METH_VARARGS,
-     "init(model_csv_path, obscodes_path)\n"
-     "Initialize digest2 with model and observatory data."},
+     "init(model_path, obscodes_path)\n"
+     "Initialize digest2 with model and observatory data.\n"
+     "model_path can be a CSV (.csv) or binary model file."},
     {"cleanup",
     py_cleanup,
     METH_NOARGS,
@@ -322,6 +488,13 @@ static PyMethodDef methods[] = {
      "Score a tracklet. observations is a list of tuples or dicts.\n"
      "Tuple format: (mjd, ra_rad, dec_rad, vmag, site_int[, rmsRA, rmsDec, spacebased])\n"
      "Returns dict with 'raw_scores', 'noid_scores', 'rms', 'rms_prime'."},
+    {"score_orbits",
+    py_score_orbits,
+    METH_VARARGS,
+     "score_orbits(observations, classes=None, is_ades=0) -> dict\n"
+     "Score a tracklet and collect trial orbits. Same as score() but also\n"
+     "returns 'trial_orbits' (list of tuples) and 'n_orbits' (int).\n"
+     "Each orbit tuple: (q, e, i, H, d, an, iq, ie, ii, ih, new_tag)."},
     {"configure",
     (PyCFunction)py_configure,
     METH_VARARGS | METH_KEYWORDS,

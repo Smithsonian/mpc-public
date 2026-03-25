@@ -7,6 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 This is the Minor Planet Center's public repository containing:
 - **mpc_orb**: Python package for standardized orbit data exchange using JSON format
 - **docs-public**: MkDocs-based documentation site deployed to https://docs.minorplanetcenter.net/
+- **MIGRATION_TRACKER.md**: Tracks the status of all legacy page migrations (see `/migrate-docs-project-man` skill)
 
 ## Common Commands
 
@@ -133,6 +134,18 @@ The following documentation pages have been migrated from MPC legacy pages into 
 - `astrometry/reporting-observations.md` - From `/iau/info/Astrometry.html` (reporting and checking sections)
 - `astrometry/discoveries-and-credit.md` - From `/iau/info/Astrometry.html` (discoveries, coverage, naming sections)
 - `astrometry/mpc-processing.md` - From `/iau/info/Astrometry.html` (processing and publication sections)
+
+**astrometry/** (migrated from `/iau/info/Astrometry.html`):
+
+- `astrometry/getting-started.md` - Getting started with astrometry submissions
+- `astrometry/observatory-codes.md` - Observatory codes overview
+- `astrometry/reporting-observations.md` - How to report observations
+- `astrometry/discoveries-and-credit.md` - Discovery credit and procedures
+- `astrometry/mpc-processing.md` - How the MPC processes observations
+
+**data-and-services/**:
+
+- `data-and-services/non-english-characters.md` - From `/iau/info/NonEnglish.html`
 
 ### Migration Conventions
 
