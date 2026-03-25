@@ -81,4 +81,4 @@ pip install mpc-orb
 
 ## See Also
 
-- [Orbital Elements Documentation](../orbits.md)
+- [Orbital Elements Documentation](../orbits/index.md)

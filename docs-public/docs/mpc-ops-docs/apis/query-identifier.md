@@ -61,7 +61,7 @@ The following fields are always returned by the API. If the object lacks one of 
 | Field | Type                 | Description                                                                                                                   |
 |-------|----------------------|-------------------------------------------------------------------------------------------------------------------------------|
 | `found` | Integer              | 0 if no match, 1 if found, >1 if disambiguation needed                                                                        |
-| `object_type` | List of two values   | An [object type](https://minorplanetcenter.net/mpcops/documentation/object-types/) identifier: `[String name, Numeric index]` |
+| `object_type` | List of two values   | An [object type](../orbits/object-types.md) identifier: `[String name, Numeric index]` |
 | `name` | String               | Object name (if assigned)                                                                                                     |
 | `citation` | String               | Citation text (if assigned)                                                                                                   |
 | `permid` | String               | Permanent ID                                                                                                                  |

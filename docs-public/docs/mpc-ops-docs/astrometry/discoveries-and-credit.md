@@ -40,8 +40,7 @@ Discovery asterisks on submitted observations must only appear on observations w
 
 There can be more than one discovery asterisk for objects that have not yet been numbered. The MPC will assign the final asterisk when the number and the discovery credits are assigned. See also this [Editorial Note](https://minorplanetcenter.net/mpec/K10/K10U20.html) for a more extensive explanation.
 
-The information is published in the monthly [_Minor Planet Circulars (MPCs)_](https://minorplanetcenter.net/iau/services/MPCServices.html). <!-- TODO: update link when migrated -->
-
+The information is published in the monthly [_Minor Planet Circulars (MPCs)_](https://minorplanetcenter.net/iau/services/MPCServices.html).
 
 ## How do I get a provisional designation?
 
@@ -63,8 +62,7 @@ Note that this linking process requires the earlier observations be on a differe
 
 The first requirement for getting your discovery numbered is to ensure that the observations at your discovery opposition cover a sufficient arc to enable recovery at a subsequent or previous opposition. Note that "your discovery" does not imply that this will be the discovery apparition when the object is numbered, if previously-reported observations satisfying the requirements listed in [_MPEC_ 2010-U20](https://minorplanetcenter.net/mpec/K10/K10U20.html) are located.
 
-Once identified (or recovered as a result of a direct search), observations should be made on pairs of nights in each of two dark runs at each opposition until the object is numbered. For main-belt objects this can occur after the object has been observed at four oppositions (although this depends on the number and distribution [preferably two nights in each of two dark runs in at least three of the oppositions] of the observations as well as their quality); NEOs can receive a number after two or three well-observed oppositions. In addition, the [uncertainty parameter, U,](https://minorplanetcenter.net/iau/info/UValue.html) must be less than or equal to two for objects to be numbered. Note that newly-identified multiple-opposition objects are not eligible for numbering: numbering of such objects can only take place after the first multiple-opposition orbit has appeared in the _MPCs_ and after further observations have been reported (these can be at the latest opposition, or at an earlier or subsequent opposition). <!-- TODO: update link when migrated -->
-
+Once identified (or recovered as a result of a direct search), observations should be made on pairs of nights in each of two dark runs at each opposition until the object is numbered. For main-belt objects this can occur after the object has been observed at four oppositions (although this depends on the number and distribution [preferably two nights in each of two dark runs in at least three of the oppositions] of the observations as well as their quality); NEOs can receive a number after two or three well-observed oppositions. In addition, the [uncertainty parameter, U,](../orbits/uncertainty-parameter.md) must be less than or equal to two for objects to be numbered. Note that newly-identified multiple-opposition objects are not eligible for numbering: numbering of such objects can only take place after the first multiple-opposition orbit has appeared in the _MPCs_ and after further observations have been reported (these can be at the latest opposition, or at an earlier or subsequent opposition).
 The selection of objects for numbering is an automatic process performed just before the preparation of each batch of _MPCs_. There is no need to ask us "What do I need to do to get such-and-such numbered?". Simply follow the guidelines above and the object will be numbered when it is ready.
 
 

@@ -9,7 +9,7 @@ The current identification table contains all the primary objects (minor planets
     - If the object has no secondary designations, primary and secondary fields are the same (appears once).
     - If the object has one secondary designation, the primary appears twice.
     - If the object has *n* (n>1) secondary designations, primary appears *n+1* times.
-- For object_type, see the [object types documentation](https://minorplanetcenter.net/mpcops/documentation/object-types/).
+- For object_type, see the [object types documentation](../../orbits/object-types.md).
 - Can be linked to the numbered identifications table by primary designation. Objects that have been numbered will have `numbered` flag set to True.
 
 | Column | Data type | Description |
