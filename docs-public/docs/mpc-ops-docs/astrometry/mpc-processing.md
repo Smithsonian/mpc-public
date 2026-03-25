@@ -12,12 +12,16 @@ Observations are published with different cadences depending on the type of obje
 - [_Minor Planet Electronic Circulars_](https://minorplanetcenter.net/iau/services/MPCServices.html) are published for newly discovered NEOs, TNOs and natural satellites. <!-- TODO: update link when migrated -->
 - _Observations and orbits of comets and A/ objects_ are also published (~weekly). (e.g. see [MPEC 2023-P65](https://minorplanetcenter.net/mpec/K23/K23P65.html))
 
-As of [MPEC 2023-D40](https://www.minorplanetcenter.net/mpec/K23/K23D40.html) (February 21, 2023), Datacite DOIs are available for all new MPECs. The first published DOI is now available at <https://commons.datacite.org/doi.org/10.48377/mpec/2023-d40>. NASA ADS, based in Cambridge (MA) at the Center for Astrophysics, is in the process of mining the relevant data from Datacite, so that MPECs will be available on their system soon. This will allow all our users to cite their observations in scientific articles or proposals. The MPC is also in the process of creating DOIs for all the MPECs that have been released before February 21.
+As of [MPEC 2023-D40](https://www.minorplanetcenter.net/mpec/K23/K23D40.html) (February 21, 2023), Datacite DOIs are available for all new MPECs. 
+The first published DOI is now available at <https://commons.datacite.org/doi.org/10.48377/mpec/2023-d40>. 
+NASA ADS, based in Cambridge (MA) at the Center for Astrophysics, is in the process of mining the relevant data from Datacite, so that MPECs will be available on their system soon. 
+This will allow all our users to cite their observations in scientific articles or proposals. 
+The MPC is also in the process of creating DOIs for all the MPECs that were been released prior to February 21, 2023.
 
 
 ## What objects go on the NEOCP?
 
-The objects that go on to the [NEO Confirmation Page](https://minorplanetcenter.net/iau/NEO/toconfirm_tabular.html) are those objects which, on the basis of their motion or orbit, appear to be NEOs and that have a digest2 score larger than 65. Objects that are suspected of being comets also appear.
+The objects that go on to the [NEO Confirmation Page](https://minorplanetcenter.net/iau/NEO/toconfirm_tabular.html) are those objects which, on the basis of their motion or orbit, appear to be NEOs and that have a [digest2](https://github.com/Smithsonian/mpc-public/tree/main/digest2) score larger than 65. Objects that are suspected of being comets also appear.
 
 [When removed from the NEOCP](https://minorplanetcenter.net/iau/NEO/NEOCPNotes.html), the inner-solar-system objects that get put on to _MPECs_ are as follows: <!-- TODO: update link when migrated -->
 

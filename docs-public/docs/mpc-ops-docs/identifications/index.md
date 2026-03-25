@@ -138,10 +138,6 @@ Potential reasons for failures:
   linkage is very close (spatially - 2 arc seconds, temporally - 2 seconds) to another
   ITF or published detection(s).
 - The orbit fit failed.
-- The following designation is not allowed \<DESIGNATION\> - e.g. designations starting
-  with K15B and K14W cannot be currently created until the
-  [Extended Packed Provisional Designation Scheme](../designations/provisional-designations.md#extended-packed-provisional-designation-scheme)
-  is implemented.
 - NEW NEO Identified from ITF to ITF: MPEC Needed (MPEC for NEO is issued manually).
 - Not enough nights in a multi-apparition ITFITF orbit (See the
   [criteria](acceptance-criteria.md)).

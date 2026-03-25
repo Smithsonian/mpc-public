@@ -29,10 +29,11 @@ See also [How do I report my astrometry?](#how-do-i-report-my-astrometry) and [W
 
 Astrometric observations can be reported in two different formats:
 
-- The longstanding 80-character MPC1992 format (also informally called obs80).
-- The more recent [IAU Astrometric Data Exchange Standard (ADES)](#whats-the-ades-format).
+- The [IAU Astrometric Data Exchange Standard (ADES)](#whats-the-ades-format) is the preferred format for reporting observations to the MPC.
+- The older 80-character MPC1992 format (also informally called obs80) may also be submitted.
 
-Observations reported in the MPC1992 format need to follow the rules detailed on the [page describing the format](https://minorplanetcenter.net/iau/info/ObsFormat.html). Please read this document carefully and report the observations in the correct format. <!-- TODO: update link when migrated -->
+Observations reported in the MPC1992 format need to follow the rules detailed on the [page describing the format](https://minorplanetcenter.net/iau/info/ObsFormat.html). 
+Please read this document carefully and report the observations in the correct format. <!-- TODO: update link when migrated -->
 
 Observations reported in ADES format need to follow the rules described in the [ADES documentation](https://github.com/IAU-ADES/ADES-Master/blob/master/ADES_Description.pdf) and on the [MPC ADES Data Submission page](https://minorplanetcenter.net/iau/info/ADES.html). <!-- TODO: update link when migrated -->
 
@@ -43,6 +44,8 @@ Observations of minor planets, comets and natural satellites, formatted as speci
     - [ADES XML Submission Form](https://minorplanetcenter.net/submit_xml)
     - [ADES PSV Submission Form](https://minorplanetcenter.net/submit_psv)
 3. [MPC1992 cURL instructions](https://minorplanetcenter.net/iau/info/commandlinesubmissions.html) <!-- TODO: update link when migrated -->
+
+Tutorials related to the submission of observations are available in the [Submission Tutorials](../../tutorials/submission_tutorials.md) section of the MPC's documentation site.
 
 In addition to the above points, please also check the following notes:
 

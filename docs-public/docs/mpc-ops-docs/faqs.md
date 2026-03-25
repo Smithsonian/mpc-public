@@ -15,7 +15,7 @@ Common questions and answers about MPC operations and services.
     <details id="faq-submit-observations">
         <summary>How do I submit observations?</summary>
             <div class="faq-answer">
-                <p>There are submission instructions <a href="astrometry/#reporting-observations-to-the-mpc">here</a>.</p>
+                <p>There are submission instructions <a href="../astrometry/#reporting-observations-to-the-mpc">here</a>.</p>
                 <p>After you submit your observations, you can confirm they were received using <a href="https://minorplanetcenter.net/wamo/wamo.html">WAMO</a> (Where Are My Observations).</p>
         </div>
     </details>
@@ -63,7 +63,7 @@ Common questions and answers about MPC operations and services.
         <div class="faq-answer">
             <p>If you are interested in identifying a moving object, you can supply the RA, Dec, and Time information to <a href="https://www.minorplanetcenter.net/cgi-bin/checkmp.cgi">MPChecker</a>. This service will return a list of minor planets near that location at a given time.</p>
             <p>If you do not see a good match on that list, the object is most likely an artificial satellite. The MPC does not track artificial satellites, but you can try <a href="https://www.projectpluto.com/sat_id2.htm">online artificial satellite identification</a>.</p>
-            <p>If you are convinced that the object is unknown, you can follow the procedure to <a href="astrometry/observatory-codes.md#how-do-i-get-an-observatory-code">get an observatory code</a>, accurately determine the position of the object and time of observation, and <a href="https://minorplanetcenter.net/iau/info/TechInfo.html">submit the astrometry to the MPC</a>.</p>
+            <p>If you are convinced that the object is unknown, you can follow the procedure to <a href="../astrometry/observatory-codes#how-do-i-get-an-observatory-code">get an observatory code</a>, accurately determine the position of the object and time of observation, and <a href="https://minorplanetcenter.net/iau/info/TechInfo.html">submit the astrometry to the MPC</a>.</p>
         </div>
     </details>
     
@@ -79,8 +79,8 @@ Common questions and answers about MPC operations and services.
         <div class="faq-answer">
             <p>The typical procedure for obtaining an observatory code is explained in the Guide to Minor Body Astrometry sections:</p>
             <ul>
-                <li><a href="astrometry/reporting-observations.md#how-do-i-begin-reporting">"How do I begin?"</a></li>
-                <li><a href="astrometry/observatory-codes.md#how-do-i-get-an-observatory-code">"How do I get an observatory code?"</a></li>
+                <li><a href="../astrometry/reporting-observations#how-do-i-begin-reporting">"How do I begin?"</a></li>
+                <li><a href="../astrometry/observatory-codes#how-do-i-get-an-observatory-code">"How do I get an observatory code?"</a></li>
             </ul>
         </div>
     </details>
