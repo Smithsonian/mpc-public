@@ -208,6 +208,7 @@ the number of the satellite.
 : Columns 6-12 contain a packed version of the provisional designation
 for those objects without Roman numeral designations.
 
+!!! note
     The first two digits of the year are packed into a single character
     in column 6 (I = 18, J = 19, K = 20). Columns 7-8 contain the last
     two digits of the year.
