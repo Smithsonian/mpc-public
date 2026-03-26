@@ -116,7 +116,7 @@ observations will be very rare.
 observation of [(1)](https://data.minorplanetcenter.net/explorer/?tab=Designated&search=1) would be given as `00001`, an observation of [(3202)](https://data.minorplanetcenter.net/explorer/?tab=Designated&search=3202) would
 be `03202`. If there is no number, these columns must be blank. Six-digit
 numbers are to be stored in packed form (`A0000 == 100000`), in order to
-be consistent with the format specifier earlier in this document.
+be consistent with the format specified earlier in this document.
 
 **Provisional/Temporary Designation**
 : Columns 6-12 contain the provisional designation or the temporary
