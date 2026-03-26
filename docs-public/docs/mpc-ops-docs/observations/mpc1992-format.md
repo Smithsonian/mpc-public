@@ -123,6 +123,7 @@ be consistent with the format specifier earlier in this document.
 designation. The provisional designation is stored in a
 [7-character packed form](../designations/packed-designations.md).
 
+!!! note
     Temporary designations are designations assigned by the observer for new
     or unidentified objects. Such designations must begin in column 6,
     should not exceed 6 characters in length, and should start with one or more
