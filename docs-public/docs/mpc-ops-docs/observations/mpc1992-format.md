@@ -3,7 +3,7 @@
 This page describes the MPC1992 80-column record format for submitting astrometric observations
 of comets, minor planets and natural satellites for publication in the
 [*Minor Planet Circulars (MPCs)*](https://minorplanetcenter.net/iau/services/MPCServices.html),
-[*Minor Planet Electronic Circulars*](https://minorplanetcenter.net/iau/services/MPCServices.html)
+[*Minor Planet Electronic Circulars (MPECs)*](https://minorplanetcenter.net/iau/services/MPCServices.html)
 and [*IAU Circulars*](https://minorplanetcenter.net/iau/services/IAUC.html).
 
 ---
