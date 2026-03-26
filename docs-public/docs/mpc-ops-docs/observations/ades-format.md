@@ -12,8 +12,7 @@ astrometry, providing many new features over the [MPC1992 80-column format](mpc1
 The [official format description](https://github.com/IAU-ADES/ADES-Master/blob/master/ADES_Description.pdf)
 is on GitHub. See also the reference material [Tables of ADES Tags and Structures](https://github.com/IAU-ADES/ADES-Master/blob/master/ades_master.pdf).
 
-The ADES describes two representations, XML and PSV. PSV is "Pipe Separated
-Values", and is similar to comma separated values (CSV) but uses the pipe
+The ADES describes two representation formats for astrometry: Extensible Markup Language [XML](https://en.wikipedia.org/wiki/XML) and Pipe-Separated Values (PSV). PSV is similar to the comma-separated values (CSV) format, but uses the pipe
 character, `|`, rather than a comma to separate data values of a record.
 For example see this [example XML](https://minorplanetcenter.net/iau/info/goodsubmit.xml.txt)
 and the equivalent [example PSV](https://minorplanetcenter.net/iau/info/goodsubmit.psv.txt).
