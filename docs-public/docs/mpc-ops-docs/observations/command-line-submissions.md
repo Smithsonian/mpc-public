@@ -63,8 +63,7 @@ Any problems should be reported to the
 
 ## Test Submissions
 
-If you wish to call the script via tools other than cURL, you are not to use the
-script listed above for testing purposes.
+Please do not use the listed above for testing purposes.
 
 If you wish to test your script, use `minorplanetcenter.net/submit_obs_test`
 instead of `minorplanetcenter.net/submit_obs`. The format of the call
