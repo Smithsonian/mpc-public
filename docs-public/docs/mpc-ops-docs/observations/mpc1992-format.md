@@ -44,7 +44,7 @@ Please note that TABs must NOT be used. Columns marked as 'blank'
 must contain spaces (ASCII 32). The Fortran formats listed below are
 for writing purposes.
 
-#### Minor Planets
+#### Minor Planets (Columns 1-13)
 
 ```
    Columns     Format   Use
