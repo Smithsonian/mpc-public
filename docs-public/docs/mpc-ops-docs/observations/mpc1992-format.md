@@ -202,7 +202,7 @@ Columns 6-12 may contain a minor planet provisional designation. In such situati
 the number of the satellite.
 
 **Column 5**
-: Column 5 is always "S" for a satellite observation.
+: Column 5 is always `S` for a satellite observation.
 
 **Provisional Designation**
 : Columns 6-12 contain a packed version of the provisional designation
