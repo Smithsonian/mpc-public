@@ -13,8 +13,9 @@ code: **247**. Each "roving observer" observation consists of two 80-column
 records. The 247 observatory code appears on both records. The first
 80-column record is otherwise identical to the [format for
 optical observations](mpc1992-format.md#optical-observations), with one minor change: column 15 contains "V". The format of the second 80-column record
-is described below. In 2021, a new roving observatory code (**270**) was created and assigned for the Unistellar network,
-using the same two-line format as for the observatory code 247.
+is described below. 
+
+Note that in 2021, a new roving observatory code (**270**) was created and assigned for the sole use of the Unistellar network, using the same two-line format as for the observatory code 247.
 
 ---
 
