@@ -165,7 +165,7 @@ Upon receipt of a batch of observations, we send an automatic acknowledgement ba
 
 If you have not received any acknowledgement from us or if you want to know what happened to your observations, please use our [WAMO service](https://minorplanetcenter.net/wamo/).
 
-Please also check that you have correctly used all the fields in the header. See [Information on how to personalize the acknowledgement](../observations/observational-details.md).
+Please also check that you have correctly used all the fields in the header. See the [information on how to personalize the acknowledgement](../observations/observational-details.md).
 
 If something is not clear or you still have questions about your observations, please submit a [Jira ticket](https://mpc-service.atlassian.net/servicedesk/customer/portals).
 
