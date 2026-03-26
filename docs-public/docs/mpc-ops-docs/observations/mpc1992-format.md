@@ -167,7 +167,7 @@ minor planet given a cometary designation or objects suspected to be comets.
 **Provisional Designation**
 : Columns 6-12 contain a packed version of the provisional designation.
 The first two digits of the year are packed into a single character
-in column 6 (I = 18, J = 19, K = 20). Columns 7-8 contain the last
+in column 6 (where `I == 18`, `J == 19`, `K == 20`). Columns 7-8 contain the last
 two digits of the year. Column 9 contains the half-month letter.
 Columns 10-11 contain the order within the half-month. Column 12 will
 be normally be `0`, except for split comets, when the fragment designation
