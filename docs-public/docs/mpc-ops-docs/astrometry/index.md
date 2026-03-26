@@ -26,8 +26,7 @@ This guide covers observing minor planets, comets and natural satellites, and re
 
 - [ADES PSV Submission Form](https://minorplanetcenter.net/submit_psv)
 - [ADES XML Submission Form](https://minorplanetcenter.net/submit_xml)
-- [MPC1992 Observation Submission Form](https://minorplanetcenter.net/cgi-bin/feedback_submit_obs.cgi?S=Observation%20submission%20via%20website&D=O)
-- [cURL submission instructions](https://minorplanetcenter.net/iau/info/commandlinesubmissions.html) <!-- TODO: update link when migrated -->
+- [cURL submission instructions](../observations/command-line-submissions.md)
 - E-mail submissions (MPC1992 only): [obs@cfa.harvard.edu](mailto:obs@cfa.harvard.edu)
 - [Report Cometary Activity](https://minorplanetcenter.net/mpcops/submissions/cometary/)
 - [How do I submit my astrometry using Tycho Tracker?](https://minorplanetcenter.net/mpcops/documentation/tycho-tracker/) <!-- TODO: update link when migrated -->
@@ -44,9 +43,8 @@ This guide covers observing minor planets, comets and natural satellites, and re
 
 - [ADES Data Submission page](https://www.minorplanetcenter.net/mpcops/documentation/ades/)
 - [ADES format description (PDF)](https://github.com/IAU-ADES/ADES-Master/blob/master/ADES_Description.pdf)
-- [MPC ADES webpage](https://minorplanetcenter.net/mpcops/documentation/ades/)
-- [MPC1992 observation format](https://minorplanetcenter.net/iau/info/ObsFormat.html) <!-- TODO: update link when migrated -->
-- [Indication of observational details (headers)](https://minorplanetcenter.net/iau/info/ObsDetails.html) <!-- TODO: update link when migrated -->
+- [MPC1992 observation format](../observations/mpc1992-format.md)
+- [Indication of observational details (headers)](../observations/observational-details.md)
 - [Packed designation format](../designations/packed-designations.md)
 
 

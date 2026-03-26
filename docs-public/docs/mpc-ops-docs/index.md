@@ -5,7 +5,7 @@ This page provides an entry point for MPC documentation and services.
 <div id="contents-grid"></div>
 
 - [FAQs](faqs.md)
-- [Observations](observations.md)
+- [Observations](observations/index.md)
 - [Astrometry Guide](astrometry/index.md)
 - [Orbits](orbits.md)
 - [Designations](designations/index.md)

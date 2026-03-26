@@ -25,8 +25,8 @@ https://data.minorplanetcenter.net/api/get-obs
 
 | Format | Type | Description                                                                                      |
 |--------|------|--------------------------------------------------------------------------------------------------|
-| `XML` | String | Observations in [ADES XML](https://minorplanetcenter.net/iau/info/ADES.html) format              |
-| `OBS80` | String | Observations in [MPC1992 80-column](https://minorplanetcenter.net/iau/info/ObsFormat.html) format |
+| `XML` | String | Observations in [ADES XML](../observations/ades-format.md) format              |
+| `OBS80` | String | Observations in [MPC1992 80-column](../observations/mpc1992-format.md) format |
 | `ADES_DF` | List of dicts | Dictionary representation of ADES values                                                         |
 | `OBS_DF` | List of dicts | Dictionary representation of 80-column format                                                    |
 

@@ -11,7 +11,7 @@ Documentation related to observatory codes, program codes, and associated polici
 - [How do I obtain an observatory code?](astrometry/observatory-codes.md#how-do-i-get-an-observatory-code)
 - [New Observatory Code Request Form](https://minorplanetcenter.net/new_obscode_request)
 - [How do I update my observatory code?](astrometry/observatory-codes.md#how-do-i-update-my-observatory-code-information)
-- [Roving Observers](https://minorplanetcenter.net/iau/info/RovingObs.html)
+- [Roving Observers](observations/roving-observers.md)
 - [Observatory codes API](apis/obscodes.md)
 
 

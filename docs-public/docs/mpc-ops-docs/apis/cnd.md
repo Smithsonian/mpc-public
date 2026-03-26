@@ -14,7 +14,7 @@ https://data.minorplanetcenter.net/api/cnd
 
 | Parameter | Type | Required | Description                                                                                                                                          | Default |
 |-----------|------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
-| `obs` | List of strings | Yes | 80- or 160-character observation records in the [MPC1992 format](https://minorplanetcenter.net/iau/info/ObsFormat.html).                             | NA      |
+| `obs` | List of strings | Yes | 80- or 160-character observation records in the [MPC1992 format](../observations/mpc1992-format.md).                             | NA      |
 | `time_separation_s` | Float | No | Temporal threshold (0-60 seconds). Matching observations will have been recorded within this time span with respect to the given observation.        | 60      |
 | `angle_separation_arcsec` | Float | No | Spatial threshold (0-10 arcseconds). Matching observations will have been recorded within this angular radius with respect to the given observation. | 5       |
 | `omit_separation` | Boolean | No | Exclude calculated separation values from results.                                                                                                   | false   |
