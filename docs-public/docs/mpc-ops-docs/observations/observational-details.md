@@ -35,7 +35,7 @@ observations.
   The text on the `ACK` line will be e-mailed back to you to let you know that your e-mail arrived.
   If it is necessary to communicate designations to you, these will be sent after the batch is processed.
   Some types of objects require special handling; for these, particular words/phrases must be included in the `ACK` line.
-  See [MPEC 2018-W60](https://www.minorplanetcenter.net/mpec/K18/K18W60.html) and the list towards the bottom of this page for information on what information should be included in the `ACK` line.
+  See [MPEC 2018-W60](https://www.minorplanetcenter.net/mpec/K18/K18W60.html) and the list towards the bottom of this page for information on what should be included in the `ACK` line.
 - `AC2` (followed by list of e-mails) must be supplied for cURL submissions, optional for e-mail submissions.
   By default, the acknowledgement is sent to the e-mail address from which
   the original message was sent. You can override this default
