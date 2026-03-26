@@ -59,7 +59,7 @@ These codes are either restricted or must not be used on newly-submitted observa
 
 ## Spacecraft Observation Note Codes
 
-Observations from spacecraft observatories use these codes for sungrazing and other comets:
+Observations from spacecraft observatories use these codes for sungrazers and other comets:
 
 | Code | Instrument |
 |------|-----------|
