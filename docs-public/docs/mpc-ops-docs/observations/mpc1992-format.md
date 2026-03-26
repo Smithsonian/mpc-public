@@ -270,7 +270,7 @@ how the observation was made. The following codes will be used:
     of discovery: this has been extended to other replaced discovery observations.
     Observations marked `X`/`x` are to be suppressed in residual blocks.
     They are retained so that there exists an original record of a discovery.
-    These codes MUST NOT be used on observation submissions.
+    **These codes MUST NOT be used on observation submissions.**
 
 **Date of Observation**
 : Columns 16-32 contain the date and UTC time, usually corresponding to the
