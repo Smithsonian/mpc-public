@@ -89,7 +89,7 @@ observations will be very rare.
    13            X      Not used, must be blank
 ```
 
-#### Minor Planets, Comets and Natural Satellites
+#### Minor Planets, Comets and Natural Satellites (Columns 14-80)
 
 ```
    Columns     Format   Use
