@@ -8,7 +8,7 @@ observations to the MPC, including submission procedures, validation, and availa
 ## Astrometry Data Exchange Standard
 
 The Astrometry Data Exchange Standard (ADES) is a new data format for
-astrometry, providing many new features over the current 80-column format.
+astrometry, providing many new features over the [MPC1992 80-column format](mpc1992-format.md).
 The [official format description](https://github.com/IAU-ADES/ADES-Master/blob/master/ADES_Description.pdf)
 is on GitHub. See also the reference material [Tables of ADES Tags and Structures](https://github.com/IAU-ADES/ADES-Master/blob/master/ades_master.pdf).
 
