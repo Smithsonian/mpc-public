@@ -135,7 +135,7 @@ designation. The provisional designation is stored in a
 **Discovery Asterisk**
 : Discovery observations for new (or unidentified) objects should contain
 `*` in column 13. Only one asterisked observation per object is
-expected. Some objects consist of multiple designations, in that case each
+expected. Some objects consist of multiple designations; in that case each
 designation keeps its original discovery asterisk.
 
 #### Comets
