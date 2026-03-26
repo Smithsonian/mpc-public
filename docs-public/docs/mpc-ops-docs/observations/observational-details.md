@@ -3,9 +3,10 @@
 Observers submitting observations by electronic means (generally e-mail) are required to
 include observer, measurer and telescope details in every submission.
 
-**Observation batches that do not include an observational header will not
-be recognized as containing observations by the automated processes and
-will be ignored.**
+!!! warning
+   Observation batches that do not include an observational header will not
+   be recognized as containing observations by the automated processes and
+   will be ignored.
 
 The observational details are to be contained in a series of header lines,
 beginning with certain keywords specified below and placed before any
