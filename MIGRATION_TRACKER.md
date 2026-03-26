@@ -1,6 +1,6 @@
 # Documentation Migration Tracker
 
-Last updated: 2026-03-01
+Last updated: 2026-03-25
 
 The purpose of this tracker is to audit and track the migration of documentation pages 
 from the legacy MPC website (https://minorplanetcenter.net/) 
@@ -28,13 +28,13 @@ and the tracker is updated.
 
 | Status | Count |
 |---|---|
-| Migrated | 13 |
+| Migrated | 27 |
 | WIP | 1 |
-| Redirect banner needed | 14 |
+| Redirect banner needed | 28 |
 | Redirect banner added | 0 |
 | Deprecation banner needed | 2 |
 | Legacy page removed | 0 |
-| To migrate | 26 |
+| To migrate | 12 |
 | To deprecate | 2 |
 | TBD | 34 |
 | Skip (service/MPEC/data) | 47 |
@@ -46,12 +46,12 @@ and the tracker is updated.
 | Designations | 8 | 0 | 0 | 0 | 0 | 6 |
 | Identifications | 3 | 1 | 0 | 0 | 0 | 2 |
 | Astrometry | 1 | 0 | 1 | 3 | 1 | 6 |
-| Observations & Formats | 0 | 0 | 9 | 3 | 0 | 3 |
-| Orbits | 0 | 0 | 10 | 2 | 0 | 1 |
+| Observations & Formats | 6 | 0 | 3 | 3 | 0 | 3 |
+| Orbits | 8 | 0 | 2 | 2 | 0 | 1 |
 | Observatory & Program Codes | 0 | 0 | 3 | 0 | 0 | 5 |
 | Data & Services | 1 | 0 | 3 | 20 | 0 | 16 |
 | Miscellaneous | 0 | 0 | 0 | 6 | 1 | 8 |
-| **Total** | **13** | **1** | **26** | **34** | **2** | **47** |
+| **Total** | **27** | **1** | **12** | **34** | **2** | **47** |
 
 ---
 
@@ -108,13 +108,13 @@ and the tracker is updated.
 
 | Legacy Path | Migration  | New Location | Legacy Banner | Notes                                                          |
 |---|------------|---|---|----------------------------------------------------------------|
-| `/iau/info/ADES.html` | to-migrate | - | none | ADES format description; priority: high                        |
-| `/iau/info/ObsFormat.html` | to-migrate | - | none | MPC1992 observation format; priority: high                     |
-| `/iau/info/ObsDetails.html` | to-migrate | - | none | Observation details header format; priority: medium            |
-| `/iau/info/RovingObs.html` | to-migrate | - | none | Roving observers format; priority: medium                      |
-| `/iau/info/TelescopeDetails.html` | to-migrate | - | none | Telescope details header format; priority: medium              |
+| `/iau/info/ADES.html` | migrated | `observations/ades-format.md` | redirect-needed | ADES format description |
+| `/iau/info/ObsFormat.html` | migrated | `observations/mpc1992-format.md` | redirect-needed | MPC1992 observation format |
+| `/iau/info/ObsDetails.html` | migrated | `observations/observational-details.md` | redirect-needed | Observation details header format |
+| `/iau/info/RovingObs.html` | migrated | `observations/roving-observers.md` | redirect-needed | Roving observers format |
+| `/iau/info/TelescopeDetails.html` | migrated | `observations/telescope-details.md` | redirect-needed | Telescope details header format |
 | `/iau/info/References.html` | to-migrate | - | none | Reference codes for observations; priority: medium             |
-| `/iau/info/commandlinesubmissions.html` | to-migrate | - | none | cURL/command-line submission guide; priority: medium           |
+| `/iau/info/commandlinesubmissions.html` | migrated | `observations/command-line-submissions.md` | redirect-needed | cURL/command-line submission guide |
 | `/mpcops/documentation/negative-observations/` | to-migrate | - | none | Negative observation protocol; priority: low                   |
 | `/mpcops/documentation/ades/` | TBD        | - | none | ADES docs : Has this been done already?                        |
 | `/mpcops/documentation/valid-ades-values` | TBD        | - | none | ADES valid values reference (dynamic): can this be migrated?   |
@@ -128,16 +128,16 @@ and the tracker is updated.
 
 | Legacy Path | Migration | New Location | Legacy Banner | Notes |
 |---|---|---|---|---|
-| `/iau/info/MPOrbitFormat.html` | to-migrate | - | none | Minor planet orbit format; priority: high |
-| `/iau/info/CometOrbitFormat.html` | to-migrate | - | none | Comet orbit format; priority: high |
-| `/iau/info/SatOrbitFormat.html` | to-migrate | - | none | Natural satellite orbit format; priority: medium |
-| `/iau/info/OrbFormat.html` | to-migrate | - | none | General orbit format overview; priority: medium |
-| `/iau/info/OrbNote.html` | to-migrate | - | none | Orbit alphabetic notes; priority: medium |
+| `/iau/info/MPOrbitFormat.html` | migrated | `orbits/minor-planet-orbit-format.md` | redirect-needed | Minor planet orbit format |
+| `/iau/info/CometOrbitFormat.html` | migrated | `orbits/comet-orbit-format.md` | redirect-needed | Comet orbit format |
+| `/iau/info/SatOrbitFormat.html` | migrated | `orbits/satellite-orbit-format.md` | redirect-needed | Natural satellite orbit format |
+| `/iau/info/OrbFormat.html` | migrated | `orbits/orbit-format-overview.md` | redirect-needed | General orbit format overview |
+| `/iau/info/OrbNote.html` | migrated | `orbits/orbit-notes.md` | redirect-needed | Orbit alphabetic notes |
 | `/iau/info/Perturbers.html` | to-migrate | - | none | Perturbing bodies reference; priority: low |
-| `/iau/info/UValue.html` | to-migrate | - | none | Uncertainty parameter U; priority: medium |
-| `/mpcops/documentation/orbit-types/` | to-migrate | - | none | Orbit type definitions; priority: medium |
-| `/mpcops/documentation/object-types/` | to-migrate | - | none | Object type definitions; priority: medium |
-| `/mpcops/documentation/ele220/` | to-migrate | - | none | ele220 format |
+| `/iau/info/UValue.html` | migrated | `orbits/uncertainty-parameter.md` | redirect-needed | Uncertainty parameter U |
+| `/mpcops/documentation/orbit-types/` | migrated | `orbits/orbit-types.md` | redirect-needed | Orbit type definitions |
+| `/mpcops/documentation/object-types/` | migrated | `orbits/object-types.md` | redirect-needed | Object type definitions |
+| `/mpcops/documentation/ele220/` | to-migrate | - | none | ele220 format; priority: low |
 | `/iau/MPCORB.html` | TBD | - | none | MPCORB orbit file documentation/download page |
 | `/mpcops/documentation/mpc-orbits/` | TBD | - | none | MPC orbits documentation on mpcops |
 | `/mpcops/documentation/mpc-orb-json/` | skip | - | none | Covered by mpc_orb package docs |
@@ -250,14 +250,7 @@ The following `<!-- TODO: update link when migrated -->` comments exist in docs-
 
 | File | Legacy URL Referenced | Tracker Status |
 |---|---|---|
-| `astrometry/index.md` | `/iau/info/commandlinesubmissions.html` | to-migrate |
 | `astrometry/index.md` | `/mpcops/documentation/tycho-tracker/` | to-migrate |
-| `astrometry/index.md` | `/iau/info/ObsFormat.html` | to-migrate |
-| `astrometry/index.md` | `/iau/info/ObsDetails.html` | to-migrate |
-| `astrometry/reporting-observations.md` | `/iau/info/ObsFormat.html` | to-migrate |
-| `astrometry/reporting-observations.md` | `/iau/info/ADES.html` | to-migrate |
-| `astrometry/reporting-observations.md` | `/iau/info/commandlinesubmissions.html` | to-migrate |
-| `astrometry/reporting-observations.md` | `/iau/info/ObsDetails.html` | to-migrate |
 | `astrometry/reporting-observations.md` | `/iau/services/MPCServices.html` | skip |
 | `astrometry/mpc-processing.md` | `/iau/services/MPCServices.html` | skip |
 | `astrometry/mpc-processing.md` | `/iau/NEO/NEOCPNotes.html` | to-migrate |
