@@ -310,7 +310,7 @@ provide the actual band used.
     The formerly-used "C" band to indicate "clear" or "no filter"
     is no longer valid for newly-submitted observations, but will remain on
     previously-submitted observations.
-
+For programmatic access to magnitude bands, see the [Magnitude Bands API](https://minorplanetcenter.net/mpcops/documentation/mag-band-api/).
 **Observatory Code**
 : Observatory codes are stored in columns 78-80.
 Lists of [observatory codes](https://minorplanetcenter.net/iau/lists/ObsCodes.html) are
