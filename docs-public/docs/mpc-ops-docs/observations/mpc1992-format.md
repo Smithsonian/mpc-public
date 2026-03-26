@@ -107,7 +107,7 @@ observations will be very rare.
 
 ---
 
-### Detailed Notes
+## Detailed Notes
 
 #### Minor Planets
 
