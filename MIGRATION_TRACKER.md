@@ -28,13 +28,13 @@ and the tracker is updated.
 
 | Status | Count |
 |---|---|
-| Migrated | 27 |
+| Migrated | 33 |
 | WIP | 1 |
-| Redirect banner needed | 28 |
+| Redirect banner needed | 34 |
 | Redirect banner added | 0 |
 | Deprecation banner needed | 2 |
 | Legacy page removed | 0 |
-| To migrate | 12 |
+| To migrate | 6 |
 | To deprecate | 2 |
 | TBD | 34 |
 | Skip (service/MPEC/data) | 47 |
@@ -45,13 +45,13 @@ and the tracker is updated.
 |---|---|---|---|---|---|---|
 | Designations | 8 | 0 | 0 | 0 | 0 | 6 |
 | Identifications | 3 | 1 | 0 | 0 | 0 | 2 |
-| Astrometry | 1 | 0 | 1 | 3 | 1 | 6 |
-| Observations & Formats | 6 | 0 | 3 | 3 | 0 | 3 |
+| Astrometry | 2 | 0 | 0 | 3 | 1 | 6 |
+| Observations & Formats | 8 | 0 | 1 | 3 | 0 | 3 |
 | Orbits | 8 | 0 | 2 | 2 | 0 | 1 |
-| Observatory & Program Codes | 0 | 0 | 3 | 0 | 0 | 5 |
+| Observatory & Program Codes | 3 | 0 | 0 | 0 | 0 | 5 |
 | Data & Services | 1 | 0 | 3 | 20 | 0 | 16 |
 | Miscellaneous | 0 | 0 | 0 | 6 | 1 | 8 |
-| **Total** | **27** | **1** | **12** | **34** | **2** | **47** |
+| **Total** | **33** | **1** | **6** | **34** | **2** | **47** |
 
 ---
 
@@ -92,7 +92,7 @@ and the tracker is updated.
 | Legacy Path | Migration  | New Location | Legacy Banner | Notes                                                                                                         |
 |---|------------|---|---|---------------------------------------------------------------------------------------------------------------|
 | `/iau/info/Astrometry.html` | migrated   | `astrometry/` (5 pages) | redirect-needed | Split into getting-started, observatory-codes, reporting-observations, discoveries-and-credit, mpc-processing |
-| `/iau/info/CatalogueCodes.html` | to-migrate | - | none | Catalogue codes reference; priority: medium                                                                   |
+| `/iau/info/CatalogueCodes.html` | migrated | `observations/catalogue-codes.md` | redirect-needed | Catalogue codes reference |
 | `/iau/info/VideoNormalPlaces.html` | TBD | - | none | Service to extract an "average" from video frames                                                             |
 | `/iau/info/AGuidetoVideoAstrometry.pdf` | TBD        | - | none | External PDF guide from 2015: Tangra software site last updated 2018                                          |
 | `/iau/info/VideoAstrometry.pdf` | TBD        | - | none | External PDF guide from 2009: Tangra software site last updated 2018                                          |
@@ -113,7 +113,7 @@ and the tracker is updated.
 | `/iau/info/ObsDetails.html` | migrated | `observations/observational-details.md` | redirect-needed | Observation details header format |
 | `/iau/info/RovingObs.html` | migrated | `observations/roving-observers.md` | redirect-needed | Roving observers format |
 | `/iau/info/TelescopeDetails.html` | migrated | `observations/telescope-details.md` | redirect-needed | Telescope details header format |
-| `/iau/info/References.html` | to-migrate | - | none | Reference codes for observations; priority: medium             |
+| `/iau/info/References.html` | migrated | `observations/reference-codes.md` | redirect-needed | Reference codes for observations |
 | `/iau/info/commandlinesubmissions.html` | migrated | `observations/command-line-submissions.md` | redirect-needed | cURL/command-line submission guide |
 | `/mpcops/documentation/negative-observations/` | to-migrate | - | none | Negative observation protocol; priority: low                   |
 | `/mpcops/documentation/ades/` | TBD        | - | none | ADES docs : Has this been done already?                        |
@@ -121,7 +121,7 @@ and the tracker is updated.
 | `/submit_psv` | skip       | - | none | PSV submission form                                            |
 | `/submit_xml` | skip       | - | none | XML submission form                                            |
 | `/iau/info/ADESFieldValues.html` | TBD | - | none | ADES field value reference; linked from ADES.html |
-| `/iau/info/ObsNote.html` | to-migrate | - | none | Observation alphabetic notes; priority: medium |
+| `/iau/info/ObsNote.html` | migrated | `observations/observation-notes.md` | redirect-needed | Observation alphabetic notes |
 | `/cgi-bin/feedback_submit_obs.cgi` | skip       | - | none | Already marked as deprecated (Old observation submission form) |
 
 ### Orbits
@@ -146,9 +146,9 @@ and the tracker is updated.
 
 | Legacy Path | Migration | New Location | Legacy Banner | Notes |
 |---|---|---|---|---|
-| `/iau/info/ObservatoryCodes.html` | to-migrate | - | none | Observatory codes documentation; priority: high |
-| `/mpcops/documentation/program-codes/` | to-migrate | - | none | Program codes documentation; priority: high |
-| `/mpcops/documentation/program-codes-policy/` | to-migrate | - | none | Program codes policy; priority: medium |
+| `/iau/info/ObservatoryCodes.html` | migrated | `observatory-and-program-codes/observatory-codes-docs.md` | redirect-needed | Observatory codes documentation |
+| `/mpcops/documentation/program-codes/` | migrated | `observatory-and-program-codes/program-codes.md` | redirect-needed | Program codes documentation |
+| `/mpcops/documentation/program-codes-policy/` | migrated | `observatory-and-program-codes/program-codes-policy.md` | redirect-needed | Program codes policy |
 | `/new_obscode_request` | skip | - | none | Observatory code request form |
 | `/iau/lists/ObsCodes.html` | skip | - | none | Observatory codes plaintext list |
 | `/iau/lists/ObsCodesF.html` | skip | - | none | Observatory codes formatted list |
@@ -256,5 +256,5 @@ The following `<!-- TODO: update link when migrated -->` comments exist in docs-
 | `astrometry/mpc-processing.md` | `/iau/NEO/NEOCPNotes.html` | to-migrate |
 | `astrometry/discoveries-and-credit.md` | `/iau/services/MPCServices.html` | skip |
 | `astrometry/discoveries-and-credit.md` | `/iau/info/Coverage.html` | skip |
-| `astrometry/observatory-codes.md` | `/iau/info/ObservatoryCodes.html` | to-migrate |
+
 | `astrometry/getting-started.md` | `/iau/mpc.html` | skip |

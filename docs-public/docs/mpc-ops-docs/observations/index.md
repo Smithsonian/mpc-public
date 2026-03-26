@@ -32,10 +32,11 @@ The ADES format is the current standard for submitting observations to the MPC.
 <div class="contents-grid"></div>
 
 - [MPC1992 observation format](mpc1992-format.md)
+- [Observation notes](observation-notes.md)
+- [Catalogue codes](catalogue-codes.md)
+- [Reference codes](reference-codes.md)
 
-- [Alphabetic notes for observations](https://data.minorplanetcenter.net/mpcops/documentation/valid-ades-values/)
-- [Astrometric catalogue codes](https://data.minorplanetcenter.net/mpcops/documentation/valid-ades-values/)
-- [References on observations](https://minorplanetcenter.net/iau/info/References.html)
+- [Valid ADES values](https://minorplanetcenter.net/mpcops/documentation/valid-ades-values)
 
 
 ## Observing Procedures
