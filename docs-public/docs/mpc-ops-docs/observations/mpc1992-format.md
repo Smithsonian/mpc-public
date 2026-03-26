@@ -58,7 +58,7 @@ assigned by the Minor Planet Center. Temporary designations are designations,
 preferably no more than six (6) characters long (the absolute maximum is
 seven (7) characters), assigned by the observer for new or
 unidentified objects. Temporary designations must consist of alphanumeric
-characters only: do not include spaces. All observations of the same "new"
+characters only; do not include spaces. All observations of the same "new"
 object reported in the same message must have the same temporary designation.
 
 #### Comets
