@@ -228,7 +228,7 @@ for those objects without Roman numeral designations.
 **Note 1**
 : This column contains an alphabetical publishable note or (for those sites that
 use program codes) an alphanumeric or
-non-alphanumeric character program code. The list of [standard codes](https://minorplanetcenter.net/iau/info/ObsNote.html) used
+non-alphanumeric character program code. The list of [standard codes](observation-notes.md) used
 for observations of minor planets is given in each batch of
 [*MPCs*](https://minorplanetcenter.net/iau/services/MPCServices.html).
 
