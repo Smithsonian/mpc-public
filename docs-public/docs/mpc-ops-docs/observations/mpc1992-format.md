@@ -143,7 +143,7 @@ designation keeps its original discovery asterisk.
 **Periodic Comet Number**
 : Periodic comets that have been observed at more than one return are
 assigned numbers. Reference should be made to the editorial notices
-on *MPC* 23803-23804 and 24421 for more complete details of the
+on [*MPC* 23803-23804](https://minorplanetcenter.net/iau/ECS/MPCArchive/1994/MPC_19940828.pdf) and [24421](https://minorplanetcenter.net/iau/ECS/MPCArchive/1995/MPC_19950116.pdf) for more complete details of the
 circumstances under which numbers are assigned.
 
     Examples:
