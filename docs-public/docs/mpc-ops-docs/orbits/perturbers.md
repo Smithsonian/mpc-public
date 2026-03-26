@@ -5,7 +5,7 @@ The Minor Planet Center maintains files of perturbed orbital elements that speci
 
 ## One-Line Format Changes
 
-Changes affect the one-line format for orbit submissions to the Minor Planet Center. Columns 1-201 and 210-220 remain unaffected. The "Extended Computer Service" includes this information, though printed MPCs omit it for simplicity.
+Changes affect the one-line format for orbit submissions to the Minor Planet Center. Columns 1-201 and 210-220 remain unaffected. The ["Extended Computer Service"](comet-orbit-format.md) includes this information, though printed MPCs omit it for simplicity.
 
 
 ## Column 202: Planetary Ephemerides Descriptor
