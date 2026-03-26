@@ -61,7 +61,7 @@ Any problems should be reported to the
 [MPC](https://cgi.minorplanetcenter.net/cgi-bin/feedback.cgi?U=/iau/mpc.html&S=Feedback&D=M).
 
 
-## Using Tools Other Than cURL
+## Test Submissions
 
 If you wish to call the script via tools other than cURL, you are not to use the
 script listed above for testing purposes.
