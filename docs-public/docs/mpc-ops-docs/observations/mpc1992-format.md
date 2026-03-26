@@ -313,7 +313,7 @@ provide the actual band used.
 For programmatic access to magnitude bands, see the [Magnitude Bands API](https://minorplanetcenter.net/mpcops/documentation/mag-band-api/).
 **Observatory Code**
 : Observatory codes are stored in columns 78-80.
-Lists of [observatory codes](https://minorplanetcenter.net/iau/lists/ObsCodes.html) are
+Lists of [observatory codes](https://data.minorplanetcenter.net/explorer/?tab=Lists&list=Observatory+Codes) are
 published from time to time in the [*MPCs*](https://minorplanetcenter.net/iau/services/MPCServices.html).
 Note that new observatory codes are assigned only upon receipt of
 acceptable astrometric observations.
