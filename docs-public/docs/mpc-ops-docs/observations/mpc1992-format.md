@@ -180,8 +180,7 @@ is stored there as a lower-case letter.
    1994 P1   = J94P010   refers to the whole comet 1994 P1
     ```
 
-    Columns 6-12 may contain a minor-planet provisional designation. In such
-    a situation column 12 will contain a capital letter.
+Columns 6-12 may contain a minor planet provisional designation. In such situations, column 12 will contain a capital letter.
 
 #### Natural Satellites
 
