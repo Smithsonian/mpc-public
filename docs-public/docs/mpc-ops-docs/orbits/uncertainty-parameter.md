@@ -9,7 +9,7 @@ larger than 6.
 
 ### Calculation Method
 
-The *U* value is derived from the in-orbit longitude runoff, RUNOFF, in seconds of arc
+The *U* value is derived from the in-orbit longitude runoff, `RUNOFF`, in seconds of arc
 per decade:
 
 ```
