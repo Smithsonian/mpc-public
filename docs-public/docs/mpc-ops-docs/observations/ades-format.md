@@ -118,7 +118,7 @@ that order, but also our preference is that you submit the first of these that
 meets your needs. Do not run a converter program simply because you think
 we prefer a different format.
 
-The README.txt file at ADES-Master is extensive and lists all of the
+The `README.txt` file at ADES-Master is extensive and lists all of the
 available conversion programs, test scripts, and documentation.
 
 
