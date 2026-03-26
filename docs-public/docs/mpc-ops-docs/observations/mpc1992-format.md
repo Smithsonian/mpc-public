@@ -226,7 +226,7 @@ for those objects without Roman numeral designations.
 #### Comets, Minor Planets and Natural Satellites
 
 **Note 1**
-: This column contains an alphabetical publishable note or (those sites that
+: This column contains an alphabetical publishable note or (for those sites that
 use program codes) an alphanumeric or
 non-alphanumeric character program code. The list of [standard codes](https://minorplanetcenter.net/iau/info/ObsNote.html) used
 for observations of minor planets is given in each batch of
