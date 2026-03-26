@@ -22,7 +22,7 @@ where:
 - **e** = eccentricity
 - **P** = orbital period (years)
 - **dP** = uncertainty in orbital period (days)
-- **ko** = Gaussian constant in degrees = 180 / pi * 0.01720209895
+- **ko** = Gaussian constant in `degrees = 180 / pi * 0.01720209895`
 - **3600** = conversion factor to seconds of arc
 - **3** = empirical factor for realistic error modeling
 
