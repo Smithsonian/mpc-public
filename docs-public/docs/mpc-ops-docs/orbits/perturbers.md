@@ -27,7 +27,7 @@ New codes are assigned only under exceptional circumstances, as consistency in p
 
 ## Columns 204-206: Coarse Perturbing Bodies Indicator
 
-Minor planets now use lowercase letters, distinguishing between M-P (includes Pluto) and M-p (includes Pallas and likely Ceres).
+Minor planets use lowercase letters, distinguishing between `M-P` (includes Pluto) and `M-p` (includes Pallas and likely Ceres).
 
 
 ## Columns 208-209: Precise Perturbers (Hexadecimal)
