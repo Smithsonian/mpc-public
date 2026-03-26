@@ -5,12 +5,11 @@ Documentation related to making, formatting, and submitting astrometric observat
 
 ## Getting Started
 
-- [How do I submit my astrometry using Tycho Tracker?](https://minorplanetcenter.net/mpcops/documentation/tycho-tracker/)
-
 <div class="contents-grid"></div>
 
 - [Guide to Minor Body Astrometry](../astrometry/index.md)
 - [How do I get an observatory code?](../astrometry/observatory-codes.md#how-do-i-get-an-observatory-code)
+- [How to submit astrometry using Tycho Tracker](tycho-tracker.md)
 
 
 ## ADES (Astrometric Data Exchange Standard)

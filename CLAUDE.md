@@ -147,6 +147,7 @@ The following documentation pages have been migrated from MPC legacy pages into 
 - `observations/catalogue-codes.md` - From `/iau/info/CatalogueCodes.html`
 - `observations/reference-codes.md` - From `/iau/info/References.html`
 - `observations/observation-notes.md` - From `/iau/info/ObsNote.html`
+- `observations/tycho-tracker.md` - From `/mpcops/documentation/tycho-tracker/`
 
 **orbits/** (migrated from `orbits.md`):
 
@@ -159,6 +160,9 @@ The following documentation pages have been migrated from MPC legacy pages into 
 - `orbits/uncertainty-parameter.md` - From `/iau/info/UValue.html`
 - `orbits/orbit-types.md` - From `/mpcops/documentation/orbit-types/`
 - `orbits/object-types.md` - From `/mpcops/documentation/object-types/`
+- `orbits/perturbers.md` - From `/iau/info/Perturbers.html`
+- `orbits/ele220-format.md` - From `/mpcops/documentation/ele220/`
+- `orbits/mpc-orb-json.md` - From `/mpcops/documentation/mpc-orb-json/`
 
 **observatory-and-program-codes/** (migrated from `observatory-and-program-codes.md`):
 

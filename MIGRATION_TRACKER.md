@@ -1,6 +1,6 @@
 # Documentation Migration Tracker
 
-Last updated: 2026-03-25
+Last updated: 2026-03-26
 
 The purpose of this tracker is to audit and track the migration of documentation pages 
 from the legacy MPC website (https://minorplanetcenter.net/) 
@@ -28,16 +28,16 @@ and the tracker is updated.
 
 | Status | Count |
 |---|---|
-| Migrated | 33 |
+| Migrated | 37 |
 | WIP | 1 |
-| Redirect banner needed | 34 |
+| Redirect banner needed | 38 |
 | Redirect banner added | 0 |
 | Deprecation banner needed | 2 |
 | Legacy page removed | 0 |
-| To migrate | 6 |
+| To migrate | 2 |
 | To deprecate | 2 |
 | TBD | 34 |
-| Skip (service/MPEC/data) | 47 |
+| Skip (service/MPEC/data) | 46 |
 
 ## By Category
 
@@ -47,11 +47,11 @@ and the tracker is updated.
 | Identifications | 3 | 1 | 0 | 0 | 0 | 2 |
 | Astrometry | 2 | 0 | 0 | 3 | 1 | 6 |
 | Observations & Formats | 8 | 0 | 1 | 3 | 0 | 3 |
-| Orbits | 8 | 0 | 2 | 2 | 0 | 1 |
+| Orbits | 11 | 0 | 0 | 2 | 0 | 0 |
 | Observatory & Program Codes | 3 | 0 | 0 | 0 | 0 | 5 |
-| Data & Services | 1 | 0 | 3 | 20 | 0 | 16 |
+| Data & Services | 2 | 0 | 2 | 20 | 0 | 16 |
 | Miscellaneous | 0 | 0 | 0 | 6 | 1 | 8 |
-| **Total** | **33** | **1** | **6** | **34** | **2** | **47** |
+| **Total** | **37** | **1** | **2** | **34** | **2** | **46** |
 
 ---
 
@@ -133,14 +133,14 @@ and the tracker is updated.
 | `/iau/info/SatOrbitFormat.html` | migrated | `orbits/satellite-orbit-format.md` | redirect-needed | Natural satellite orbit format |
 | `/iau/info/OrbFormat.html` | migrated | `orbits/orbit-format-overview.md` | redirect-needed | General orbit format overview |
 | `/iau/info/OrbNote.html` | migrated | `orbits/orbit-notes.md` | redirect-needed | Orbit alphabetic notes |
-| `/iau/info/Perturbers.html` | to-migrate | - | none | Perturbing bodies reference; priority: low |
+| `/iau/info/Perturbers.html` | migrated | `orbits/perturbers.md` | redirect-needed | Perturbing bodies reference |
 | `/iau/info/UValue.html` | migrated | `orbits/uncertainty-parameter.md` | redirect-needed | Uncertainty parameter U |
 | `/mpcops/documentation/orbit-types/` | migrated | `orbits/orbit-types.md` | redirect-needed | Orbit type definitions |
 | `/mpcops/documentation/object-types/` | migrated | `orbits/object-types.md` | redirect-needed | Object type definitions |
-| `/mpcops/documentation/ele220/` | to-migrate | - | none | ele220 format; priority: low |
+| `/mpcops/documentation/ele220/` | migrated | `orbits/ele220-format.md` | redirect-needed | ele220 format (deprecated) |
 | `/iau/MPCORB.html` | TBD | - | none | MPCORB orbit file documentation/download page |
 | `/mpcops/documentation/mpc-orbits/` | TBD | - | none | MPC orbits documentation on mpcops |
-| `/mpcops/documentation/mpc-orb-json/` | skip | - | none | Covered by mpc_orb package docs |
+| `/mpcops/documentation/mpc-orb-json/` | migrated | `orbits/mpc-orb-json.md` | redirect-needed | MPC_ORB JSON format |
 
 ### Observatory & Program Codes
 
@@ -161,7 +161,7 @@ and the tracker is updated.
 |---|---|---|---|---|
 | `/iau/info/TechInfo.html` | to-migrate | - | none | General technical information; priority: medium |
 | `/iau/NEO/NEOCPNotes.html` | to-migrate | - | none | NEOCP documentation/notes; priority: medium |
-| `/mpcops/documentation/tycho-tracker/` | to-migrate | - | none | Tycho Tracker guide; priority: medium |
+| `/mpcops/documentation/tycho-tracker/` | migrated | `observations/tycho-tracker.md` | redirect-needed | Tycho Tracker guide |
 | `/iau/NEO/ToConfirm.html` | skip | - | none | NEOCP main page (dynamic service) |
 | `/iau/NEO/toconfirm_tabular.html` | skip | - | none | NEOCP tabular view (dynamic) |
 | `/iau/NEO_dev/toconfirm_tabular.html` | skip | - | none | NEOCP dev endpoint |
@@ -250,7 +250,7 @@ The following `<!-- TODO: update link when migrated -->` comments exist in docs-
 
 | File | Legacy URL Referenced | Tracker Status |
 |---|---|---|
-| `astrometry/index.md` | `/mpcops/documentation/tycho-tracker/` | to-migrate |
+| `astrometry/index.md` | `/mpcops/documentation/tycho-tracker/` | migrated — TODO resolved |
 | `astrometry/reporting-observations.md` | `/iau/services/MPCServices.html` | skip |
 | `astrometry/mpc-processing.md` | `/iau/services/MPCServices.html` | skip |
 | `astrometry/mpc-processing.md` | `/iau/NEO/NEOCPNotes.html` | to-migrate |

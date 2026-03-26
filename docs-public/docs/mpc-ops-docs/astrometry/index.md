@@ -29,7 +29,7 @@ This guide covers observing minor planets, comets and natural satellites, and re
 - [cURL submission instructions](../observations/command-line-submissions.md)
 - E-mail submissions (MPC1992 only): [obs@cfa.harvard.edu](mailto:obs@cfa.harvard.edu)
 - [Report Cometary Activity](https://minorplanetcenter.net/mpcops/submissions/cometary/)
-- [How do I submit my astrometry using Tycho Tracker?](https://minorplanetcenter.net/mpcops/documentation/tycho-tracker/) <!-- TODO: update link when migrated -->
+- [How to submit astrometry using Tycho Tracker](../observations/tycho-tracker.md)
 
 ### Submission Tutorials
 

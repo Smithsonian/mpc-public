@@ -73,7 +73,7 @@ The MPC maintains a public GitHub repository with a pip-installable package for 
 
 - [`mpc_orb` on GitHub](https://github.com/Smithsonian/mpc-public/tree/main/mpc_orb)
 - [`mpc-orb` on PyPI](https://pypi.org/project/mpc-orb/)
-- [`MPC_ORB` JSON Documentation](https://minorplanetcenter.net/mpcops/documentation/mpc-orb-json/)
+- [`MPC_ORB` JSON Documentation](../orbits/mpc-orb-json.md)
 
 ```bash
 pip install mpc-orb
