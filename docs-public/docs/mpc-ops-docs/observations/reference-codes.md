@@ -18,13 +18,13 @@ Example: "MPEC 2004-P03" observations use reference `EP003`
 
 ## Permanent References
 
-### Five-Digit References (MPC publication)
+### Five-Digit References (MPC publication <= 99999)
 
 | Column | Purpose |
 |--------|---------|
 | 1-5 | MPC number |
 
-Example: `24133` = MPC 24133
+Example: `24133` = [MPC 24133](https://minorplanetcenter.net/iau/ECS/MPCArchive/1994/MPC_19941118.pdf)
 
 ### "@" + Four-Digit References (MPC > 99999)
 
