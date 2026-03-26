@@ -195,7 +195,7 @@ Columns 6-12 may contain a minor planet provisional designation. In such situati
      N    Neptune
     ```
 
-    This is given in column 1 for those objects with Roman numeral designations and column 9 for those with provisional designations.
+This is given in column 1 for numbered natural satellites such as [Jupiter 1](https://data.minorplanetcenter.net/explorer/?tab=Designated&search=Jupiter+1), and column 9 for those with only provisional designations, such as [S/2022 J 1](https://data.minorplanetcenter.net/explorer/?tab=Designated&search=S/2022+J+1).
 
 **Satellite Number**
 : For those objects with Roman numeral designations, columns 2-4 contain
