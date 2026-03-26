@@ -74,7 +74,7 @@ observations.
   the initials: e.g., 'J. R. R. Tolkien'.
 - Hyphenated first names should be abbreviated with the hyphen: e.g.,
   'Jean-Francois Hulot' would be 'J.-F. Hulot'.
-- Names that contain non-standard characters (e.g., accents or cedillas)
+- Names that contain characters with diacritical marks (e.g., accents or cedillas such as `à`, `ç`, or `ü`)
   may be specified using [standard TeX notation](https://www.minorplanetcenter.net/iau/info/NonEnglish.html) -- alternatively, an
   explanation of any special characters required must be included above
   the header.
