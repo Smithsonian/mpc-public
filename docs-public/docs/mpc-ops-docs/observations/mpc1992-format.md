@@ -234,7 +234,7 @@ for observations of minor planets is given in each batch of
 
 **Note 2**
 : This column serves two purposes. For those observations which have been
-converted to the J2000.0 system by rotating B1950.0 coordinates this column
+converted to the J2000.0 system by rotating B1950.0 coordinates, this column
 contains `A`, to indicate that the value has been adjusted. For those
 observations reduced in the J2000.0 system this column is used to indicate
 how the observation was made. The following codes will be used:
