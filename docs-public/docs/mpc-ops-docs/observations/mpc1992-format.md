@@ -301,7 +301,7 @@ be given in V- or R-band, for example. In the past for comets, the magnitude
 was specified as being nuclear, N, or total, T, but observers are now encouraged to
 provide the actual band used.
 
-    The current list of acceptable magnitude bands is: B, V, R, I, J, W, U, C, L, H, K, Y, G, g, r, i, w, y, z, o, c, v, u. Non-recognized
+    The current list of acceptable magnitude bands is: `B, V, R, I, J, W, U, C, L, H, K, Y, G, g, r, i, w, y, z, o, c, v, u`. Non-recognized
     magnitude bands will
     cause observations to be rejected. Addition of new recognised bands
     requires knowledge of a standard correction to convert a magnitude in that
