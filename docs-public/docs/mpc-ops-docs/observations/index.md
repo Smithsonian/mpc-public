@@ -5,24 +5,23 @@ Documentation related to making, formatting, and submitting astrometric observat
 
 ## Getting Started
 
+- [How do I submit my astrometry using Tycho Tracker?](https://minorplanetcenter.net/mpcops/documentation/tycho-tracker/)
+
 <div class="contents-grid"></div>
 
-- [Guide to Minor Body Astrometry](../astrometry/index.md) — comprehensive guide covering equipment, submission methods, observatory codes, discoveries and MPC processing
-
+- [Guide to Minor Body Astrometry](../astrometry/index.md)
 - [How do I get an observatory code?](../astrometry/observatory-codes.md#how-do-i-get-an-observatory-code)
-- [How do I submit my astrometry using Tycho Tracker?](https://minorplanetcenter.net/mpcops/documentation/tycho-tracker/)
 
 
 ## ADES (Astrometric Data Exchange Standard)
 
 The ADES format is the current standard for submitting observations to the MPC.
 
+- [Valid ADES values](https://minorplanetcenter.net/mpcops/documentation/valid-ades-values)
+
 <div class="contents-grid"></div>
 
 - [ADES Data Submission](ades-format.md)
-
-- [ADES introduction](https://minorplanetcenter.net/mpcops/documentation/ades/)
-- [Valid ADES values](https://minorplanetcenter.net/mpcops/documentation/valid-ades-values)
 - [ADES GitHub repository](https://github.com/IAU-ADES/ADES-Master/)
 - [Official ADES format description (PDF)](https://github.com/IAU-ADES/ADES-Master/blob/master/ADES_Description.pdf)
 
@@ -36,10 +35,11 @@ The ADES format is the current standard for submitting observations to the MPC.
 - [Catalogue codes](catalogue-codes.md)
 - [Reference codes](reference-codes.md)
 
-- [Valid ADES values](https://minorplanetcenter.net/mpcops/documentation/valid-ades-values)
 
 
 ## Observing Procedures
+
+- [Guide to using the MPES (PDF)](https://minorplanetcenter.net/iau/info/MPES.pdf)
 
 <div class="contents-grid"></div>
 
@@ -47,8 +47,6 @@ The ADES format is the current standard for submitting observations to the MPC.
 - [How to specify telescope details in the observational header](telescope-details.md)
 - [Command line submissions](command-line-submissions.md)
 - [Roving observers](roving-observers.md)
-
-- [Guide to using the MPES (PDF)](https://minorplanetcenter.net/iau/info/MPES.pdf)
 - [Guide to video observing (PDF)](https://minorplanetcenter.net/iau/info/AGuidetoVideoAstrometry.pdf)
 - [A script to generate mini normal places from video frames](https://minorplanetcenter.net/iau/info/VideoNormalPlaces.html)
 

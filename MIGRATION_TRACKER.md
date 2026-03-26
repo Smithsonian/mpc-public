@@ -107,21 +107,21 @@ and the tracker is updated.
 ### Observations & Formats
 
 | Legacy Path | Migration  | New Location | Legacy Banner | Notes                                                          |
-|---|------------|---|---|----------------------------------------------------------------|
-| `/iau/info/ADES.html` | migrated | `observations/ades-format.md` | redirect-needed | ADES format description |
-| `/iau/info/ObsFormat.html` | migrated | `observations/mpc1992-format.md` | redirect-needed | MPC1992 observation format |
-| `/iau/info/ObsDetails.html` | migrated | `observations/observational-details.md` | redirect-needed | Observation details header format |
-| `/iau/info/RovingObs.html` | migrated | `observations/roving-observers.md` | redirect-needed | Roving observers format |
-| `/iau/info/TelescopeDetails.html` | migrated | `observations/telescope-details.md` | redirect-needed | Telescope details header format |
-| `/iau/info/References.html` | migrated | `observations/reference-codes.md` | redirect-needed | Reference codes for observations |
-| `/iau/info/commandlinesubmissions.html` | migrated | `observations/command-line-submissions.md` | redirect-needed | cURL/command-line submission guide |
+|---|------------|--|---|----------------------------------------------------------------|
+| `/iau/info/ADES.html` | migrated   | `observations/ades-format.md` | redirect-needed | ADES format description |
+| `/iau/info/ObsFormat.html` | migrated   | `observations/mpc1992-format.md` | redirect-needed | MPC1992 observation format |
+| `/iau/info/ObsDetails.html` | migrated   | `observations/observational-details.md` | redirect-needed | Observation details header format |
+| `/iau/info/RovingObs.html` | migrated   | `observations/roving-observers.md` | redirect-needed | Roving observers format |
+| `/iau/info/TelescopeDetails.html` | migrated   | `observations/telescope-details.md` | redirect-needed | Telescope details header format |
+| `/iau/info/References.html` | migrated   | `observations/reference-codes.md` | redirect-needed | Reference codes for observations |
+| `/iau/info/commandlinesubmissions.html` | migrated   | `observations/command-line-submissions.md` | redirect-needed | cURL/command-line submission guide |
 | `/mpcops/documentation/negative-observations/` | to-migrate | - | none | Negative observation protocol; priority: low                   |
-| `/mpcops/documentation/ades/` | TBD        | - | none | ADES docs : Has this been done already?                        |
+| `/mpcops/documentation/ades/` | migrated     | `observations/ades-format/` | redirect-needed | ADES docs                      |
 | `/mpcops/documentation/valid-ades-values` | TBD        | - | none | ADES valid values reference (dynamic): can this be migrated?   |
 | `/submit_psv` | skip       | - | none | PSV submission form                                            |
 | `/submit_xml` | skip       | - | none | XML submission form                                            |
-| `/iau/info/ADESFieldValues.html` | TBD | - | none | ADES field value reference; linked from ADES.html |
-| `/iau/info/ObsNote.html` | migrated | `observations/observation-notes.md` | redirect-needed | Observation alphabetic notes |
+| `/iau/info/ADESFieldValues.html` | TBD        | - | none | ADES field value reference; linked from ADES.html |
+| `/iau/info/ObsNote.html` | migrated   | `observations/observation-notes.md` | redirect-needed | Observation alphabetic notes |
 | `/cgi-bin/feedback_submit_obs.cgi` | skip       | - | none | Already marked as deprecated (Old observation submission form) |
 
 ### Orbits
