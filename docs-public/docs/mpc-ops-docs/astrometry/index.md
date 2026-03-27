@@ -17,7 +17,6 @@ This guide covers observing minor planets, comets and natural satellites, and re
 - [Observer Target List](https://minorplanetcenter.net/whatsup)
 - [Observable-Object List Customizer](https://minorplanetcenter.net/iau/lists/Customize.html)
 - [NEOfixer](https://neofixer.arizona.edu/) (external)
-- [ESA Priority List](https://neo.ssa.esa.int/priority-list) (external)
 - [Follow-Up Observing Sites](https://minorplanetcenter.net/iau/MPEph/FollowUp.html)
 - [Minor Planet Ephemeris Service](https://minorplanetcenter.net/iau/MPEph/MPEph.html)
 
