@@ -20,5 +20,5 @@ Additional refinements regarding program code assignments for archival observati
 
 ## Reference Resources
 
-- [Available program codes](program-codes.md)
+- [Current program codes](program-codes.md#Available-Formats)
 - [Available observatory codes](https://minorplanetcenter.net/iau/lists/ObsCodesF.html)
