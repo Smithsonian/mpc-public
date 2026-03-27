@@ -4,7 +4,7 @@ Observatory codes are assigned to observatories that report astrometric observat
 
 Historical observatory positions derive from 19th and early 20th-century almanac listings. The MPC recommends all positions reference the WGS84 datum. Those with previously reported coordinates should remeasure using Google Earth and submit updated values.
 
-The [current list of assigned codes](https://minorplanetcenter.net/iau/lists/ObsCodesF.html) is available online.
+The [current list of assigned codes](https://data.minorplanetcenter.net/explorer/?tab=Lists&list=Observatory+Codes) is available online.
 
 
 ## What to Report
