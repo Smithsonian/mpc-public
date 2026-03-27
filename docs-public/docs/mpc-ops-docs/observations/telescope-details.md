@@ -43,7 +43,7 @@ In the descriptions below `<real>` indicates a positive real number,
 either integer or non-decimal: if the value is less than 1, a leading
 zero must be given. Examples of valid values are "1", "3.44" and "0.76".
 Also, `<int>` indicates a positive integer, and `|` indicates
-OR.
+a logical OR.
 
 
 ## 2: The Notification Process
