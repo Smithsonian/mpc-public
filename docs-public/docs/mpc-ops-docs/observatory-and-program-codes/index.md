@@ -20,12 +20,11 @@ Documentation related to observatory codes, program codes, and associated polici
 
 ## Program Codes
 
+- [Program Codes (plain text list)](https://minorplanetcenter.net/iau/lists/ProgramCodes.txt)
+
 <div class="contents-grid"></div>
 
 - [Program Codes](program-codes.md)
-- [Program Codes policy](program-codes-policy.md)
-
-- [Program Codes (plain text list)](https://minorplanetcenter.net/iau/lists/ProgramCodes.txt)
 
 
 ## Related

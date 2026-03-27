@@ -25,6 +25,20 @@ The comprehensive listing includes:
 The program codes data is accessible in two formats:
 
 1. **Legacy Format**: [Plain text file](https://minorplanetcenter.net/iau/lists/ProgramCodes.txt)
-2. **Modern Format**: [JSON file](https://minorplanetcenter.net/static/downloadable-files/program_codes.json)
+2. **JSON Format**: [JSON file](https://minorplanetcenter.net/static/downloadable-files/program_codes.json)
 
-For additional context, consult the [program codes policy](program-codes-policy.md) regarding code assignment procedures.
+
+## Quality Monitoring
+
+The MPC continuously evaluates the astrometric quality of all submitted observations. Prior to assigning new observatory codes, the organization performs thorough verification of the astrometry provided by users requesting codes. Detailed instructions are available in the [astrometry guide](../astrometry/observatory-codes.md#how-do-i-get-an-observatory-code).
+
+
+## Policy Changes
+
+Previously, program-code assignments had not received the same level of scrutiny as observatory code assignments. This is changing.
+
+**Effective August 4th, 2025**, a program code will be assigned by default to all new observatory codes.
+
+Additional refinements regarding program code assignments for archival observations and non-historical stations are in development, with further details to be announced.
+
+[//]: # (TODO: Link in SARC policy stuff)
