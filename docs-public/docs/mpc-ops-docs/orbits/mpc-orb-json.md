@@ -5,7 +5,7 @@ The MPC_ORB JSON format provides a JSON representation of orbital elements and r
 
 ## Python Package
 
-The MPC maintains the [mpc_orb](https://github.com/Smithsonian/mpc-public/tree/main/mpc_orb) package in the [mpc-public](https://github.com/Smithsonian/mpc-public) repository. It can be installed via pip:
+The MPC maintains the [mpc_orb](https://github.com/Smithsonian/mpc-public/tree/main/mpc_orb) package in the [mpc-public](https://github.com/Smithsonian/mpc-public) repository. It can be installed via [pip](https://pypi.org/project/mpc-orb/):
 
 ```bash
 pip install mpc_orb
