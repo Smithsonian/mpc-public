@@ -24,7 +24,7 @@ The package provides:
 The complete schema is available in [mpcorb_schema_latest.json](https://github.com/Smithsonian/mpc-public/blob/main/mpc_orb/mpc_orb/schema_json/mpcorb_schema_latest.json).
 
 !!! note
-    While the schema version is still 0.x, the schema is subject to change.
+    While the schema version is still `0.x`, the schema is subject to change.
 
 
 ## Accessing MPC_ORB Data
