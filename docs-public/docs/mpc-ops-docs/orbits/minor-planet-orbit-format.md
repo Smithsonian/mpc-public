@@ -87,7 +87,7 @@ reading the specified values.
 
 Format: `z4.4` (4-hexdigit flags).
 
-The bottom 6 bits (bits 0--5) encode the [orbit type](orbit-types.md):
+The bottom 6 bits (bits 0--5) encode an orbit type:
 
 | Value | Classification |
 |-------|----------------|

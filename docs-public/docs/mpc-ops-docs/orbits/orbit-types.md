@@ -20,7 +20,7 @@ The following parameter definitions are used in the classification criteria:
 
 ## Inner Solar System
 
-Objects with orbits primarily interior to Mars.
+Objects with orbits primarily interior to Mars' orbit.
 
 | Type   | Code | Definition |
 |--------|------|------------|
@@ -34,7 +34,7 @@ Objects with orbits primarily interior to Mars.
 
 ## Middle Solar System
 
-Objects in the region from Mars crossers through the Jovian Trojans.
+OObjects that occupy the orbital region of Mars-crossers up to that of the Jovian Trojans.
 
 | Type            | Code | Definition |
 |-----------------|------|------------|

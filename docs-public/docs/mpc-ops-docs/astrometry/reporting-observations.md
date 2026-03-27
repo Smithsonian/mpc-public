@@ -149,10 +149,6 @@ In case you are submitting observations in the MPC1992 format and you want to us
 - If you are using a mailer that can send HTML mail, please disable the inclusion of the HTML version. Inclusion of the HTML version more than doubles the length of the e-mail and the repetition of material is completely useless. In addition, the inclusion of HTML text may trigger the MPC's antispam e-mail filters, causing your message to be flagged as spam.
 - Never send any kind of word-processor/DTP file. If you use a word processor or DTP package to prepare your observations, ensure that you use the package's 'Save as ASCII' option.
 
-If you cannot send unencoded attachments and the batches are not more than a few KB in size, you can use the [Observation Submission Form](https://minorplanetcenter.net/cgi-bin/feedback_submit_obs.cgi?S=Observation%20submission%20via%20website&D=O).
-
-Or you can use the [cURL submission method](../observations/command-line-submissions.md) to submit batches of any size.
-
 
 ## Spam-blocking systems
 
