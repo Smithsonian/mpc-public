@@ -2,7 +2,7 @@
 
 Observatory codes are assigned to observatories that report astrometric observations of minor planets, comets or irregular natural satellites. New codes are regularly assigned based on new observers or literature extraction. For guidance on obtaining an observatory code, consult the [Guide to Minor Body Astrometry](../astrometry/observatory-codes.md#how-do-i-get-an-observatory-code).
 
-Historical observatory positions derive from 19th and early 20th-century almanac listings. The MPC recommends all positions reference the WGS84 datum. Those with previously reported coordinates should remeasure using Google Earth and submit updated values.
+Historical observatory positions derive from 19th and early 20th-century almanac listings. The MPC recommends all positions reference the [WGS84 datum](https://en.wikipedia.org/wiki/World_Geodetic_System). Those with previously reported coordinates are encouraged to remeasure using Google Earth and submit updated values.
 
 The [current list of assigned codes](https://data.minorplanetcenter.net/explorer/?tab=Lists&list=Observatory+Codes) is available online.
 
