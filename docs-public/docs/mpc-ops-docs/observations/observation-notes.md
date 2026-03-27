@@ -1,9 +1,9 @@
-# Observation Notes
+# Observation Notes (`Note 1`)
 
 Alphabetic notes shown with some observations are defined according to the scheme below. Non-alphabetic codes are used to differentiate between different programs at the same site and such codes will be defined in the headings for the individual observatories in the Minor Planet Circulars.
 
 
-## Standard Alphabetic Note Codes
+## Standard Alphabetic `Note 1` Codes
 
 | Code | Definition |
 |------|-----------|
