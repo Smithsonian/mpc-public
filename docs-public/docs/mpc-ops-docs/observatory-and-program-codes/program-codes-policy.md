@@ -16,6 +16,7 @@ Previously, program-code assignments had not received the same level of scrutiny
 
 Additional refinements regarding program code assignments for archival observations and non-historical stations are in development, with further details to be announced.
 
+[//]: # (TODO: Link in SARC policy stuff)
 
 ## Reference Resources
 

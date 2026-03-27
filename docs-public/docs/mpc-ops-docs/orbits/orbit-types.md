@@ -1,7 +1,20 @@
 # Orbit Type Definition
 
-The Minor Planet Center classifies orbits based on osculating orbital elements. Objects
-are grouped into three main regions of the solar system.
+The Minor Planet Center classifies orbits based on osculating orbital elements. 
+Objects are grouped into three main regions of the solar system.
+
+
+The following parameter definitions are used in the classification criteria:
+- **a** -- semimajor axis (AU)
+- **q** -- perihelion distance (AU)
+- **Q** -- aphelion distance (AU)
+- **e** -- eccentricity
+- **i** -- inclination (degrees)
+- **T** -- Tisserand parameter with respect to Jupiter
+- **q_Mars** = 1.405 AU (Mars perihelion distance)
+- **a_Jupiter** = 5.204 AU
+- **a_Neptune** = 30.178 AU
+
 
 ---
 
@@ -55,15 +68,3 @@ semimajor axes.
 | Other       | 99   | Classification failure |
 
 ---
-
-## Parameters and Constants
-
-- **a** -- semimajor axis (AU)
-- **q** -- perihelion distance (AU)
-- **Q** -- aphelion distance (AU)
-- **e** -- eccentricity
-- **i** -- inclination (degrees)
-- **T** -- Tisserand parameter with respect to Jupiter
-- **q_Mars** = 1.405 AU (Mars perihelion distance)
-- **a_Jupiter** = 5.204 AU
-- **a_Neptune** = 30.178 AU
