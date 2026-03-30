@@ -13,7 +13,7 @@ Please follow these rules:
 - In general, comets are harder to measure than minor planets. If we have a new observer reporting comet observations of bad or indifferent quality we do not know if it is simply a problem due to the comet (big, bright difficult-to-measure image) or a problem with the measurement/reduction process.
 - The MPC encourages submitters, especially those searching through archival astrometry, to carefully examine any marginal detections. Astrometry should be reported only for detections with a sufficiently high signal-to-noise ratio to withstand external independent review of the images. We note that synthetic tracking software, such as Tycho Tracker, often requires significant experience to avoid submitting stacked noise in sky location of the expected position of an object.
 - Reporting magnitudes is optional, but highly desirable. Please try to report magnitudes if you are submitting archival astrometry.
-- MPC encourages observers to use the correct keywords in the observational header, particularly when it comes to rapid processing of NEOs or comets. Without the correct keyword, tracklets could end up in a wrong or slower queue. In addition, please submit new NEOs separately from NEOCP followup and/or incidental astrometry. Lastly, please follow the instructions on how to format other elements of the header. Issues such as omitting space between initial and last name slows down the process of the submitted astrometry since the automated program code assignment will not be possible (follow the instructions reported on the [how to specify observational details page](https://www.minorplanetcenter.net/iau/info/ObsDetails.html)). <!-- TODO: update link when migrated -->
+- MPC encourages observers to use the correct keywords in the observational header, particularly when it comes to rapid processing of NEOs or comets. Without the correct keyword, tracklets could end up in a wrong or slower queue. In addition, please submit new NEOs separately from NEOCP followup and/or incidental astrometry. Lastly, please follow the instructions on how to format other elements of the header. Issues such as omitting a space between one's first initial and last name slows down the process of the submitted astrometry, since the automated program code assignment will not be possible. Please follow the instructions reported on the [observational details page](../observations/observational-details.md)).
 
 In particular:
 
@@ -32,10 +32,10 @@ Astrometric observations can be reported in two different formats:
 - The [IAU Astrometric Data Exchange Standard (ADES)](#whats-the-ades-format) is the preferred format for reporting observations to the MPC.
 - The older 80-character MPC1992 format (also informally called obs80) may also be submitted.
 
-Observations reported in the MPC1992 format need to follow the rules detailed on the [page describing the format](https://minorplanetcenter.net/iau/info/ObsFormat.html). 
-Please read this document carefully and report the observations in the correct format. <!-- TODO: update link when migrated -->
+Observations reported in the MPC1992 format need to follow the rules detailed on the [page describing the format](../observations/mpc1992-format.md).
+Please read this document carefully and report the observations in the correct format.
 
-Observations reported in ADES format need to follow the rules described in the [ADES documentation](https://github.com/IAU-ADES/ADES-Master/blob/master/ADES_Description.pdf) and on the [MPC ADES Data Submission page](https://minorplanetcenter.net/iau/info/ADES.html). <!-- TODO: update link when migrated -->
+Observations reported in ADES format need to follow the rules described in the [ADES documentation](https://github.com/IAU-ADES/ADES-Master/blob/master/ADES_Description.pdf) and on the [MPC ADES Data Submission page](../observations/ades-format.md).
 
 Observations of minor planets, comets and natural satellites, formatted as specified above, can be reported via:
 
@@ -43,7 +43,7 @@ Observations of minor planets, comets and natural satellites, formatted as speci
 2. Observation Submission Forms (ADES only):
     - [ADES XML Submission Form](https://minorplanetcenter.net/submit_xml)
     - [ADES PSV Submission Form](https://minorplanetcenter.net/submit_psv)
-3. [MPC1992 cURL instructions](https://minorplanetcenter.net/iau/info/commandlinesubmissions.html) <!-- TODO: update link when migrated -->
+3. [MPC1992 cURL instructions](../observations/command-line-submissions.md)
 
 Tutorials related to the submission of observations are available in the [Submission Tutorials](../../tutorials/submission_tutorials.md) section of the MPC's documentation site.
 
@@ -59,7 +59,7 @@ In addition to the above points, please also check the following notes:
 
 The Astrometric Data Exchange Standard (ADES) format was adopted by the IAU in August 2015. It was introduced with the goal of standardizing the exchange and the storage of astrometric data (observations and uncertainties) and their associated data description between observers and orbit computing centers. The MPC accepts and internally uses observations in this format.
 
-Details are available on the [ADES GitHub repository](https://github.com/IAU-ADES/ADES-Master) and on the [MPC ADES webpage](https://minorplanetcenter.net/iau/info/ADES.html). <!-- TODO: update link when migrated -->
+Details are available on the [ADES GitHub repository](https://github.com/IAU-ADES/ADES-Master) and on the [MPC ADES webpage](../observations/ades-format.md).
 
 The use of the ADES format is not mandatory at the moment, but the MPC strongly encourages users to familiarize themselves with the format and the repository.
 
@@ -140,7 +140,7 @@ Note that this scheme must be followed if there are two (or more) headers from t
 
 ## E-mail recommendations
 
-If you can, please use the [cURL submission method](https://minorplanetcenter.net/iau/info/commandlinesubmissions.html) to submit the observations. If you submit ADES observations, the cURL method and website submission forms are also the only methods allowed; you cannot submit ADES by email. <!-- TODO: update link when migrated -->
+If you can, please use the [cURL submission method](../observations/command-line-submissions.md) to submit the observations. If you submit ADES observations, the cURL method and website submission forms are also the only methods allowed; you cannot submit ADES by email.
 
 In case you are submitting observations in the MPC1992 format and you want to use e-mail, the following guidelines should be noted with regard to any e-mail submission of observations:
 
@@ -148,10 +148,6 @@ In case you are submitting observations in the MPC1992 format and you want to us
 - Please ensure that your mailer does not split the 80-column observation records--many mailers, such as PINE, will automatically break a line at about 72 characters. In PINE you can avoid this problem if the observations you wish to send are in a separate file by including the file using CTRL-R, rather than by using cut and paste.
 - If you are using a mailer that can send HTML mail, please disable the inclusion of the HTML version. Inclusion of the HTML version more than doubles the length of the e-mail and the repetition of material is completely useless. In addition, the inclusion of HTML text may trigger the MPC's antispam e-mail filters, causing your message to be flagged as spam.
 - Never send any kind of word-processor/DTP file. If you use a word processor or DTP package to prepare your observations, ensure that you use the package's 'Save as ASCII' option.
-
-If you cannot send unencoded attachments and the batches are not more than a few KB in size, you can use the [Observation Submission Form](https://minorplanetcenter.net/cgi-bin/feedback_submit_obs.cgi?S=Observation%20submission%20via%20website&D=O).
-
-Or you can use the [cURL submission method](https://minorplanetcenter.net/iau/info/commandlinesubmissions.html) to submit batches of any size. <!-- TODO: update link when migrated -->
 
 
 ## Spam-blocking systems
@@ -167,7 +163,7 @@ Upon receipt of a batch of observations, we send an automatic acknowledgement ba
 
 If you have not received any acknowledgement from us or if you want to know what happened to your observations, please use our [WAMO service](https://minorplanetcenter.net/wamo/).
 
-Please also check that you have correctly used all the fields in the header. See [Information on how to personalize the acknowledgement](https://minorplanetcenter.net/iau/info/ObsDetails.html). <!-- TODO: update link when migrated -->
+Please also check that you have correctly used all the fields in the header. See the [information on how to personalize the acknowledgement](../observations/observational-details.md).
 
 If something is not clear or you still have questions about your observations, please submit a [Jira ticket](https://mpc-service.atlassian.net/servicedesk/customer/portals).
 
@@ -185,7 +181,7 @@ You do not need to resend your message if the bounceback comes from any other e-
 
 ## What is the purpose of the contact details?
 
-The contact details as published in the [_MPCs_](https://minorplanetcenter.net/iau/services/MPCServices.html) for each observatory code are intended as a contact point for persons with queries regarding a specific program. The contact address does not have to be the street address of the observatory. For professional programs it should be noted that the contact details are NOT intended to be a list of P.I.s on the project. <!-- TODO: update link when migrated -->
+The contact details as published in the [_MPCs_](https://minorplanetcenter.net/iau/services/MPCServices.html) for each observatory code are intended as a contact point for persons with queries regarding a specific program. The contact address does not have to be the street address of the observatory. For professional programs it should be noted that the contact details are NOT intended to be a list of P.I.s on the project.
 
 The contact details MUST include:
 
@@ -193,7 +189,7 @@ The contact details MUST include:
 - a snail-mail address for that person (this can be a P.O. Box)
 - an e-mail address for that person
 
-[Information on how to specify the contact address](https://minorplanetcenter.net/iau/info/ObsDetails.html) (as well as names of observers and measurers) is available. <!-- TODO: update link when migrated -->
+[Information on how to specify the contact address](../observations/observational-details.md) (as well as names of observers and measurers) is available.
 
 
 ## What are some common mistakes?
@@ -212,11 +208,11 @@ The contact details MUST include:
 
 4. **Incorrectly-Specified Observer Details.**
 
-    If you do not include an [observational header](https://minorplanetcenter.net/iau/info/ObsDetails.html) before the observations, the e-mail message will not be recognized as containing observations. <!-- TODO: update link when migrated -->
+    If you do not include an [observational header](../observations/observational-details.md) before the observations, the e-mail message will not be recognized as containing observations.
 
-    Some observers specify observer details in the form used in the _MPCs_. These details are usually nicely formatted, but the observation processing routines will ignore them. Observer details must be formatted in [the proper format](https://minorplanetcenter.net/iau/info/ObsDetails.html). <!-- TODO: update link when migrated -->
+    Some observers specify observer details in the form used in the _MPCs_. These details are usually nicely formatted, but the observation processing routines will ignore them. Observer details must be formatted in [the proper format](../observations/observational-details.md).
 
 
 ## Should I check my observations before reporting them?
 
-Observer checking does not need to be anything more than checking that what you actually send is what you meant to send. Checking of designations, observation dates and times, positions and the [format](https://minorplanetcenter.net/iau/info/ObsFormat.html) is advisable. <!-- TODO: update link when migrated -->
+Observer checking does not need to be anything more than checking that what you actually send is what you meant to send. Checking of designations, observation dates and times, positions and the [format](../observations/mpc1992-format.md) is advisable.

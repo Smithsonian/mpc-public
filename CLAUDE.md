@@ -135,13 +135,41 @@ The following documentation pages have been migrated from MPC legacy pages into 
 - `astrometry/discoveries-and-credit.md` - From `/iau/info/Astrometry.html` (discoveries, coverage, naming sections)
 - `astrometry/mpc-processing.md` - From `/iau/info/Astrometry.html` (processing and publication sections)
 
-**astrometry/** (migrated from `/iau/info/Astrometry.html`):
+**observations/** (migrated from `observations.md`):
 
-- `astrometry/getting-started.md` - Getting started with astrometry submissions
-- `astrometry/observatory-codes.md` - Observatory codes overview
-- `astrometry/reporting-observations.md` - How to report observations
-- `astrometry/discoveries-and-credit.md` - Discovery credit and procedures
-- `astrometry/mpc-processing.md` - How the MPC processes observations
+- `observations/index.md` - Hub page with button links to local pages, text links to external resources
+- `observations/ades-format.md` - From `/iau/info/ADES.html`
+- `observations/mpc1992-format.md` - From `/iau/info/ObsFormat.html`
+- `observations/observational-details.md` - From `/iau/info/ObsDetails.html`
+- `observations/command-line-submissions.md` - From `/iau/info/commandlinesubmissions.html`
+- `observations/roving-observers.md` - From `/iau/info/RovingObs.html`
+- `observations/telescope-details.md` - From `/iau/info/TelescopeDetails.html`
+- `observations/catalogue-codes.md` - From `/iau/info/CatalogueCodes.html`
+- `observations/reference-codes.md` - From `/iau/info/References.html`
+- `observations/observation-notes.md` - From `/iau/info/ObsNote.html`
+- `observations/tycho-tracker.md` - From `/mpcops/documentation/tycho-tracker/`
+
+**orbits/** (migrated from `orbits.md`):
+
+- `orbits/index.md` - Hub page with button links to local pages, text links to external resources
+- `orbits/minor-planet-orbit-format.md` - From `/iau/info/MPOrbitFormat.html`
+- `orbits/comet-orbit-format.md` - From `/iau/info/CometOrbitFormat.html`
+- `orbits/satellite-orbit-format.md` - From `/iau/info/SatOrbitFormat.html`
+- `orbits/orbit-format-overview.md` - From `/iau/info/OrbFormat.html`
+- `orbits/orbit-notes.md` - From `/iau/info/OrbNote.html`
+- `orbits/uncertainty-parameter.md` - From `/iau/info/UValue.html`
+- `orbits/orbit-types.md` - From `/mpcops/documentation/orbit-types/`
+- `orbits/object-types.md` - From `/mpcops/documentation/object-types/`
+- `orbits/perturbers.md` - From `/iau/info/Perturbers.html`
+- `orbits/ele220-format.md` - From `/mpcops/documentation/ele220/`
+- `orbits/mpc-orb-json.md` - From `/mpcops/documentation/mpc-orb-json/`
+
+**observatory-and-program-codes/** (migrated from `observatory-and-program-codes.md`):
+
+- `observatory-and-program-codes/index.md` - Hub page with button links to local pages, text links to external resources
+- `observatory-and-program-codes/observatory-codes-docs.md` - From `/iau/info/ObservatoryCodes.html`
+- `observatory-and-program-codes/program-codes.md` - From `/mpcops/documentation/program-codes/`
+- `observatory-and-program-codes/program-codes-policy.md` - From `/mpcops/documentation/program-codes-policy/`
 
 **data-and-services/**:
 

@@ -5,7 +5,7 @@ This page covers obtaining, using and updating observatory codes for astrometric
 
 ## How do I get an observatory code?
 
-Observatory codes are intended for "permanent" (repeated usage) observing sites. It is not necessary that your telescope is associated with any existing building in order to apply for an observatory code; setting up your portable telescope in your backyard is permanent enough to obtain an observatory code from the MPC. We encourage all observers to apply for an observatory code. The ["Roving Observers"](https://minorplanetcenter.net/iau/info/RovingObs.html) format should only be used in very specific cases by observers at temporary sites, preferably only by people with prior experience submitting measurements to the MPC. We always encourage observers to apply for an observatory code and not to use the Roving Observers format. <!-- TODO: update link when migrated -->
+Observatory codes are intended for "permanent" (repeated usage) observing sites. It is not necessary that your telescope is associated with any existing building in order to apply for an observatory code; setting up your portable telescope in your backyard is permanent enough to obtain an observatory code from the MPC. We encourage all observers to apply for an observatory code. The ["Roving Observers"](../observations/roving-observers.md) format should only be used in very specific cases by observers at temporary sites, preferably only by people with prior experience submitting measurements to the MPC. We always encourage observers to apply for an observatory code and not to use the Roving Observers format.
 
 When you apply for an observatory code, you must complete the following tasks, preferably on the same day, in this order:
 
