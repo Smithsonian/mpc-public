@@ -272,7 +272,7 @@ how the observation was made. The following codes will be used:
     In addition, there are `X` and `x` which are used only for already-filed observations.
     `X` was given originally only to discovery observations that were approximate or
     semi-accurate and that had accurate measures corresponding to the time
-    of discoverythis has been extended to other replaced discovery observations.
+of discovery; this has been extended to other replaced discovery observations.
     Observations marked `X`/`x` are to be suppressed in residual blocks.
     They are retained so that there exists an original record of a discovery.
     **These codes MUST NOT be used on observation submissions.**
