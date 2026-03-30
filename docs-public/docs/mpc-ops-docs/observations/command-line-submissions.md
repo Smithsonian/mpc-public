@@ -63,7 +63,7 @@ Any problems should be reported to the
 
 ## Test Submissions
 
-Please do not use the listed above for testing purposes.
+Please do not use the commands listed above for testing purposes.
 
 If you wish to test your script, use `minorplanetcenter.net/submit_obs_test`
 instead of `minorplanetcenter.net/submit_obs`. The format of the call
