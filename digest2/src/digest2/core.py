@@ -308,6 +308,7 @@ class Digest2:
         self,
         tracklets: List[List[Observation]],
         classes: Optional[List[str]] = None,
+        is_ades: bool = False,
         collect_orbits: bool = False,
         max_workers: Optional[int] = None,
     ) -> List[Optional[ClassificationResult]]:
@@ -319,6 +320,8 @@ class Digest2:
         Args:
             tracklets: List of tracklets, each a list of Observations.
             classes: List of class abbreviations to compute.
+            is_ades: If True, use ADES RMS handling in the scoring engine.
+                Set this when observations were parsed from ADES XML files.
             collect_orbits: If True, collect trial orbit elements per tracklet.
             max_workers: Maximum number of threads for parallel scoring.
                 ``None`` lets the runtime choose.  Use ``1`` for sequential.
@@ -331,6 +334,7 @@ class Digest2:
             for obs_list in tracklets:
                 try:
                     result = self.classify_tracklet(obs_list, classes=classes,
+                                                    is_ades=is_ades,
                                                     collect_orbits=collect_orbits)
                     results.append(result)
                 except RuntimeError:
@@ -340,6 +344,7 @@ class Digest2:
         def _score_one(obs_list):
             try:
                 return self.classify_tracklet(obs_list, classes=classes,
+                                              is_ades=is_ades,
                                               collect_orbits=collect_orbits)
             except RuntimeError:
                 return None
@@ -392,6 +397,7 @@ def classify(
     classes: Optional[List[str]] = None,
     repeatable: bool = True,
     no_threshold: bool = False,
+    is_ades: bool = False,
     collect_orbits: bool = False,
     max_workers: Optional[int] = None,
 ) -> Union[ClassificationResult, List[ClassificationResult]]:
@@ -408,6 +414,9 @@ def classify(
         classes: List of class abbreviations to compute.
         repeatable: Use fixed random seed for deterministic results.
         no_threshold: If True, disable per-observation RMS ceiling clamping.
+        is_ades: If True, use ADES RMS handling in the scoring engine.
+            Set this when observations were parsed from ADES XML files.
+            Ignored when *input* is a filepath (auto-detected from extension).
         collect_orbits: If True, collect trial orbit elements per tracklet.
         max_workers: Maximum number of threads for parallel scoring.
             ``None`` lets the runtime choose.  Use ``1`` for sequential.
@@ -429,7 +438,9 @@ def classify(
                                     max_workers=max_workers)
         if isinstance(input, list) and input and isinstance(input[0], list):
             return d2.classify_batch(input, classes=classes,
+                                     is_ades=is_ades,
                                      collect_orbits=collect_orbits,
                                      max_workers=max_workers)
         return d2.classify_tracklet(input, classes=classes,
+                                    is_ades=is_ades,
                                     collect_orbits=collect_orbits)
