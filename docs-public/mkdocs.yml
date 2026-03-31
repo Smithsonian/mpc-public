@@ -31,6 +31,8 @@ nav:
     - services/index.md
   - Tutorials:
     - tutorials/index.md
+  - Software:
+    - software/index.md
 
 markdown_extensions:
   - admonition
