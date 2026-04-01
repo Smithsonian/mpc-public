@@ -346,6 +346,98 @@ def _parse_ades_optical(optical, ns: str) -> Optional[Observation]:
         return None
 
 
+def _as_float(val: str, default: float = 0.0) -> float:
+    """Convert a string to float, treating empty string or literal 'None' as default."""
+    return float(val) if val and val != "None" else default
+
+
+def _parse_ades_psv_row(row: Dict[str, str]) -> Optional[Observation]:
+    """Parse a single ADES PSV row dict into an Observation."""
+    try:
+        mjd = _iso_to_mjd(row["obsTime"].strip())
+        ra_deg = float(row["ra"])
+        dec_deg = float(row["dec"])
+        obscode = row.get("stn", "500")
+        mag = _as_float(row.get("mag", ""))
+        band = row.get("band", "V") or "V"
+        rms_ra = _as_float(row.get("rmsRA", ""))
+        rms_dec = _as_float(row.get("rmsDec", ""))
+
+        vmag = _update_magnitude(band, mag)
+
+        return Observation(
+            mjd=mjd,
+            ra=ra_deg,
+            dec=dec_deg,
+            mag=vmag,
+            band=band,
+            obscode=obscode,
+            rms_ra=rms_ra,
+            rms_dec=rms_dec,
+        )
+    except (ValueError, KeyError):
+        return None
+
+
+def parse_ades_psv(filepath: str) -> Dict[str, List[Observation]]:
+    """Parse an ADES PSV (pipe-separated values) observation file.
+
+    Groups observations by tracklet sub-designation, with fallback to
+    provID then permID. Observations within each tracklet
+    are returned sorted by MJD ascending, as required by the digest2
+    scoring engine.
+
+    Args:
+        filepath: Path to the ADES PSV file.
+
+    Returns:
+        Dict mapping designation string -> list of Observations sorted by MJD.
+        Rows that cannot be parsed are skipped silently.
+    """
+
+    def _split(line: str) -> List[str]:
+        """Split a PSV line on '|', strip whitespace, and drop trailing empty field."""
+        parts = [p.strip() for p in line.split("|")]
+        if parts and parts[-1] == "":
+            parts = parts[:-1]
+        return parts
+
+    tracklets: Dict[str, List[Observation]] = {}
+    headers: Optional[List[str]] = None
+
+    with open(filepath, "r") as f:
+        for raw_line in f:
+            line = raw_line.rstrip("\n")
+            if line.startswith("#"):
+                continue
+            # Skip metadata key-value lines (e.g. "! mpcCode G96") but not the
+            # column-header line which also starts with "!" in the full ADES spec
+            # (e.g. "!Obstype|permID|...").
+            if line.startswith("!") and "|" not in line:
+                continue
+            if line.startswith("!"):
+                line = line[1:]  # strip leading "!" from "!Obstype|..." header
+            if headers is None:
+                headers = _split(line)
+                continue
+            fields = _split(line)
+            if len(fields) != len(headers):
+                continue
+
+            row = dict(zip(headers, fields))
+            desig = next(
+                (v for k in ("trkSub", "provID", "permID")
+                 if (v := row.get(k, "")) and v != "None"),
+                "unknown",
+            )
+
+            obs = _parse_ades_psv_row(row)
+            if obs is not None:
+                tracklets.setdefault(desig, []).append(obs)
+
+    return {k: sorted(v, key=lambda o: o.mjd) for k, v in tracklets.items()}
+
+
 def _iso_to_mjd(iso_str: str) -> float:
     """Convert ISO 8601 datetime string to MJD.
 
