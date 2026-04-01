@@ -44,6 +44,12 @@ def sample_xml_path(digest2_dir):
 
 
 @pytest.fixture
+def sample_psv_path(digest2_dir):
+    """Return path to sample.psv."""
+    return str(digest2_dir / "digest2" / "sample.psv")
+
+
+@pytest.fixture
 def mpc_config_path(digest2_dir):
     """Return path to the MPC.config in population/."""
     return str(digest2_dir / "population" / "MPC.config")
