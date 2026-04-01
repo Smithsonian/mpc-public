@@ -13,6 +13,7 @@ from digest2.observation import (
     _update_magnitude,
     parse_mpc80,
     parse_mpc80_file,
+    parse_ades_psv,
 )
 
 
@@ -183,3 +184,80 @@ class TestParseMpc80File:
         f.write_text(content)
         tracklets = parse_mpc80_file(str(f))
         assert len(tracklets) == 2
+
+
+class TestParseAdesPsv:
+    """Test ADES PSV file parsing against real-world format variants."""
+
+    # Minimal header — the function accesses fields by name so extra columns are ignored
+    _HEADER = "permID|provID|trkSub|mode|stn|obsTime|ra|dec|rmsRA|rmsDec|mag|band"
+
+    def test_groups_by_trksub_sorted_by_mjd(self, tmp_path):
+        """Two observations for the same trkSub in reverse time order come out MJD-sorted.
+        Uses comet-fragment-style header (no leading !, no trailing |)."""
+        content = (
+            f"{self._HEADER}\n"
+            "# comment\n"
+            "! mpcCode G96\n"
+            "None|None|J81E35N|CCD|D29|2022-07-26T17:22:00.077Z|313.90775|1.52200|None|None|20.6|R\n"
+            "None|None|J81E35N|CCD|D29|2022-07-26T16:41:16.426Z|313.91454|1.52442|None|None|20.6|R\n"
+        )
+        f = tmp_path / "test.psv"
+        f.write_text(content)
+        tracklets = parse_ades_psv(str(f))
+
+        obs_list = tracklets["J81E35N"]
+        assert len(obs_list) == 2
+        assert obs_list[0].mjd < obs_list[1].mjd
+        assert abs(obs_list[0].ra - 313.91454) < 1e-5
+
+    def test_exclamation_obstype_header(self, tmp_path):
+        """Handles full ADES spec header starting with '!Obstype|...' (ades_example.txt format)."""
+        content = (
+            "!permID|provID|trkSub|mode|stn|obsTime|ra|dec|rmsRA|rmsDec|mag|band\n"
+            "5157|None|None|UNK|675|1954-04-08T09:00:30.240Z|213.27217|-13.68703|None|None|None|None\n"
+            "5157|None|None|UNK|675|1954-04-08T09:17:15.072Z|213.26975|-13.68650|None|None|None|None\n"
+        )
+        f = tmp_path / "test.psv"
+        f.write_text(content)
+        tracklets = parse_ades_psv(str(f))
+
+        # trkSub="None" and provID="None" → falls back to permID="5157"
+        assert "5157" in tracklets
+        assert len(tracklets["5157"]) == 2
+
+    def test_none_string_fields_default_to_zero(self, tmp_path):
+        """Literal 'None' in rmsRA/rmsDec/mag (standard in MPC PSV files) → 0.0."""
+        content = (
+            f"{self._HEADER}\n"
+            "None|None|J81E35N|CCD|D29|2022-07-26T17:01:38.208Z|313.91113|1.52319|None|None|None|V\n"
+        )
+        f = tmp_path / "test.psv"
+        f.write_text(content)
+        obs = parse_ades_psv(str(f))["J81E35N"][0]
+        assert obs.rms_ra == 0.0
+        assert obs.rms_dec == 0.0
+        assert obs.mag == 0.0
+
+    def test_band_correction_applied(self, tmp_path):
+        """Non-V band magnitude is corrected to V-band (R band: +0.4)."""
+        content = (
+            f"{self._HEADER}\n"
+            "None|None|J81E35N|CCD|D29|2022-07-26T17:01:38.208Z|313.91113|1.52319|None|None|20.5|R\n"
+        )
+        f = tmp_path / "test.psv"
+        f.write_text(content)
+        obs = parse_ades_psv(str(f))["J81E35N"][0]
+        assert abs(obs.mag - 20.9) < 0.001
+
+    def test_malformed_row_skipped(self, tmp_path):
+        """Row with wrong field count is skipped; valid rows still parsed."""
+        content = (
+            f"{self._HEADER}\n"
+            "None|None|J81E35N|CCD|D29|2022-07-26T17:01:38.208Z|313.91113|1.52319|None|None|20.5|R\n"
+            "BROKEN_ROW\n"
+            "None|None|J81E35N|CCD|D29|2022-07-26T17:22:00.077Z|313.90775|1.52200|None|None|20.6|R\n"
+        )
+        f = tmp_path / "test.psv"
+        f.write_text(content)
+        assert len(parse_ades_psv(str(f))["J81E35N"]) == 2
