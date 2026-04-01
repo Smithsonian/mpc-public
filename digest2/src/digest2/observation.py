@@ -357,7 +357,9 @@ def _parse_ades_psv_row(row: Dict[str, str]) -> Optional[Observation]:
         mjd = _iso_to_mjd(row["obsTime"].strip())
         ra_deg = float(row["ra"])
         dec_deg = float(row["dec"])
-        obscode = row.get("stn", "500")
+        obscode = row["stn"].strip()
+        if not obscode:
+            return None
         mag = _as_float(row.get("mag", ""))
         band = row.get("band", "V") or "V"
         rms_ra = _as_float(row.get("rmsRA", ""))
