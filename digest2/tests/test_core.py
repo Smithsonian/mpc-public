@@ -7,7 +7,7 @@ from pathlib import Path
 import pytest
 
 from digest2 import Digest2, classify, ClassificationResult, Scores
-from digest2.observation import Observation, parse_ades_xml, parse_mpc80_file
+from digest2.observation import Observation, parse_ades_psv, parse_ades_xml, parse_mpc80_file
 
 
 class TestDigest2Class:
@@ -609,6 +609,37 @@ class TestClassifyBatchIsAdes:
             repeatable=True,
         ) as d2:
             file_results = d2.classify_file(sample_xml_path)
+            batch_results = d2.classify_batch(obs_lists, is_ades=True)
+
+        # Build lookup from file results by designation
+        file_by_desig = {r.designation.strip(): r for r in file_results}
+
+        assert len(batch_results) == len(designations)
+        for desig, br in zip(designations, batch_results):
+            fr = file_by_desig.get(desig.strip())
+            assert fr is not None, f"Designation {desig} not in classify_file results"
+            assert br is not None, f"classify_batch returned None for {desig}"
+            for cls in ALL_CLASSES:
+                assert fr.noid[cls] == br.noid[cls], \
+                    f"Mismatch for {desig} class {cls}: " \
+                    f"file={fr.noid[cls]} batch={br.noid[cls]}"
+
+    def test_classify_batch_is_ades_matches_classify_file_psv(
+        self, model_path, obscodes_path, sample_psv_path, empty_config_path
+    ):
+        """Pre-parsed PSV observations scored via classify_batch(is_ades=True)
+        should produce the same scores as classify_file on the same PSV file."""
+        tracklets_dict = parse_ades_psv(sample_psv_path)
+        designations = list(tracklets_dict.keys())
+        obs_lists = [tracklets_dict[d] for d in designations]
+
+        with Digest2(
+            model_path=model_path,
+            obscodes_path=obscodes_path,
+            config_path=empty_config_path,
+            repeatable=True,
+        ) as d2:
+            file_results = d2.classify_file(sample_psv_path)
             batch_results = d2.classify_batch(obs_lists, is_ades=True)
 
         # Build lookup from file results by designation
