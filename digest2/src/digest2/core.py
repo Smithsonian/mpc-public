@@ -14,6 +14,7 @@ from digest2 import _extension
 from digest2.model import find_config_path, find_model_path, find_obscodes_path
 from digest2.observation import (
     Observation,
+    parse_ades_psv,
     parse_ades_xml,
     parse_mpc80_file,
 )
@@ -256,9 +257,13 @@ class Digest2:
         self._check_open()
 
         is_xml = filepath.lower().endswith(".xml")
+        is_psv = filepath.lower().endswith(".psv")
+        is_ades = is_xml or is_psv
 
         if is_xml:
             tracklets = parse_ades_xml(filepath)
+        elif is_psv:
+            tracklets = parse_ades_psv(filepath)
         else:
             tracklets = parse_mpc80_file(filepath)
 
@@ -278,7 +283,7 @@ class Digest2:
             for desig, obs_list in scoreable:
                 try:
                     result = self._score(
-                        obs_list, classes=classes, is_ades=is_xml,
+                        obs_list, classes=classes, is_ades=is_ades,
                         designation=desig,
                         collect_orbits=collect_orbits,
                     )
@@ -292,7 +297,7 @@ class Digest2:
             desig, obs_list = item
             try:
                 return self._score(
-                    obs_list, classes=classes, is_ades=is_xml,
+                    obs_list, classes=classes, is_ades=is_ades,
                     designation=desig,
                     collect_orbits=collect_orbits,
                 )

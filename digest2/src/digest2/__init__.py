@@ -22,7 +22,7 @@ Or as a one-shot::
 """
 
 from digest2.core import Digest2, classify
-from digest2.observation import Observation, parse_mpc80, parse_mpc80_file
+from digest2.observation import Observation, parse_mpc80, parse_mpc80_file, parse_ades_psv
 from digest2.population import build_model, read_model_csv
 from digest2.result import ClassificationResult, Scores, TrialOrbit
 from digest2.truth import (
@@ -44,6 +44,7 @@ __all__ = [
     "Observation",
     "parse_mpc80",
     "parse_mpc80_file",
+    "parse_ades_psv",
     "build_model",
     "read_model_csv",
     "GroundTruthRecord",
