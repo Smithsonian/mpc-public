@@ -15,7 +15,10 @@ The following table lists the object types and their assigned numbers.
 | [Past Impactor](https://data.minorplanetcenter.net/explorer/?tab=Lists&list=Past+Impactors) | 6 | Object that has impacted with the Earth and that has been identified before the impact, e.g. 2014 AA. |
 | Comet | 10 | Body made of rock and ice, typically a few kilometres in diameter, which orbits the Sun. |
 | Comet (Fragment) | 11 | Piece of comet that has broken off from the main body. |
+| Comet without orbit | 12 | Comet for which the MPC did not have observations to determine an orbit (mostly coming from literature, e.g. X/-233 B1). |
+| Disintegrated comet | 13 | Comet that has been observed to disintegrate, or that has been observed to have disintegrated in the past (e.g. 3D/Biela). |
 | [Dual Status (Minor Planet and Comet)](https://data.minorplanetcenter.net/explorer/?tab=Lists&list=Dual-Status+Objects) | 20 | Object with both minor planet and cometary designation; initially classified as a minor planet but showing cometary activity. |
-| Natural Satellite (of planet) | 30 | Object well within the Hill sphere of a planet and appears gravitationally bound. |
+| Irregular Natural Satellite (of planet) | 30 | Object well within the Hill sphere of a planet and appears gravitationally bound. An irregular satellites if a satellite of a major planet that follows an orbit that is irregular in some of the following ways: distant; inclined; highly elliptical; retrograde.|
+| Regular Natural Satellite (of planet) | 31 | Object well within the Hill sphere of a planet and appears gravitationally bound. A regular satellite is a natural satellite that orbits close to its parent planet, typically in a prograde motion (same direction as the planet's rotation) and within the equatorial plane. |
 | Natural Satellite (of minor planet) | 40 | Object that has been measured to orbit around another minor planet or the center of mass of a minor planet system. |
 | Interstellar Object | 50 | Object that originates from outside the solar system and is not gravitationally bound to the Sun. |
