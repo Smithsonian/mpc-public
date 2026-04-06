@@ -174,6 +174,12 @@ The following documentation pages have been migrated from MPC legacy pages into 
 **data-and-services/**:
 
 - `data-and-services/non-english-characters.md` - From `/iau/info/NonEnglish.html`
+- `data-and-services/submission-info.md` - From `/iau/info/TechInfo.html` (submission hub with links to migrated format docs)
+- `data-and-services/neocp-notes.md` - From `/iau/NEO/NEOCPNotes.html`
+
+**observations/** (additional):
+
+- `observations/negative-observations.md` - From `/mpcops/documentation/negative-observations/`
 
 ### Migration Conventions
 

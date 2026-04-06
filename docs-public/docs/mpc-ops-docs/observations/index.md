@@ -52,4 +52,6 @@ The ADES format is the current standard for submitting observations to the MPC.
 
 ## Negative Observations
 
-- [Protocol for Negative Observations for Virtual Impactors](https://minorplanetcenter.net/mpcops/documentation/negative-observations/)
+<div class="contents-grid"></div>
+
+- [Protocol for Negative Observations for Virtual Impactors](negative-observations.md)

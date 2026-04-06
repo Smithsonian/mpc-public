@@ -24,6 +24,20 @@ Documentation related to MPC data products, database access, and subscriptions.
 - [Singletons and Archival Observations Committee (SARC)](sarc.md)
 
 
+## Submission Information
+
+<div class="contents-grid"></div>
+
+- [MPC Submission Information](submission-info.md)
+
+
+## NEO Confirmation Page
+
+<div class="contents-grid"></div>
+
+- [Notes on the NEO Confirmation Page](neocp-notes.md)
+
+
 ## Other
 
 <div class="contents-grid"></div>
