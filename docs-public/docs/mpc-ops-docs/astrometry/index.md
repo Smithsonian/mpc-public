@@ -43,14 +43,7 @@ This guide covers observing minor planets, comets and natural satellites, and re
 
 ## Observation Formats
 
-- [ADES Data Submission page](https://www.minorplanetcenter.net/mpcops/documentation/ades/)
-- [ADES format description (PDF)](https://github.com/IAU-ADES/ADES-Master/blob/master/ADES_Description.pdf)
-
-<div class="contents-grid"></div>
-
-- [MPC1992 observation format](../observations/mpc1992-format.md)
-- [Indication of observational details (headers)](../observations/observational-details.md)
-- [Packed designation format](../designations/packed-designations.md)
+For detailed format specifications, see [Observations](../observations/index.md).
 
 
 ## Checking and Verification

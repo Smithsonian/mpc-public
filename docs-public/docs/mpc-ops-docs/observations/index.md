@@ -1,6 +1,6 @@
 # Observations
 
-Documentation related to making, formatting, and submitting astrometric observations to the MPC.
+Technical reference for observation formats, metadata encoding, and submission procedures. For a workflow-oriented guide to getting started with astrometry, see the [Guide to Minor Body Astrometry](../astrometry/index.md).
 
 
 ## Getting Started

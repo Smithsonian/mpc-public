@@ -98,4 +98,20 @@ Other:
 
 <div class="contents-grid"></div>
 
-- [Observatory Codes](../observatory-and-program-codes/observatory-codes-docs.md)
+- [Observatory Codes](../astrometry/observatory-codes.md)
+
+
+---
+
+
+## Technical Lists and Statistics
+
+The links below contain low-level information generated during MPC operations and are not formatted for casual viewing.
+
+- [Break down of amateur discoveries](https://minorplanetcenter.net/iau/special/AmateurDiscoveries.txt)
+- [Yearly break down of observations](https://minorplanetcenter.net/iau/special/CountObsByYear.txt)
+- [Status of designated objects (by year and half-month)](https://minorplanetcenter.net/iau/special/DesignationsStatus.txt)
+- [Statistics on residuals from observations of minor planets, by observatory code](https://minorplanetcenter.net/iau/special/residuals.txt)
+- [Statistics on residuals from observations of numbered minor planets, by observatory code](https://minorplanetcenter.net/iau/special/residuals2.txt)
+- [Magnitude-weighting file](https://minorplanetcenter.net/iau/special/magweights.txt)
+- [Astrometry-weighting file](https://minorplanetcenter.net/iau/special/posweights.txt)

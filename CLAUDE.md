@@ -174,7 +174,7 @@ The following documentation pages have been migrated from MPC legacy pages into 
 **data-and-services/**:
 
 - `data-and-services/non-english-characters.md` - From `/iau/info/NonEnglish.html`
-- `data-and-services/submission-info.md` - From `/iau/info/TechInfo.html` (submission hub with links to migrated format docs)
+- ~~`data-and-services/submission-info.md`~~ - Removed; TechInfo.html content covered by `astrometry/index.md#submission-methods` and `data-and-services/lists.md`
 - `data-and-services/neocp-notes.md` - From `/iau/NEO/NEOCPNotes.html`
 
 **observations/** (additional):

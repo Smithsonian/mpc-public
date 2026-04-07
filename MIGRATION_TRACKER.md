@@ -146,7 +146,7 @@ and the tracker is updated.
 
 | Legacy Path | Migration | New Location | Legacy Banner | Notes |
 |---|---|---|---|---|
-| `/iau/info/ObservatoryCodes.html` | migrated | `observatory-and-program-codes/observatory-codes-docs.md` | redirect-needed | Observatory codes documentation |
+| `/iau/info/ObservatoryCodes.html` | migrated | `astrometry/observatory-codes.md` | redirect-needed | Observatory codes documentation (consolidated) |
 | `/mpcops/documentation/program-codes/` | migrated | `observatory-and-program-codes/program-codes.md` | redirect-needed | Program codes documentation |
 | `/mpcops/documentation/program-codes-policy/` | migrated | `observatory-and-program-codes/program-codes-policy.md` | redirect-needed | Program codes policy |
 | `/new_obscode_request` | skip | - | none | Observatory code request form |
@@ -159,7 +159,7 @@ and the tracker is updated.
 
 | Legacy Path | Migration | New Location | Legacy Banner | Notes |
 |---|---|---|---|---|
-| `/iau/info/TechInfo.html` | migrated | `data-and-services/submission-info.md` | redirect-needed | MPC submission information hub |
+| `/iau/info/TechInfo.html` | migrated | `astrometry/index.md#submission-methods` | redirect-needed | Submission hub; stats moved to `data-and-services/lists.md` |
 | `/iau/NEO/NEOCPNotes.html` | migrated | `data-and-services/neocp-notes.md` | redirect-needed | NEOCP documentation/notes |
 | `/mpcops/documentation/tycho-tracker/` | migrated | `observations/tycho-tracker.md` | redirect-needed | Tycho Tracker guide |
 | `/iau/NEO/ToConfirm.html` | skip | - | none | NEOCP main page (dynamic service) |
