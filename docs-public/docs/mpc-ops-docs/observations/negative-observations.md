@@ -12,4 +12,6 @@ This protocol resulted from collaboration among the following organizations:
 
 ## Documentation
 
-- [VI Observations Protocol version 3.1 (PDF)](https://minorplanetcenter.net/media/documentation/negative_observations/VI_Observations_Protocol_3.1.pdf)
+- [VI Observations Protocol version 3.1 (PDF)](vi-protocol)
+
+[vi-protocol]: https://minorplanetcenter.net/media/documentation/negative_observations/VI_Observations_Protocol_3.1.pdf
