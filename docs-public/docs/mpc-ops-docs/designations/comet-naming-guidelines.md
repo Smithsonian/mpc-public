@@ -57,7 +57,7 @@ Comets traditionally receive names based on their discoverers. These guidelines 
 
 5.3. New comets later identified with previous "asteroidal" observations do not receive added names after initial publication.
 
-5.4. Prior to name publication, if a new comet matches an asteroidal object reported at the same apparition on multiple nights by a single or team discoverer, both the minor-planet designator and discoverer/team name may be credited (total of two names maximum).
+5.4. Prior to name publication, if a new comet matches an asteroidal object reported at the same apparition on multiple nights by a single or team discoverer, both the minor planet designator and discoverer/team name may be credited (total of two names maximum).
 
 5.5. Comet names will not be changed by adding numerals after names where multiple comets share discoverers' names.
 
