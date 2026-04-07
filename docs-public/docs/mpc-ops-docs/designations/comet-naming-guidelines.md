@@ -53,7 +53,7 @@ Comets traditionally receive names based on their discoverers. These guidelines 
 
 5.1. The MPC/WGSBN may occasionally change rediscovered lost comet names or address spelling/diacritical errors, but such changes are rare.
 
-5.2. Lost short-period comets sometimes are rediscovered after new names are assigned. Names are announced on electronic circulars at first orbital elements publication to maintain stability. When a previously named lost comet is identified, new names are added to original names.
+5.2. Lost short-period comets sometimes are rediscovered after new names are assigned. Names are announced on electronic circulars at first orbital elements publication to maintain stability. When a previously-named lost comet is identified, new names are added to original names.
 
 5.3. New comets later identified with previous "asteroidal" observations do not receive added names after initial publication.
 
