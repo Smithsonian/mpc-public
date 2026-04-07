@@ -1,6 +1,6 @@
 # IAU Comet-Naming Guidelines
 
-Comets traditionally receive names based on their discoverers. These guidelines were adopted in 2003 by the IAU Committee on Small Body Nomenclature (now the Working Group on Small Body Nomenclature, WGSBN, under IAU Division F). The Minor Planet Center announces comet names via electronic circulars after reasonable orbits are determined.
+Comets traditionally receive names based on their discoverers. These guidelines were adopted in 2003 by the IAU Committee on Small Body Nomenclature (now the [Working Group on Small Body Nomenclature](https://www.wgsbn-iau.org/), WGSBN, under IAU Division F). The Minor Planet Center announces comet names via electronic circulars after reasonable orbits are determined.
 
 
 ## Guideline 1: Proper Reporting of Discoveries
