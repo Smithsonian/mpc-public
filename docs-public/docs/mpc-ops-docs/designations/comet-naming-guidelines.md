@@ -27,7 +27,7 @@ Comets traditionally receive names based on their discoverers. These guidelines 
 
 3.1. Teams must provide complete and truthful discovery details.
 
-3.2. A team is formally organized astronomers with instrumentation seeking celestial objects including comets.
+3.2. A "team" is a formally organized group of astronomers with instrumentation seeking celestial objects including comets.
 
 3.3. An acceptable one-word team name or acronym can be used.
 
