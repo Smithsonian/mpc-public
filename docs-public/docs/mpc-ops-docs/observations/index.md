@@ -16,11 +16,10 @@ Documentation related to making, formatting, and submitting astrometric observat
 
 The ADES format is the current standard for submitting observations to the MPC.
 
-- [Valid ADES values](https://minorplanetcenter.net/mpcops/documentation/valid-ades-values)
-
 <div class="contents-grid"></div>
 
 - [ADES Data Submission](ades-format.md)
+- [Valid ADES Field Values](valid-ades-values.md)
 - [ADES GitHub repository](https://github.com/IAU-ADES/ADES-Master/)
 - [Official ADES format description (PDF)](https://github.com/IAU-ADES/ADES-Master/blob/master/ADES_Description.pdf)
 
