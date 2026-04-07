@@ -44,7 +44,7 @@ Comets traditionally receive names based on their discoverers. These guidelines 
 
 4.3. Follow-up observers confirming an object is a comet may result in crediting the original discoverer only.
 
-4.4. If a minor-planet designation was published before recognizing cometary nature, the comet retains the minor-planet designation; otherwise, a new comet designation is assigned.
+4.4. If a minor planet designation was published before recognizing cometary nature, the comet retains the minor planet designation; otherwise, a new comet designation is assigned.
 
 4.5. Objects receiving permanent minor-planet numbers before comet recognition receive [dual status](dual-status-objects.md), retaining both designations. If already named as a minor planet, the comet inherits that name; otherwise, a new name is assigned following these guidelines.
 
