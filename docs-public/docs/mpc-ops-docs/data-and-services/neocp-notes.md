@@ -62,7 +62,7 @@ An automated script assigns provisional designations to NEOCP objects only when 
 12. Residuals are clean, without suspicious patterns.
 13. There are no virtual impactors or concerning close approaches.
 14. The Earth MOID is greater than 2 Earth radii, with no close approaches within 5 Earth radii during the 21st century.
-15. The designation does not exceed packed-designation limits.
+15. The designation does not exceed [packed designation](../designations/packed-designations.md) limits.
 16. All fail-safe checks pass.
 
 
