@@ -101,7 +101,10 @@ For new observatory code requests very close to an existing code, we may ask for
 
 If the information relating to an observatory code needs to be updated/corrected, simply raise a [Helpdesk ticket](https://mpc-service.atlassian.net/servicedesk/customer/portal/13/group/39/create/260) about it. Please note that if your observatory has been moved to a different site, you **cannot** simply change the associated coordinates to the new location; you must apply for a new observatory code for the new site. However, many obscodes were assigned based on low-precision coordinates; many have recently been found to be wrong by tens or even a hundred meters. If you have measured, either using Google Earth or a GPS, the location of your observatory more accurately and precisely than the coordinates the MPC currently use, we highly encourage you to contact us with such updates. Additionally, if you wish to change the name of your observatory, or change the contact person/email address, this can also be changed by opening a Jira ticket.
 
-When reporting a change/update, please use the following format, to make our lives easier (a few lines have comments starting with a #; don't include that part):
+When reporting a change/update, please use the following format, to make our lives easier. 
+
+!!! note 
+   A few lines have comments starting with a `#`. These are included only for descriptive purposes in this documentation; do not include any comments in your submission.
 
 ```text
 observatory_code: ???  # The observatory code that you want to update
