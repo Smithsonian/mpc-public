@@ -28,16 +28,16 @@ and the tracker is updated.
 
 | Status | Count |
 |---|---|
-| Migrated | 40 |
+| Migrated | 45 |
 | WIP | 1 |
-| Redirect banner needed | 41 |
+| Redirect banner needed | 47 |
 | Redirect banner added | 0 |
-| Deprecation banner needed | 2 |
-| Legacy page removed | 0 |
-| To migrate | 0 |
-| To deprecate | 2 |
-| TBD | 34 |
-| Skip (service/MPEC/data) | 46 |
+| Deprecation banner needed | 3 |
+| Legacy page removed | 3 |
+| To migrate | 1 |
+| To deprecate | 3 |
+| TBD | 28 |
+| Skip (service/MPEC/data) | 43 |
 
 ## By Category
 
@@ -50,8 +50,8 @@ and the tracker is updated.
 | Orbits | 11 | 0 | 0 | 2 | 0 | 0 |
 | Observatory & Program Codes | 3 | 0 | 0 | 0 | 0 | 5 |
 | Data & Services | 4 | 0 | 0 | 20 | 0 | 16 |
-| Miscellaneous | 0 | 0 | 0 | 6 | 1 | 8 |
-| **Total** | **40** | **1** | **0** | **34** | **2** | **46** |
+| Miscellaneous | 5 | 0 | 1 | 0 | 2 | 5 |
+| **Total** | **45** | **1** | **1** | **28** | **3** | **43** |
 
 ---
 
@@ -202,23 +202,24 @@ and the tracker is updated.
 
 ### Miscellaneous
 
-| Legacy Path | Migration | New Location | Legacy Banner | Notes                                |
-|---|-----------|---|---|--------------------------------------|
-| `/iau/info/MPECComputers.html` | deprecate | - | deprecation-needed | Very outdated computer list          |
-| `/iau/info/MPES.pdf` | skip      | - | none | Ephemeris Service PDF reference guide |
-| `/iau/mpc.html` | TBD      | - | TBD | A copy of the MPC main page ???      |
-| `/iau/services/MPCServices.html` | TBD      | - | TBD | MPC *publications* directory  |
-| `/mpec/RecentMPECs.html` | skip      | - | none | Recent MPECs index                   |
-| `/mpcops/mpecs/` | skip      | - | none | MPEC search tool                     |
-| `/mpcops/submissions/cometary/` | skip      | - | none | Cometary submission form             |
-| `/media/newsletters/` | skip      | - | none | Newsletter PDFs                      |
-| `/iau/MPC_Documentation.html` | TBD | - | none | Master documentation index; useful to audit for completeness |
-| `/iau/services/IAUC.html` | TBD | - | none | IAU Circulars information |
-| `/iau/services/MPS.html` | TBD | - | none | Minor Planet Supplements information |
-| `/iau/services/ECS.html` | TBD | - | none | Electronic Circulars/Supplements |
-| `/iau/lists/Lists.html` | skip | - | none | Lists master index (auto-generated) |
-| `/iau/lists/MPLists.html` | skip | - | none | Minor planet lists index (auto-generated) |
-| `/iau/lists/CometLists.html` | skip | - | none | Comet lists index (auto-generated) |
+| Legacy Path | Migration  | New Location | Legacy Banner | Notes                                                |
+|---|------------|---|---|------------------------------------------------------|
+| `/iau/info/MPECComputers.html` | deprecate  | - | deprecation-needed | Very outdated computer list                          |
+| `/iau/info/MPES.pdf` | skip       | - | none | Ephemeris Service PDF reference guide                |
+| `/iau/mpc.html` | deprecate  | - | deprecation-needed | A copy of the MPC main page ???                      |
+| `/iau/services/MPCServices.html` | to-migrate | - | redirect-needed | MPC *publications* directory                         |
+| `/mpec/RecentMPECs.html` | skip       | - | none | Recent MPECs index                                   |
+| `/mpcops/mpecs/` | skip       | - | none | MPEC search tool                                     |
+| `/mpcops/submissions/cometary/` | skip       | - | none | Cometary submission form                             |
+| `/media/newsletters/` | skip       | - | none | Newsletter PDFs                                      |
+| `/iau/MPC_Documentation.html` | migrated        | - | redirect-needed | This became mpc-ops-docs                       |
+| `/iau/services/IAUC.html` | removed | - | none | Legacy page no longer exists (404) |
+| `/iau/services/MPS.html` | removed | - | none | Legacy page no longer exists (404) |
+| `/iau/services/ECS.html` | removed | - | none | Duplicate of MPCServices.html; legacy page no longer exists (404) |
+| `/iau/lists/Lists.html` | migrated   | `data-and-services/lists.md` | redirect-needed | Lists master index (combined into single page)       |
+| `/iau/lists/MPLists.html` | migrated   | `data-and-services/lists.md` | redirect-needed | Minor planet lists index (combined into single page) |
+| `/iau/lists/CometLists.html` | migrated   | `data-and-services/lists.md` | redirect-needed | Comet lists index (combined into single page)        |
+| `/iau/info/CometNamingGuidelines.html` | migrated   | `designations/comet-naming-guidelines.md` | redirect-needed | IAU comet-naming guidelines                          |
 
 ---
 

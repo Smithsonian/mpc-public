@@ -103,7 +103,7 @@ If the information relating to an observatory code needs to be updated/corrected
 
 When reporting a change/update, please use the following format, to make our lives easier (a few lines have comments starting with a #; don't include that part):
 
-```
+```text
 observatory_code: ???  # The observatory code that you want to update
 contact_name: New Contact Name
 email_adr: new_contact@email.com
@@ -130,6 +130,8 @@ Yes and No.
 
 No, in the sense that we cannot dictate what you choose to call your observatory.
 
-Yes, in the sense that we don't have to use your observatory's name in the _MPCs_ if we don't think it is appropriate. Proper names or names of living people should not be chosen as site names. If your observatory's name is longer than 35 characters, please also suggest an abbreviated version, as long names cannot be used in all contexts.
+Yes, in the sense that we don't have to use your observatory's name in the _MPCs_ if we don't think it is appropriate. 
+Proper names or names of living people should not be chosen as site names. 
+If your observatory's name is longer than 35 characters, please also suggest an abbreviated version, as long names cannot be used in all contexts.
 
 Please be careful when you select your site name.

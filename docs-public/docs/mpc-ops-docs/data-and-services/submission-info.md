@@ -33,7 +33,9 @@ Observations should be formatted per the guidelines below and sent to [`obs@cfa.
 
 ## Getting Started
 
-- [Guide to Minor Body Astrometry](../astrometry/index.md) — notes for new or potential astrometrists
+<div class="contents-grid"></div>
+
+- [Guide to Minor Body Astrometry](../astrometry/index.md)
 - [How discoverers can name their numbered discoveries](../designations/how-asteroids-are-named.md)
 - [MPEC Orbit Computers](mpec-computers.md)
 

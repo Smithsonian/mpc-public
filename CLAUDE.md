@@ -181,6 +181,14 @@ The following documentation pages have been migrated from MPC legacy pages into 
 
 - `observations/negative-observations.md` - From `/mpcops/documentation/negative-observations/`
 
+**designations/** (additional):
+
+- `designations/comet-naming-guidelines.md` - From `/iau/info/CometNamingGuidelines.html`
+
+**data-and-services/** (additional):
+
+- `data-and-services/lists.md` - Combined from `/iau/lists/Lists.html`, `/iau/lists/MPLists.html`, `/iau/lists/CometLists.html`
+
 ### Migration Conventions
 
 - Pages with many links become sub-folders with an `index.md` and individual content pages
