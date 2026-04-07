@@ -67,5 +67,5 @@ Comets traditionally receive names based on their discoverers. These guidelines 
 6.1. The WGSBN and MPC reserve the right to delay naming, possibly indefinitely. Reasons include:
 
 - Comets found months or years after observation that are no longer observable (exceptions may be made for team-named sungrazing comets observed by space-based coronagraphs).
-- Comets with indeterminable orbits due to poor observations or short observation arcs, which receive "X/" designations.
+- Comets with indeterminable orbits due to poor observations or short observation arcs; These receive `X/` designations.
 - Disagreement among team members claiming discovery.
