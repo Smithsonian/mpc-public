@@ -33,7 +33,7 @@ Comets traditionally receive names based on their discoverers. These guidelines 
 
 3.4. Without a team name, name the comet for the individual finder or leave it unnamed. At most two people from the same program may be credited if: only two team members exist, both were directly involved in discovery and identification, and their surnames differ. Teams with more than two members may use a single observer's name if written testimony confirms they detected and reported the comet. The same name cannot appear twice on one comet.
 
-3.4(b). Comets discovered from publicly published or posted data generally will not receive individual names unless an established program name exists.
+3.4(b). Comets discovered from publicly published or posted data generally will not receive individual names unless an established [program code](../observatory-and-program-codes/program-codes.md) exists.
 
 
 ## Guideline 4: Cometary Nature Not Immediately Noticed
