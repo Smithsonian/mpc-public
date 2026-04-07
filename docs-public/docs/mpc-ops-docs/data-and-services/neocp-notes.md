@@ -34,7 +34,7 @@ Objects on the NEOCP are color-coded by their estimated distance from Earth:
 
 ## Object Removal Criteria
 
-Objects are removed from the NEOCP when:
+Objects are removed from the NEOCP when one or more of the following conditions are met:
 
 1. Sufficient astrometry has been obtained to determine a well-constrained orbit, and a new designation is assigned.
 2. The object is identified with a previously known object.
