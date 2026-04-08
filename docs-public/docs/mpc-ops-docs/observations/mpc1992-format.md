@@ -323,4 +323,4 @@ Observatory codes are stored in columns 78-80.
 Lists of [observatory codes](https://data.minorplanetcenter.net/explorer/?tab=Lists&list=Observatory+Codes) are
 published from time to time in the [*MPCs*](https://minorplanetcenter.net/iau/services/MPCServices.html).
 Note that new observatory codes are assigned only upon receipt of
-acceptable astrometric observations per the [MPC's requirements](../observatory-and-program-codes/observatory-codes-docs.md).
+acceptable astrometric observations per the [MPC's requirements](../astrometry/observatory-codes.md).

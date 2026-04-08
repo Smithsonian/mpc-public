@@ -23,7 +23,7 @@ The MPC is also in the process of creating DOIs for all the MPECs that were been
 
 The objects that go on to the [NEO Confirmation Page](https://minorplanetcenter.net/iau/NEO/toconfirm_tabular.html) are those objects which, on the basis of their motion or orbit, appear to be NEOs and that have a [digest2](https://github.com/Smithsonian/mpc-public/tree/main/digest2) score larger than 65. Objects that are suspected of being comets also appear.
 
-[When removed from the NEOCP](https://minorplanetcenter.net/iau/NEO/NEOCPNotes.html), the inner-solar-system objects that get put on to _MPECs_ are as follows: <!-- TODO: update link when migrated -->
+[When removed from the NEOCP](../data-and-services/neocp-notes.md), the inner Solar System objects that are eligible for publication in _MPECs_ include:
 
 - Any object with perihelion distance less than 1.3 AU.
 - Any object with a perihelion distance beyond 5.5 AU (Centaurs/SDO and TNOs are not listed in only one-opposition).
