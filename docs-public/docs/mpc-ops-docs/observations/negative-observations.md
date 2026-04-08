@@ -1,6 +1,8 @@
 # Protocol for Negative Observations for Virtual Impactors
 
-The [VI Observations Protocol version 3.1 document](vi-protocol) delineates observational strategy requirements aimed at removing virtual impactors of unrecoverable near-Earth asteroids (NEAs) in the risk list, or NEAs with such great sky uncertainty that they would be difficult to cover with state-of-the-art telescopes.
+The [VI Observations Protocol version 3.1 document](vi-protocol) delineates observational strategy requirements aimed 
+at removing virtual impactors of unrecoverable near-Earth asteroids (NEAs) in the [risk list](https://neo.ssa.esa.int/risk-list), 
+or NEAs with such great sky uncertainty that they would be difficult to cover with state-of-the-art telescopes.
 
 This protocol resulted from collaboration among the following organizations:
 
