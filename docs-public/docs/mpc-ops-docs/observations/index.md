@@ -8,7 +8,7 @@ Technical reference for observation formats, metadata encoding, and submission p
 <div class="contents-grid"></div>
 
 - [Guide to Minor Body Astrometry](../astrometry/index.md)
-- [How do I get an observatory code?](../astrometry/observatory-codes.md#how-do-i-get-an-observatory-code)
+- [How do I get an observatory code?](../observatory-and-program-codes/observatory-codes.md#how-do-i-get-an-observatory-code)
 - [How to submit astrometry using Tycho Tracker](tycho-tracker.md)
 
 

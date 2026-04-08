@@ -7,11 +7,11 @@ This page covers how to format and submit observations to the MPC, including for
 
 Please follow these rules:
 
-- If your site does not have an observatory code, [ask for it!](observatory-codes.md#how-do-i-get-an-observatory-code)
+- If your site does not have an observatory code, [ask for it!](../observatory-and-program-codes/observatory-codes.md#how-do-i-get-an-observatory-code)
 - If possible, report at least three observations of each object from each night: do not report single positions per night. As a general rule, batches that contain single positions will be returned in their entirety to the submitter.
 - You should not start by observing fast-moving objects. It is important that you gain experience by observing "routine" objects before attempting to observe "unusual" objects. We also expect you to prove that you can produce good astrometry of known objects before you begin to discover new objects.
 - In general, comets are harder to measure than minor planets. If we have a new observer reporting comet observations of bad or indifferent quality we do not know if it is simply a problem due to the comet (big, bright difficult-to-measure image) or a problem with the measurement/reduction process.
-- The MPC encourages submitters, especially those searching through archival astrometry, to carefully examine any marginal detections. Astrometry should be reported only for detections with a sufficiently high signal-to-noise ratio to withstand external independent review of the images. We note that synthetic tracking software, such as Tycho Tracker, often requires significant experience to avoid submitting stacked noise in sky location of the expected position of an object.
+- The MPC encourages submitters to carefully examine any marginal detections before reporting. See [measurement guidance on signal-to-noise](getting-started.md#how-do-i-make-measurements) for details.
 - Reporting magnitudes is optional, but highly desirable. Please try to report magnitudes if you are submitting archival astrometry.
 - MPC encourages observers to use the correct keywords in the observational header, particularly when it comes to rapid processing of NEOs or comets. Without the correct keyword, tracklets could end up in a wrong or slower queue. In addition, please submit new NEOs separately from NEOCP followup and/or incidental astrometry. Lastly, please follow the instructions on how to format other elements of the header. Issues such as omitting a space between one's first initial and last name slows down the process of the submitted astrometry, since the automated program code assignment will not be possible. Please follow the instructions reported on the [observational details page](../observations/observational-details.md)).
 
@@ -35,7 +35,7 @@ Astrometric observations can be reported in two different formats:
 Observations reported in the MPC1992 format need to follow the rules detailed on the [page describing the format](../observations/mpc1992-format.md).
 Please read this document carefully and report the observations in the correct format.
 
-Observations reported in ADES format need to follow the rules described in the [ADES documentation](https://github.com/IAU-ADES/ADES-Master/blob/master/ADES_Description.pdf) and on the [MPC ADES Data Submission page](../observations/ades-format.md).
+Observations reported in ADES format need to follow the rules described in the [ADES documentation](https://github.com/IAU-ADES/ADES-Master/blob/master/ADES_Description.pdf) and on the [MPC ADES Data Submission page](../observations/ades-format.md). For a complete list of accepted values for ADES fields such as instrument mode, star catalog, and photometric band, see [Valid ADES Field Values](../observations/valid-ades-values.md).
 
 Observations of minor planets, comets and natural satellites, formatted as specified above, can be reported via:
 
@@ -57,11 +57,9 @@ In addition to the above points, please also check the following notes:
 
 ## What's the ADES format?
 
-The Astrometric Data Exchange Standard (ADES) format was adopted by the IAU in August 2015. It was introduced with the goal of standardizing the exchange and the storage of astrometric data (observations and uncertainties) and their associated data description between observers and orbit computing centers. The MPC accepts and internally uses observations in this format.
+The Astrometric Data Exchange Standard (ADES) is the preferred format for reporting observations. For full details on the format, submission procedures, and validation, see the [ADES Data Submission](../observations/ades-format.md) page. For the list of accepted field values, see [Valid ADES Field Values](../observations/valid-ades-values.md).
 
-Details are available on the [ADES GitHub repository](https://github.com/IAU-ADES/ADES-Master) and on the [MPC ADES webpage](../observations/ades-format.md).
-
-The use of the ADES format is not mandatory at the moment, but the MPC strongly encourages users to familiarize themselves with the format and the repository.
+The use of the ADES format is not mandatory at the moment, but the MPC strongly encourages users to familiarize themselves with the format.
 
 
 ## How many observations should I make of each object?

@@ -105,6 +105,8 @@ using the API, example usage
 Before submitting your identifications please read through the documentation on the
 required format. See below for various links.
 
+<div class="contents-grid"></div>
+
 - [Submission format for identifications](submission-format.md)
 - [Submit identifications](https://minorplanetcenter.net/mpcops/submissions/identifications/)
 - [MPC criteria for accepting identifications](acceptance-criteria.md)

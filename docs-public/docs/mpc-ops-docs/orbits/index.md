@@ -7,7 +7,6 @@ Documentation related to orbital elements, orbit formats, and orbit/object class
 
 <div class="contents-grid"></div>
 
-- [Export orbit formats (overview)](orbit-format-overview.md)
 - [Export orbit format for minor planets](minor-planet-orbit-format.md)
 - [Export orbit format for comets](comet-orbit-format.md)
 - [Export orbit format for natural satellites](satellite-orbit-format.md)

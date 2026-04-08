@@ -108,7 +108,7 @@ Other:
 
 <div class="contents-grid"></div>
 
-- [Observatory Codes](../astrometry/observatory-codes.md)
+- [Observatory Codes](../observatory-and-program-codes/observatory-codes.md)
 
 
 ---

@@ -98,5 +98,7 @@ curl -X GET -H "Content-Type: application/json" \
 
 ## See Also
 
-- [NEOCP](https://minorplanetcenter.net/iau/NEO/toconfirm_tabular.html) - Current NEOCP listing
-- [Observations API](get-obs.md) - For confirmed objects
+<div class="contents-grid"></div>
+
+- [NEOCP](https://minorplanetcenter.net/iau/NEO/toconfirm_tabular.html)
+- [Observations API](get-obs.md)

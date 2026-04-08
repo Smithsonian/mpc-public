@@ -28,12 +28,12 @@ and the tracker is updated.
 
 | Status | Count |
 |---|---|
-| Migrated | 47 |
+| Migrated | 46 |
 | WIP | 1 |
-| Redirect banner needed | 49 |
+| Redirect banner needed | 48 |
 | Redirect banner added | 0 |
 | Deprecation banner needed | 3 |
-| Legacy page removed | 3 |
+| Legacy page removed | 4 |
 | To migrate | 0 |
 | To deprecate | 3 |
 | TBD | 27 |
@@ -47,11 +47,11 @@ and the tracker is updated.
 | Identifications | 3 | 1 | 0 | 0 | 0 | 2 |
 | Astrometry | 2 | 0 | 0 | 3 | 1 | 6 |
 | Observations & Formats | 11 | 0 | 0 | 1 | 0 | 3 |
-| Orbits | 11 | 0 | 0 | 2 | 0 | 0 |
+| Orbits | 10 | 0 | 0 | 2 | 0 | 0 |
 | Observatory & Program Codes | 3 | 0 | 0 | 0 | 0 | 5 |
 | Data & Services | 4 | 0 | 0 | 20 | 0 | 16 |
 | Miscellaneous | 5 | 0 | 0 | 0 | 2 | 5 |
-| **Total** | **47** | **1** | **0** | **27** | **3** | **43** |
+| **Total** | **46** | **1** | **0** | **27** | **3** | **43** |
 
 ---
 
@@ -131,7 +131,7 @@ and the tracker is updated.
 | `/iau/info/MPOrbitFormat.html` | migrated | `orbits/minor-planet-orbit-format.md` | redirect-needed | Minor planet orbit format |
 | `/iau/info/CometOrbitFormat.html` | migrated | `orbits/comet-orbit-format.md` | redirect-needed | Comet orbit format |
 | `/iau/info/SatOrbitFormat.html` | migrated | `orbits/satellite-orbit-format.md` | redirect-needed | Natural satellite orbit format |
-| `/iau/info/OrbFormat.html` | migrated | `orbits/orbit-format-overview.md` | redirect-needed | General orbit format overview |
+| `/iau/info/OrbFormat.html` | removed | - | none | General orbit format overview; content redundant with individual format pages, page deleted |
 | `/iau/info/OrbNote.html` | migrated | `orbits/orbit-notes.md` | redirect-needed | Orbit alphabetic notes |
 | `/iau/info/Perturbers.html` | migrated | `orbits/perturbers.md` | redirect-needed | Perturbing bodies reference |
 | `/iau/info/UValue.html` | migrated | `orbits/uncertainty-parameter.md` | redirect-needed | Uncertainty parameter U |

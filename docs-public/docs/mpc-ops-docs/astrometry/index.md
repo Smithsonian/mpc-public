@@ -5,7 +5,7 @@ This guide covers observing minor planets, comets and natural satellites, and re
 <div class="contents-grid"></div>
 
 - [Getting Started](getting-started.md)
-- [Observatory Codes](observatory-codes.md)
+- [Observatory Codes](../observatory-and-program-codes/observatory-codes.md)
 - [Reporting Observations](reporting-observations.md)
 - [Discoveries, Credit and Naming](discoveries-and-credit.md)
 - [MPC Processing](mpc-processing.md)
