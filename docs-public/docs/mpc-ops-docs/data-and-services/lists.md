@@ -1,12 +1,22 @@
 # Lists and Plots
 
-The MPC maintains a variety of lists, plots, and statistics related to minor planets and comets. Most of these are auto-generated and updated regularly.
+The MPC maintains a variety of lists, plots, and statistics related to minor planets and comets. 
+Most of these are auto-generated and updated regularly.
 
 !!! note "Citation policy"
-    Users of any of these lists are reminded that the source of the data is the Minor Planet Center. The relevant URL should be cited, along with a reference to the MPC itself.
+    Users of any of these lists are reminded that the source of the data is the Minor Planet Center. 
+    The relevant URL should be cited, along with a reference to the MPC itself.
 
 
 ## Minor Planets
+
+### Database Explorer
+
+Links to the MPC's database explorer, which allows the user to generate customizable lists and plots of
+various solar system populations: 
+
+ - [](https://data.minorplanetcenter.net/explorer/?tab=lists)
+ - [](https://data.minorplanetcenter.net/lists/)
 
 ### Unusual Minor Planets
 

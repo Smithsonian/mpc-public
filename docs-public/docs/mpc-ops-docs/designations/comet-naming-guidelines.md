@@ -40,7 +40,7 @@ Comets traditionally receive names based on their discoverers. These guidelines 
 
 4.1. Objects initially assumed to be minor planets may be discovered to be comets with later observations.
 
-4.2. When a non-discoverer identifies cometary appearance in an "asteroidal" object, both original discoverer and identifier may be credited in the comet name, subject to prerequisites: dual recognition occurs only without prior suspicion of unusual nature; if the object appeared on the NEO Confirmation Page or had unusual orbits published beforehand, the identifier is ineligible. The name consists of two parts (original discoverer and cometary nature identifier), each limited to one name (individual or team), and team discoverers cannot suggest individual member names.
+4.2. When a non-discoverer identifies cometary activity or appearance in an "asteroidal" object, both the original discoverer and the identifier may be credited in the comet name, subject to prerequisites: dual recognition occurs only without prior suspicion of unusual nature; if the object appeared on the NEO Confirmation Page or had unusual orbits published beforehand, the identifier is ineligible. The name consists of two parts (the original discoverer and the identifier of thee cometary nature), each limited to one name (individual or team), and team discoverers cannot suggest individual member names.
 
 4.3. Follow-up observers confirming an object is a comet may result in crediting the original discoverer only.
 
