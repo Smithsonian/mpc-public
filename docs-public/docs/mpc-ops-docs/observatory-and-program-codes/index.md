@@ -7,9 +7,7 @@ Documentation related to observatory codes, program codes, and associated polici
 
 <div class="contents-grid"></div>
 
-- [Observatory codes documentation](observatory-codes-docs.md)
-- [How do I obtain an observatory code?](../astrometry/observatory-codes.md#how-do-i-get-an-observatory-code)
-- [How do I update my observatory code?](../astrometry/observatory-codes.md#how-do-i-update-my-observatory-code-information)
+- [Observatory Codes](../astrometry/observatory-codes.md)
 - [Roving Observers](../observations/roving-observers.md)
 
 - [Observatory codes (interactive list)](https://data.minorplanetcenter.net/explorer/?tab=Lists&list=Observatory+Codes)
@@ -26,7 +24,3 @@ Documentation related to observatory codes, program codes, and associated polici
 
 - [Program Codes](program-codes.md)
 
-
-## Related
-
-- [Valid ADES values](https://minorplanetcenter.net/mpcops/documentation/valid-ades-values)

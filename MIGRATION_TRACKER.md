@@ -28,16 +28,16 @@ and the tracker is updated.
 
 | Status | Count |
 |---|---|
-| Migrated | 39 |
+| Migrated | 47 |
 | WIP | 1 |
-| Redirect banner needed | 40 |
+| Redirect banner needed | 49 |
 | Redirect banner added | 0 |
-| Deprecation banner needed | 2 |
-| Legacy page removed | 0 |
-| To migrate | 1 |
-| To deprecate | 2 |
-| TBD | 33 |
-| Skip (service/MPEC/data) | 46 |
+| Deprecation banner needed | 3 |
+| Legacy page removed | 3 |
+| To migrate | 0 |
+| To deprecate | 3 |
+| TBD | 27 |
+| Skip (service/MPEC/data) | 43 |
 
 ## By Category
 
@@ -46,12 +46,12 @@ and the tracker is updated.
 | Designations | 8 | 0 | 0 | 0 | 0 | 6 |
 | Identifications | 3 | 1 | 0 | 0 | 0 | 2 |
 | Astrometry | 2 | 0 | 0 | 3 | 1 | 6 |
-| Observations & Formats | 10 | 0 | 0 | 1 | 0 | 3 |
+| Observations & Formats | 11 | 0 | 0 | 1 | 0 | 3 |
 | Orbits | 11 | 0 | 0 | 2 | 0 | 0 |
 | Observatory & Program Codes | 3 | 0 | 0 | 0 | 0 | 5 |
-| Data & Services | 2 | 0 | 2 | 20 | 0 | 16 |
-| Miscellaneous | 0 | 0 | 0 | 6 | 1 | 8 |
-| **Total** | **39** | **1** | **1** | **33** | **2** | **46** |
+| Data & Services | 4 | 0 | 0 | 20 | 0 | 16 |
+| Miscellaneous | 5 | 0 | 0 | 0 | 2 | 5 |
+| **Total** | **47** | **1** | **0** | **27** | **3** | **43** |
 
 ---
 
@@ -115,8 +115,8 @@ and the tracker is updated.
 | `/iau/info/TelescopeDetails.html` | migrated   | `observations/telescope-details.md` | redirect-needed | Telescope details header format |
 | `/iau/info/References.html` | migrated   | `observations/reference-codes.md` | redirect-needed | Reference codes for observations |
 | `/iau/info/commandlinesubmissions.html` | migrated   | `observations/command-line-submissions.md` | redirect-needed | cURL/command-line submission guide |
-| `/mpcops/documentation/negative-observations/` | to-migrate | - | none | Negative observation protocol; priority: low                   |
-| `/mpcops/documentation/ades/` | migrated   | `observations/ades-format/` | redirect-needed | ADES docs                      |
+| `/mpcops/documentation/negative-observations/` | migrated | `observations/negative-observations.md` | redirect-needed | Negative observation protocol |
+| `/mpcops/documentation/ades/` | migrated     | `observations/ades-format/` | redirect-needed | ADES docs                      |
 | `/mpcops/documentation/valid-ades-values` | migrated | `observations/valid-ades-values.md` | redirect-needed | ADES valid field values reference |
 | `/submit_psv` | skip       | - | none | PSV submission form                                            |
 | `/submit_xml` | skip       | - | none | XML submission form                                            |
@@ -146,7 +146,7 @@ and the tracker is updated.
 
 | Legacy Path | Migration | New Location | Legacy Banner | Notes |
 |---|---|---|---|---|
-| `/iau/info/ObservatoryCodes.html` | migrated | `observatory-and-program-codes/observatory-codes-docs.md` | redirect-needed | Observatory codes documentation |
+| `/iau/info/ObservatoryCodes.html` | migrated | `astrometry/observatory-codes.md` | redirect-needed | Observatory codes documentation (consolidated) |
 | `/mpcops/documentation/program-codes/` | migrated | `observatory-and-program-codes/program-codes.md` | redirect-needed | Program codes documentation |
 | `/mpcops/documentation/program-codes-policy/` | migrated | `observatory-and-program-codes/program-codes-policy.md` | redirect-needed | Program codes policy |
 | `/new_obscode_request` | skip | - | none | Observatory code request form |
@@ -159,8 +159,8 @@ and the tracker is updated.
 
 | Legacy Path | Migration | New Location | Legacy Banner | Notes |
 |---|---|---|---|---|
-| `/iau/info/TechInfo.html` | to-migrate | - | none | General technical information; priority: medium |
-| `/iau/NEO/NEOCPNotes.html` | to-migrate | - | none | NEOCP documentation/notes; priority: medium |
+| `/iau/info/TechInfo.html` | migrated | `astrometry/index.md#submission-methods` | redirect-needed | Submission hub; stats moved to `data-and-services/lists.md` |
+| `/iau/NEO/NEOCPNotes.html` | migrated | `data-and-services/neocp-notes.md` | redirect-needed | NEOCP documentation/notes |
 | `/mpcops/documentation/tycho-tracker/` | migrated | `observations/tycho-tracker.md` | redirect-needed | Tycho Tracker guide |
 | `/iau/NEO/ToConfirm.html` | skip | - | none | NEOCP main page (dynamic service) |
 | `/iau/NEO/toconfirm_tabular.html` | skip | - | none | NEOCP tabular view (dynamic) |
@@ -202,23 +202,24 @@ and the tracker is updated.
 
 ### Miscellaneous
 
-| Legacy Path | Migration | New Location | Legacy Banner | Notes                                |
-|---|-----------|---|---|--------------------------------------|
-| `/iau/info/MPECComputers.html` | deprecate | - | deprecation-needed | Very outdated computer list          |
-| `/iau/info/MPES.pdf` | skip      | - | none | Ephemeris Service PDF reference guide |
-| `/iau/mpc.html` | TBD      | - | TBD | A copy of the MPC main page ???      |
-| `/iau/services/MPCServices.html` | TBD      | - | TBD | MPC *publications* directory  |
-| `/mpec/RecentMPECs.html` | skip      | - | none | Recent MPECs index                   |
-| `/mpcops/mpecs/` | skip      | - | none | MPEC search tool                     |
-| `/mpcops/submissions/cometary/` | skip      | - | none | Cometary submission form             |
-| `/media/newsletters/` | skip      | - | none | Newsletter PDFs                      |
-| `/iau/MPC_Documentation.html` | TBD | - | none | Master documentation index; useful to audit for completeness |
-| `/iau/services/IAUC.html` | TBD | - | none | IAU Circulars information |
-| `/iau/services/MPS.html` | TBD | - | none | Minor Planet Supplements information |
-| `/iau/services/ECS.html` | TBD | - | none | Electronic Circulars/Supplements |
-| `/iau/lists/Lists.html` | skip | - | none | Lists master index (auto-generated) |
-| `/iau/lists/MPLists.html` | skip | - | none | Minor planet lists index (auto-generated) |
-| `/iau/lists/CometLists.html` | skip | - | none | Comet lists index (auto-generated) |
+| Legacy Path | Migration  | New Location | Legacy Banner | Notes                                                |
+|---|------------|---|---|------------------------------------------------------|
+| `/iau/info/MPECComputers.html` | deprecate  | - | deprecation-needed | Very outdated computer list                          |
+| `/iau/info/MPES.pdf` | skip       | - | none | Ephemeris Service PDF reference guide                |
+| `/iau/mpc.html` | deprecate  | - | deprecation-needed | A copy of the MPC main page ???                      |
+| `/iau/services/MPCServices.html` | to-migrate | - | redirect-needed | MPC *publications* directory                         |
+| `/mpec/RecentMPECs.html` | skip       | - | none | Recent MPECs index                                   |
+| `/mpcops/mpecs/` | skip       | - | none | MPEC search tool                                     |
+| `/mpcops/submissions/cometary/` | skip       | - | none | Cometary submission form                             |
+| `/media/newsletters/` | skip       | - | none | Newsletter PDFs                                      |
+| `/iau/MPC_Documentation.html` | migrated        | - | redirect-needed | This became mpc-ops-docs                       |
+| `/iau/services/IAUC.html` | removed | - | none | Legacy page no longer exists (404) |
+| `/iau/services/MPS.html` | removed | - | none | Legacy page no longer exists (404) |
+| `/iau/services/ECS.html` | removed | - | none | Duplicate of MPCServices.html; legacy page no longer exists (404) |
+| `/iau/lists/Lists.html` | migrated   | `data-and-services/lists.md` | redirect-needed | Lists master index (combined into single page)       |
+| `/iau/lists/MPLists.html` | migrated   | `data-and-services/lists.md` | redirect-needed | Minor planet lists index (combined into single page) |
+| `/iau/lists/CometLists.html` | migrated   | `data-and-services/lists.md` | redirect-needed | Comet lists index (combined into single page)        |
+| `/iau/info/CometNamingGuidelines.html` | migrated   | `designations/comet-naming-guidelines.md` | redirect-needed | IAU comet-naming guidelines                          |
 
 ---
 
@@ -253,7 +254,7 @@ The following `<!-- TODO: update link when migrated -->` comments exist in docs-
 | `astrometry/index.md` | `/mpcops/documentation/tycho-tracker/` | migrated — TODO resolved |
 | `astrometry/reporting-observations.md` | `/iau/services/MPCServices.html` | skip |
 | `astrometry/mpc-processing.md` | `/iau/services/MPCServices.html` | skip |
-| `astrometry/mpc-processing.md` | `/iau/NEO/NEOCPNotes.html` | to-migrate |
+| `astrometry/mpc-processing.md` | `/iau/NEO/NEOCPNotes.html` | migrated — TODO resolved |
 | `astrometry/discoveries-and-credit.md` | `/iau/services/MPCServices.html` | skip |
 | `astrometry/discoveries-and-credit.md` | `/iau/info/Coverage.html` | skip |
 
