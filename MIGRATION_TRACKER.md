@@ -91,7 +91,7 @@ and the tracker is updated.
 
 | Legacy Path | Migration  | New Location | Legacy Banner | Notes                                                                                                         |
 |---|------------|---|---|---------------------------------------------------------------------------------------------------------------|
-| `/iau/info/Astrometry.html` | migrated   | `astrometry/` (5 pages) | redirect-needed | Split into getting-started, observatory-codes, reporting-observations, discoveries-and-credit, mpc-processing |
+| `/iau/info/Astrometry.html` | migrated   | `astrometry/` (4 pages) | redirect-needed | Split into getting-started, reporting-observations, discoveries-and-credit, mpc-processing. Observatory codes content moved to `observatory-and-program-codes/observatory-codes.md` |
 | `/iau/info/CatalogueCodes.html` | migrated | `observations/catalogue-codes.md` | redirect-needed | Catalogue codes reference |
 | `/iau/info/VideoNormalPlaces.html` | TBD | - | none | Service to extract an "average" from video frames                                                             |
 | `/iau/info/AGuidetoVideoAstrometry.pdf` | TBD        | - | none | External PDF guide from 2015: Tangra software site last updated 2018                                          |
@@ -146,7 +146,7 @@ and the tracker is updated.
 
 | Legacy Path | Migration | New Location | Legacy Banner | Notes |
 |---|---|---|---|---|
-| `/iau/info/ObservatoryCodes.html` | migrated | `astrometry/observatory-codes.md` | redirect-needed | Observatory codes documentation (consolidated) |
+| `/iau/info/ObservatoryCodes.html` | migrated | `observatory-and-program-codes/observatory-codes.md` | redirect-needed | Observatory codes documentation (consolidated); legacy redirect should point to `observatory-and-program-codes/observatory-codes.md` |
 | `/mpcops/documentation/program-codes/` | migrated | `observatory-and-program-codes/program-codes.md` | redirect-needed | Program codes documentation |
 | `/mpcops/documentation/program-codes-policy/` | migrated | `observatory-and-program-codes/program-codes-policy.md` | redirect-needed | Program codes policy |
 | `/new_obscode_request` | skip | - | none | Observatory code request form |
