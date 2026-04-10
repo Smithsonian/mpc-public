@@ -7,7 +7,6 @@ Documentation related to orbital elements, orbit formats, and orbit/object class
 
 <div class="contents-grid"></div>
 
-- [Export orbit formats (overview)](orbit-format-overview.md)
 - [Export orbit format for minor planets](minor-planet-orbit-format.md)
 - [Export orbit format for comets](comet-orbit-format.md)
 - [Export orbit format for natural satellites](satellite-orbit-format.md)
@@ -17,13 +16,17 @@ Documentation related to orbital elements, orbit formats, and orbit/object class
 
 ## Orbit Metadata
 
-- [List of orbit computers on the Daily Orbit Update MPECs](https://minorplanetcenter.net/iau/info/MPECComputers.html)
+
+[//]: # (- https://minorplanetcenter.net/iau/info/MPECComputers.html&#41;)
+
 
 <div class="contents-grid"></div>
 
 - [Uncertainty parameter, U, and orbit quality codes](uncertainty-parameter.md)
 - [Alphabetic notes for orbits](orbit-notes.md)
 - [Indication of perturbing bodies](perturbers.md)
+
+[//]: # (- [List of orbit computers on the Daily Orbit Update MPECs]&#40;../data-and-services/mpec-computers/#mpec-orbit-computers&#41;)
 
 
 ## Orbit and Object Classification

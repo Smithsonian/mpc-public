@@ -20,17 +20,17 @@ The comprehensive listing includes:
 - **Additional Coinvestigators**: Collaborating researchers (same code applies to all)
 
 
-## Available Formats
+## Assigned Program Codes
 
-The program codes data is accessible in two formats:
+Information on assigned program codes is accessible in two formats:
 
-1. **Legacy Format**: [Plain text file](https://minorplanetcenter.net/iau/lists/ProgramCodes.txt)
-2. **JSON Format**: [JSON file](https://minorplanetcenter.net/static/downloadable-files/program_codes.json)
+1. [Plain text format](https://minorplanetcenter.net/iau/lists/ProgramCodes.txt)
+2. [JSON format](https://minorplanetcenter.net/static/downloadable-files/program_codes.json)
 
 
 ## Quality Monitoring
 
-The MPC continuously evaluates the astrometric quality of all submitted observations. Prior to assigning new observatory codes, the organization performs thorough verification of the astrometry provided by users requesting codes. Detailed instructions are available in the [astrometry guide](../astrometry/observatory-codes.md#how-do-i-get-an-observatory-code).
+The MPC continuously evaluates the astrometric quality of all submitted observations. Prior to assigning new observatory codes, the organization performs thorough verification of the astrometry provided by users requesting codes. Detailed instructions are available in the [astrometry guide](observatory-codes.md#how-do-i-get-an-observatory-code).
 
 
 ## Policy Changes

@@ -7,18 +7,15 @@ Documentation related to observatory codes, program codes, and associated polici
 
 <div class="contents-grid"></div>
 
-- [Observatory Codes](../astrometry/observatory-codes.md)
+- [Observatory Codes](observatory-codes.md)
 - [Roving Observers](../observations/roving-observers.md)
-
-- [Observatory codes (interactive list)](https://data.minorplanetcenter.net/explorer/?tab=Lists&list=Observatory+Codes)
 - [Observatory codes (plain text)](https://minorplanetcenter.net/iau/lists/ObsCodes.html)
 - [New Observatory Code Request Form](https://minorplanetcenter.net/new_obscode_request)
 - [Observatory codes API](../apis/obscodes.md)
+- [Observatory codes (interactive list)](https://data.minorplanetcenter.net/explorer/?tab=Lists&list=Observatory+Codes)
 
 
 ## Program Codes
-
-- [Program Codes (plain text list)](https://minorplanetcenter.net/iau/lists/ProgramCodes.txt)
 
 <div class="contents-grid"></div>
 

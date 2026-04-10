@@ -23,7 +23,8 @@ Additional experts can always be added on a case-by-case basis.
 
 The committee and the peer-review process will only provide recommendations to the MPC: the MPC will always have the ultimate decision.
 
-Up until now, the committee has been called to express their opinion on a few different submissions of archival observations, but in the near future the committee will be more involved in how the MPC will plan to assign (or re-assign) program codes. For further information, please see our [program codes documentation page](https://minorplanetcenter.net/mpcops/documentation/program-codes-policy).
+Up until now, the committee has been called to express their opinion on a few different submissions of archival observations, but in the near future the committee will be more involved in how the MPC will plan to assign (or re-assign) program codes. 
+For further information, please see our [program codes documentation page](../observatory-and-program-codes/program-codes.md).
 
 ## List of Public Archives and Corresponding SARC Contact
 

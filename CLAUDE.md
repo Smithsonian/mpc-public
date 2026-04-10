@@ -155,7 +155,6 @@ The following documentation pages have been migrated from MPC legacy pages into 
 - `orbits/minor-planet-orbit-format.md` - From `/iau/info/MPOrbitFormat.html`
 - `orbits/comet-orbit-format.md` - From `/iau/info/CometOrbitFormat.html`
 - `orbits/satellite-orbit-format.md` - From `/iau/info/SatOrbitFormat.html`
-- `orbits/orbit-format-overview.md` - From `/iau/info/OrbFormat.html`
 - `orbits/orbit-notes.md` - From `/iau/info/OrbNote.html`
 - `orbits/uncertainty-parameter.md` - From `/iau/info/UValue.html`
 - `orbits/orbit-types.md` - From `/mpcops/documentation/orbit-types/`

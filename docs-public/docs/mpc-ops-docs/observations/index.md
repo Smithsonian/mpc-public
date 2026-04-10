@@ -8,7 +8,7 @@ Technical reference for observation formats, metadata encoding, and submission p
 <div class="contents-grid"></div>
 
 - [Guide to Minor Body Astrometry](../astrometry/index.md)
-- [How do I get an observatory code?](../astrometry/observatory-codes.md#how-do-i-get-an-observatory-code)
+- [How do I get an observatory code?](../observatory-and-program-codes/observatory-codes.md#how-do-i-get-an-observatory-code)
 - [How to submit astrometry using Tycho Tracker](tycho-tracker.md)
 
 
@@ -16,11 +16,10 @@ Technical reference for observation formats, metadata encoding, and submission p
 
 The ADES format is the current standard for submitting observations to the MPC.
 
-- [Valid ADES values](https://minorplanetcenter.net/mpcops/documentation/valid-ades-values)
-
 <div class="contents-grid"></div>
 
 - [ADES Data Submission](ades-format.md)
+- [Valid ADES Field Values](valid-ades-values.md)
 - [ADES GitHub repository](https://github.com/IAU-ADES/ADES-Master/)
 - [Official ADES format description (PDF)](https://github.com/IAU-ADES/ADES-Master/blob/master/ADES_Description.pdf)
 
