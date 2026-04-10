@@ -104,7 +104,7 @@ If the information relating to an observatory code needs to be updated/corrected
 When reporting a change/update, please use the following format, to make our lives easier. 
 
 !!! note 
-   A few lines have comments starting with a `#`. These are included only for descriptive purposes in this documentation; do not include any comments in your submission.
+    A few lines have comments starting with a `#`. These are included only for descriptive purposes in this documentation; do not include any comments in your submission.
 
 ```text
 observatory_code: ???  # The observatory code that you want to update
@@ -172,7 +172,7 @@ For website reporting:
 URL OC http://...
 ```
 
-[Submit updated coordinates](https://cgi.minorplanetcenter.net/cgi-bin/feedback.cgi?U=ObservatoryCodes.html&S=Updated%20Coordinates)
+To submit updated coordinates, simply raise a [Helpdesk ticket](https://mpc-service.atlassian.net/servicedesk/customer/portal/13/group/39/create/260) about it.
 
 
 ## Known Low-Precision Sites

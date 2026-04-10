@@ -32,18 +32,24 @@ Astrometric observations can be reported in two different formats:
 - The [IAU Astrometric Data Exchange Standard (ADES)](#whats-the-ades-format) is the preferred format for reporting observations to the MPC.
 - The older 80-character MPC1992 format (also informally called obs80) may also be submitted.
 
+The use of the ADES format is not mandatory at the moment, but the MPC **strongly** prefers submission in this format, 
+and encourages users to familiarize themselves with the format.
+
+Observations reported in ADES format need to follow the rules described in the [ADES documentation](https://github.com/IAU-ADES/ADES-Master/blob/master/ADES_Description.pdf) 
+and on the [MPC ADES Data Submission page](../observations/ades-format.md). 
+For a complete list of accepted values for ADES fields such as instrument mode, star catalog, and photometric band, see [Valid ADES Field Values](../observations/valid-ades-values.md).
+
 Observations reported in the MPC1992 format need to follow the rules detailed on the [page describing the format](../observations/mpc1992-format.md).
 Please read this document carefully and report the observations in the correct format.
 
-Observations reported in ADES format need to follow the rules described in the [ADES documentation](https://github.com/IAU-ADES/ADES-Master/blob/master/ADES_Description.pdf) and on the [MPC ADES Data Submission page](../observations/ades-format.md). For a complete list of accepted values for ADES fields such as instrument mode, star catalog, and photometric band, see [Valid ADES Field Values](../observations/valid-ades-values.md).
 
 Observations of minor planets, comets and natural satellites, formatted as specified above, can be reported via:
 
-1. E-mail to [obs@cfa.harvard.edu](mailto:obs@cfa.harvard.edu) (MPC1992 only)
-2. Observation Submission Forms (ADES only):
+1. Observation Submission Forms (ADES only):
     - [ADES XML Submission Form](https://minorplanetcenter.net/submit_xml)
     - [ADES PSV Submission Form](https://minorplanetcenter.net/submit_psv)
-3. [MPC1992 cURL instructions](../observations/command-line-submissions.md)
+2. [MPC1992 cURL instructions](../observations/command-line-submissions.md)
+3. E-mail to [obs@cfa.harvard.edu](mailto:obs@cfa.harvard.edu) (MPC1992 only)
 
 Tutorials related to the submission of observations are available in the [Submission Tutorials](../../tutorials/submission_tutorials.md) section of the MPC's documentation site.
 

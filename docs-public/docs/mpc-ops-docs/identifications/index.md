@@ -23,6 +23,9 @@ in accepting identifications, in order to minimize the number of false positives
 
 ## Documentation
 
+Before submitting your identifications please read through the documentation on the
+required format.
+
 <div class="contents-grid"></div>
 
 - [Submission format for identifications](submission-format.md)
@@ -30,7 +33,18 @@ in accepting identifications, in order to minimize the number of false positives
 
 ## Submit Identifications
 
-- [Submit identifications (upload form)](https://minorplanetcenter.net/mpcops/submissions/identifications/)
+Identifications can be submitted using the
+[file upload form](https://minorplanetcenter.net/mpcops/submissions/identifications/) or
+using the API, example usage
+[here](https://minorplanetcenter.net/static/submissions/media/identifications_api_example.py).
+
+!!! warning
+    The submission form does not currently support:
+
+    - The deletion of identifications.
+    - Designations that need to be retired.
+    - Identifications where some tracklets need to be redesignated before the
+      identification can be processed.
 
 
 ---
@@ -95,29 +109,6 @@ slow down the ID pipeline.
 - If you have any doubts about the status of your submission, please contact us using the
   [Jira Helpdesk](https://mpc-service.atlassian.net/servicedesk/customer/portals).
 
-
-## Submitting Identifications
-
-Identifications can be submitted using the
-[file upload form](https://minorplanetcenter.net/mpcops/submissions/identifications/) or
-using the API, example usage
-[here](https://minorplanetcenter.net/static/submissions/media/identifications_api_example.py).
-Before submitting your identifications please read through the documentation on the
-required format. See below for various links.
-
-<div class="contents-grid"></div>
-
-- [Submission format for identifications](submission-format.md)
-- [Submit identifications](https://minorplanetcenter.net/mpcops/submissions/identifications/)
-- [MPC criteria for accepting identifications](acceptance-criteria.md)
-
-!!! warning
-    The submission form does not currently support:
-
-    - The deletion of identifications.
-    - Designations that need to be retired.
-    - Identifications where some tracklets need to be redesignated before the
-      identification can be processed.
 
 
 ## Failed Submissions

@@ -25,7 +25,8 @@ Documentation related to orbital elements, orbit formats, and orbit/object class
 - [Uncertainty parameter, U, and orbit quality codes](uncertainty-parameter.md)
 - [Alphabetic notes for orbits](orbit-notes.md)
 - [Indication of perturbing bodies](perturbers.md)
-- [List of orbit computers on the Daily Orbit Update MPECs](../data-and-services/mpec-computers/#mpec-orbit-computers)
+
+[//]: # (- [List of orbit computers on the Daily Orbit Update MPECs]&#40;../data-and-services/mpec-computers/#mpec-orbit-computers&#41;)
 
 
 ## Orbit and Object Classification
