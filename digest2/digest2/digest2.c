@@ -72,6 +72,7 @@ tracklet *resetInvalid(void) {
     int saveObsCap = tk->obsCap;
     observation *saveOlist = tk->olist;
     uint64_t saveRand = tk->rand64;
+    uint64_t saveRngS[4] = {tk->rng_s[0], tk->rng_s[1], tk->rng_s[2], tk->rng_s[3]};
     perClass *saveClass = tk->class;
     char *saveOutputBuf = tk->outputBuf;
     int saveOutputBufSize = tk->outputBufSize;
@@ -79,6 +80,7 @@ tracklet *resetInvalid(void) {
     tk->obsCap = saveObsCap;
     tk->olist = saveOlist;
     tk->rand64 = saveRand;
+    for (int i = 0; i < 4; i++) tk->rng_s[i] = saveRngS[i];
     tk->class = saveClass;
     tk->outputBuf = saveOutputBuf;
     tk->outputBufSize = saveOutputBufSize;
@@ -328,7 +330,7 @@ void *scoreStaged(void *id) {
 
         // do math, not holding any mutex
         if (repeatable)
-            tk->rand64 = 3;
+            tkSeed(tk, 3);
 
         score(tk);
         ringAdd(tk);
@@ -541,9 +543,9 @@ void setup(char *fnObs) {
         tracklet *tk = (tracklet *) calloc(1, sizeof(tracklet));
         if (!tk)
             fatal(msgMemory);
-        // per-thread LCG setup.  I think NAG needs an odd number for a seed.
-        // see additional notes in d2math.c
-        tk->rand64 = 2 * (rand() / 2) + 1;
+        // per-thread PRNG setup.  tkSeed splitmix64-expands rand() into all
+        // state slots so both LCG and xoshiro paths start well-decorrelated.
+        tkSeed(tk, rand());
         tk->obsCap = 5;
         tk->olist = (observation *) malloc(tk->obsCap * sizeof(observation));
         if (!tk->olist)

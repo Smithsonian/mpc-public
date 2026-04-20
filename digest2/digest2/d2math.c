@@ -334,10 +334,59 @@ _Bool tagAngle(tracklet *tk, double an) {
     return newTag;
 }
 
+/*
+ * xoshiro256++ (Blackman & Vigna 2018) — opt-in alternative PRNG.
+ * Period 2^256-1, passes BigCrush, has jump() / long_jump() primitives
+ * for provably-disjoint parallel substreams.  See PRNG_TRADE_STUDY.md.
+ */
+static inline uint64_t rotl(const uint64_t x, int k) {
+    return (x << k) | (x >> (64 - k));
+}
+
+static inline uint64_t xoshiro256pp_next(uint64_t s[4]) {
+    uint64_t result = rotl(s[0] + s[3], 23) + s[0];
+    uint64_t t = s[1] << 17;
+    s[2] ^= s[0];
+    s[3] ^= s[1];
+    s[1] ^= s[2];
+    s[0] ^= s[3];
+    s[2] ^= t;
+    s[3] = rotl(s[3], 45);
+    return result;
+}
+
+/* splitmix64 used to expand a single seed into the 4-word xoshiro state
+   (also guards against pathological small-seed starts). */
+static inline uint64_t splitmix64(uint64_t *state) {
+    uint64_t z = (*state += 0x9e3779b97f4a7c15ULL);
+    z = (z ^ (z >> 30)) * 0xbf58476d1ce4e5b9ULL;
+    z = (z ^ (z >> 27)) * 0x94d049bb133111ebULL;
+    return z ^ (z >> 31);
+}
+
+/* Seed both PRNG paths from one integer so each PRNG choice starts from a
+   well-decorrelated state for every seed value. */
+void tkSeed(tracklet *tk, uint64_t seed) {
+    tk->rand64 = 2 * (seed / 2) + 1;        /* LCG: odd seed per NAG */
+    uint64_t s = seed;
+    for (int i = 0; i < 4; i++)
+        tk->rng_s[i] = splitmix64(&s);      /* xoshiro: expand via splitmix */
+}
+
+/*
+ * `repeatable` mode uses the LCG so output is bit-for-bit reproducible
+ * across digest2 versions (the reproducibility contract).  `random` mode
+ * uses xoshiro256++ for its longer period, better seed decorrelation, and
+ * jump primitives that matter when many stochastic streams run in parallel.
+ */
 double tkRand(tracklet *tk) {
-    // see LCG notes above, in this file
-    tk->rand64 = (tk->rand64 * LCGA) & LCGM;
-    return tk->rand64 * invLCGM;
+    if (repeatable) {
+        tk->rand64 = (tk->rand64 * LCGA) & LCGM;
+        return tk->rand64 * invLCGM;
+    }
+    uint64_t r = xoshiro256pp_next(tk->rng_s);
+    /* top 53 bits -> uniform double in [0, 1) */
+    return (r >> 11) * 0x1.0p-53;
 }
 
 /*
