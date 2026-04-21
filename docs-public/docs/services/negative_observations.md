@@ -46,7 +46,6 @@ Pointings must be submitted as a **JSON file**.
 ## Contents
 
 - [JSON Field Names](#json-field-names)
-- [Negative Observations JSON](#negative-observations-json)
 - [JSON Examples](#json-examples)
 - [Submission Examples](#submission-examples)
 
