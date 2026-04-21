@@ -105,7 +105,7 @@ Pointings must be submitted as a **JSON file**.
 
 ---
 
-### Limiting magnitude methods
+### Negative Observations: Limiting magnitude methods
 
 1. Star stack → scale to 5σ  
 2. Sky noise → scale to point source  
