@@ -116,7 +116,7 @@ Pointings must be submitted as a **JSON file**.
 
 ## JSON Examples
 
-### Square field (survey)
+### Exposed Square Field (survey)
 
 ```json
 {
