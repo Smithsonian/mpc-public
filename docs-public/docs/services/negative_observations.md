@@ -204,40 +204,14 @@ Pointings must be submitted as a **JSON file**.
 
 ### Submission Examples
 
+#### Command-line (using `curl`)
+```bash
 URL='https://www.minorplanetcenter.net/cgi-bin/pointings/submit_negativeObs'
 
 curl -X POST \
   -H "Content-Type: application/json" \
   -d @json.txt \
   $URL
-
-Python
-
-import http.client
-import json
-
-observation = {
-    "action": "exposed",
-    "mode": "survey",
-    "mpcCode": "802",
-    "time": "2017-02-06T10:00:57.2",
-    "duration": 15.0,
-    "center": [140.1945, 20.3632],
-    "width": 2.4,
-    "limit": 20.5,
-    "surveyExpName": "A123xyz006"
-}
-
-conn = http.client.HTTPSConnection('www.minorplanetcenter.net')
-conn.request(
-    "POST",
-    "/cgi-bin/pointings/submit_negativeObs",
-    json.dumps(observation),
-    {'Content-type': 'application/json'}
-)
-
-response = conn.getresponse()
-print(response.status, response.reason, response.read())
 
 ### Test form
 
