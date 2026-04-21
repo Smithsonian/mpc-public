@@ -147,7 +147,7 @@ Pointings must be submitted as a **JSON file**.
   "filter": "zp1"
 }
 ```
-### Field defined by offsets
+### Exposed Field (Defined by Offsets)
 ```json
 {
   "action": "exposed",
