@@ -84,11 +84,7 @@ Pointings must be submitted as a **JSON file**.
 
 ---
 
-## Negative Observations JSON
-
-A **negative observation** indicates the object was *not found*.
-
-### Additional mandatory fields
+### Negative Observations: Additional mandatory fields
 
 - `found` — boolean
 - `desig` — object designation or trksub
