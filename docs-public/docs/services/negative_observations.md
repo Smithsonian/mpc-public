@@ -133,7 +133,7 @@ Pointings must be submitted as a **JSON file**.
 }
 ```
 
-### Circular field (survey)
+### Exposed Circular Field (survey)
 ```json
 {
   "action": "exposed",
