@@ -92,7 +92,7 @@ Pointings must be submitted as a **JSON file**.
 
 ---
 
-### Optional fields
+### Negative Observations: Additional optional fields
 
 - `limiting_mag_method` — 1–4
 - `notes`
