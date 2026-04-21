@@ -53,7 +53,7 @@ Pointings must be submitted as a **JSON file**.
 
 ## JSON Field Names
 
-### Mandatory fields
+### Mandatory fields (All Pointing Types)
 
 - `action` — `"exposed"` *(string)*
 - `surveyExpName` — unique exposure ID *(string, ≤64 chars, no spaces)*
