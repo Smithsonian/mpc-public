@@ -31,7 +31,7 @@ jobs:
           echo "Version set to:"
           grep '^version' pyproject.toml
 
-      - name: Build source distribution
+      - name: Build distributions
         run: |
           cd mpc_orb
           python -m pip install --upgrade build
@@ -53,9 +53,8 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
-          pattern: testpypi-*
-          name: dist
-          merge-multiple: true
+          name: testpypi-dist
+          path: dist
 
       - name: Publish to TestPyPI
         uses: pypa/gh-action-pypi-publish@release/v1
