@@ -284,7 +284,7 @@
                     "description": "True if any value in the SNR list is <3, False otherwise",
                     "type": "boolean"
                 },
-                "snr_below_1:"        : {
+                "snr_below_1"         : {
                     "description": "True if any value in the SNR list is <1, False otherwise",
                     "type": "boolean"
                 },
