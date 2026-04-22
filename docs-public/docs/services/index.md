@@ -49,11 +49,4 @@ Query the MPC's database of known minor planets to check for potential matches t
 
 - [MPChecker Service](https://minorplanetcenter.net/cgi-bin/checkmp.cgi)
 
-## Negative observations
-Tool to submit pointings and negative observations ... 
-
-<div id="contents-grid"></div>  
-
-- [Pointing submissions page](https://minorplanetcenter.net/)
-- [Documentation](negative_observations.md)
 
