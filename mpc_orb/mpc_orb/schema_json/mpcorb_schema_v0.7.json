@@ -458,21 +458,24 @@
                     "description": "U parameter per https://minorplanetcenter.net/iau/info/UValue.html",
                     "type": [
                         "null",
-                        "integer"
+                        "integer",
+                        "number"
                     ]
                 },
                 "score1": {
                     "description": " 1st score for numbering",
                     "type": [
                         "null",
-                        "integer"
+                        "integer",
+                        "number"
                     ]
                 },
                 "score2": {
                     "description": " 2nd score for numbering",
                     "type": [
                         "null",
-                        "integer"
+                        "integer",
+                        "number"
                     ]
                 },
                 "orbit_quality": {
