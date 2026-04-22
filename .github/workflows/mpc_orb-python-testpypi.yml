@@ -8,13 +8,8 @@ on:
       - ".github/workflows/mpc_orb-python-testpypi.yml"
 
 jobs:
-
-  build-wheels:
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
+  build:
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
@@ -31,70 +26,36 @@ jobs:
         shell: bash
         run: |
           cd mpc_orb
-          # Append .devN to the version so each build is unique on TestPyPI
-          sed -i.bak "s/^version = \"\\(.*\\)\"/version = \"\\1.dev${{ github.run_number }}\"/" pyproject.toml
-          echo "Version set to:"
-          grep '^version' pyproject.toml
-
-      - name: Build wheels
-        uses: pypa/cibuildwheel@v2.21
-        with:
-          package-dir: mpc_orb
-        env:
-          CIBW_BUILD: "cp312-*"
-          CIBW_SKIP: "*-musllinux_*"
-
-      - name: Upload wheels as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: testpypi-wheels-${{ matrix.os }}
-          path: wheelhouse/*.whl
-
-  build-sdist:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          lfs: true
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Append dev version suffix
-        run: |
-          cd mpc_orb
+          # Append .devN so each TestPyPI upload has a unique version.
           sed -i "s/^version = \"\\(.*\\)\"/version = \"\\1.dev${{ github.run_number }}\"/" pyproject.toml
           echo "Version set to:"
           grep '^version' pyproject.toml
 
-      - name: Build source distribution
+      - name: Build distributions
         run: |
           cd mpc_orb
-          pip install build
-          python -m build --sdist 
+          python -m pip install --upgrade build
+          python -m build
 
-      - name: Upload sdist as artifact
+      - name: Upload distributions as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: testpypi-sdist
-          path: mpc_orb/dist/*.tar.gz
+          name: testpypi-dist
+          path: mpc_orb/dist/*
 
   publish:
-    needs: [build-wheels, build-sdist]
+    needs: build
     runs-on: ubuntu-latest
     environment: testpypi
     permissions:
       id-token: write
+
     steps:
-      - name: Download all artifacts
+      - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
-          pattern: testpypi-*
+          name: testpypi-dist
           path: dist
-          merge-multiple: true
 
       - name: Publish to TestPyPI
         uses: pypa/gh-action-pypi-publish@release/v1
