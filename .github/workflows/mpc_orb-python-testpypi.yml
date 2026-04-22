@@ -1,28 +1,15 @@
-name: mpc-orb-python-release
+name: mpc-orb-testpypi
 
 on:
-  release:
-    types: [published]
+  push:
+    branches-ignore: [main]
+    paths:
+      - "mpc_orb/**"
+      - ".github/workflows/mpc_orb-python-testpypi.yml"
 
 jobs:
-  # Only run for mpc-orb releases (tags starting with "mpc-orb-v")
-  check-tag:
-    runs-on: ubuntu-latest
-    outputs:
-      is_mpc_orb: ${{ steps.check.outputs.is_mpc_orb }}
-    steps:
-      - name: Check release tag
-        id: check
-        run: |
-          if [[ "${{ github.event.release.tag_name }}" == mpc-orb-v* ]]; then
-            echo "is_mpc_orb=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "is_mpc_orb=false" >> "$GITHUB_OUTPUT"
-          fi
 
   build-wheels:
-    needs: check-tag
-    if: needs.check-tag.outputs.is_mpc_orb == 'true'
     strategy:
       fail-fast: false
       matrix:
@@ -35,6 +22,20 @@ jobs:
         with:
           lfs: true
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Append dev version suffix
+        shell: bash
+        run: |
+          cd mpc_orb
+          # Append .devN to the version so each build is unique on TestPyPI
+          sed -i.bak "s/^version = \"\\(.*\\)\"/version = \"\\1.dev${{ github.run_number }}\"/" pyproject.toml
+          echo "Version set to:"
+          grep '^version' pyproject.toml
+
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.21
         with:
@@ -46,18 +47,28 @@ jobs:
       - name: Upload wheels as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: mpc-orb-wheels-${{ matrix.os }}
+          name: testpypi-wheels-${{ matrix.os }}
           path: wheelhouse/*.whl
 
   build-sdist:
-    needs: check-tag
-    if: needs.check-tag.outputs.is_mpc_orb == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           lfs: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Append dev version suffix
+        run: |
+          cd mpc_orb
+          sed -i "s/^version = \"\\(.*\\)\"/version = \"\\1.dev${{ github.run_number }}\"/" pyproject.toml
+          echo "Version set to:"
+          grep '^version' pyproject.toml
 
       - name: Build source distribution
         run: |
@@ -68,23 +79,25 @@ jobs:
       - name: Upload sdist as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: sdist
+          name: testpypi-sdist
           path: mpc_orb/dist/*.tar.gz
 
   publish:
     needs: [build-wheels, build-sdist]
     runs-on: ubuntu-latest
-    environment: pypi
+    environment: testpypi
     permissions:
       id-token: write
     steps:
       - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
+          pattern: testpypi-*
           path: dist
           merge-multiple: true
 
-      - name: Publish to PyPI
+      - name: Publish to TestPyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
+          repository-url: https://test.pypi.org/legacy/
           packages-dir: dist/
