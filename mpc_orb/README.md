@@ -1,79 +1,238 @@
-# mpc-public/mpc_orb
+# `mpc_orb`
 
-N.B. The code in this repository is available as a pip-installable package:
-```
+`mpc_orb` is a Python package and reference repository for working with
+`mpc_orb.json` orbit files.
+
+The format is designed to exchange best-fit orbit information for a single
+solar-system object, including orbital elements, covariance information,
+fit statistics, metadata, and optional non-gravitational terms.
+
+The package can:
+
+- validate an `mpc_orb.json` payload against the bundled JSON schema
+- parse a JSON file or Python dictionary into a convenient Python object
+- expose orbit content in a form that is easier to inspect and use in code
+
+## Installation
+
+Install from PyPI:
+
+```bash
 pip install mpc_orb
 ```
 
-Documentation and code related to the *mpc_orb.json* format. 
- - This is a standardized format for the exchange of data on the *best-fit orbit* for solar-system bodies, including minor-planets, comets, irregular satellites, and interstellar interlopers. 
- - The format uses JSON files for the exchange of data.
+Install from this repository while developing:
 
-The MPC currently populates mpc_orb.json files using data from the *orbfit* package, but we emphasize that the mpc_orb.json format is intended for the generic exchange of orbit data from *any* source.  
-
-As of September 2025, the latest version of the defining schema is version 0.6
- - While the schema versions are numbered < 1, the format should be considered experimental/developmental/beta/WIP.
-
-This repository currently contains code and documentation related to: 
- - A description of the *mpc_orb.json* format, and an associated defining JSON schema.
- - Examples of the *mpc_orb.json* format for some specific objects
- - Python code to demonstrate the validation of files in the *mpc_orb.json* format. 
- - Python code to facilitate the parsing of files in the *mpc_orb.json* format. 
-
-## Repo Contents 
-
-
-### Sample JSON Files 
-
-Examples of the *mpc_orb.json* format for some specific objects can be found in */mpc_orb/demo_json*
- 
-
-### MPC_ORB JSON schema 
-
-The JSON files defining the *mpc_orb.json* format can be found in */mpc_orb/schema_json*
- 
-### Documentation
-
-Documentation describing the *mpc_orb.json* format, including *allowed* fields, *required* fields, constraints, etc, can be found in the */docs/* directory.
-
-
-### Python Functionalities (*/mpc_orb/*)
-
-The */mpc_orb/* directory contains some python code to both validate & parse mpc-orb-json files 
-
-#### Parsing *mpc_orb.json* formatted data
-
-The code in *mpc_orb/parse.py* provides functions & classes to facilitate the parsing of *mpc_orb.json* files in python. 
-
-It is expected that this functionality will be used regularly by both internal MPC staff & external community users.
-
-Some demonstrations of code usage can be found in the */demo/* directory and in the *mpc_orb/demo.py* script.
-
-
-#### Validating *mpc_orb.json* files
-
-The code in *mpc_orb/parse.py* provides functions & classes to validate *mpc_orb.json* files in python. 
-
-It is expected that these validation functionalities will typically be used as part of the "parse" functions described above. 
-
-I.e. it is *not* expected that the end-user will regularly access the validation functions *directly*, but rather, the validation functions will be called under-the-hood by the *mpc_orb/parse.py* routines. 
-
-
-
-#### Installation and Usage 
-
-The python code in *mpc_orb* is available as a pip-installable python package. 
-
+```bash
+pip install -e .
 ```
-pip install mpc_orb
+
+Install with test dependencies:
+
+```bash
+pip install -e .'[test]'
 ```
- 
 
+## Quick Start
 
-### Python Tests (*/tests/*)
+```python
+from mpc_orb.parse import MPCORB
+from mpc_orb import validate_mpcorb
+import json
 
-Tests of the python code in the *mpc_orb* directory are provided in the *tests* directory. 
- 
- For details of the test code, including how to execute the tests, please see the file */tests/README.md*.
+json_path = "tests/jsons/pass_mpcorb/2012HN13_mpcorb_yarkovsky.json"
 
+# Read json into a dictionary
+with open(json_path, "r", encoding="utf-8") as f:
+    json_dict = json.load(f)
 
+# Optional explicit validation
+validate_mpcorb.validate_mpcorb(json_dict)
+
+# Parse into a Python object
+M = MPCORB(json_dict)
+
+# Top-level metadata
+print(M.designation_data["iau_name"])
+print(M.software_data["mpcorb_version"])
+
+# Cometary elements
+print(M.COM.q["val"], M.COM.q["unc"])
+print(M.COM.e["val"], M.COM.e["unc"])
+
+# Cartesian elements
+print(M.CAR.x["val"], M.CAR.x["unc"])
+print(M.CAR.vx["val"], M.CAR.vx["unc"])
+
+# Convenience aliases
+print(M.q["val"])
+print(M.x["val"])
+
+# Full covariance matrix
+print(M.CAR.covariance_array.shape)
+
+# Optional Keplerian elements
+if hasattr(M, "KEP"):
+    print(M.KEP.a["val"])
+```
+
+## Main API
+
+### `MPCORB`
+
+The main entry point is `mpc_orb.parse.MPCORB`.
+
+```python
+from mpc_orb.parse import MPCORB
+
+M = MPCORB(json_dict)
+```
+
+When you instantiate `MPCORB`, the package:
+
+1. interprets the input as either a JSON filepath or a Python dictionary
+2. validates the content against the packaged schema
+3. exposes the parsed content as object attributes
+
+You can also instantiate an empty object and parse later:
+
+```python
+from mpc_orb.parse import MPCORB
+
+M = MPCORB()
+M.parse(json_dict)
+```
+
+### `validate_mpcorb`
+
+Validation helpers live in `mpc_orb.validate_mpcorb`.
+
+```python
+from mpc_orb import validate_mpcorb
+
+validate_mpcorb.validate_mpcorb(json_dict)
+```
+
+If the input is valid, the function returns `True`. If it is not valid, it
+raises an exception from the validation layer.
+
+### `describe`
+
+`MPCORB.describe()` uses the schema to describe a field and, when available,
+report its units.
+
+```python
+info = M.describe("q")
+print(info)
+```
+
+## Parsed Data Model
+
+An `MPCORB` instance exposes both raw JSON sections and convenience structures
+created during parsing.
+
+### Top-Level Attributes
+
+These sections are attached directly to the `MPCORB` instance as dictionaries:
+
+- `categorization`
+- `designation_data`
+- `epoch_data`
+- `magnitude_data`
+- `moid_data`
+- `non_grav_booleans`
+- `orbit_fit_statistics`
+- `software_data`
+- `system_data`
+
+### Coordinate Containers
+
+`COM`, `CAR`, and optional `KEP` (starting from version 0.6) are represented as `COORD` objects. 
+Each one includes:
+
+- `coefficient_names`
+- `coefficient_values`
+- `coefficient_uncertainties`
+- `eigenvalues`
+- `covariance`
+- `covariance_array`
+- `element_dict`
+
+Individual fitted quantities are also exposed as attributes such as:
+
+- `M.COM.q`
+- `M.CAR.x`
+- `M.KEP.a`
+
+Each of these is a dictionary with `val` and `unc` keys.
+
+## Accepted Inputs
+
+Most public functions in the package accept a Python `dict` containing the JSON content.
+
+That behavior is implemented in `mpc_orb/interpret.py` and is shared by the
+parser and validator.
+
+## Schema And Version Handling
+
+The versioned schema files live in `mpc_orb/schema_json/`.
+
+Validation is version-aware: `validate_mpcorb.validate_mpcorb()` reads
+`software_data["mpcorb_version"]` from the input JSON and loads the matching
+schema file bundled with the package.
+
+If you call `load_schema()` directly with no version, the package loads the
+`latest` schema alias:
+
+```python
+from mpc_orb import validate_mpcorb
+
+schema = validate_mpcorb.load_schema()
+```
+
+## Repository Contents
+
+- `mpc_orb/`: Python package code
+- `mpc_orb/schema_json/`: versioned JSON schema files
+- `mpc_orb/demo_json/`: sample `mpc_orb.json` files
+- `demos/`: notebook-based usage examples
+- `docs/`: format documentation and generated PDFs
+- `tests/`: parser and validation tests
+
+## Examples And Demo Material
+
+The repository includes a few ready-made examples:
+
+- `mpc_orb/demo_json/` contains sample JSON files
+- `mpc_orb/bin/demo.py` provides a simple command-line demo
+- `demos/Example_parse_mpcorb_json.ipynb` shows interactive usage
+
+After installation, the demo entry point is also exposed as:
+
+```bash
+demo
+```
+
+## Running The Tests
+
+From the `mpc_orb` project directory:
+
+```bash
+pytest -v tests
+```
+
+The test suite covers:
+
+- schema loading and validation behavior
+- parsing of `COM`, `CAR`, and optional `KEP` sections
+- convenience attributes such as `M.q` and `M.x`
+- schema-backed descriptions returned by `describe()`
+
+## Notes
+
+The MPC currently generates `mpc_orb.json` files from `orbfit`, but the format
+is intended for broader orbit-data exchange and is not tied to a single orbit
+determination pipeline.
+
+## Documentation
+Documentation for `mpc_orb` is available on the [MPC Public Documentation Hub](https://docs.minorplanetcenter.net/), and tutorials for working with `mpc_orb.json` files are available on the [MPC Orbit API tutorial page](https://docs.minorplanetcenter.net/tutorials/notebooks/mpc_tutorial_api_orbits/).
