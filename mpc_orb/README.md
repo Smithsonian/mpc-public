@@ -228,6 +228,29 @@ The test suite covers:
 - convenience attributes such as `M.q` and `M.x`
 - schema-backed descriptions returned by `describe()`
 
+### Releasing to PyPI
+
+Three GitHub Actions workflows handle CI and publishing for the Python package:
+
+1. **Tests** (`mpc_orb_pytest.yml`) -- Runs `pytest` on every pull request and on pushes to `main` that modify `mpc_orb/` files.
+
+2. **TestPyPI** (`mpc_orb-python-testpypi.yml`) -- On every push to a PR branch that modifies `mpc_orb/`, a python package is built for Linux, macOS, and Windows, version-suffixed with `.devN`, and published to [TestPyPI](https://test.pypi.org/project/mpc-orb/). Reviewers can install a pre-release build with:
+   ```bash
+   pip install -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ mpc-orb
+   ```
+
+3. **PyPI release** (`mpc_orb_release.yml`) -- Triggered when a GitHub Release is published with a tag matching `mpc-orb-v*`. Builds production wheels and sdist, then publishes to [PyPI](https://pypi.org/project/mpc-orb/).
+
+**To release a new version:**
+
+1. Update the version in `pyproject.toml` (e.g., `version = "2.2.0"`).
+2. Open a PR with the version bump (and any other changes) and merge it into `main`.
+3. Go to the repository's [Releases page](https://github.com/Smithsonian/mpc-public/releases) and create a new release:
+   - **Tag:** `mpc-orb-v2.2.0` (must start with `mpc-orb-v`)
+   - **Target:** `main`
+   - **Title/notes:** Describe what changed in this release.
+4. Publishing the release automatically triggers the workflow, which builds wheels for all platforms and uploads them to PyPI.
+
 ## Notes
 
 The MPC currently generates `mpc_orb.json` files from `orbfit`, but the format
