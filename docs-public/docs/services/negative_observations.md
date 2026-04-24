@@ -1,45 +1,6 @@
-# Pointings submissions and negative observations
+# Pointing submissions documentation
 
-The Minor Planet Center (MPC) collects data on **pointings**, i.e. information describing the direction, time, duration, etc. of each exposure.
-
-A pointing corresponds to an **individual image** (not a multi-exposure field).
-
-We welcome submissions from:
-- Large surveys
-- Targeted follow-up observations
-- Negative observations
-
----
-
-## Purpose
-
-Collecting pointing data enables:
-1. Community coordination of NEO follow-up
-2. Internal MPC data processing
-3. Community precovery
-
----
-
-## Types of pointings
-
-We collect three types:
-
-1. **Exposed pointings**  
-   → At (or near) time of exposure
-
-2. **Queued pointings**  
-   → Scheduled observations
-
-3. **Negative observations**  
-   → Targeted observation where object was *not found*
-
----
-
-## Submission format
-
-Pointings must be submitted as a **JSON file**.
-
-> An API for querying the database will be available soon.
+This page contains the field definitions, rules, examples, and submission methods for MPC pointings and negative observations.
 
 ---
 
@@ -49,6 +10,7 @@ Pointings must be submitted as a **JSON file**.
 - [Negative Observations JSON](#negative-observations-json)
 - [JSON Examples](#json-examples)
 - [Submission Examples](#submission-examples)
+- [Common mistakes](#common-mistakes)
 
 ---
 
@@ -57,10 +19,10 @@ Pointings must be submitted as a **JSON file**.
 ### Mandatory fields
 
 - `action` — `"exposed"` *(string)*
-- `surveyExpName` — unique exposure ID *(string, ≤64 chars, no spaces)*
+- `surveyExpName` — unique exposure ID *(string, up to 64 characters, no spaces)*
 - `mode` — `"survey"` or `"target"` *(string)*
-- `mpcCode` — MPC site code *(string)*
-- `time` — `"YYYY-MM-DDThh:mm:ss.sss"` *(string, UTC)*
+- `mpcCode` — MPC-assigned 3- or 4-character site code *(string)*
+- `time` — UTC time in the format `"YYYY-MM-DDThh:mm:ss.sss"` *(string)*
 - `duration` — exposure length in seconds *(number)*
 - `center` — `[RA, Dec]` in decimal degrees *(list)*
 - `limit` — limiting magnitude *(number)*
@@ -70,35 +32,35 @@ Pointings must be submitted as a **JSON file**.
 
 ### Field geometry (choose exactly ONE)
 
-- `width` — square field size *(number)*
-- `widths` — `[ra, dec]` rectangular field *(list)*
-- `fieldDiam` — circular field diameter *(number)*
-- `offsets` — list of 4 corner offsets *(list of pairs)*
+Exactly ONE of the following must be provided:
+
+- `width` — side length of a square field *(number)*
+- `widths` — `[ra, dec]` side lengths of a rectangular field *(list)*
+- `fieldDiam` — diameter of a circular field *(number)*
+- `offsets` — tangent-plane offsets of the four field corners *(list of pairs)*
 
 ---
 
 ### Optional fields
 
-- `filter` — bandpass (use `"UNFILTERED"` if none)
-- `nonsidereal` — `true` / `false`
+- `filter` — short name of the bandpass; use `"UNFILTERED"` if no filter
+- `nonsidereal` — `true` or `false`
 
 ---
 
 ## Negative Observations JSON
 
-A **negative observation** indicates the object was *not found*.
+A **negative observation** indicates that an object was searched for but was *not found* in the field.
 
 ### Additional mandatory fields
 
 - `found` — boolean
-- `desig` — object designation or trksub
-- `submitter` — name of reporter
-
----
+- `desig` — object designation in packed format, or a trksub for NEOCP
+- `submitter` — name of the submitter
 
 ### Optional fields
 
-- `limiting_mag_method` — 1–4
+- `limiting_mag_method` — integer in `{1,2,3,4}`
 - `notes`
 - `number_of_stars_fov`
 - `pixel_scale`
@@ -107,14 +69,12 @@ A **negative observation** indicates the object was *not found*.
 - `stacked`
 - `fill_factor`
 
----
-
 ### Limiting magnitude methods
 
-1. Star stack → scale to 5σ  
-2. Sky noise → scale to point source  
-3. Inject artificial objects (50% detection efficiency)  
-4. Manual/custom  
+1. On star stack, measure faint objects at the limit and scale to 5-sigma.
+2. On stack, measure sky noise, scale for a point-source area, and then to 5-sigma.
+3. Insert artificial objects into frames and measure 50% detection efficiency.
+4. Manual/custom method.
 
 ---
 
@@ -138,6 +98,7 @@ A **negative observation** indicates the object was *not found*.
 ```
 
 ### Circular field (survey)
+
 ```json
 {
   "action": "exposed",
@@ -151,7 +112,9 @@ A **negative observation** indicates the object was *not found*.
   "filter": "zp1"
 }
 ```
+
 ### Field defined by offsets
+
 ```json
 {
   "action": "exposed",
@@ -161,13 +124,14 @@ A **negative observation** indicates the object was *not found*.
   "time": "2018-01-01T11:22:33.456",
   "duration": 30,
   "center": [255.167, -29.008],
-  "offsets": [[1.25,-1.25],[-1.25,-1.25],[1.25,1.25],[-1.25,1.25]],
+  "offsets": [[1.25, -1.25], [-1.25, -1.25], [1.25, 1.25], [-1.25, 1.25]],
   "limit": 22,
   "filter": "r"
 }
 ```
 
 ### Targeted observation
+
 ```json
 {
   "action": "exposed",
@@ -186,6 +150,7 @@ A **negative observation** indicates the object was *not found*.
 ```
 
 ### Negative observation
+
 ```json
 {
   "action": "exposed",
@@ -206,17 +171,24 @@ A **negative observation** indicates the object was *not found*.
 }
 ```
 
-### Submission Examples
+---
 
+## Submission Examples
+
+### curl
+
+```bash
 URL='https://www.minorplanetcenter.net/cgi-bin/pointings/submit_negativeObs'
 
 curl -X POST \
   -H "Content-Type: application/json" \
   -d @json.txt \
   $URL
+```
 
-Python
+### Python
 
+```python
 import http.client
 import json
 
@@ -242,11 +214,14 @@ conn.request(
 
 response = conn.getresponse()
 print(response.status, response.reason, response.read())
+```
 
-### Test form
+---
 
-You can test JSON submissions using the MPC test endpoint:
+## Common mistakes
 
-https://www.minorplanetcenter.net/cgi-bin/pointings/submit_negativeObs
-
-Test submissions are flagged as ignored.
+- Providing multiple geometry fields
+- Missing `surveyExpName`
+- Wrong time format
+- Using spaces in `surveyExpName`
+- Forgetting `desig` for target mode

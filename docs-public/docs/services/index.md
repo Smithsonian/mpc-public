@@ -54,6 +54,6 @@ Tool to submit pointings and negative observations ...
 
 <div id="contents-grid"></div>  
 
-- [Pointing submissions page](https://minorplanetcenter.net/)
+- [Pointing submissions page](submissions.md)
 - [Documentation](negative_observations.md)
 
