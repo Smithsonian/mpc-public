@@ -7,7 +7,6 @@ This page contains the field definitions, rules, examples, and submission method
 ## Contents
 
 - [JSON Field Names](#json-field-names)
-- [Negative Observations JSON](#negative-observations-json)
 - [JSON Examples](#json-examples)
 - [Submission Examples](#submission-examples)
 - [Common mistakes](#common-mistakes)
@@ -16,7 +15,7 @@ This page contains the field definitions, rules, examples, and submission method
 
 ## JSON Field Names
 
-### Mandatory fields
+### Mandatory fields (All Pointing Types)
 
 - `action` — `"exposed"` *(string)*
 - `surveyExpName` — unique exposure ID *(string, up to 64 characters, no spaces)*
@@ -48,17 +47,14 @@ Exactly ONE of the following must be provided:
 
 ---
 
-## Negative Observations JSON
 
-A **negative observation** indicates that an object was searched for but was *not found* in the field.
-
-### Additional mandatory fields
+### Negative Observations: Additional mandatory fields
 
 - `found` — boolean
 - `desig` — object designation in packed format, or a trksub for NEOCP
 - `submitter` — name of the submitter
 
-### Optional fields
+### Negative Observations: Additional optional fields
 
 - `limiting_mag_method` — integer in `{1,2,3,4}`
 - `notes`
@@ -69,7 +65,9 @@ A **negative observation** indicates that an object was searched for but was *no
 - `stacked`
 - `fill_factor`
 
-### Limiting magnitude methods
+---
+
+### Negative Observations: Limiting magnitude methods
 
 1. On star stack, measure faint objects at the limit and scale to 5-sigma.
 2. On stack, measure sky noise, scale for a point-source area, and then to 5-sigma.
@@ -80,7 +78,7 @@ A **negative observation** indicates that an object was searched for but was *no
 
 ## JSON Examples
 
-### Square field (survey)
+### Exposed Square Field (survey)
 
 ```json
 {
@@ -97,8 +95,7 @@ A **negative observation** indicates that an object was searched for but was *no
 }
 ```
 
-### Circular field (survey)
-
+### Exposed Circular Field (survey)
 ```json
 {
   "action": "exposed",
@@ -112,9 +109,7 @@ A **negative observation** indicates that an object was searched for but was *no
   "filter": "zp1"
 }
 ```
-
-### Field defined by offsets
-
+### Exposed Field (Defined by Offsets)
 ```json
 {
   "action": "exposed",
@@ -173,10 +168,7 @@ A **negative observation** indicates that an object was searched for but was *no
 
 ---
 
-## Submission Examples
-
-### curl
-
+#### Command-line (using `curl`)
 ```bash
 URL='https://www.minorplanetcenter.net/cgi-bin/pointings/submit_negativeObs'
 
@@ -186,37 +178,7 @@ curl -X POST \
   $URL
 ```
 
-### Python
-
-```python
-import http.client
-import json
-
-observation = {
-    "action": "exposed",
-    "mode": "survey",
-    "mpcCode": "802",
-    "time": "2017-02-06T10:00:57.2",
-    "duration": 15.0,
-    "center": [140.1945, 20.3632],
-    "width": 2.4,
-    "limit": 20.5,
-    "surveyExpName": "A123xyz006"
-}
-
-conn = http.client.HTTPSConnection('www.minorplanetcenter.net')
-conn.request(
-    "POST",
-    "/cgi-bin/pointings/submit_negativeObs",
-    json.dumps(observation),
-    {'Content-type': 'application/json'}
-)
-
-response = conn.getresponse()
-print(response.status, response.reason, response.read())
-```
-
----
+### Test form
 
 ## Common mistakes
 
