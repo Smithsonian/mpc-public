@@ -234,6 +234,21 @@ strictly repeatable or can be non-deterministic from one run to the next, for wh
 By default, the pseudo random number generator is seeded randomly. 
 When the keyword `repeatable` is used, it is reseeded with a constant value for each tracklet, yielding repeatable scores.
 
+Each mode uses a different pseudo-random number generator:
+
+- `repeatable` uses the historical LCG (a = 13^13, m = 2^59).  Output is
+  bit-for-bit reproducible across digest2 versions, preserving the
+  reproducibility contract relied on by CI pipelines and cross-version
+  validation.
+- `random` uses xoshiro256++ (Blackman & Vigna, 2018).  It has a longer
+  period, better seed decorrelation, and supports `jump()` primitives that
+  give provably-disjoint substreams for parallel / HPC workloads.  Its
+  statistical properties are measurably better (passes BigCrush), though
+  digest2's scores are insensitive to that difference in practice.
+
+Users need not (and cannot) choose the PRNG directly: the `repeatable` vs.
+`random` decision selects it.  See `PRNG_TRADE_STUDY.md` for detail.
+
 Keyword `obserr` specifies the amount of observational error that the algorithm should allow for.  
 It is specified in arc seconds as in,
 
