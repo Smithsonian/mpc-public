@@ -44,6 +44,11 @@ Asteroid naming is handled by the IAU Working Group on Small Body Nomenclature (
 - [IAU Planetary System Nomenclature](https://www.iau.org/public/themes/naming/#satellites) (natural satellite naming)
 
 
+<div class="contents-grid"></div>
+
+- [IAU Comet-Naming Guidelines](comet-naming-guidelines.md)
+
+
 ## Other
 
 - [Discovery circumstances of numbered minor planets](https://minorplanetcenter.net/iau/lists/NumberedMPs.html)

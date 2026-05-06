@@ -83,7 +83,12 @@ def find_obscodes_path() -> str:
     if env_path and os.path.isfile(env_path):
         return env_path
 
-    # 2. Current working directory
+    # 2. Bundled/cached data directory in the package
+    pkg_data_path = Path(__file__).parent / "data" / "digest2.obscodes"
+    if pkg_data_path.is_file():
+        return str(pkg_data_path)
+
+    # 3. Current working directory
     for name in ["digest2.obscodes", "ObsCodes.html"]:
         cwd_path = Path.cwd() / name
         if cwd_path.is_file():
@@ -94,6 +99,39 @@ def find_obscodes_path() -> str:
         "environment variable or ensure digest2.obscodes or "
         "ObsCodes.html is in the current directory."
     )
+
+
+def ensure_obscodes() -> str:
+    """Locate the observatory codes file, downloading from MPC API if not found.
+
+    Extends find_obscodes_path() with a download fallback. The downloaded file
+    is saved to the package data/ directory and found by future find_obscodes_path()
+    calls without re-downloading.
+
+    Returns:
+        Path to the observatory codes file.
+
+    Raises:
+        OSError: If the file cannot be downloaded or written.
+    """
+    try:
+        return find_obscodes_path()
+    except FileNotFoundError:
+        import json
+        import urllib.request
+
+        dest = Path(__file__).parent / "data" / "digest2.obscodes"
+        dest.parent.mkdir(exist_ok=True)
+        data = json.dumps({"format": "ObsCodes.html"}).encode()
+        req = urllib.request.Request(
+            "https://data.minorplanetcenter.net/api/obscodes",
+            data=data,
+            headers={"Content-Type": "application/json"},
+            method="GET",
+        )
+        with urllib.request.urlopen(req) as resp:
+            dest.write_text(resp.read().decode())
+        return str(dest)
 
 
 def find_config_path() -> str | None:

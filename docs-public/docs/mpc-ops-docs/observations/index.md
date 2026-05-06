@@ -1,6 +1,6 @@
 # Observations
 
-Documentation related to making, formatting, and submitting astrometric observations to the MPC.
+Technical reference for observation formats, metadata encoding, and submission procedures. For a workflow-oriented guide to getting started with astrometry, see the [Guide to Minor Body Astrometry](../astrometry/index.md).
 
 
 ## Getting Started
@@ -8,7 +8,7 @@ Documentation related to making, formatting, and submitting astrometric observat
 <div class="contents-grid"></div>
 
 - [Guide to Minor Body Astrometry](../astrometry/index.md)
-- [How do I get an observatory code?](../astrometry/observatory-codes.md#how-do-i-get-an-observatory-code)
+- [How do I get an observatory code?](../observatory-and-program-codes/observatory-codes.md#how-do-i-get-an-observatory-code)
 - [How to submit astrometry using Tycho Tracker](tycho-tracker.md)
 
 
@@ -16,11 +16,10 @@ Documentation related to making, formatting, and submitting astrometric observat
 
 The ADES format is the current standard for submitting observations to the MPC.
 
-- [Valid ADES values](https://minorplanetcenter.net/mpcops/documentation/valid-ades-values)
-
 <div class="contents-grid"></div>
 
 - [ADES Data Submission](ades-format.md)
+- [Valid ADES Field Values](valid-ades-values.md)
 - [ADES GitHub repository](https://github.com/IAU-ADES/ADES-Master/)
 - [Official ADES format description (PDF)](https://github.com/IAU-ADES/ADES-Master/blob/master/ADES_Description.pdf)
 
@@ -52,4 +51,6 @@ The ADES format is the current standard for submitting observations to the MPC.
 
 ## Negative Observations
 
-- [Protocol for Negative Observations for Virtual Impactors](https://minorplanetcenter.net/mpcops/documentation/negative-observations/)
+<div class="contents-grid"></div>
+
+- [Protocol for Negative Observations for Virtual Impactors](negative-observations.md)

@@ -10,21 +10,27 @@ and [*IAU Circulars*](https://minorplanetcenter.net/iau/services/IAUC.html).
 
 ## Observation Types
 
-Three primary observation formats are documented:
-
-- [Optical](#optical-observations) (photographic, CCD or visual)
-    - ["Roving Observer" format](roving-observers.md)
 - [Satellite-based](https://minorplanetcenter.net/iau/info/SatelliteObs.html)
 - [Radar](https://minorplanetcenter.net/iau/info/RadarObs.html)
 
+<div class="contents-grid"></div>
+
+ - [Optical (photographic, CCD or visual)](#optical-observations) 
+ - [Optical ("Roving Observer" format)](roving-observers.md)
+
 ### Related Links
 
-- [References](https://minorplanetcenter.net/iau/info/References.html)
-- [Packed provisional designations](../designations/packed-designations.md)
-    - [Packed designations for comets discovered/recovered in the past year](https://minorplanetcenter.net/iau/lists/LastYear.html)
-- [Alphabetic notes for observations](https://minorplanetcenter.net/iau/info/ObsNote.html)
+
+- [Packed designations for comets discovered/recovered in the past year](https://minorplanetcenter.net/iau/lists/LastYear.html)
 - [Observatory codes](https://minorplanetcenter.net/iau/lists/ObsCodesF.html)
-- You should also ensure that you have read the [Guide to Minor-Body Astrometry](../astrometry/index.md)
+
+<div class="contents-grid"></div>
+
+- [References](reference-codes.md)
+- [Packed provisional designations](../designations/packed-designations.md)
+- [Alphabetic notes for observations](observation-notes.md)
+- [Guide to Minor-Body Astrometry](../astrometry/index.md)
+
 
 Observations formatted according to the schemes detailed above must
 be sent via e-mail to [`obs@cfa.harvard.edu`](mailto:obs@cfa.harvard.edu).
@@ -323,4 +329,4 @@ Observatory codes are stored in columns 78-80.
 Lists of [observatory codes](https://data.minorplanetcenter.net/explorer/?tab=Lists&list=Observatory+Codes) are
 published from time to time in the [*MPCs*](https://minorplanetcenter.net/iau/services/MPCServices.html).
 Note that new observatory codes are assigned only upon receipt of
-acceptable astrometric observations per the [MPC's requirements](../observatory-and-program-codes/observatory-codes-docs.md).
+acceptable astrometric observations per the [MPC's requirements](../observatory-and-program-codes/observatory-codes.md).

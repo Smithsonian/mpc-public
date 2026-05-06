@@ -54,6 +54,7 @@ The ele220 format is an old 220-character string that was created for internal u
 
 ## Related
 
+<div class="contents-grid"></div>
+
 - [Indication of perturbing bodies](perturbers.md)
-- [Export orbit formats (overview)](orbit-format-overview.md)
 - [MPC_ORB JSON format](mpc-orb-json.md)

@@ -3,10 +3,10 @@
 Observers submitting observations by electronic means (generally e-mail) are required to
 include observer, measurer and telescope details in every submission.
 
-!!! warning
-   Observation batches that do not include an observational header will not
-   be recognized as containing observations by the automated processes and
-   will be ignored.
+!!! note
+    Observation batches that do not include an observational header will not
+    be recognized as containing observations by the automated processes and
+    will be ignored.
 
 The observational details are to be contained in a series of header lines,
 beginning with certain keywords specified below and placed before any
@@ -75,7 +75,7 @@ observations.
 - Hyphenated first names should be abbreviated with the hyphen: e.g.,
   'Jean-Francois Hulot' would be 'J.-F. Hulot'.
 - Names that contain characters with diacritical marks (e.g., accents or cedillas such as `à`, `ç`, or `ü`)
-  may be specified using [standard TeX notation](https://www.minorplanetcenter.net/iau/info/NonEnglish.html) -- alternatively, an
+  may be specified using [standard TeX notation](../data-and-services/non-english-characters.md) -- alternatively, an
   explanation of any special characters required must be included above
   the header.
 - When there are multiple versions of the `NET` catalogue, be sure to include
