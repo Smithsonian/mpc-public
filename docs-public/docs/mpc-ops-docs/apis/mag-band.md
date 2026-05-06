@@ -67,3 +67,8 @@ print(json.dumps(response.json(), indent=4))
     ]
 }
 ```
+
+## See Also
+
+- [Magnitude Band API Tutorial](../../../tutorials/notebooks/mpc_tutorial_api_mag_band/)
+
