@@ -72,13 +72,26 @@ The `like` parameter accepts PostgreSQL [LIKE patterns][PSQLLIKE] for filtering 
 | `items` | List of objects matching the query |
 | `request` | Echo of query parameters |
 
-Each item contains:
+Each item contains a subset of the following fields.
+The exact fields returned depend on the list queried.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `name` | String/Null | Object name (if assigned) |
-| `permid` | String/Null | Permanent ID (if numbered) |
+| `citation` | String / Null | Information about the object name |
+| `group` | String | Object type |
+| `impact_date` | Float | Time of impact |
+| `impact_lat` | Float | Latitude of impact site |
+| `impact_lon` | Float | Longitude of impact site |
+| `name` | String / Null | Object name (if assigned) |
+| `orbital_parameters` | Dict[string, Union[string, float, int]] / Null | orbit elements |
+| `permid` | String / Null | Permanent ID (if numbered) |
+| `permid_comet` | String / Null | Comet permanent ID (if numbered) |
+| `publication_references` | List[string] | Publication information for retired designation |
+| `published` | Boolean / Null | True if published |
+| `reason` | String / Null | Reason for retiring designation |
+| `reference` | String / Null | publication info |
 | `unpacked_primary_provisional_designation` | String | Primary provisional designation |
+| `unpacked_primary_provisional_designation_comet` | String | Comet primary provisional designation |
 
 ## Examples
 

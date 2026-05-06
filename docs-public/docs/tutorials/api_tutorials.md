@@ -15,4 +15,5 @@ Tutorials on how to use various of the MPC's APIs are linked below.
  - [MPECs API](notebooks/mpc_tutorial_api_mpecs.ipynb)
  - [Action Codes API](notebooks/mpc_tutorial_api_action_codes.ipynb)
  - [WAMO API](notebooks/mpc_tutorial_api_wamo.ipynb)
+ - [List API](notebooks/mpc_tutorial_api_lists.ipynb)
  - [Magnitude Band API](notebooks/mpc_tutorial_api_mag_band.ipynb)
