@@ -170,4 +170,7 @@ second_page = response.json()['items']
 
 ## See Also
 
+<div class="contents-grid"></div>
+
+- [List API Tutorial](../../../tutorials/notebooks/mpc_tutorial_api_lists/)
 - [PostgreSQL Pattern Matching](https://www.postgresql.org/docs/current/functions-matching.html)
