@@ -31,8 +31,8 @@ There are over 2,500 observatories registered with the MPC. Each is assigned a u
 | `name_utf8` | String         | Observatory name (Unicode)                                                                                             |
 | `name_latex` | String         | Observatory name (LaTeX)                                                                                               |
 | `short_name` | String         | Abbreviated name (ASCII)                                                                                               |
-| `firstdate` | String or Null | First observing date or commissioning (YYYYMMDD)                                                                       |
-| `lastdate` | String or Null | Last observing date or decommissioning (YYYYMMDD)                                                                      |
+| `firstdate` | String or Null | First observing date or commissioning (YYYY-MM-DD)                                                                       |
+| `lastdate` | String or Null | Last observing date or decommissioning (YYYY-MM-DD)                                                                      |
 | `web_link` | String or Null | Observatory website URL                                                                                                |
 | `created_at` | String         | Timestamp at which the observatory code was created in the MPC database.                                               |
 | `updated_at` | String         | Timestamp at which the observatory code was created in the MPC database.                                               |
@@ -73,7 +73,7 @@ for key, value in response.json().items():
 
 ```
 created_at                 : Mon, 18 Nov 2019 23:52:11 GMT
-firstdate                  : None
+firstdate                  : 1978-06-30
 lastdate                   : None
 longitude                  : 288.87164
 name                       : Minor Planet Center Test Code
