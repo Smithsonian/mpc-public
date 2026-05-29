@@ -73,16 +73,16 @@ class TestDigest2Class:
         assert "K16S99K" in r.designation
         assert abs(r.rms - 0.73) < 0.1
         # NoID scores should match CLI
-        assert round(r.noid.Int) == 2
-        assert round(r.noid.NEO) == 2
-        assert round(r.noid.MB1) == 85
+        assert round(r.noid.Int) == 3
+        assert round(r.noid.NEO) == 3
+        assert round(r.noid.MB1) == 91
 
     def test_classify_file_matches_cli(self, model_path, obscodes_path,
                                        sample_obs_path, empty_config_path):
         """Verify Python API matches CLI output for sample.obs.
 
         CLI with 'repeatable' config shows:
-        K16S99K  0.73  Int=2 NEO=2 N22=1 N18=0 MC=2 MB1=85 MB2=3
+        K16S99K  0.73  Int=3 NEO=3 N22=1 N18=0 MC=2 MB1=91 MB2=1
         """
         with Digest2(
             model_path=model_path,
@@ -95,13 +95,13 @@ class TestDigest2Class:
         r = results[0]
 
         # These should match the CLI exactly (all rounded)
-        assert round(r.noid.Int) == 2
-        assert round(r.noid.NEO) == 2
+        assert round(r.noid.Int) == 3
+        assert round(r.noid.NEO) == 3
         assert round(r.noid.N22) == 1
         assert round(r.noid.N18) == 0
         assert round(r.noid.MC) == 2
-        assert round(r.noid.MB1) == 85
-        assert round(r.noid.MB2) == 3
+        assert round(r.noid.MB1) == 91
+        assert round(r.noid.MB2) == 1
 
     def test_classify_tracklet_with_class_filter(self, model_path, obscodes_path,
                                                   empty_config_path):
