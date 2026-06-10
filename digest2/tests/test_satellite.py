@@ -377,19 +377,20 @@ class TestSatelliteScoring:
                                      obscodes_path, cli_config_path):
         """Pin the satellite tracklet scores (repeatable mode).
 
-        Reference values from the C CLI, which reads pos1/pos2/pos3:
-            ST001aa  0.00  NEO 26 77  MB1 44 27
-        The geocentric (bugged) scores were NEO 35 78, MB1 39 19.
+        Reference values from the C CLI (population model of 2026-06),
+        which reads pos1/pos2/pos3:
+            ST001aa  0.00  NEO 28 78  MB1 43 29
+        The geocentric (bugged) scores were NEO 36 79, MB1 37 18.
         """
         path = _write_sat_xml(tmp_path / "sat.xml")
         with Digest2(model_path=model_path, obscodes_path=obscodes_path,
                      config_path=cli_config_path, repeatable=True) as d2:
             r = d2.classify_file(path, classes=["NEO", "MB1"])[0]
 
-        assert round(r.raw.NEO) == 26
-        assert round(r.noid.NEO) == 77
-        assert round(r.raw.MB1) == 44
-        assert round(r.noid.MB1) == 27
+        assert round(r.raw.NEO) == 28
+        assert round(r.noid.NEO) == 78
+        assert round(r.raw.MB1) == 43
+        assert round(r.noid.MB1) == 29
 
 
 # ---------------------------------------------------------------------------
