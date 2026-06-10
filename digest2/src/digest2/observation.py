@@ -20,7 +20,9 @@ class Observation:
         rms_ra: RA uncertainty in arcseconds (0 = use default).
         rms_dec: Dec uncertainty in arcseconds (0 = use default).
         spacebased: Whether this is a space-based observation.
-        earth_obs: Earth-observer vector for space-based obs [x, y, z].
+        earth_obs: Geocentric equatorial observer position [x, y, z] in AU,
+            used instead of the observatory parallax constants when
+            spacebased is True.
     """
 
     mjd: float
@@ -51,7 +53,8 @@ class Observation:
             site_index: Integer site index from parse_obscode().
 
         Returns:
-            Tuple of (mjd, ra_rad, dec_rad, vmag, site_int, rmsRA, rmsDec, spacebased).
+            Tuple of (mjd, ra_rad, dec_rad, vmag, site_int, rmsRA, rmsDec,
+            spacebased, earth_obs_x, earth_obs_y, earth_obs_z).
         """
         return (
             self.mjd,
@@ -62,6 +65,9 @@ class Observation:
             self.rms_ra,
             self.rms_dec,
             1 if self.spacebased else 0,
+            self.earth_obs[0],
+            self.earth_obs[1],
+            self.earth_obs[2],
         )
 
 
@@ -99,6 +105,71 @@ def _update_magnitude(band: str, mag: float) -> float:
         correction = _BAND_CORRECTIONS.get(band, -0.8)
         mag += correction
     return mag
+
+
+# km -> AU scale factor, computed as in d2ades.c / d2mpc.c (sf = 1 / 1 AU in km)
+# so that converted positions are bit-identical to the C parsers.
+_KM_TO_AU = 1 / 149.59787e6
+
+
+def _roving_position(x: float, y: float, altitude: float) -> List[float]:
+    """Convert a roving-observer position to a geocentric vector.
+
+    Exact reimplementation of roving_position() in d2math.c, kept
+    bit-compatible so the Python wrapper scores identically to the C CLI.
+    """
+    a = 6378137.0
+    b = 6356752.314245
+    numerator = (a * a * math.cos(y)) ** 2 + (b * b * math.sin(y)) ** 2
+    denominator = (a * math.cos(y)) ** 2 + (b * math.sin(y)) ** 2
+    r = math.sqrt(numerator / denominator) + altitude
+    return [
+        r * math.cos(x) * math.cos(y),
+        r * math.cos(x) * math.sin(y),
+        r * math.sin(x),
+    ]
+
+
+def _observer_position(sys: Optional[str], pos1: Optional[str],
+                       pos2: Optional[str], pos3: Optional[str]):
+    """Derive (spacebased, earth_obs) from ADES sys/pos1/pos2/pos3 fields.
+
+    Mirrors the satellite/roving handling in d2ades.c (processOptical):
+
+    - All four fields must be present, otherwise the observation is
+      treated as ground-based.
+    - ``sys`` containing ``_KM`` (e.g. ICRF_KM): positions are km,
+      converted to AU.
+    - ``sys`` containing ``WGS84`` (roving observer): positions are
+      converted via _roving_position() then scaled like km.
+    - Any other ``sys`` (e.g. ICRF_AU): positions are used as-is (AU).
+
+    Returns:
+        (spacebased, earth_obs) tuple; (False, [0, 0, 0]) if the fields
+        are absent or unparseable.
+    """
+    if not (sys and pos1 and pos2 and pos3):
+        return False, [0.0, 0.0, 0.0]
+
+    try:
+        x = float(pos1)
+        y = float(pos2)
+        z = float(pos3)
+    except ValueError:
+        return False, [0.0, 0.0, 0.0]
+
+    is_satellite = "_KM" in sys
+    is_roving = "WGS84" in sys
+
+    if is_roving:
+        x, y, z = _roving_position(x, y, z)
+
+    if is_satellite or is_roving:
+        x *= _KM_TO_AU
+        y *= _KM_TO_AU
+        z *= _KM_TO_AU
+
+    return True, [x, y, z]
 
 
 def _date_to_mjd(year: int, month: int, day: float) -> float:
@@ -200,10 +271,68 @@ def parse_mpc80(line: str) -> Optional[Observation]:
     )
 
 
+def _c_strtod(s: str) -> float:
+    """Parse a float like mustStrtod in d2mpc.c.
+
+    An optional leading sign may be separated from the digits by
+    whitespace (e.g. ``"- 3471.6659"``), as found in some MPC 80-column
+    satellite position lines.
+    """
+    neg = s.startswith("-")
+    if neg or s.startswith("+"):
+        s = s[1:]
+    value = float(s)
+    return -value if neg else value
+
+
+def _apply_mpc80_second_line(line: str, obs: Observation) -> bool:
+    """Apply an 80-column second line to the preceding observation.
+
+    Satellite observations (note2 'S') and roving observations (note2 'V')
+    are followed by a second line (note2 's' / 'v') carrying the observer
+    position in columns 35-69.  This mirrors parseMpcSat / parseMpcRoving
+    in d2mpc.c: the position is attached to the preceding observation as a
+    geocentric vector in AU and the observation is marked space-based.
+
+    Returns:
+        True if the position was applied, False if the line was rejected.
+    """
+    note2 = line[14]
+    try:
+        x = _c_strtod(line[34:45])
+        y = _c_strtod(line[46:57])
+        z = _c_strtod(line[58:69])
+    except ValueError:
+        return False
+
+    if note2 == "s":
+        # parseMpcSat: obscode must match the observation being amended;
+        # column 33 flags the units ('1' = km, '2' = AU).
+        if line[77:80] != obs.obscode:
+            return False
+        if line[32] == "1":
+            x *= _KM_TO_AU
+            y *= _KM_TO_AU
+            z *= _KM_TO_AU
+    elif note2 == "v":
+        x, y, z = _roving_position(x, y, z)
+        x *= _KM_TO_AU
+        y *= _KM_TO_AU
+        z *= _KM_TO_AU
+    else:
+        return False
+
+    obs.earth_obs = [x, y, z]
+    obs.spacebased = True
+    return True
+
+
 def parse_mpc80_file(filepath: str) -> Dict[str, List[Observation]]:
     """Parse an MPC 80-column format observation file.
 
     Groups observations by designation (first 12 characters of each line).
+    Satellite/roving second lines (note2 's' / 'v') are applied to the
+    preceding observation of the same designation.
 
     Args:
         filepath: Path to the observation file.
@@ -217,6 +346,12 @@ def parse_mpc80_file(filepath: str) -> Dict[str, List[Observation]]:
         for raw_line in f:
             line = raw_line.rstrip("\n")
             if len(line) < 80:
+                continue
+
+            if line[14] in ("s", "v"):
+                obs_list = tracklets.get(line[0:12])
+                if obs_list:
+                    _apply_mpc80_second_line(line, obs_list[-1])
                 continue
 
             obs = parse_mpc80(line)
@@ -331,6 +466,14 @@ def _parse_ades_optical(optical, ns: str) -> Optional[Observation]:
         if rmsDec_el is not None and rmsDec_el.text:
             rms_dec = float(rmsDec_el.text.strip())
 
+        # Satellite / roving observer position (sys + pos1/pos2/pos3)
+        def _text(tag):
+            el = optical.find(f"{ns}{tag}")
+            return el.text.strip() if el is not None and el.text else None
+
+        spacebased, earth_obs = _observer_position(
+            _text("sys"), _text("pos1"), _text("pos2"), _text("pos3"))
+
         return Observation(
             mjd=mjd,
             ra=ra_deg,
@@ -340,6 +483,8 @@ def _parse_ades_optical(optical, ns: str) -> Optional[Observation]:
             obscode=obscode,
             rms_ra=rms_ra,
             rms_dec=rms_dec,
+            spacebased=spacebased,
+            earth_obs=earth_obs,
         )
 
     except (ValueError, AttributeError):
@@ -367,6 +512,13 @@ def _parse_ades_psv_row(row: Dict[str, str]) -> Optional[Observation]:
 
         vmag = _update_magnitude(band, mag)
 
+        def _field(key):
+            val = row.get(key, "").strip()
+            return val if val and val != "None" else None
+
+        spacebased, earth_obs = _observer_position(
+            _field("sys"), _field("pos1"), _field("pos2"), _field("pos3"))
+
         return Observation(
             mjd=mjd,
             ra=ra_deg,
@@ -376,6 +528,8 @@ def _parse_ades_psv_row(row: Dict[str, str]) -> Optional[Observation]:
             obscode=obscode,
             rms_ra=rms_ra,
             rms_dec=rms_dec,
+            spacebased=spacebased,
+            earth_obs=earth_obs,
         )
     except (ValueError, KeyError):
         return None

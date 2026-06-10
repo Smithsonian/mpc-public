@@ -72,6 +72,7 @@ static d2_observation *parse_obs_list(PyObject *obs_list, Py_ssize_t n_obs) {
         if (PyTuple_Check(item)) {
             // Tuple format: (mjd, ra_rad, dec_rad, vmag, site_int, rmsRA, rmsDec)
             // Optional 8th element: spacebased (int)
+            // Optional 9th-11th elements: earth_obs x, y, z (AU, geocentric)
             Py_ssize_t tlen = PyTuple_Size(item);
             if (tlen < 5) {
                 free(obs);
@@ -91,8 +92,14 @@ static d2_observation *parse_obs_list(PyObject *obs_list, Py_ssize_t n_obs) {
                 obs[i].rmsDec = PyFloat_AsDouble(PyTuple_GetItem(item, 6));
             if (tlen > 7)
                 obs[i].spacebased = (int)PyLong_AsLong(PyTuple_GetItem(item, 7));
+            if (tlen > 10) {
+                obs[i].earth_obs[0] = PyFloat_AsDouble(PyTuple_GetItem(item, 8));
+                obs[i].earth_obs[1] = PyFloat_AsDouble(PyTuple_GetItem(item, 9));
+                obs[i].earth_obs[2] = PyFloat_AsDouble(PyTuple_GetItem(item, 10));
+            }
         } else {
-            // Dict format with keys: mjd, ra, dec, vmag, site, rmsRA, rmsDec, spacebased
+            // Dict format with keys: mjd, ra, dec, vmag, site, rmsRA, rmsDec,
+            // spacebased, earth_obs
             PyObject *val;
             val = PyDict_GetItemString(item, "mjd");
             if (!val) { free(obs); PyErr_SetString(PyExc_KeyError, "mjd"); return NULL; }
@@ -121,6 +128,23 @@ static d2_observation *parse_obs_list(PyObject *obs_list, Py_ssize_t n_obs) {
 
             val = PyDict_GetItemString(item, "spacebased");
             obs[i].spacebased = val ? (int)PyLong_AsLong(val) : 0;
+
+            // Optional "earth_obs": sequence of 3 floats (AU, geocentric)
+            val = PyDict_GetItemString(item, "earth_obs");
+            if (val) {
+                if (!PySequence_Check(val) || PySequence_Size(val) != 3) {
+                    free(obs);
+                    PyErr_SetString(PyExc_ValueError,
+                        "earth_obs must be a sequence of 3 floats");
+                    return NULL;
+                }
+                for (int k = 0; k < 3; k++) {
+                    PyObject *comp = PySequence_GetItem(val, k);
+                    if (!comp) { free(obs); return NULL; }
+                    obs[i].earth_obs[k] = PyFloat_AsDouble(comp);
+                    Py_DECREF(comp);
+                }
+            }
         }
 
         if (PyErr_Occurred()) {
@@ -486,7 +510,8 @@ static PyMethodDef methods[] = {
     METH_VARARGS,
      "score(observations, classes=None, is_ades=0) -> dict\n"
      "Score a tracklet. observations is a list of tuples or dicts.\n"
-     "Tuple format: (mjd, ra_rad, dec_rad, vmag, site_int[, rmsRA, rmsDec, spacebased])\n"
+     "Tuple format: (mjd, ra_rad, dec_rad, vmag, site_int[, rmsRA, rmsDec,\n"
+     "spacebased, earth_obs_x, earth_obs_y, earth_obs_z])\n"
      "Returns dict with 'raw_scores', 'noid_scores', 'rms', 'rms_prime'."},
     {"score_orbits",
     py_score_orbits,
