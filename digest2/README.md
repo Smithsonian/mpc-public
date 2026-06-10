@@ -58,6 +58,15 @@ These are a great starting point for new users.
 
 All classification methods accept `collect_orbits=True` to return individual trial orbit elements alongside scores (see Trial Orbit Collection below).
 
+**Satellite and roving observers** are supported in all input formats, matching the C CLI:
+ADES `sys`/`pos1`/`pos2`/`pos3` fields (`ICRF_KM` positions are converted from km to AU;
+`ICRF_AU` used as-is; `WGS84` roving positions converted to a geocentric vector) and
+MPC 80-column second lines (note2 `s`/`v`) are parsed into `Observation.spacebased` and
+`Observation.earth_obs` (geocentric equatorial vector in AU) and passed through to the
+scoring engine. Observations without position data fall back to the observatory's
+parallax constants; space telescopes with blank parallax entries in the obscodes file
+are scored from the geocenter.
+
 ### Development Setup
 
 ```bash
