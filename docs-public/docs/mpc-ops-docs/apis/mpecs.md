@@ -175,6 +175,8 @@ curl -X GET -H "Accept: application/json" \
 
 ## See Also
 
+<div class="contents-grid"></div>
+
 - [MPEC API Tutorial](../../../tutorials/notebooks/mpc_tutorial_api_mpecs/)
 - [MPEC Search Tool](https://minorplanetcenter.net/mpcops/mpecs/)
 - [Recent MPECs](https://minorplanetcenter.net/mpec/RecentMPECs.html)

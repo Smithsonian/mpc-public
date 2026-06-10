@@ -105,5 +105,7 @@ for event in result["fault_events"]:
 
 ## See Also
 
-- [Observation Submission API](../observations/command-line-submissions.md) - How to submit observations via cURL and other tools.
+<div class="contents-grid"></div>
+
+- [Observation Submission API](../observations/command-line-submissions.md)
 - [Submission Tutorials](../../tutorials/submission_tutorials.md)

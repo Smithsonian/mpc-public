@@ -5,7 +5,7 @@ This guide covers observing minor planets, comets and natural satellites, and re
 <div class="contents-grid"></div>
 
 - [Getting Started](getting-started.md)
-- [Observatory Codes](observatory-codes.md)
+- [Observatory Codes](../observatory-and-program-codes/observatory-codes.md)
 - [Reporting Observations](reporting-observations.md)
 - [Discoveries, Credit and Naming](discoveries-and-credit.md)
 - [MPC Processing](mpc-processing.md)
@@ -25,9 +25,12 @@ This guide covers observing minor planets, comets and natural satellites, and re
 
 - [ADES PSV Submission Form](https://minorplanetcenter.net/submit_psv)
 - [ADES XML Submission Form](https://minorplanetcenter.net/submit_xml)
-- [cURL submission instructions](../observations/command-line-submissions.md)
 - E-mail submissions (MPC1992 only): [obs@cfa.harvard.edu](mailto:obs@cfa.harvard.edu)
 - [Report Cometary Activity](https://minorplanetcenter.net/mpcops/submissions/cometary/)
+
+<div class="contents-grid"></div>
+
+- [cURL submission instructions](../observations/command-line-submissions.md)
 - [How to submit astrometry using Tycho Tracker](../observations/tycho-tracker.md)
 
 ### Submission Tutorials
@@ -40,16 +43,17 @@ This guide covers observing minor planets, comets and natural satellites, and re
 
 ## Observation Formats
 
-- [ADES Data Submission page](https://www.minorplanetcenter.net/mpcops/documentation/ades/)
-- [ADES format description (PDF)](https://github.com/IAU-ADES/ADES-Master/blob/master/ADES_Description.pdf)
-- [MPC1992 observation format](../observations/mpc1992-format.md)
-- [Indication of observational details (headers)](../observations/observational-details.md)
-- [Packed designation format](../designations/packed-designations.md)
+For detailed format specifications, see [Observations](../observations/index.md).
 
 
 ## Checking and Verification
 
+<div class="contents-grid"></div>
+
 - [Where Are My Observations (WAMO)](../../services/index.md#wamo)
+
+Other:
+
 - [MPChecker](https://minorplanetcenter.net/cgi-bin/checkmp.cgi)
 
 

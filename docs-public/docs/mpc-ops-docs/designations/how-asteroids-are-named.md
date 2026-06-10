@@ -23,7 +23,7 @@ understand some basic astronomical concepts in order to fully appreciate it.
    [provisional designation](provisional-designations.md) is assigned to the object.
    More information on how and when we remove objects from the NEO Confirmation Page can
    be found on the
-   [Notes about the NEO Confirmation Page](https://minorplanetcenter.net/iau/NEO/NEOCPNotes.html).
+   [Notes about the NEO Confirmation Page](../data-and-services/neocp-notes.md).
 
     - It is also possible to search for identifications with known objects. If an
       identification is made, one of the provisional designations is chosen by the

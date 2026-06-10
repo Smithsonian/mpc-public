@@ -116,7 +116,7 @@ int main()
   //binS3m("S1_11.s3m", 1);
   // binS3m("S1_12.s3m", 1);
   //binS3m("S1_13.s3m", 1);
-  binS3m("S2_new.s3m", 1);
+  binS3m("S4_new.s3m", 1);
   printf("%d orbits\n", nOrbits);
   printf("%d in model\n", nAll);
 

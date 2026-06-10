@@ -56,7 +56,7 @@ in the case of any problems.
 
 ### Enumerated Field Values
 
-A number of ADES fields are specified with lists of [allowable values](https://www.minorplanetcenter.net/iau/info/ADESFieldValues.html).
+A number of ADES fields are specified with lists of [allowable values](valid-ades-values.md).
 
 ### Other Restrictions
 

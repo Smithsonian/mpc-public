@@ -155,7 +155,6 @@ The following documentation pages have been migrated from MPC legacy pages into 
 - `orbits/minor-planet-orbit-format.md` - From `/iau/info/MPOrbitFormat.html`
 - `orbits/comet-orbit-format.md` - From `/iau/info/CometOrbitFormat.html`
 - `orbits/satellite-orbit-format.md` - From `/iau/info/SatOrbitFormat.html`
-- `orbits/orbit-format-overview.md` - From `/iau/info/OrbFormat.html`
 - `orbits/orbit-notes.md` - From `/iau/info/OrbNote.html`
 - `orbits/uncertainty-parameter.md` - From `/iau/info/UValue.html`
 - `orbits/orbit-types.md` - From `/mpcops/documentation/orbit-types/`
@@ -174,6 +173,20 @@ The following documentation pages have been migrated from MPC legacy pages into 
 **data-and-services/**:
 
 - `data-and-services/non-english-characters.md` - From `/iau/info/NonEnglish.html`
+- ~~`data-and-services/submission-info.md`~~ - Removed; TechInfo.html content covered by `astrometry/index.md#submission-methods` and `data-and-services/lists.md`
+- `data-and-services/neocp-notes.md` - From `/iau/NEO/NEOCPNotes.html`
+
+**observations/** (additional):
+
+- `observations/negative-observations.md` - From `/mpcops/documentation/negative-observations/`
+
+**designations/** (additional):
+
+- `designations/comet-naming-guidelines.md` - From `/iau/info/CometNamingGuidelines.html`
+
+**data-and-services/** (additional):
+
+- `data-and-services/lists.md` - Combined from `/iau/lists/Lists.html`, `/iau/lists/MPLists.html`, `/iau/lists/CometLists.html`
 
 ### Migration Conventions
 

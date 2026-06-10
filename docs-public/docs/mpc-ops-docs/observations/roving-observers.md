@@ -5,7 +5,7 @@ the fact that there may be circumstances under which a telescope is
 transported to a temporary site for some reason for the purpose of performing
 minor-body astrometry and recognizing that assigning this one-time site an
 observing code would not be worthwhile, the MPC observation format has been
-extended to allow observations made at such sites to be published. Please do not submit your astrometry as a roving observer from a permanent location/telescope -- instead apply for an [observatory code](../astrometry/observatory-codes.md#how-do-i-get-an-observatory-code)
+extended to allow observations made at such sites to be published. Please do not submit your astrometry as a roving observer from a permanent location/telescope -- instead apply for an [observatory code](../observatory-and-program-codes/observatory-codes.md#how-do-i-get-an-observatory-code)
 if you intend a regular use of the site/telescope for submission of your astrometry.
 
 All "roving observer" observations are represented by a single observatory
