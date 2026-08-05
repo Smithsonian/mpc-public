@@ -268,6 +268,12 @@ Notes:
 1. **MPC 80-column** (`.obs`): Fixed-width format with packed designation, date, RA/Dec, magnitude, observatory code
 2. **ADES XML** (`.xml`): Rich format with per-observation uncertainties (rmsRA, rmsDec), roving/satellite observer support
 
+The Python `parse_mpc80()` additionally accepts **160-column database
+records** (an observation line and its satellite/roving second line
+concatenated, as stored in the MPC `obs` table's `obs80` column): the second
+segment's observer position is applied automatically, so per-record database
+consumers score space-based observations correctly.
+
 ### Config File Keywords
 
 | Keyword | Description |

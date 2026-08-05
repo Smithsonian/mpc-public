@@ -207,10 +207,25 @@ def _date_to_mjd(year: int, month: int, day: float) -> float:
 
 
 def parse_mpc80(line: str) -> Optional[Observation]:
-    """Parse an MPC 80-column format observation line.
+    """Parse an MPC 80-column format observation line or 160-column record.
+
+    Satellite / roving observations are stored in the MPC ``obs`` database
+    table as a single 160-column ``obs80`` value: the observation line and
+    its 's'/'v' second line (observer position) concatenated. When such a
+    record is supplied, the second segment's observer position is applied
+    and the observation is marked space-based — so database consumers (e.g.
+    the digest2-service ``/digest2_trkid`` path) score space-based
+    observations correctly instead of silently treating them as geocentric.
+
+    A record whose second segment is present but malformed (bad position
+    fields, obscode mismatch) returns None rather than degrading to a
+    geocentric observer. Trailing content after column 80 that is not an
+    's'/'v' second segment (e.g. whitespace padding) is ignored, matching
+    the previous behaviour for over-long lines.
 
     Args:
-        line: An 80-column MPC format observation line.
+        line: An 80-column MPC observation line, or a 160-column
+            first-line + second-line database record.
 
     Returns:
         Observation object, or None if the line cannot be parsed.
@@ -261,7 +276,7 @@ def parse_mpc80(line: str) -> Optional[Observation]:
 
     vmag = _update_magnitude(band, mag)
 
-    return Observation(
+    obs = Observation(
         mjd=mjd,
         ra=ra_deg,
         dec=dec_deg,
@@ -269,6 +284,15 @@ def parse_mpc80(line: str) -> Optional[Observation]:
         band=band,
         obscode=obscode,
     )
+
+    # 160-column database record: second segment note2 at column 95
+    # (index 80 + 14). Apply the observer position; reject the whole
+    # record if the second segment cannot be applied.
+    if len(line) >= 95 and line[94] in ("s", "v"):
+        if not _apply_mpc80_second_line(line[80:160].ljust(80), obs):
+            return None
+
+    return obs
 
 
 def _c_strtod(s: str) -> float:
