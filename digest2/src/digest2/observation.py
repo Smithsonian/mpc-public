@@ -209,13 +209,21 @@ def _date_to_mjd(year: int, month: int, day: float) -> float:
 def parse_mpc80(line: str) -> Optional[Observation]:
     """Parse an MPC 80-column format observation line or 160-column record.
 
-    Satellite / roving observations are stored in the MPC ``obs`` database
-    table as a single 160-column ``obs80`` value: the observation line and
-    its 's'/'v' second line (observer position) concatenated. When such a
-    record is supplied, the second segment's observer position is applied
-    and the observation is marked space-based — so database consumers (e.g.
-    the digest2-service ``/digest2_trkid`` path) score space-based
-    observations correctly instead of silently treating them as geocentric.
+    The **standard** MPC form for satellite / roving observations is two
+    *sequential* 80-column lines — the observation line followed by a
+    separate 's'/'v' second line carrying the observer position — and that
+    form is already fully handled by :func:`parse_mpc80_file`, which pairs
+    consecutive lines. Nothing about that changes, and callers are NOT
+    required to use anything else.
+
+    Purely as a **convenience**, this function additionally accepts the two
+    lines concatenated into a single 160-column record — a form that
+    happens to be used by the MPC's database, which stores both lines in
+    one ``obs80`` value. When such a record is supplied, the second
+    segment's observer position is applied and the observation is marked
+    space-based, so per-record consumers (e.g. the digest2-service
+    ``/digest2_trkid`` path) score space-based observations correctly
+    without first splitting the record back into two lines.
 
     A record whose second segment is present but malformed (bad position
     fields, obscode mismatch) returns None rather than degrading to a
@@ -224,8 +232,8 @@ def parse_mpc80(line: str) -> Optional[Observation]:
     the previous behaviour for over-long lines.
 
     Args:
-        line: An 80-column MPC observation line, or a 160-column
-            first-line + second-line database record.
+        line: An 80-column MPC observation line, or (as a convenience) a
+            160-column first-line + second-line concatenated record.
 
     Returns:
         Observation object, or None if the line cannot be parsed.
@@ -285,9 +293,11 @@ def parse_mpc80(line: str) -> Optional[Observation]:
         obscode=obscode,
     )
 
-    # 160-column database record: second segment note2 at column 95
-    # (index 80 + 14). Apply the observer position; reject the whole
-    # record if the second segment cannot be applied.
+    # Convenience handling of a 160-column concatenated record (second
+    # segment note2 at column 95 = index 80 + 14). Sequential two-line
+    # input is handled by parse_mpc80_file instead. Apply the observer
+    # position; reject the whole record if the second segment cannot be
+    # applied.
     if len(line) >= 95 and line[94] in ("s", "v"):
         if not _apply_mpc80_second_line(line[80:160].ljust(80), obs):
             return None

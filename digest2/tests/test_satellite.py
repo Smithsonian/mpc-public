@@ -288,11 +288,16 @@ class TestMpc80SecondLine:
 
 
 class TestMpc80DbRecords:
-    """160-column database records: the MPC ``obs`` table stores satellite /
-    roving observations as first line + second line concatenated in one
-    ``obs80`` value. parse_mpc80 must apply the second segment's observer
-    position (the digest2-service /digest2_trkid path feeds these records
-    one at a time, so parse_mpc80_file's pairing never runs)."""
+    """Convenience handling of 160-column concatenated records.
+
+    The standard sequential two-line form (observation line + separate
+    's'/'v' position line) is already handled by parse_mpc80_file — see
+    TestMpc80SecondLine above; nothing requires callers to concatenate.
+    But the MPC ``obs`` table happens to store both lines concatenated in
+    one ``obs80`` value, and per-record consumers (e.g. digest2-service's
+    /digest2_trkid) feed those records to parse_mpc80 one at a time, where
+    the file-level pairing never runs — so parse_mpc80 applies the second
+    segment itself."""
 
     @staticmethod
     def _db_record(index=0, code="C57", flag="1"):
