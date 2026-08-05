@@ -1,0 +1,42 @@
+name: PyTest wis
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "wis/**"
+      - ".github/workflows/wis_pytest.yml"
+  pull_request:
+    paths:
+      - "wis/**"
+      - ".github/workflows/wis_pytest.yml"
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]  # macos-latest, windows-latest
+        python-version: ["3.12", "3.13"]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # NB: setup-uv stopped publishing moving major tags after v7, so this is pinned
+      # to an exact release rather than following the @v4/@v5 style used above.
+      - name: Install uv
+        uses: astral-sh/setup-uv@v9.0.0
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        working-directory: ./wis
+        run: uv sync --all-groups --locked
+
+      - name: Run wis tests
+        working-directory: ./wis
+        # The integration tests download SPICE kernels (GBs) from JPL/STScI, so
+        # they are deselected here and left to be run locally.
+        run: uv run pytest -v -m "not integration"
