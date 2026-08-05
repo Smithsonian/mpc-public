@@ -299,7 +299,10 @@ def parse_mpc80(line: str) -> Optional[Observation]:
     # position; reject the whole record if the second segment cannot be
     # applied.
     if len(line) >= 95 and line[94] in ("s", "v"):
-        if not _apply_mpc80_second_line(line[80:160].ljust(80), obs):
+        second = line[80:160].ljust(80)
+        if second[0:12] != line[0:12]:
+            return None
+        if not _apply_mpc80_second_line(second, obs):
             return None
 
     return obs
