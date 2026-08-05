@@ -7,6 +7,7 @@ By default these are heliocentric equatorial coordinates
 # Standard library imports
 # -----------------------------------------
 import logging
+import operator
 from types import TracebackType
 
 # Third-party imports
@@ -14,7 +15,7 @@ from types import TracebackType
 import numpy as np
 import spiceypy as sp
 from astropy.time import Time
-from cachetools import LRUCache, cached
+from cachetools import LRUCache, cachedmethod
 from cachetools.keys import hashkey
 
 # Local imports
@@ -49,9 +50,6 @@ class Wis(MPCObsCodes):
         ...     # Mix built-in and custom kernels
     """
 
-    # Define the cache for the get_obs_helio_equ_AU function
-    cache_get_obs_helio_equ_AU = LRUCache(maxsize=1024)
-
     # Any ability to specify `center`, `frame` or `abcorr` has been removed for the sake of simplicity
     #  - While the underlying spicepy functions can be used to get other coordinate systems if desired,
     #    this module is intended purely as a simplified convenience tool for the MPC
@@ -85,6 +83,15 @@ class Wis(MPCObsCodes):
         # Call MPCObsCodes's __init__ to ensure it is properly set up
         super().__init__()
 
+        # The cache for get_obs_helio_equ_AU is PER-INSTANCE: the cache key describes
+        # only the call signature (obscode, times, flags), not which kernels are loaded,
+        # so a shared cache would let a DE430 instance serve a DE440 instance's results.
+        self.cache_get_obs_helio_equ_AU: LRUCache = LRUCache(maxsize=1024)
+
+        # Populated by __enter__; the position methods refuse to run until then
+        self.loaded_kernels: list[KernelSpecifier] = []
+        self._entered = False
+
         # Validate kernels parameter
         if kernels is None:
             raise ValueError(
@@ -113,7 +120,7 @@ class Wis(MPCObsCodes):
             Wis: The instance for use in context manager.
         """
         # Load all specified kernels
-        self.loaded_kernels: list[KernelSpecifier] = []
+        self.loaded_kernels = []
         loaded_obscodes = set()  # Track loaded obscodes to avoid duplicates
 
         for kernel in self.kernels_param:
@@ -142,6 +149,7 @@ class Wis(MPCObsCodes):
             f"{[k.name for k in self.loaded_kernels]}"
         )
 
+        self._entered = True
         return self  # so that Wis instance can be used as 'w' inside 'with'
 
     def __exit__(
@@ -153,7 +161,24 @@ class Wis(MPCObsCodes):
         """Clear the loaded SPICE kernels and cache on exiting the context manager."""
         sp.kclear()  # <- Clear the spice kernels from memory
         self.cache_get_obs_helio_equ_AU.clear()  # <- Clear the cache
+        self.loaded_kernels = []
+        self._entered = False
         return False  # <- Do not suppress exceptions
+
+    def _require_context(self) -> None:
+        """Raise if the instance is not currently inside its `with` block.
+
+        The kernels are only furnished by __enter__ (and are unloaded again by
+        __exit__), so any position query outside that block would either fail
+        deep inside SPICE or read stale kernel state.
+        """
+        if not self._entered:
+            raise RuntimeError(
+                "Wis must be used as a context manager, e.g.\n"
+                "  from wis.kernels import DE430\n"
+                "  with Wis(kernels=DE430) as w:\n"
+                "      w.get_obs_helio_equ_AU('F51', times)"
+            )
 
     def _has_ground_kernel(self) -> bool:
         """Check if a ground kernel (DE430 or DE440) is loaded."""
@@ -197,7 +222,10 @@ class Wis(MPCObsCodes):
         """
         # Extract positional arguments
         _, name, times = args[0], args[1], args[2]
-        times_jd_tuple = tuple(np.atleast_1d(times.jd))  # type: ignore
+        # Key on the UTC JDs, because that is what `_convert_time` actually feeds to
+        # SPICE. Keying on `times.jd` instead would make Time(X, scale="utc") and
+        # Time(X, scale="tdb") collide despite being ~69s (i.e. ~2000km) apart.
+        times_jd_tuple = tuple(np.atleast_1d(times.utc.jd))  # type: ignore
 
         # fallback_to_geo / return_velocity may be passed positionally (indices
         # 3/4) or by keyword; read positionals first so positional calls do not
@@ -213,7 +241,7 @@ class Wis(MPCObsCodes):
         # Create a unique hash key
         return hashkey(name, times_jd_tuple, fallback_to_geo, return_velocity)
 
-    @cached(cache_get_obs_helio_equ_AU, key=compute_key)
+    @cachedmethod(operator.attrgetter("cache_get_obs_helio_equ_AU"), key=compute_key)
     def get_obs_helio_equ_AU(
         self,
         obscodeMPC: str,
@@ -239,9 +267,12 @@ class Wis(MPCObsCodes):
             None if obscode unknown and fallback_to_geo is False.
 
         Raises:
-            RuntimeError: If the required kernel for this obscode is not loaded.
+            RuntimeError: If the instance is not being used as a context manager, or
+                           if the required kernel for this obscode is not loaded.
                            Error message indicates which kernel to include.
         """
+        self._require_context()
+
         # Check if required kernel is loaded BEFORE converting time (which needs SPICE)
         # This must be done first because _check_input_formats calls _convert_time
         # which requires leapsecond kernels to be loaded
@@ -261,9 +292,11 @@ class Wis(MPCObsCodes):
             if obscodeMPC in self.known_satellite_obscodes:
                 logger.error(
                     f"Cannot calculate position for satellite {obscodeMPC}: "
-                    f"{obscodeMPC} kernel not loaded. Please include '{obscodeMPC}' "
-                    f"in your kernels list when instantiating Wis. "
-                    f"Example: Wis(kernels=[DE430, {obscodeMPC}])"
+                    f"the {satellite_kernels[obscodeMPC].name} kernel is not loaded. "
+                    f"Import the kernel object from wis.kernels and include it in "
+                    f"your kernels list when instantiating Wis. Example:\n"
+                    f"  from wis.kernels import DE430, TESS\n"
+                    f"  Wis(kernels=[DE430, TESS])"
                 )
                 return None
             if not fallback_to_geo:
@@ -276,27 +309,20 @@ class Wis(MPCObsCodes):
                 return None
 
         # Now safe to convert time (requires SPICE kernels)
-        self.obscodeMPC, self.epochs_tuple = self._check_input_formats(
-            obscodeMPC, times
-        )
+        # NB: routing state is kept in LOCALS, not on self: this method is cached, so on
+        # a cache hit the body never runs and any attribute set here would be stale.
+        obscodeMPC, epochs_tuple = self._check_input_formats(obscodeMPC, times)
 
         # get the heliocentric equatorial coordinates for the obscode in question
         # Validation already done above, so just route to appropriate handler
-        if self.obscodeMPC in self.geocentric_xyz_dict:  # <- Known ground station
-            return self._get_ground_posns(
-                self.obscodeMPC, self.epochs_tuple, return_velocity
-            )
+        if obscodeMPC in self.geocentric_xyz_dict:  # <- Known ground station
+            return self._get_ground_posns(obscodeMPC, epochs_tuple, return_velocity)
 
-        elif self._has_satellite_kernel(self.obscodeMPC):
-            return self._get_satellite_posns(
-                self.obscodeMPC, self.epochs_tuple, return_velocity
-            )
+        elif self._has_satellite_kernel(obscodeMPC):
+            return self._get_satellite_posns(obscodeMPC, epochs_tuple, return_velocity)
 
         elif fallback_to_geo:  # <- Treat unknown as geocenter
-            self.obscodeMPC = "500"
-            return self._get_ground_posns(
-                self.obscodeMPC, self.epochs_tuple, return_velocity
-            )
+            return self._get_ground_posns("500", epochs_tuple, return_velocity)
         else:
             return None  # <- Unknown obscode and not falling back to geocenter
 
@@ -318,6 +344,7 @@ class Wis(MPCObsCodes):
         - ltts: shape=(N_times) array of light travel times [days]
         """
         # Runtime validation
+        self._require_context()
         if not self._has_ground_kernel():
             raise RuntimeError(
                 "get_bary_wrt_helio requires a ground kernel. "

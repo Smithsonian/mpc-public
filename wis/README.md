@@ -34,8 +34,8 @@ A traditional astronomical backronym:
 ### From source (recommended for development)
 
 ```bash
-git clone https://github.com/Smithsonian/mpc-software.git
-cd mpc-software/wis
+git clone https://github.com/Smithsonian/mpc-public.git
+cd mpc-public/wis
 pip install .
 ```
 
@@ -230,7 +230,7 @@ Static satellite kernels are downloaded once and never automatically refreshed (
 
 ## Migration Guide (Breaking Changes)
 
-**Version 1.0.1+ introduces breaking changes from earlier versions:**
+**Version 2.0.0 introduces breaking changes from earlier versions:**
 
 ### Old API (no longer supported)
 ```python

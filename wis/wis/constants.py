@@ -46,7 +46,7 @@ class Directories:
         os.makedirs(self.data_dir, exist_ok=True)
 
     def obscode_data_subdir(self, obscode: str) -> str:
-        """Returns the path to the subdirectory where files will be savedor loaded for a specific obscode."""
+        """Returns the path to the subdirectory where files will be saved or loaded for a specific obscode."""
         subdir = os.path.join(self.data_dir, obscode)
         os.makedirs(subdir, exist_ok=True)
         return subdir

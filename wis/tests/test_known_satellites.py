@@ -18,13 +18,8 @@ from wis.wis import Wis
 
 pytestmark = pytest.mark.integration
 
-
-@pytest.fixture(autouse=True)
-def clear_cache_between_tests() -> None:
-    """Clear the cached Horizons queries after each test."""
-    yield
-    Wis.cache_get_obs_helio_equ_AU.clear()
-
+# NB: no cache-clearing fixture is needed -- the get_obs_helio_equ_AU cache lives on
+# the Wis instance, so it is discarded along with the instance at the end of each test.
 
 # -------------------------------------------------------------------
 # TESS (C57, JPL -95)

@@ -9,7 +9,6 @@ import hashlib
 import json
 import logging
 import os
-import sys
 import time
 from datetime import datetime
 from functools import cached_property
@@ -455,7 +454,7 @@ class KernelSpecifier(BaseModel):
             wildcardStart = wildcard[: wildcard.find("*")]
             wildcardEnd = wildcard[wildcard.find("*") + 1 :]
         else:
-            sys.exit(
+            raise ValueError(
                 f"Cannot parse wildcards with >=2 asterisks in them ... [{wildcard!r}]"
             )
 
@@ -483,7 +482,7 @@ class KernelSpecifier(BaseModel):
         """Return the kernels that are currently loaded."""
         return [sp.kdata(n, "ALL")[0] for n in range(sp.ktotal("ALL"))]
 
-    def load(self, download_if_needed: bool = True) -> None:
+    def load(self) -> None:
         """Load the kernels into memory."""
         # Ensure we have everything we need locally
         # (this is a no-op if everything is already downloaded)

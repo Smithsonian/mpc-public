@@ -18,16 +18,12 @@ from wis.wis import Wis
 
 pytestmark = pytest.mark.integration
 
+# NB: no cache-clearing fixture is needed -- the get_obs_helio_equ_AU cache lives on
+# the Wis instance, so it is discarded along with the instance at the end of each test.
+
 # -------------------------------------------------------------------
 # Tests of basic functionalities
 # -------------------------------------------------------------------
-
-
-@pytest.fixture(autouse=True)
-def clear_cache_between_tests() -> None:
-    """Clear the Wis cache after each test."""
-    yield  # test body will run here
-    Wis.cache_get_obs_helio_equ_AU.clear()  # ensures that after each test, the cache is cleared
 
 
 def test_Wis_instantiation_successful() -> None:
@@ -92,6 +88,23 @@ def test_Wis_instantiation_with_DE440() -> None:
         assert isinstance(W, Wis)
         assert len(W.loaded_kernels) == 1
         assert W.loaded_kernels[0].name == "DE440"
+
+
+def test_position_methods_require_context_manager() -> None:
+    """Position queries outside the `with` block raise a clear error, not AttributeError."""
+    times = Time([2458337.82915783], format="jd", scale="tdb")
+
+    W = Wis(kernels=DE430)  # <- never entered, so no kernels are furnished
+    with pytest.raises(RuntimeError, match="context manager"):
+        W.get_obs_helio_equ_AU("F51", times)
+    with pytest.raises(RuntimeError, match="context manager"):
+        W.get_bary_wrt_helio(times)
+
+    # ... and the same applies once the block has been exited again
+    with Wis(kernels=DE430) as W:
+        W.get_obs_helio_equ_AU("F51", times)
+    with pytest.raises(RuntimeError, match="context manager"):
+        W.get_obs_helio_equ_AU("F51", times)
 
 
 def test__check_input_formats() -> None:

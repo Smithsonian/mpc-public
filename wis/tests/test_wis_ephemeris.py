@@ -21,12 +21,8 @@ pytestmark = pytest.mark.integration
 
 np.set_printoptions(precision=16)
 
-
-@pytest.fixture(autouse=True)
-def clear_cache_between_tests() -> None:
-    """Clear the Wis obs_helio_equ_AU cache after each test."""
-    yield  # test body will run here
-    Wis.cache_get_obs_helio_equ_AU.clear()  # ensures that after each test, the cache is cleared
+# NB: no cache-clearing fixture is needed -- the get_obs_helio_equ_AU cache lives on
+# the Wis instance, so it is discarded along with the instance at the end of each test.
 
 
 def test_change_actually_occurs_1() -> None:
@@ -379,6 +375,55 @@ def test_cache_key_positional_fallback_no_collision() -> None:
         scalar_times = Time(2458337.82915783, format="jd", scale="tdb")
         posns_scalar, _ = W.get_obs_helio_equ_AU("F51", scalar_times)
         assert posns_scalar.shape == (1, 3)
+
+
+def test_cache_key_distinguishes_time_scale() -> None:
+    """Regression test for compute_key.
+
+    A UTC and a TDB Time carrying the same numeric JD are ~69s apart, but
+    compute_key used to hash the scale-dependent `times.jd` while `_convert_time`
+    feeds SPICE the scale-independent `times.utc.jd`. The two calls below therefore
+    shared a cache key, and the second silently returned the first's positions.
+    """
+    jd = 2458337.82915783
+    with Wis(kernels=DE430) as W:
+        posns_utc, _ = W.get_obs_helio_equ_AU("F51", Time(jd, format="jd", scale="utc"))
+        posns_tdb, _ = W.get_obs_helio_equ_AU("F51", Time(jd, format="jd", scale="tdb"))
+
+    # ~69s of Earth orbital motion is ~2e3 km, i.e. ~1.4e-5 AU
+    separation_AU = np.linalg.norm(posns_utc[0] - posns_tdb[0])
+    assert (
+        separation_AU > 1e-6
+    ), f"UTC and TDB inputs returned effectively identical positions ({separation_AU} AU)"
+
+
+def test_cache_not_shared_between_instances() -> None:
+    """Regression test: the get_obs_helio_equ_AU cache must not be shared between instances.
+
+    The cache key describes only the call signature (obscode, times, flags) and says
+    nothing about which kernels are loaded, so a class-level cache let a DE440
+    instance be handed the positions a DE430 instance had already computed for the
+    same arguments.
+
+    NB: the context managers are deliberately nested, because that is the only way to
+    have two instances alive with populated caches at the same time. Nesting is
+    otherwise an anti-pattern here -- the inner __exit__ calls sp.kclear(), which
+    unloads the outer instance's kernels too -- so nothing is queried on the outer
+    instance after the inner block closes.
+    """
+    times = Time([2458337.82915783, 2458338.82915783], format="jd", scale="tdb")
+
+    with Wis(kernels=DE430) as W430:
+        posns_430, _ = W430.get_obs_helio_equ_AU("F51", times)
+        with Wis(kernels=DE440) as W440:
+            posns_440, _ = W440.get_obs_helio_equ_AU("F51", times)
+
+    assert not np.array_equal(
+        posns_430, posns_440
+    ), "DE440 instance was served the DE430 instance's cached positions"
+    # ... but the two ephemerides should still agree to well under a km: the measured
+    # difference is ~7.9e-10 AU (~0.12km), so 1e-8 AU (~1.5km) leaves ~10x of margin
+    assert np.allclose(posns_430, posns_440, rtol=0, atol=1e-8)
 
 
 def test_ground_return_velocity() -> None:
