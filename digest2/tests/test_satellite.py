@@ -370,6 +370,24 @@ class TestMpc80DbRecords:
         chars[34:45] = "not-a-float"
         assert parse_mpc80(sat_line + "".join(chars)) is None
 
+    def test_designation_mismatch_rejects_record(self):
+        # The two segments of a 160-column record must carry the SAME
+        # designation in columns [0:12] — a mismatch means the segments
+        # belong to different observations (a malformed/mis-joined DB
+        # record), so the whole record is rejected rather than attaching
+        # the wrong observer position.
+        ground = MPC80_GROUND_LINES[0]
+        sat_line = ground[:14] + "S" + ground[15:77] + "C57"
+        second = _sat_second_line(sat_line, 235000.0, -180000.0, 95000.0)
+        # Sanity: with matching designations the record parses space-based.
+        good = parse_mpc80(sat_line + second)
+        assert good is not None and good.spacebased is True
+        # Now corrupt the second segment's designation field only.
+        mismatched = list(second)
+        mismatched[0:12] = "     K16S99X".ljust(12)
+        assert second[0:12] != "".join(mismatched[0:12])
+        assert parse_mpc80(sat_line + "".join(mismatched)) is None
+
     def test_db_record_scores_match_file_parse(self, tmp_path, model_path,
                                                obscodes_path,
                                                empty_config_path):
