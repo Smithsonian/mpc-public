@@ -296,3 +296,23 @@ Tests include unit tests for individual modules and integration tests that verif
 * Better caching (currently a local cache for entire call signatures; could be remote-friendly, as well as individual times)
 * Add more unit tests
 * Provide a Docker image with pre‑downloaded kernels
+
+
+## Releasing to PyPI
+
+Publication is automated via GitHub Actions and PyPI [trusted
+publishing](https://docs.pypi.org/trusted-publishers/) (no tokens), mirroring
+the `digest2` release flow in this repository.
+
+**To release a new version:**
+
+1. Update `version` in `wis/pyproject.toml` and merge that change to `main`.
+2. On the repository's [Releases page](https://github.com/Smithsonian/mpc-public/releases),
+   create a new release:
+   - **Tag:** `wis-v<version>` (must start with `wis-v` and match the
+     `pyproject.toml` version — the workflow verifies this and fails on mismatch)
+   - **Target:** `main`
+   - **Title/notes:** describe what changed.
+3. Publishing the release triggers `wis-python-release.yml`, which builds the
+   sdist + wheel, runs `twine check`, and uploads to
+   [PyPI](https://pypi.org/project/wis/).

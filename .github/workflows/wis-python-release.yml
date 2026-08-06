@@ -1,0 +1,80 @@
+name: wis-python-release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  # Only run for wis releases (tags starting with "wis-v")
+  check-tag:
+    runs-on: ubuntu-latest
+    outputs:
+      is_wis: ${{ steps.check.outputs.is_wis }}
+    steps:
+      - name: Check release tag
+        id: check
+        run: |
+          if [[ "${{ github.event.release.tag_name }}" == wis-v* ]]; then
+            echo "is_wis=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "is_wis=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  # wis is pure Python: one sdist + one universal wheel is all we need
+  # (no compiled extensions, so no cibuildwheel matrix like digest2's).
+  build:
+    needs: check-tag
+    if: needs.check-tag.outputs.is_wis == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check tag matches package version
+        run: |
+          tag_version="${GITHUB_REF_NAME#wis-v}"
+          pkg_version="$(python -c "import tomllib; print(tomllib.load(open('wis/pyproject.toml','rb'))['project']['version'])")"
+          if [ "$tag_version" != "$pkg_version" ]; then
+            echo "Release tag wis-v$tag_version does not match wis/pyproject.toml version $pkg_version" >&2
+            exit 1
+          fi
+
+      - name: Build sdist and wheel
+        run: |
+          cd wis
+          pip install build
+          python -m build
+
+      - name: Check artifacts
+        run: |
+          pip install twine
+          python -m twine check wis/dist/*
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: wis-dist
+          path: wis/dist/*
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist/
