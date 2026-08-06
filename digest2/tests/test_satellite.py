@@ -18,6 +18,7 @@ from digest2.observation import (
     Observation,
     parse_ades_psv,
     parse_ades_xml,
+    parse_mpc80,
     parse_mpc80_file,
 )
 
@@ -284,6 +285,129 @@ class TestMpc80SecondLine:
         assert obs.spacebased is True
         expected = [v * _KM_TO_AU for v in _roving_position(0.5, 0.7, 2000.0)]
         assert obs.earth_obs == expected
+
+
+class TestMpc80DbRecords:
+    """Convenience handling of 160-column concatenated records.
+
+    The standard sequential two-line form (observation line + separate
+    's'/'v' position line) is already handled by parse_mpc80_file — see
+    TestMpc80SecondLine above; nothing requires callers to concatenate.
+    But the MPC ``obs`` table happens to store both lines concatenated in
+    one ``obs80`` value, and per-record consumers (e.g. digest2-service's
+    /digest2_trkid) feed those records to parse_mpc80 one at a time, where
+    the file-level pairing never runs — so parse_mpc80 applies the second
+    segment itself."""
+
+    @staticmethod
+    def _db_record(index=0, code="C57", flag="1"):
+        ground = MPC80_GROUND_LINES[index]
+        x, y, z = MPC80_SAT_POSITIONS[index]
+        sat_line = ground[:14] + "S" + ground[15:77] + code
+        second = _sat_second_line(sat_line, x, y, z, code=code, flag=flag)
+        return sat_line + second, (x, y, z)
+
+    def test_db_record_satellite_km(self):
+        record, (x, y, z) = self._db_record()
+        assert len(record) == 160
+        obs = parse_mpc80(record)
+        assert obs is not None
+        assert obs.spacebased is True
+        assert obs.earth_obs == [x * _KM_TO_AU, y * _KM_TO_AU, z * _KM_TO_AU]
+
+    def test_db_record_au_flag_not_scaled(self):
+        ground = MPC80_GROUND_LINES[0]
+        sat_line = ground[:14] + "S" + ground[15:77] + "C57"
+        second = _sat_second_line(sat_line, 0.01, -0.005, 0.002, flag="2")
+        obs = parse_mpc80(sat_line + second)
+        assert obs is not None
+        assert obs.spacebased is True
+        assert obs.earth_obs == [0.01, -0.005, 0.002]
+
+    def test_db_record_roving(self):
+        ground = MPC80_GROUND_LINES[0]
+        second = _sat_second_line(ground, 0.5, 0.7, 2000.0, note2="v",
+                                  code="247")
+        obs = parse_mpc80(ground + second)
+        assert obs is not None
+        assert obs.spacebased is True
+        expected = [v * _KM_TO_AU for v in _roving_position(0.5, 0.7, 2000.0)]
+        assert obs.earth_obs == expected
+
+    def test_plain_80_column_lines_unchanged(self):
+        # Ordinary ground-based line.
+        obs = parse_mpc80(MPC80_GROUND_LINES[0])
+        assert obs is not None
+        assert obs.spacebased is False
+        # A bare satellite first line (no second segment) keeps the previous
+        # behaviour: parsed, geocentric.
+        ground = MPC80_GROUND_LINES[0]
+        sat_line = ground[:14] + "S" + ground[15:77] + "C57"
+        obs = parse_mpc80(sat_line)
+        assert obs is not None
+        assert obs.spacebased is False
+
+    def test_padded_line_not_treated_as_record(self):
+        # Whitespace padding beyond column 80 must not change parsing
+        # (regression guard: only an 's'/'v' note2 at column 95 marks a
+        # two-line record).
+        for padded_len in (95, 120, 160):
+            obs = parse_mpc80(MPC80_GROUND_LINES[0].ljust(padded_len))
+            assert obs is not None
+            assert obs.spacebased is False
+            assert obs.earth_obs == [0.0, 0.0, 0.0]
+
+    def test_malformed_second_segment_rejects_record(self):
+        # Obscode mismatch between the two segments: reject the record
+        # rather than silently scoring geocentrically.
+        ground = MPC80_GROUND_LINES[0]
+        sat_line = ground[:14] + "S" + ground[15:77] + "C57"
+        second = _sat_second_line(sat_line, 235000.0, -180000.0, 95000.0,
+                                  code="C51")
+        assert parse_mpc80(sat_line + second) is None
+        # Garbage position fields: likewise rejected.
+        chars = list(_sat_second_line(sat_line, 0.0, 0.0, 0.0))
+        chars[34:45] = "not-a-float"
+        assert parse_mpc80(sat_line + "".join(chars)) is None
+
+    def test_designation_mismatch_rejects_record(self):
+        # The two segments of a 160-column record must carry the SAME
+        # designation in columns [0:12] — a mismatch means the segments
+        # belong to different observations (a malformed/mis-joined DB
+        # record), so the whole record is rejected rather than attaching
+        # the wrong observer position.
+        ground = MPC80_GROUND_LINES[0]
+        sat_line = ground[:14] + "S" + ground[15:77] + "C57"
+        second = _sat_second_line(sat_line, 235000.0, -180000.0, 95000.0)
+        # Sanity: with matching designations the record parses space-based.
+        good = parse_mpc80(sat_line + second)
+        assert good is not None and good.spacebased is True
+        # Now corrupt the second segment's designation field only.
+        mismatched = list(second)
+        mismatched[0:12] = "     K16S99X".ljust(12)
+        assert second[0:12] != "".join(mismatched[0:12])
+        assert parse_mpc80(sat_line + "".join(mismatched)) is None
+
+    def test_db_record_scores_match_file_parse(self, tmp_path, model_path,
+                                               obscodes_path,
+                                               empty_config_path):
+        """classify_tracklet on 160-column DB records must score identically
+        to classify_file on the equivalent two-line file."""
+        records = []
+        for i in range(len(MPC80_GROUND_LINES)):
+            record, _ = self._db_record(index=i)
+            records.append(record)
+        file_path = _write_sat_obs80(tmp_path / "sat.obs")
+
+        with Digest2(model_path=model_path, obscodes_path=obscodes_path,
+                     config_path=empty_config_path, repeatable=True) as d2:
+            obs_list = [parse_mpc80(r) for r in records]
+            assert all(o is not None and o.spacebased for o in obs_list)
+            r_records = d2.classify_tracklet(obs_list)
+            r_file = d2.classify_file(file_path)[0]
+
+        assert r_records.raw.NEO == r_file.raw.NEO
+        assert r_records.noid.NEO == r_file.noid.NEO
 
 
 class TestObservationToTuple:
