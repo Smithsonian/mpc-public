@@ -34,7 +34,7 @@ Objects with orbits primarily interior to Mars' orbit.
 
 ## Middle Solar System
 
-OObjects that occupy the orbital region of Mars-crossers up to that of the Jovian Trojans.
+Objects that occupy the orbital region of Mars-crossers up to that of the Jovian Trojans.
 
 | Type            | Code | Definition |
 |-----------------|------|------------|
