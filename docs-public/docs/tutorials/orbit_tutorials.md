@@ -6,3 +6,4 @@ Tutorials demonstrating how to work with MPC orbital data, including retrieving 
 
  - [From MPC Orbit to N-Body Simulation](notebooks/mpc_tutorial_orbit_to_rebound.ipynb)
  - [Plotting Asteroid Orbits](notebooks/mpc_tutorial_orbit_plotting.ipynb)
+ - [The Kirkwood Gaps](notebooks/mpc_tutorial_orbit_kirkwood.ipynb)
