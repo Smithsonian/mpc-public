@@ -140,3 +140,6 @@ dmypy.json
 
 # PyCharm
 .idea
+
+# Large JPL ephemeris files downloaded by the ASSIST tutorial notebook
+assist_ephem_data/
