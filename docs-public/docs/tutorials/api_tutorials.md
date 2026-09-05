@@ -21,11 +21,3 @@ Tutorials on how to use various of the MPC's APIs are linked below.
  - [Negative Observations API](notebooks/mpc_tutorial_api_negative_observations.ipynb)
  - [Observing Target List ("WhatsUp") wrapper](notebooks/mpc_tutorial_api_whatsup.ipynb) — an unofficial Python wrapper for a web form, not a formal API
 
-<!-- Note (2026-09-04, resolves the earlier whatsup TODO): /whatsup is the Observing
-     Target List web form, working as intended for browsers; it returns 403 only to
-     generic HTTP clients that do not send "Accept: text/html". It is not a REST API.
-     The tutorial above wraps the form (CSRF token + POST + HTML-table parsing) as a
-     convenience. If a real JSON endpoint is ever added, replace that tutorial with a
-     standard API tutorial. -->
-
-
