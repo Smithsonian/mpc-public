@@ -141,5 +141,8 @@ dmypy.json
 # PyCharm
 .idea
 
+# Large JPL ephemeris files downloaded by the ASSIST tutorial notebook
+assist_ephem_data/
+
 # Large MPC catalogue file downloaded by the orbit-plotting tutorial notebook
 MPCORB.DAT.gz
