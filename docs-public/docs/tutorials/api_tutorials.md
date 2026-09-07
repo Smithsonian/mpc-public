@@ -19,6 +19,7 @@ Tutorials on how to use various of the MPC's APIs are linked below.
  - [Magnitude Band API](notebooks/mpc_tutorial_api_mag_band.ipynb)
  - [Pointings API](notebooks/mpc_tutorial_api_pointings.ipynb)
  - [Negative Observations API](notebooks/mpc_tutorial_api_negative_observations.ipynb)
+ - [NEA Observation Planning Aid wrapper](notebooks/mpc_tutorial_api_neaobs.ipynb) — an unofficial Python wrapper for a web form, not a formal API
 
 <!-- TODO: the endpoint at https://data.minorplanetcenter.net/whatsup (linked from the
      data.minorplanetcenter.net navigation, currently returns 403 to anonymous requests)
