@@ -284,6 +284,33 @@ admonition/attr rewrite and theme rebuild are the real cost, not the notebooks.
 *Dates flagged as reported/approximate: Material's ~Nov 2026 EOL and Jupyter Book
 v2's exact GA status are directional, not hard deadlines.*
 
+### Decision update (2026-09-08): Material look & markdown dialect deprioritized
+
+Maintainer input: **the Material look is not important**, and **markdown-dialect
+differences are not a concern** (an LLM can coherently remap `!!! note` →
+callouts/`:::`, `attr_list`, `pymdownx` tabs, and the custom `div` grids). That
+removes the two biggest costs in the table above, and with them most of the
+reason to stay on frozen MkDocs 1.x (its headline advantages were "already
+Material" and "zero rework"). The re-weighted ranking, prioritizing **active
+maintenance · best notebook story · easy GitHub Pages**:
+
+1. **Quarto — now the clear target.** Best-maintained (Posit), notebooks render
+   un-executed by default, native notebook download/view links replace our
+   `page.nb_url` override, and there's an official GitHub Pages Action. Its only
+   real downsides for us were the theme and the dialect — both now moot.
+2. **Jupyter Book v2 / mystmd** — viable and philosophically closest, but still
+   closing v1-parity gaps; pick only if we prefer the MyST ecosystem.
+3. **Stay on MkDocs 1.x** — still the zero-effort *status quo*, but no longer the
+   recommendation once its Material/no-rework advantages are discounted; it just
+   defers an eventual forced move.
+
+`sphinx-immaterial` drops out entirely (its whole point was the Material look).
+**Recommended next step:** a small **Quarto pilot** — convert 5–6 notebooks plus a
+few Markdown pages (including a custom grid/button `div` page and the
+notebook-download affordance) under `_quarto.yml`, deploy it to a throwaway Pages
+target, and confirm the LLM-assisted dialect remap is clean at that scale before
+committing to all ~148 pages.
+
 ---
 
 ## Sources
