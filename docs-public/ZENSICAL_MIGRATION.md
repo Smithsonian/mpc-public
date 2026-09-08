@@ -26,6 +26,14 @@ built. Options, in preference order, are in [§5](#5-decision-options). If/when 
 do port, the concrete steps are in [§3](#3-concrete-port-plan) and the required
 README/CLAUDE.md edits are in [§4](#4-documentation-instruction-updates).
 
+**Zensical is not the only option.** Because the notebook blocker is specific to
+Zensical (the `mkdocs-jupyter` *plugin* itself is actively maintained — v0.26.3,
+Apr 2026 — it is only Zensical that refuses to load third-party plugins),
+[§6](#6-alternatives-to-zensical-with-native-notebook-support) evaluates the
+other realistic paths that *do* render notebooks: staying on MkDocs 1.x, and the
+scientific-docs generators Quarto, Jupyter Book/MyST, and Sphinx (+ myst-nb /
+nbsphinx).
+
 ---
 
 ## 1. Why this is on the table
@@ -211,6 +219,73 @@ part of the port.
 
 ---
 
+## 6. Alternatives to Zensical with native notebook support
+
+Zensical is the Material team's chosen successor, but it is not the only way to
+stay off unmaintained MkDocs 1.x while keeping our 47 notebooks. The important
+correction to the framing above: **`mkdocs-jupyter` is actively maintained**
+(v0.26.3, Apr 2026, Python 3.9–3.12) — the plugin is fine; only *Zensical*
+declines to load it. So the realistic field is:
+
+| Candidate | Native `.ipynb` | No-execute mode | Markdown-reuse friction | Material-like theme | Maintenance (2026) | GH Pages | Migration effort |
+|---|---|---|---|---|---|---|---|
+| **Stay: MkDocs 1.x + Material + mkdocs-jupyter** | Yes (`page.nb_url`) | `execute: false` | **None** | **Already Material** | Core frozen; Material in maintenance (reported ~EOL Nov 2026); **plugin active** | `gh-deploy` / our Action | **Zero** (tail risk) |
+| **Quarto 1.9/1.10** | Yes | **Default** (no-exec) | Medium (Pandoc; `!!!`→callouts, attr_list, tabs) | Clean, not Material | Strong (Posit); Quarto 2 Rust rewrite pending late-2026 | Official Action | **Medium** |
+| **Jupyter Book v2 / mystmd 1.10** | Yes | **Default** (opt-in exec) | Medium (MyST; `!!!`→`:::`) | Clean, not Material | Active; still closing v1 parity gaps | `myst init --gh-pages` | **Medium** |
+| **Sphinx + myst-nb 1.3** | Yes | `nb_execution_mode="off"` | Medium (MyST) | **sphinx-immaterial = closest to Material (but beta, ~1 maintainer)** | myst-nb stable; theme beta | action (unofficial) | **Med–High** |
+| **Sphinx + nbsphinx 0.9.8** | Yes | `nbsphinx_execute="never"` | Medium (MyST for `.md`) + **Pandoc build dep** | via any Sphinx theme (incl. sphinx-immaterial) | Actively maintained | action (unofficial) | **Med–High** |
+| **Jupyter Book v1** (Sphinx) | Yes | `execute_notebooks:"off"` | Medium (MyST) | sphinx-book-theme (not Material) | **Maintenance-only — dead end** | Sphinx publish | Med–High — **avoid** |
+
+**Cross-cutting friction if we leave MkDocs.** Every non-MkDocs option shares the
+same two real costs — the notebooks themselves are the *easy* part:
+- **Markdown dialect.** We use python-markdown + Material admonitions
+  (`!!! note`), `attr_list` (`{: .class}`), and `pymdownx` tabs. Quarto wants
+  Pandoc (`::: {.callout-note}`), and the MyST-based tools want `:::{note}`.
+  Our **27 Markdown files that embed custom `div` grid/button classes** and the 3
+  custom CSS files are the fiddly bit to re-home.
+- **Theme rebuild.** Only `sphinx-immaterial` reproduces the Material look; every
+  other option is a clean-but-different theme, so the visual identity is
+  re-created, not inherited.
+- **Notebook download button.** Our `page.nb_url` override is replaced by each
+  tool's own mechanism — Quarto `notebook-view`/`notebook-links` (nicest),
+  nbsphinx source links, or a theme-provided button in Sphinx/JupyterBook.
+
+**Ranked recommendation** (weighing: notebooks with minimal rework · Material-like
+look + search · active maintenance · easy GitHub Pages):
+
+1. **Stay on MkDocs 1.x + Material + mkdocs-jupyter — for now.** Uniquely wins on
+   rework (zero), look (already Material), and deploy (unchanged); the plugin is
+   actively maintained. Only weakness is the frozen core/theme. **Pin all
+   versions, keep 3.9–3.12, keep shipping, and re-check in 6–12 months** —
+   especially whether Zensical gains a notebook path via its planned third-party
+   module system (early-2026 proposal ZAP-007), which would become the
+   lowest-friction forward route.
+2. **Quarto — best target if/when we move.** Best-maintained (Posit), notebooks
+   render un-executed *by default* with native download/view links (retires our
+   custom override), official GH Pages Action. Cost: non-Material theme +
+   admonition/tab rewrite.
+3. **Sphinx + myst-nb + sphinx-immaterial — pick only if a Material look is
+   non-negotiable.** The one route that reproduces the Material appearance, but
+   the theme is pre-1.0 / effectively single-maintainer, and we'd adopt Sphinx's
+   `toctree`/`conf.py` model.
+4. **Jupyter Book v2 / mystmd — promising, philosophically closest, still
+   stabilizing.** Pilot before committing.
+5. **Sphinx + nbsphinx — mature but more moving parts** (Pandoc dep + myst-parser
+   for our 101 `.md` pages). **Avoid Jupyter Book v1** (dead end).
+
+**Bottom line:** the notebook blocker doesn't force a bad migration — it argues
+for *not* migrating yet. Stay on MkDocs 1.x with pinned versions; when we do move,
+the finalists are **Quarto** (best maintenance + notebook story) vs **Sphinx +
+myst-nb + sphinx-immaterial** (best Material look, weaker maintenance). Either
+way, do a **5–6 notebook + a-few-Markdown-page pilot** — including the custom
+grid/button `div`s and the download button — before converting all 148 pages; the
+admonition/attr rewrite and theme rebuild are the real cost, not the notebooks.
+
+*Dates flagged as reported/approximate: Material's ~Nov 2026 EOL and Jupyter Book
+v2's exact GA status are directional, not hard deadlines.*
+
+---
+
 ## Sources
 - MkDocs 2.0 / why Zensical: https://squidfunk.github.io/mkdocs-material/blog/2026/02/18/mkdocs-2.0/ , https://squidfunk.github.io/mkdocs-material/blog/2025/11/05/zensical/
 - Zensical MkDocs compatibility & migration: https://zensical.org/docs/compatibility/mkdocs/ , https://zensical.org/docs/compatibility/mkdocs/migration/
@@ -219,3 +294,10 @@ part of the port.
 - Customization / overrides (MiniJinja): https://zensical.org/docs/customization/
 - Extensions: https://zensical.org/docs/setup/extensions/about/
 - PyPI (version, Python ≥ 3.10): https://pypi.org/project/zensical/
+
+### §6 alternatives
+- mkdocs-jupyter (actively maintained): https://pypi.org/project/mkdocs-jupyter/
+- Quarto: https://quarto.org/docs/projects/code-execution.html · https://quarto.org/docs/authoring/notebook-embed.html · https://quarto.org/docs/publishing/github-pages.html · https://github.com/quarto-dev/quarto-actions · https://opensource.posit.co/blog/2026-04-06_whats-next-quarto-2/
+- Jupyter Book / MyST: https://jupyterbook.org/stable/resources/faq/ · https://mystmd.org/guide/execute-notebooks · https://mystmd.org/guide/deployment-github-pages · https://github.com/jupyter-book/mystmd/releases
+- Sphinx + myst-nb: https://myst-nb.readthedocs.io/en/stable/computation/execute.html · https://sphinx-immaterial.readthedocs.io/ · https://pydata-sphinx-theme.readthedocs.io/
+- Sphinx + nbsphinx: https://nbsphinx.readthedocs.io/en/latest/never-execute.html · https://github.com/spatialaudio/nbsphinx/releases
