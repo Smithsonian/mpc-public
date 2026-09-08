@@ -27,9 +27,6 @@ Returns a JSON array of summary objects that fall within `[start_time, cutoff_ti
 
 If `limit` is provided, at most that many results are returned.
 
-!!! tip
-    Set `limit` to `1` to return only the latest recorded summary.
-
 ## Examples
 
 ### Python - Get the Latest Summary
@@ -37,7 +34,7 @@ If `limit` is provided, at most that many results are returned.
 ```python
 import requests
 
-response = requests.get(
+response = requests.post(
     "https://data.minorplanetcenter.net/api/summary/overall",
     json={},
 )
@@ -55,7 +52,5 @@ curl -X POST -H "Content-Type: application/json" \
 
 ## See Also
 
-<div class="contents-grid"></div>
-
-- [MPC APIs](index.md)
-
+- [MPC Summary Page](https://data.minorplanetcenter.net/summary/)
+- [Summary API Tutorial](../../tutorials/notebooks/mpc_tutorial_api_summary.ipynb)
