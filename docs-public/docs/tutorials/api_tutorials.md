@@ -20,4 +20,6 @@ Tutorials on how to use various of the MPC's APIs are linked below.
  - [Pointings API](notebooks/mpc_tutorial_api_pointings.ipynb)
  - [Negative Observations API](notebooks/mpc_tutorial_api_negative_observations.ipynb)
  - [Observing Target List ("WhatsUp") wrapper](notebooks/mpc_tutorial_api_whatsup.ipynb) — an unofficial Python wrapper for a web form, not a formal API
+ - [NEA Observation Planning Aid wrapper](notebooks/mpc_tutorial_api_neaobs.ipynb) — an unofficial Python wrapper for a web form, not a formal API
+
 
