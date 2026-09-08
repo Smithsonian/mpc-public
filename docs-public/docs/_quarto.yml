@@ -1,0 +1,55 @@
+project:
+  type: website
+  output-dir: _site
+  # Render every Markdown page and the tutorial notebooks. The non-recursive
+  # notebooks glob deliberately excludes any .ipynb_checkpoints/ subdir.
+  render:
+    - "**/*.md"
+    - "tutorials/notebooks/*.ipynb"
+  # Files copied verbatim into the output root.
+  resources:
+    - CNAME
+    - javascript/notebook-downloads.js
+  # After the site is built, copy the raw .ipynb files to /downloads/notebooks/
+  # so the download buttons have real notebooks to serve.
+  post-render:
+    - scripts/copy-notebooks.sh
+
+website:
+  title: "MPC Public Documentation Hub"
+  site-url: "https://docs.minorplanetcenter.net"
+  repo-url: "https://github.com/Smithsonian/mpc-public"
+  favicon: images/mpc-logo.jpeg
+  search:
+    location: navbar
+    type: overlay
+  navbar:
+    logo: images/mpc-logo.jpeg
+    search: true
+    left:
+      - href: index.md
+        text: Home
+      - href: mpc-ops-docs/index.md
+        text: Documentation
+      - href: services/index.md
+        text: Services
+      - href: tutorials/index.md
+        text: Tutorials
+      - href: software/index.md
+        text: Software
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    css:
+      - stylesheets/grid-buttons2.css
+      - stylesheets/faq-cards.css
+      - stylesheets/nb-download.css
+    include-after-body:
+      - _includes/after-body.html
+
+# Never execute notebooks at build time — render their stored outputs as-is
+# (the equivalent of mkdocs-jupyter's `execute: false`).
+execute:
+  enabled: false
