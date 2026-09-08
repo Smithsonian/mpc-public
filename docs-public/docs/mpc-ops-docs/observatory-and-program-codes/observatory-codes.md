@@ -31,8 +31,9 @@ Your observatory code request will not be processed until **both** the request f
 
 - Measurements **must** be submitted in either ADES PSV or ADES XML. The older MPC1992 format is obsolete and must not be used for new observatory codes. Please follow the instructions documented on the [ADES Data Submission page](../observations/ades-format.md) for details on how to prepare and submit your measurements in ADES format.
 
-!!! note
-    If your astrometry submission has severe problems (such as formatting errors, duplicate lines, single positions within a night, missing mandatory header fields, etc.) the entire submission gets automatically rejected and you may not get an e-mail about it. If you did not receive an acknowledgement email and you cannot find your measurements using the [Where Are My Observations (WAMO)](https://minorplanetcenter.net/wamo/) service, then your submission must have failed. In such case, please review your submission file to identify the problems, review [the submission instructions](../astrometry/reporting-observations.md#how-do-i-report-my-astrometry) and try again. If you cannot identify the problem, you can ask for assistance in the helpdesk ticket tied to your observatory code request; simply reply to the email that you received when you submitted the observatory code request form (it will be from "General Support" and will have "MPCHLP" in the subject line).
+::: {.callout-note}
+If your astrometry submission has severe problems (such as formatting errors, duplicate lines, single positions within a night, missing mandatory header fields, etc.) the entire submission gets automatically rejected and you may not get an e-mail about it. If you did not receive an acknowledgement email and you cannot find your measurements using the [Where Are My Observations (WAMO)](https://minorplanetcenter.net/wamo/) service, then your submission must have failed. In such case, please review your submission file to identify the problems, review [the submission instructions](../astrometry/reporting-observations.md#how-do-i-report-my-astrometry) and try again. If you cannot identify the problem, you can ask for assistance in the helpdesk ticket tied to your observatory code request; simply reply to the email that you received when you submitted the observatory code request form (it will be from "General Support" and will have "MPCHLP" in the subject line).
+:::
 
 **The new observatory code request form requires you to provide the following information**:
 
@@ -103,8 +104,9 @@ If the information relating to an observatory code needs to be updated/corrected
 
 When reporting a change/update, please use the following format, to make our lives easier. 
 
-!!! note 
-    A few lines have comments starting with a `#`. These are included only for descriptive purposes in this documentation; do not include any comments in your submission.
+::: {.callout-note}
+A few lines have comments starting with a `#`. These are included only for descriptive purposes in this documentation; do not include any comments in your submission.
+:::
 
 ```text
 observatory_code: ???  # The observatory code that you want to update

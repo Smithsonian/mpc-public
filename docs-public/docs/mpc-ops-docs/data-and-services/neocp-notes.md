@@ -2,9 +2,9 @@
 
 The [NEO Confirmation Page (NEOCP)](https://minorplanetcenter.net/iau/NEO/toconfirm_tabular.html) provides ephemerides for newly-discovered fast-moving or other unusual objects in need of confirmation. Most objects on the NEOCP do not yet have official provisional designations and are identified only by temporary observer-assigned identifiers.
 
-!!! warning
-    Temporary designations and ephemerides from the NEOCP must not be promulgated.
-
+::: {.callout-warning}
+Temporary designations and ephemerides from the NEOCP must not be promulgated.
+:::
 
 ## Comets on the NEOCP
 

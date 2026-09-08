@@ -3,10 +3,10 @@
 The MPC maintains a variety of lists, plots, and statistics related to minor planets and comets. 
 Most of these are auto-generated and updated regularly.
 
-!!! note "Citation policy"
-    Users of any of these lists are reminded that the source of the data is the Minor Planet Center. 
-    The relevant URL should be cited, along with a reference to the MPC itself.
-
+::: {.callout-note title="Citation policy"}
+Users of any of these lists are reminded that the source of the data is the Minor Planet Center. 
+The relevant URL should be cited, along with a reference to the MPC itself.
+:::
 
 ## Minor Planets
 

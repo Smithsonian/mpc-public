@@ -2,8 +2,9 @@
 
 The obscodes table is a replica of the MPC internal PostgreSQL table. It contains all observatory code information. The [Obscodes API](../../apis/obscodes.md) gets data from this internal PostgreSQL database.
 
-!!! note
-    This table contains additional information beyond the public Observatory Codes page, such as whether the observatory uses two-line observations.
+::: {.callout-note}
+This table contains additional information beyond the public Observatory Codes page, such as whether the observatory uses two-line observations.
+:::
 
 | Column | Data type | Description |
 |--------|-----------|-------------|
