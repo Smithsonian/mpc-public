@@ -17,7 +17,7 @@ Find the current state of processing of your submitted data.
 
 - [WAMO Service](https://minorplanetcenter.net/wamo/)
 - [WAMO API Documentation](../mpc-ops-docs/apis/wamo.md)
-[//]: # (- [WAMO Tutorial Notebook]&#40;../tutorials/notebooks/mpc_tutorial_api_wamo.ipynb&#41;)
+<!-- - [WAMO Tutorial Notebook](../tutorials/notebooks/mpc_tutorial_api_wamo.ipynb) -->
 
 
 ## MPC-Explorer

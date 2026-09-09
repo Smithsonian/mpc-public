@@ -17,7 +17,7 @@ Documentation related to orbital elements, orbit formats, and orbit/object class
 ## Orbit Metadata
 
 
-[//]: # (- https://minorplanetcenter.net/iau/info/MPECComputers.html&#41;)
+<!-- - https://minorplanetcenter.net/iau/info/MPECComputers.html) -->
 
 
 <div class="contents-grid"></div>
@@ -26,7 +26,7 @@ Documentation related to orbital elements, orbit formats, and orbit/object class
 - [Alphabetic notes for orbits](orbit-notes.md)
 - [Indication of perturbing bodies](perturbers.md)
 
-[//]: # (- [List of orbit computers on the Daily Orbit Update MPECs]&#40;../data-and-services/mpec-computers/#mpec-orbit-computers&#41;)
+<!-- - [List of orbit computers on the Daily Orbit Update MPECs](../data-and-services/mpec-computers/#mpec-orbit-computers) -->
 
 
 ## Orbit and Object Classification
