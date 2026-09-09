@@ -1,9 +1,19 @@
-# Porting `docs-public` from MkDocs 1.x to Zensical — Assessment
+# `docs-public` Documentation-Site Migration — Decision Record
 
-*Compiled 2026-09-08 on branch `zensical-port`. This is a decision/planning
-document, not an executed migration — no build files have been changed.*
+> **Outcome (2026-09-08): the site was ported to [Quarto](https://quarto.org).**
+> **Zensical was evaluated and rejected**, because it does not support the
+> `mkdocs-jupyter` plugin that renders our tutorial notebooks (see §0–§5 below).
+> This document is kept as the *rationale*: why we left MkDocs, why not Zensical
+> or MkDocs 2.0, and why Quarto won once the "Material look" and "markdown
+> dialect" constraints were dropped (§6 + the decision update at the end of §6).
+> The actual port lives in the `quarto-port` branch / its PR; the sections below
+> are the analysis that led there and are written in their original
+> pre-decision, present-tense voice.
 
-## TL;DR / verdict
+*Originally compiled 2026-09-08 while still named `ZENSICAL_MIGRATION.md` on the
+`zensical-port`/`quarto-port` branch.*
+
+## TL;DR / verdict (Zensical assessment — superseded by the Quarto port)
 
 Zensical **reads our existing `mkdocs.yml` natively** and would carry over almost
 everything we use — the Material look (via the `classic` theme variant), the
