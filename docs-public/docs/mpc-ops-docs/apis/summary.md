@@ -5,10 +5,10 @@ The Summary API provides overall counts of the MPC's data holdings over a reques
 ## Endpoint
 
 ```
-/summary/overall
+https://data.minorplanetcenter.net/api/summary/overall 
 ```
 
-**Method:** GET
+**Method:** POST
 
 !!! note
     This endpoint accepts a JSON request body.
