@@ -10,7 +10,7 @@ For now, this page serves as:
  - a *map* into the existing documentation.
  - a means to access new tutorials and existing services.
 
-Use the menu on the left or the buttons below to navigate to topics of interest.
+Use the menu at the top or the buttons below to navigate to topics of interest.
 
 <div id="contents-grid"></div>  
 
