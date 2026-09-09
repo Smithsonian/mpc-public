@@ -6,7 +6,7 @@ This page provides links to documentation for the MPC's REST APIs.
 
 - [WAMO (Where Are My Observations)](wamo.md)
 - [Submission Status](submission-status.md)
-- [Summaries](summary.md)
+- [Summary](summary.md)
 - [Designation Identifier](query-identifier.md)
 - [Observations](get-obs.md)
 - [NEOCP Observations](get-obs-neocp.md)
