@@ -15,6 +15,8 @@ https://data.minorplanetcenter.net/api/summary/overall
 
 ## Request Body
 
+Note that summary records are timestamped at the time of their creation, which is typically once per hour. Therefore, the `start_time` and `cutoff_time` parameters are inclusive of the summary records that fall within that range.
+
 | Field | Type | Required | Description                                 | Default                               |
 |-------|------|----------|---------------------------------------------|---------------------------------------|
 | `start_time` | String (ISO8601 datetime) | No | Earliest timestamp to include in results.   | `1647-09-29T00:00:00+00:00`           |
@@ -26,6 +28,34 @@ https://data.minorplanetcenter.net/api/summary/overall
 Returns a JSON array of summary objects that fall within `[start_time, cutoff_time]`.
 
 If `limit` is provided, at most that many results are returned.
+
+A summary object has the values given in the table below. All of which are relative to `cutoff_time`; this timestamp marks the end of the summary's "field of regard". For example, `designated_objects` is a count of provisional designations as recorded in the MPC's database, of all entries with `created_at` prior to the `cutoff_time`.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `cutoff_time` | String (ISO8601 datetime) | Timestamp marking the end of the summary. |
+| `designated_objects` | Integer | Count of [provisionally designated](../designations/provisional-designations.md) objects. |
+| `numbered_objects` | Integer | Count of [numbered objects](../data-and-services/schema/numbered-identifications.md). |
+| `neocp_objects` | Integer | Count of [NEOCP objects](../data-and-services/neocp-notes.md). |
+| `pccp_objects` | Integer | Count of PCCP objects. |
+| `identifications` | Integer | Count of [identifications](../identifications/index.md). |
+| `obscodes` | Integer | Count of [observatory codes](../observatory-and-program-codes/index.md). |
+| `program_codes` | Integer | Count of [program codes](../observatory-and-program-codes/index.md). |
+| `obs_published` | Integer | Count of published observations. |
+| `obs_itf` | Integer | Count of ITF observations. |
+| `obs_duplicated` | Integer | Count of duplicated observations. |
+| `obs_deleted` | Integer | Count of deleted observations. |
+| `designated_this_year` | Integer | Count of objects [designated](../designations/provisional-designations.md) this year. |
+| `designated_this_month` | Integer | Count of objects [designated](../designations/provisional-designations.md) this month. |
+| `designated_this_half_month` | Integer | Count of objects [designated](../designations/provisional-designations.md) in the last half month. |
+| `orbit_type_counts` | Object | Counts of observations by numbered/unnumbered status, per [orbit type](../orbits/orbit-types.md). |
+| `object_type_counts` | Object | Counts of observations by numbered/unnumbered status, per [object type](../orbits/object-types.md). |
+| `mpec_counts` | Object | Counts of MPECs, subset by MPEC type. |
+| `named_minor_planets` | Integer | Count of named minor planets. |
+| `named_natural_satellites` | Integer | Count of named natural satellites. |
+| `named_comets` | Integer | Count of named comets. |
+| `named_interstellar` | Integer | Count of named interstellar objects. |
+| `updated_at` | String (ISO8601 datetime) | Timestamp when the summary record was last updated. |
 
 ## Examples
 
