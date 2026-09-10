@@ -26,16 +26,21 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - uses: quarto-dev/quarto-actions/setup@v2
+
       - uses: actions/setup-python@v6
         with:
           python-version: '3.13'
 
       - name: Install dependencies
+        # Quarto's Jupyter engine needs jupyter to read the tutorial notebooks
+        # (they are NOT executed at build time; stored outputs are rendered).
         run: pip install -r docs-public/requirements.txt
 
-      - name: Build site
-        run: |
-          mkdocs build -f docs-public/mkdocs.yml -d site
+      - name: Render site with Quarto
+        # Renders the project at docs-public/docs to docs-public/docs/_site and
+        # runs the post-render step that copies raw notebooks to /downloads/.
+        run: quarto render docs-public/docs
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
@@ -43,7 +48,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: docs-public/site
+          path: docs-public/docs/_site
 
       - name: Deploy to GitHub Pages
         id: deployment

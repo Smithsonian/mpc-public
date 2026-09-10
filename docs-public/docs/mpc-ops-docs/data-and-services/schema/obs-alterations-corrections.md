@@ -2,8 +2,9 @@
 
 The observations alterations corrections table records corrections made to published observations.
 
-!!! warning
-    The table is currently empty and the schema may change. Remeasurements are still a work in progress.
+::: {.callout-warning}
+The table is currently empty and the schema may change. Remeasurements are still a work in progress.
+:::
 
 | Column | Data type | Description |
 |--------|-----------|-------------|

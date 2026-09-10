@@ -56,6 +56,6 @@ Asteroid naming is handled by the IAU Working Group on Small Body Nomenclature (
 
 <div class="contents-grid"></div>
 
-[//]: # (TODO: When the explorer version is working, swap out this link for https://data.minorplanetcenter.net/explorer/?tab=Lists&list=Dual-Status+Objects )
+<!-- TODO: When the explorer version is working, swap out this link for https://data.minorplanetcenter.net/explorer/?tab=Lists&list=Dual-Status+Objects  -->
 - [Dual-Status objects](dual-status-objects.md)
 

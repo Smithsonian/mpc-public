@@ -10,10 +10,10 @@ The Catalina Sky Survey team integrated it into their operations, finding it val
 However, the MPC is now receiving an increasing volume of observations, and a significant minority of these unfortunately 
 contain false detections.
 
-!!! warning
-    Submitting false tracklets for NEOCP objects or short-arc designated objects 
-    can distort orbital calculations and cause objects to be lost entirely.
-
+::: {.callout-warning}
+Submitting false tracklets for NEOCP objects or short-arc designated objects 
+can distort orbital calculations and cause objects to be lost entirely.
+:::
 
 ## Before Submitting
 

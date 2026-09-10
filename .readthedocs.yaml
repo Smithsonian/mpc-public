@@ -1,9 +1,32 @@
+# Read the Docs build for the docs-public site.
+#
+# The site is built with Quarto (not mkdocs). Read the Docs has no native Quarto
+# builder, so we use `build.commands` to install the Quarto CLI, render the
+# project at docs-public/docs, and copy the output to $READTHEDOCS_OUTPUT/html.
+# Notebooks are NOT executed (execute: false in _quarto.yml); jupyter is only
+# needed for Quarto's engine to read them.
 version: 2
 
 build:
-  os: ubuntu-22.04
+  os: ubuntu-24.04
   tools:
-    python: "3.11"
+    python: "3.12"
   commands:
-    - pip install "mkdocs>=1.5,<2" mkdocs-material "mkdocstrings[python]" "mkdocs-jupyter>=0.24,<0.25" "nbconvert>=7.0,<8"
-    - cd docs-public && mkdocs build --site-dir $READTHEDOCS_OUTPUT/html
+    - pip install -r docs-public/requirements.txt
+    - |
+      # NB: Read the Docs runs this block with /bin/sh (dash), so no bashisms
+      # like `set -o pipefail`.
+      set -eu
+      # Install a pinned Quarto CLI
+      QUARTO_VERSION="1.9.36"
+      curl -fsSL -o /tmp/quarto.tar.gz \
+        "https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.tar.gz"
+      mkdir -p /tmp/quarto
+      tar -xzf /tmp/quarto.tar.gz -C /tmp/quarto --strip-components=1
+      export PATH="/tmp/quarto/bin:${PATH}"
+      quarto --version
+      # Render the site (runs the post-render notebook-copy step) and hand the
+      # output to Read the Docs.
+      quarto render docs-public/docs
+      mkdir -p "${READTHEDOCS_OUTPUT}/html"
+      cp -r docs-public/docs/_site/. "${READTHEDOCS_OUTPUT}/html/"

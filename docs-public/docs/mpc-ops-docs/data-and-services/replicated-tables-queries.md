@@ -21,11 +21,13 @@ unpacked_primary_provisional_designation | unpacked_secondary_provisional_design
 2015 AC2                                 | 2010 HL23
 ```
 
-!!! note
-    The *current_identifications* table contains both the *packed* and *unpacked* designations.
+::: {.callout-note}
+The *current_identifications* table contains both the *packed* and *unpacked* designations.
+:::
 
-!!! note
-    The previous query only works well if the primary designation is known. For a more generic query see the following example.
+::: {.callout-note}
+The previous query only works well if the primary designation is known. For a more generic query see the following example.
+:::
 
 [Back to introduction](replicated-tables-intro.md)
 
@@ -52,20 +54,21 @@ unpacked_primary_provisional_designation | unpacked_secondary_provisional_design
 2015 AC2                                 | 2010 HL23
 ```
 
-!!! tip
-    To obtain the result in JSON format, the query can be modified as follows:
+::: {.callout-tip}
+To obtain the result in JSON format, the query can be modified as follows:
 
-    ```sql
-    SELECT to_json(t) FROM(
-        SELECT unpacked_primary_provisional_designation, unpacked_secondary_provisional_designation
+```sql
+SELECT to_json(t) FROM(
+    SELECT unpacked_primary_provisional_designation, unpacked_secondary_provisional_designation
+    FROM current_identifications
+    WHERE unpacked_primary_provisional_designation = (
+        SELECT unpacked_primary_provisional_designation
         FROM current_identifications
-        WHERE unpacked_primary_provisional_designation = (
-            SELECT unpacked_primary_provisional_designation
-            FROM current_identifications
-            WHERE unpacked_secondary_provisional_designation = '2010 HL23'
-        )
-    ) AS t;
-    ```
+        WHERE unpacked_secondary_provisional_designation = '2010 HL23'
+    )
+) AS t;
+```
+:::
 
 [Back to introduction](replicated-tables-intro.md)
 
@@ -111,8 +114,9 @@ The query should return the following result:
  535308
 ```
 
-!!! note
-    The *permid* field is populated with the unpacked number.
+::: {.callout-note}
+The *permid* field is populated with the unpacked number.
+:::
 
 ## To retrieve all the observations for a numbered object
 
@@ -124,8 +128,9 @@ FROM obs_sbn
 WHERE permid = '123456';
 ```
 
-!!! note
-    If an object is numbered, the *permid* field is populated with the same unpacked number.
+::: {.callout-note}
+If an object is numbered, the *permid* field is populated with the same unpacked number.
+:::
 
 [Back to introduction](replicated-tables-intro.md)
 

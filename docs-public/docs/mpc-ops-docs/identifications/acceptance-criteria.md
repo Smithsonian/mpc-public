@@ -5,8 +5,9 @@
 
 ### ITF-to-ITF submissions
 
-!!! note
-    The criteria below do not apply to NEOCP objects.
+::: {.callout-note}
+The criteria below do not apply to NEOCP objects.
+:::
 
 The MPC will reject ITF-to-ITF identifications without performing any orbit fitting if
 any of the following is true:
@@ -52,8 +53,9 @@ any of the following is true:
 
 ### ITF-to-ITF submissions
 
-!!! note
-    The criteria below do not apply to NEOCP objects.
+::: {.callout-note}
+The criteria below do not apply to NEOCP objects.
+:::
 
 The MPC will reject certain identifications after performing an orbit fit if any of the
 following is true:

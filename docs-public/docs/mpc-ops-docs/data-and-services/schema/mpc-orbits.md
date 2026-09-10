@@ -4,8 +4,9 @@ The MPC orbits table contains orbits and orbital related information of minor pl
 
 ## Known issues
 
-!!! warning
-    This table should be considered a work in progress.
+::: {.callout-warning}
+This table should be considered a work in progress.
+:::
 
 - Comet and natural satellite orbits are not saved (for now).
 - Fields are not fully populated.
