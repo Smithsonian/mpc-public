@@ -45,14 +45,14 @@ Subscribers should regularly verify that their replicated database is performing
 
 ## Sample Queries
 
-We have collected some [sample queries](replicated-tables-queries.md) that can be run on the replicated tables. Please note that the queries might take a long time to run, especially on the *obs_sbn* table if the proper indexes are not in place.
+We have collected some [sample queries](replicated-tables-queries.md) that can be run on the replicated tables, grouped by topic. Please note that the queries might take a long time to run, especially on the *obs_sbn* table if the proper indexes are not in place — see the [conventions and performance notes](replicated-tables-queries.md#conventions-and-performance-notes) before you start.
 
-- [To retrieve all the secondary designations for a given primary designation](replicated-tables-queries.md#to-retrieve-all-the-secondary-designations-for-a-given-primary-designation)
-- [To retrieve all the secondary designations for a generic designation](replicated-tables-queries.md#to-retrieve-all-the-secondary-designations-for-a-generic-designation)
-- [To check if an object is numbered](replicated-tables-queries.md#to-check-if-an-object-is-numbered)
-- [To retrieve the *permid* for a given object](replicated-tables-queries.md#to-retrieve-the-permid-for-a-given-object)
-- [To retrieve all the observations for a numbered object](replicated-tables-queries.md#to-retrieve-all-the-observations-for-a-numbered-object)
-- [To retrieve all the observations for an unnumbered object](replicated-tables-queries.md#to-retrieve-all-the-observations-for-an-unnumbered-object)
+- [Identifications and designations](replicated-tables-queries.md#identifications-and-designations)
+- [Observations](replicated-tables-queries.md#observations-obs_sbn)
+- [Orbits](replicated-tables-queries.md#orbits-mpc_orbits)
+- [Observatory codes](replicated-tables-queries.md#observatory-codes-obscodes)
+- [Objects on the NEOCP](replicated-tables-queries.md#objects-on-the-neocp)
+- [Alterations and the Isolated Tracklet File (ITF)](replicated-tables-queries.md#alterations-and-the-isolated-tracklet-file-itf)
+- [Aggregate and analytical queries](replicated-tables-queries.md#aggregate-and-analytical-queries)
 
-We plan to add additional sample queries to the documentation as new tables, such as the orbit tables, are finalized.
 To check the current status for all the replicated tables, please refer to the [schema page](replicated-tables-schema.md).
