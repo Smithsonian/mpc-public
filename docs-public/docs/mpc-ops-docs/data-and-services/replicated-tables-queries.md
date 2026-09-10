@@ -3,6 +3,7 @@
 This page collects sample SQL queries for the [replicated tables](replicated-tables-schema.md). They are grouped by topic:
 
 - [Conventions and performance notes](#conventions-and-performance-notes)
+- [Running the queries from Python](#running-the-queries-from-python)
 - [Identifications and designations](#identifications-and-designations)
 - [Observations](#observations-obs_sbn)
 - [Orbits](#orbits-mpc_orbits)
@@ -33,6 +34,54 @@ Observations marked `deprecated = 'X'` are preserved for historical purposes and
 
 !!! warning "Bound your `obs_sbn` queries"
     `obs_sbn` is by far the largest table. Always constrain it by `status` and/or an `obstime` date range, and make sure the relevant [indexes](replicated-tables-intro.md#indexes) exist — an unbounded scan of the whole table can be very slow. Note that `obstime` is stored as text; the examples cast it with `obstime::date` for date-range comparisons.
+
+## Running the queries from Python
+
+The queries on this page are plain SQL and can be run from any PostgreSQL client — `psql`, a GUI such as DBeaver, or a program. Because the database is one you [replicate locally from the SBN](replicated-tables-intro.md), the connection details (host, database name, user, password) are your own: the MPC does not host a public SQL endpoint.
+
+A minimal connection and query with [`psycopg`](https://www.psycopg.org/):
+
+```python
+import psycopg  # psycopg 3: pip install "psycopg[binary]"  (for psycopg2: import psycopg2 as psycopg)
+
+conn = psycopg.connect(host="localhost", dbname="mpc_sbn", user="mpc_read", password="********")
+
+with conn.cursor() as cur:
+    cur.execute(
+        "SELECT unpacked_secondary_provisional_designation "
+        "FROM current_identifications "
+        "WHERE unpacked_primary_provisional_designation = %s;",
+        ("2015 AC2",),
+    )
+    for row in cur.fetchall():
+        print(row)
+```
+
+!!! warning
+    Always pass values as query **parameters** (the `%s` placeholder and the tuple above), never by string-formatting them into the SQL. This avoids SQL-injection problems and quoting mistakes with designations that contain spaces.
+
+For interactive analysis it is often convenient to read results straight into a [pandas](https://pandas.pydata.org/) DataFrame through a [SQLAlchemy](https://www.sqlalchemy.org/) engine:
+
+```python
+import pandas as pd
+from sqlalchemy import create_engine
+
+engine = create_engine("postgresql+psycopg://mpc_read:********@localhost/mpc_sbn")
+
+df = pd.read_sql(
+    """
+    SELECT unpacked_primary_provisional_designation, a, e, i, h
+    FROM mpc_orbits
+    WHERE orbit_type_int = 2       -- Apollo
+    LIMIT 1000;
+    """,
+    engine,
+)
+print(df.describe())
+```
+
+!!! tip
+    A runnable, end-to-end version of these examples is available as a Jupyter notebook: [Querying the replicated database](../../tutorials/notebooks/mpc_tutorial_replicated_db_queries.ipynb). It requires access to your own replicated database.
 
 ## Identifications and designations
 

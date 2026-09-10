@@ -55,4 +55,6 @@ We have collected some [sample queries](replicated-tables-queries.md) that can b
 - [Alterations and the Isolated Tracklet File (ITF)](replicated-tables-queries.md#alterations-and-the-isolated-tracklet-file-itf)
 - [Aggregate and analytical queries](replicated-tables-queries.md#aggregate-and-analytical-queries)
 
+A runnable Jupyter notebook that connects to a replica and works through several of these queries is also available: [Querying the Replicated Database](../../tutorials/notebooks/mpc_tutorial_replicated_db_queries.ipynb).
+
 To check the current status for all the replicated tables, please refer to the [schema page](replicated-tables-schema.md).
