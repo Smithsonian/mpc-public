@@ -14,7 +14,9 @@ build:
   commands:
     - pip install -r docs-public/requirements.txt
     - |
-      set -euo pipefail
+      # NB: Read the Docs runs this block with /bin/sh (dash), so no bashisms
+      # like `set -o pipefail`.
+      set -eu
       # Install a pinned Quarto CLI
       QUARTO_VERSION="1.9.36"
       curl -fsSL -o /tmp/quarto.tar.gz \

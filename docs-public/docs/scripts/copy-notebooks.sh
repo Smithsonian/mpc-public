@@ -5,7 +5,7 @@
 #
 # Quarto runs post-render scripts from the project directory and sets
 # QUARTO_PROJECT_OUTPUT_DIR to the output directory (relative to the project).
-set -euo pipefail
+set -eu
 
 OUT="${QUARTO_PROJECT_OUTPUT_DIR:-_site}"
 SRC="tutorials/notebooks"
