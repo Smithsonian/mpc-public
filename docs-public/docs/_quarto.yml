@@ -42,6 +42,11 @@ format:
   html:
     theme: cosmo
     toc: true
+    # MkDocs (python-markdown) let a list follow a paragraph with no blank line;
+    # Pandoc requires the blank line and otherwise runs the list into the
+    # paragraph. This extension restores the lenient MkDocs behaviour so lists
+    # in pages and notebook markdown cells render correctly either way.
+    from: markdown+lists_without_preceding_blankline
     css:
       - stylesheets/grid-buttons2.css
       - stylesheets/faq-cards.css
