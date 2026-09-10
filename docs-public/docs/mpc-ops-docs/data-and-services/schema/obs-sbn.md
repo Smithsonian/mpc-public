@@ -16,8 +16,7 @@ The observations table is a replica of the MPC internal PostgreSQL table. It con
 - For duplicates, keep the more recent one or the one with more information.
 - Fields prefixed "ADES:" are valid ADES fields; "MPC_ops:" are MPC internal operations fields.
 
-
-<!-- The column tables below are generated from the authoritative replicated-schema definitions (column names, types and comments). -->
+<!-- BEGIN GENERATED SCHEMA TABLE — managed by generate_public_schema_docs.py; do not edit below by hand -->
 
 ## ADES Fields
 
@@ -49,8 +48,8 @@ The observations table is a replica of the MPC internal PostgreSQL table. It con
 | `obstime` | text | UTC date and time of the observation. |
 | `ra` | numeric | Right Ascension is decimal degrees in J2000.0 reference frame |
 | `dec` | numeric | Declination is decimal degrees in J2000.0 reference frame |
-| `rastar` | numeric | For occultation, only when stn=244, Right Ascension in the J2000.0 reference frame in decimal degress of the occulted star. |
-| `decstar` | numeric | For occultation, only when stn=244, Declination in the J2000.0 reference frame in decimal degress of the occulted star. |
+| `rastar` | numeric | For occultation, only when stn=244, Right Ascension in the J2000.0 reference frame in decimal degrees of the occulted star. |
+| `decstar` | numeric | For occultation, only when stn=244, Declination in the J2000.0 reference frame in decimal degrees of the occulted star. |
 | `obscenter` | text | Origin of offset observations (full name of a planet or permID or provID for a small body) |
 | `deltara` | numeric | Measured DeltaRA*cos(Dec) in arcsec in the J2000.0 reference frame for offset measurements of a satellite with respect to osbCenter, or for occultation observations with respect to the star (stn=244) |
 | `deltadec` | numeric | Measured DeltaDec in arcsec in the J2000.0 reference frame for offset measurements of a satellite with respect to osbCenter, or for occultation observations with respect to the star (only if stn=244) |
@@ -65,11 +64,11 @@ The observations table is a replica of the MPC internal PostgreSQL table. It con
 | `rmsdelay` | numeric | Delay uncertainty in microseconds |
 | `doppler` | numeric | Observed radar Doppler shift in Hz |
 | `rmsdoppler` | numeric | Doppler shift uncertainty in Hz |
-| `astcat` | text | Star catalog used for the astrometric reduction or, in case of occultation observations, for the occulted star (a list of accepted astcat values is availble at the following link https://minorplanetcenter.net/mpcops/documentation/valid-ades-values/#astCat) |
+| `astcat` | text | Star catalog used for the astrometric reduction or, in case of occultation observations, for the occulted star (a list of accepted astcat values is available at the following link https://minorplanetcenter.net/mpcops/documentation/valid-ades-values/#astCat) |
 | `mag` | numeric | Apparent magnitude in specified band |
 | `rmsmag` | numeric | Apparent magnitude uncertainty in magnitudes |
-| `band` | text | Passband designation for photometry (a list of accepted astcat values is availble at the following link https://minorplanetcenter.net/mpcops/documentation/valid-ades-values/#band) |
-| `photcat` | text | Star catalog used for the photometric reduction (a list of accepted astcat values is availble at the following link https://minorplanetcenter.net/mpcops/documentation/valid-ades-values/#astCat) |
+| `band` | text | Passband designation for photometry (a list of accepted astcat values is available at the following link https://minorplanetcenter.net/mpcops/documentation/valid-ades-values/#band) |
+| `photcat` | text | Star catalog used for the photometric reduction (a list of accepted astcat values is available at the following link https://minorplanetcenter.net/mpcops/documentation/valid-ades-values/#astCat) |
 | `photap` | numeric | Photometric aperture radius in arcsec |
 | `nucmag` | smallint | Nuclear magnitude flag for comets, primarily used for archival data (photap should be used to communicate information in the new standard). 1=True for archival cometary nuclear magnitude measurements, 0=False otherwise. |
 | `logsnr` | numeric | The log10 of the signal-to-noise ratio of the source in the image integrated on the entire aperture used for astrometric centroid |
@@ -80,12 +79,12 @@ The observations table is a replica of the MPC internal PostgreSQL table. It con
 | `frq` | numeric | Carrier reference frequency in MHz |
 | `disc` | character(1) | Discovery flag (more documentation needs to be added here). |
 | `subfrm` | text | Originally reported reference frame for angular measurements. The subfrm does not reflect the frame of the associated ADES observations, which are always J2000.0. For example, B1950.0 corresponds to the letter A in column 14 in the 80-column format |
-| `subfmt` | text | Format in which the observation was originally submitted to the MPC. This is filled by the MPC (a list of accepted astcat values is availble at the following link https://minorplanetcenter.net/mpcops/documentation/valid-ades-values/#subfmt) |
+| `subfmt` | text | Format in which the observation was originally submitted to the MPC. This is filled by the MPC (a list of accepted astcat values is available at the following link https://minorplanetcenter.net/mpcops/documentation/valid-ades-values/#subfmt) |
 | `prectime` | integer | Precision in millionths of a day of the reported observation time for archival MPC1992 observations and earlier data |
 | `precra` | numeric | Precision for archival MPC1992 observations or earlier data in seconds for RA |
 | `precdec` | numeric | Precision for archival MPC1992 observations or earlier data in arcsec for Dec |
 | `unctime` | numeric | Estimated systematic time error in seconds. This field indicates a presumed level of systematic clock error. |
-| `notes` | text | A set of one-character note flags to communicate observing circumstances (a list of accepted notes values is availble at the following link https://minorplanetcenter.net/mpcops/documentation/valid-ades-values/#notes |
+| `notes` | text | A set of one-character note flags to communicate observing circumstances (a list of accepted notes values is available at the following link https://minorplanetcenter.net/mpcops/documentation/valid-ades-values/#notes |
 | `remarks` | text | A comment provided by the observer. |
 | `deprecated` | character(1) | Deprecated observation that is preserved for historical purpose. Do not use it in the orbit fitting. The only allowed value is X |
 | `localuse` | text | Container to hold subelements carrying ancillary information not envisioned by the standard |
@@ -103,7 +102,7 @@ The observations table is a replica of the MPC internal PostgreSQL table. It con
 | `submission_id` | text | Unique MPC-assigned submission ID |
 | `submission_block_id` | text | Unique MPC-assigned submission block ID |
 | `obs80` | text | 80 or 160-Character observation string |
-| `status` | character(1) | processing status. Allowed values are: P for ufficially published in a circular (DOU, mid-month, monthly), p for accepted and waiting for publication in the next circular, I for ITF observations |
+| `status` | character(1) | processing status. Allowed values are: P for officially published in a circular (DOU, mid-month, monthly), p for accepted and waiting for publication in the next circular, I for ITF observations |
 | `healpix` | bigint | A convenience calculation that maps the observed (Ra,Dec) to a healpix (healpix.sourceforge.io) patch of the sky indicated by the recorded integer. The chosen mapping assumes nside = 32768 & nested = True (see https://astropy-healpix.readthedocs.io/en/latest/coordinates.html), corresponding to a pixel scale of approx 6.4 arcsec. |
 | `prev_desig` | text | Previous designation for a redesignated observations (see also the obs_alteration_redesignations table https://minorplanetcenter.net/mpcops/documentation/obs-alterations-redesignations/) |
 | `prev_ref` | text | Previous publication references |
@@ -151,5 +150,7 @@ The observations table is a replica of the MPC internal PostgreSQL table. It con
 | `vel2` | numeric | Observer velocity, component 2 (space-based / roving stations). |
 | `vel3` | numeric | Observer velocity, component 3 (space-based / roving stations). |
 | `fltr` | character(3) | Filter |
+
+<!-- END GENERATED SCHEMA TABLE -->
 
 [Back to schema overview](../replicated-tables-schema.md)

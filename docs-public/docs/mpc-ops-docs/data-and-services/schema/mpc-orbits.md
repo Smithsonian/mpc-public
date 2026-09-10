@@ -17,8 +17,7 @@ The MPC orbits table contains orbits and orbital related information of minor pl
 - Only unpacked numbered (no parentheses) included for primary permanent designations.
 - Can be linked to the current identification table using primary provisional designation fields.
 
-
-<!-- The column tables below are generated from the authoritative replicated-schema definitions (column names, types and comments). -->
+<!-- BEGIN GENERATED SCHEMA TABLE — managed by generate_public_schema_docs.py; do not edit below by hand -->
 
 ## Columns
 
@@ -113,5 +112,7 @@ The MPC orbits table contains orbits and orbital related information of minor pl
 | `period_unc_planeto` | double precision | Post-fit 1-sigma uncertainty in the planetocentric orbital period [days] |
 | `mean_motion_planeto` | double precision | Planetocentric orbital mean motion [degrees per day] |
 | `mean_motion_unc_planeto` | double precision | Post-fit 1-sigma uncertainty in the planetocentric orbital mean motion [degrees per day] |
+
+<!-- END GENERATED SCHEMA TABLE -->
 
 [Back to schema overview](../replicated-tables-schema.md)

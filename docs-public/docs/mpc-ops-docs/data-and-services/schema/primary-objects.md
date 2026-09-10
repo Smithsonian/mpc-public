@@ -7,27 +7,33 @@ The primary objects table contains all objects designated by the MPC: minor plan
 - Both packed and unpacked forms are included for primary provisional designations.
 - Some fields are not being currently populated.
 
+<!-- BEGIN GENERATED SCHEMA TABLE — managed by generate_public_schema_docs.py; do not edit below by hand -->
+
+## Columns
+
 | Column | Data type | Description |
 |--------|-----------|-------------|
-| orbit_publication_references | text[] | References to MPC publications containing this orbit (DOU, MPEC, mid-month, Monthly-MPC, etc.) |
-| comet | boolean | Whether the object-orbit is in the comet table (currently always false) |
-| satellite | boolean | Whether the object-orbit is in the satellite table |
-| barycentric | boolean | Whether the orbit is in a barycentric table (always false) |
-| standard_minor_planet | boolean | Whether the orbit is in the standard_minor_planet table (not currently used) |
-| nongravs | boolean | Whether orbit includes non-gravitational perturbations (not currently used) |
-| created_at | timestamp(6) without time zone | Date and time of initial row insert |
-| updated_at | timestamp(6) without time zone | Date and time of latest row update |
-| orbit_published | integer | 0=unpublished, 1=MPEC, 2=DOU, 3=mid-month, 4=monthly |
-| flag_all_object_obs_consistent | boolean | All observations checked for consistency (not currently used) |
-| flag_allowed_external | boolean | Orbit computed with all available/consistent observations (not used) |
-| flag_orbit_calculated_from_consistent_obs | boolean | Orbit from flagged-consistent observations (not used) |
-| no_orbit | boolean | True if no orbit could be computed |
-| standard_epoch | boolean | Whether standard-epoch orbit is populated |
-| orbfit_epoch | boolean | Whether mid-observation epoch orbit is populated |
-| object_type | integer | Object type classification |
-| packed_primary_provisional_designation | text | Packed primary provisional designation (e.g. K17P08M) |
-| id | integer | PostgreSQL automatically generated identifier for row of data |
-| status | integer | Result of orbit fitting (not currently used) |
-| unpacked_primary_provisional_designation | text | Unpacked primary provisional designation (e.g. 2017 PM8) |
+| `id` | integer | PostgreSQL automatically generated identifier |
+| `packed_primary_provisional_designation` | text | Packed form of the primary provisional designation (e.g. K17P08M) |
+| `unpacked_primary_provisional_designation` | text | Unpacked form of the primary provisional designation (e.g. 2017 PM8) |
+| `status` | integer | Result of the orbit fitting. This is still not used |
+| `standard_minor_planet` | boolean | Boolean to indicate whether the orbit of the object is specified in the standard_minor_planet table. This is not used right now, but we might use it in the future |
+| `standard_epoch` | boolean | If the object is in the standard_minor_planet table, this boolean indicates whether an orbit at the standard-epoch is populated |
+| `orbfit_epoch` | boolean | If the object is in the standard_minor_planet table, this boolean indicates whether the orbit at the mid-observation epoch is populated |
+| `nongravs` | boolean | Boolean to indicate whether the orbit of the object is specified in the table containing orbits with nongravitational perturbations. At the moment this is not used because we do not have a table for the orbits computed including nongravitational perturbations, even though we compute them. We might use this flag in the future it to indicate whether we computed the orbit of the object using non-gravitational perturbations. |
+| `satellite` | boolean | Boolean to indicate whether the object-orbit is specified in the satellite table |
+| `comet` | boolean | Boolean to indicate whether the object-orbit is specified in the comet table. The values are currently false because we are not saving comet orbits in a comet table |
+| `barycentric` | boolean | Boolean to indicate whether the orbit for the object is in a barycentric table. The values for this field are always false because we are not computing barycentric orbits. |
+| `no_orbit` | boolean | Flag to indicate those cases for which it was not possible to compute an orbit. |
+| `orbit_publication_references` | text[] | Array of references to MPC publication(s) containing this particular orbit calculation (e.g. DOU MPEC, mid-month, Monthly-MPC, etc) |
+| `flag_all_object_obs_consistent` | boolean | Flag to indicate if all observations for an object have been checked to be consistent with obs files. We are not currently using this field. |
+| `flag_orbit_calculated_from_consistent_obs` | boolean | Flag to indicate if the the orbit was calculated using the observations flagged as consistent. This flag is not used |
+| `flag_allowed_external` | boolean | Flag to indicate if the orbit has been computed using all the observations available and if the observations were consisten with the flat files. This flat is not used. |
+| `created_at` | timestamp without time zone | Date and time of initial row insert |
+| `updated_at` | timestamp without time zone | Date and time of latest row update |
+| `orbit_published` | integer | Flag indicating if the orbit has been published in a Circular. Field values are: 0=unpublished ; 1=published as MPEC; 2=published in DOU ; 3=published in mid-month ; 4=published in monthly. Please note that we are talking about orbit publication and not object designations |
+| `object_type` | integer | Integer to indicate the object type as defined in: https://minorplanetcenter.net/mpcops/documentation/object-types/ |
+
+<!-- END GENERATED SCHEMA TABLE -->
 
 [Back to schema overview](../replicated-tables-schema.md)
