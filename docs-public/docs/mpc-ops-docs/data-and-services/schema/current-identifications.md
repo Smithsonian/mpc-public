@@ -12,18 +12,24 @@ The current identification table contains all the primary objects (minor planets
 - For object_type, see the [object types documentation](../../orbits/object-types.md).
 - Can be linked to the numbered identifications table by primary designation. Objects that have been numbered will have `numbered` flag set to True.
 
+<!-- BEGIN GENERATED SCHEMA TABLE — managed by generate_public_schema_docs.py; do not edit below by hand -->
+
+## Columns
+
 | Column | Data type | Description |
 |--------|-----------|-------------|
-| created_at | timestamp(6) without time zone | Date and time of initial row insert |
-| updated_at | timestamp(6) without time zone | Date and time of latest row update |
-| numbered | boolean | Flag indicating if the primary designation is also numbered |
-| published | integer | Publication status: 0=not published, 1=MPEC, 2=DOU, 3=mid-month circular, 4=monthly circular |
-| identifier_ids | text[] | List of unique identifiers for tracking credit for correct identifications |
-| object_type | integer | Object classification based on orbital elements |
-| packed_secondary_provisional_designation | text | Packed form of a secondary provisional designation (e.g. K06Sf5M) |
-| packed_primary_provisional_designation | text | Packed form of the primary provisional designation (e.g. K17P08M) |
-| id | integer | PostgreSQL automatically generated identifier for row of data |
-| unpacked_secondary_provisional_designation | text | Unpacked form of a secondary provisional designation (e.g. 2006 SM415) |
-| unpacked_primary_provisional_designation | text | Unpacked form of the primary provisional designation (e.g. 2017 PM8) |
+| `id` | integer | PostgreSQL automatically generated identifier |
+| `packed_primary_provisional_designation` | text | Packed form of the primary provisional designation (e.g. K17P08M). |
+| `packed_secondary_provisional_designation` | text | Packed form of one of the secondary provisional designations (e.g. K06Sf5M). |
+| `unpacked_primary_provisional_designation` | text | Unpacked form of the primary provisional designation (e.g. 2017 PM8). |
+| `unpacked_secondary_provisional_designation` | text | Unpacked form of one of the secondary provisional designations (e.g. 2006 SM415). |
+| `published` | integer | Integer describing the publication status of the identification: 0=not published, 1=published in an MPEC, 2=published in the DOU, 3=published in a mid-month circular, 4=published in a monthly circular |
+| `identifier_ids` | text[] | List of unique identifiers used by the MPC to track credit for correct identifications |
+| `object_type` | integer | Object classification based on its orbital element. For more information please see https://minorplanetcenter.net/mpcops/documentation/object-types/ |
+| `numbered` | boolean | Flag indicating if the primary designation is also numbered (True if it numbered, False if it is not numbered) |
+| `created_at` | timestamp without time zone | Date and time of initial row insert |
+| `updated_at` | timestamp without time zone | Date and time of latest row update |
+
+<!-- END GENERATED SCHEMA TABLE -->
 
 [Back to schema overview](../replicated-tables-schema.md)
