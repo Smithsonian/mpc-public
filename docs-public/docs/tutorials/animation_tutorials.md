@@ -7,6 +7,7 @@ These build on the simpler, static tutorials in [Working with Orbits](orbit_tuto
 <div id="contents-grid"></div>
 
  - [Animating Minimoons: Earth's Temporarily Captured Asteroids](notebooks/mpc_tutorial_orbit_animation_minimoons.ipynb)
+ - [Watching the Kirkwood Gaps Form](notebooks/mpc_tutorial_orbit_animation_kirkwood.ipynb)
 
 ---
 
@@ -46,12 +47,22 @@ The camera starts on the whole orbit, glides in to follow Earth as the asteroid 
 </video>
 
 
+## The Kirkwood gaps forming
+
+A gap-free synthetic asteroid belt of test particles under the Sun, Jupiter and Saturn, integrated for a million years with REBOUND. Left: the (semi-major axis, eccentricity) plane, where the mean-motion resonances pump eccentricities until orbits cross Mars's and the particles are removed; right: the histogram of survivors with the real belt from MPCORB underneath. The 3:1 and 5:2 gaps and the ν₆ inner edge open in front of you; the 2:1 gap needs far longer. Produced by the [Kirkwood gaps animation tutorial](notebooks/mpc_tutorial_orbit_animation_kirkwood.ipynb).
+
+<video controls loop muted playsinline width="100%" poster="../animations/kirkwood_gaps_forming.png">
+  <source src="../animations/kirkwood_gaps_forming.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
 Related static tutorials in [Working with Orbits](orbit_tutorials.md): 
 
  - [From MPC Orbit to Ephemeris-Quality Integration with ASSIST](notebooks/mpc_tutorial_orbit_to_assist.ipynb) (the integration set-up used here)
  - [From MPC Orbit to N-Body Simulation](notebooks/mpc_tutorial_orbit_to_rebound.ipynb), 
  - [Earth's Co-orbital Companions](notebooks/mpc_tutorial_orbit_earth_coorbitals.ipynb) (the same rotating frame, for horseshoe and quasi-satellite orbits), and 
  - [Reference Frames for Solar System Dynamics](notebooks/mpc_tutorial_orbit_frames.ipynb).
+ - [The Kirkwood Gaps](notebooks/mpc_tutorial_orbit_kirkwood.ipynb) (the static view of the gaps the second animation reproduces)
 
 [//]: # (The MP4 files above, and GIF versions of each animation, are written by the notebook into )
 
