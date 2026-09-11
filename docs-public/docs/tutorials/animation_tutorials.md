@@ -37,14 +37,22 @@ Three real minimoons, simulated with [ASSIST](https://assist.readthedocs.io/) fr
 
 ### 2006 RH120 seen from the Sun
 
-The same capture in heliocentric coordinates with the axes fixed in space. The camera starts on the whole orbit, glides in to follow Earth as the asteroid catches up, holds through the bound phase — where the loops trace a slowly turning rosette — and pulls back out after the release.
+The same capture in heliocentric coordinates with the axes fixed in space. 
+The camera starts on the whole orbit, glides in to follow Earth as the asteroid catches up, holds through the bound phase — where the loops trace a slowly turning rosette — and pulls back out after the release.
 
 <video controls loop muted playsinline width="100%" poster="../animations/minimoon_2006_RH120_heliocentric.png">
   <source src="../animations/minimoon_2006_RH120_heliocentric.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
-[//]: # (Related static tutorials in [Working with Orbits](orbit_tutorials.md): [From MPC Orbit to Ephemeris-Quality Integration with ASSIST](notebooks/mpc_tutorial_orbit_to_assist.ipynb) (the integration set-up used here), [From MPC Orbit to N-Body Simulation](notebooks/mpc_tutorial_orbit_to_rebound.ipynb), [Earth's Co-orbital Companions](notebooks/mpc_tutorial_orbit_earth_coorbitals.ipynb) (the same rotating frame, for horseshoe and quasi-satellite orbits) and [Reference Frames for Solar System Dynamics](notebooks/mpc_tutorial_orbit_frames.ipynb).
 
-The MP4 files above, and GIF versions of each animation, are written by the notebook into 
-the `animations/` folder next to it, so re-running the notebook for a new object produces a drop-in addition to this page.)
+Related static tutorials in [Working with Orbits](orbit_tutorials.md): 
+
+ - [From MPC Orbit to Ephemeris-Quality Integration with ASSIST](notebooks/mpc_tutorial_orbit_to_assist.ipynb) (the integration set-up used here)
+ - [From MPC Orbit to N-Body Simulation](notebooks/mpc_tutorial_orbit_to_rebound.ipynb), 
+ - [Earth's Co-orbital Companions](notebooks/mpc_tutorial_orbit_earth_coorbitals.ipynb) (the same rotating frame, for horseshoe and quasi-satellite orbits), and 
+ - [Reference Frames for Solar System Dynamics](notebooks/mpc_tutorial_orbit_frames.ipynb).
+
+[//]: # (The MP4 files above, and GIF versions of each animation, are written by the notebook into )
+
+[//]: # (the `animations/` folder next to it, so re-running the notebook for a new object produces a drop-in addition to this page.&#41;)
