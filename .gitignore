@@ -146,3 +146,6 @@ assist_ephem_data/
 
 # Large MPC catalogue file downloaded by the orbit-plotting tutorial notebook
 MPCORB.DAT.gz
+
+# Figure written by the multi-scale orbit tutorial notebook
+docs-public/docs/tutorials/notebooks/small_bodies_three_scales.png
