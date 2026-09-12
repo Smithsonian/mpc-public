@@ -83,10 +83,11 @@ class Wis(MPCObsCodes):
         # Call MPCObsCodes's __init__ to ensure it is properly set up
         super().__init__()
 
-        # The cache for get_obs_helio_equ_AU is PER-INSTANCE: the cache key describes
-        # only the call signature (obscode, times, flags), not which kernels are loaded,
-        # so a shared cache would let a DE430 instance serve a DE440 instance's results.
+        # These caches are PER-INSTANCE: the cache keys describe only the call
+        # signature (times and flags), not which kernels are loaded, so a shared
+        # cache would let a DE430 instance serve a DE440 instance's results.
         self.cache_get_obs_helio_equ_AU: LRUCache = LRUCache(maxsize=1024)
+        self.cache_get_bary_wrt_helio: LRUCache = LRUCache(maxsize=1024)
 
         # Populated by __enter__; the position methods refuse to run until then
         self.loaded_kernels: list[KernelSpecifier] = []
@@ -160,7 +161,8 @@ class Wis(MPCObsCodes):
     ) -> bool:
         """Clear the loaded SPICE kernels and cache on exiting the context manager."""
         sp.kclear()  # <- Clear the spice kernels from memory
-        self.cache_get_obs_helio_equ_AU.clear()  # <- Clear the cache
+        self.cache_get_obs_helio_equ_AU.clear()  # <- Clear the caches
+        self.cache_get_bary_wrt_helio.clear()
         self.loaded_kernels = []
         self._entered = False
         return False  # <- Do not suppress exceptions
@@ -240,6 +242,20 @@ class Wis(MPCObsCodes):
 
         # Create a unique hash key
         return hashkey(name, times_jd_tuple, fallback_to_geo, return_velocity)
+
+    def compute_bary_wrt_helio_key(*args: object, **kwargs: object) -> tuple:
+        """Generate a unique cache key for `get_bary_wrt_helio` (below).
+
+        N.B.: `test_speed` shows the same kind of caching helps make it ~100x faster
+        to get the same data.
+        """
+        # args[1] is `times`; args[0] is the `self` that `cachedmethod` passes through
+        times = args[1]
+        # Key on the UTC JDs, because that is what `_convert_time` actually feeds to
+        # SPICE. Keying on `times.jd` instead would make Time(X, scale="utc") and
+        # Time(X, scale="tdb") collide despite being ~69s (i.e. ~2000km) apart.
+        times_jd_tuple = tuple(np.atleast_1d(times.utc.jd))  # type: ignore
+        return hashkey(times_jd_tuple)
 
     @cachedmethod(operator.attrgetter("cache_get_obs_helio_equ_AU"), key=compute_key)
     def get_obs_helio_equ_AU(
@@ -326,6 +342,10 @@ class Wis(MPCObsCodes):
         else:
             return None  # <- Unknown obscode and not falling back to geocenter
 
+    @cachedmethod(
+        operator.attrgetter("cache_get_bary_wrt_helio"),
+        key=compute_bary_wrt_helio_key,
+    )
     def get_bary_wrt_helio(
         self, times: Time
     ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
@@ -342,6 +362,9 @@ class Wis(MPCObsCodes):
         - posns: shape=(N_times,3) array of position vectors [AU]
         - vels: shape=(N_times,3) array of velocity vectors [AU/day]
         - ltts: shape=(N_times) array of light travel times [days]
+
+        The returned arrays are cached and shared between calls, so callers must not
+        modify them in place.
         """
         # Runtime validation
         self._require_context()
