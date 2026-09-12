@@ -49,7 +49,7 @@ The camera starts on the whole orbit, glides in to follow Earth as the asteroid 
 
 ## The Kirkwood gaps forming
 
-A gap-free synthetic asteroid belt of 4,000 test particles under the Sun, Jupiter and Saturn, integrated for ten million years with REBOUND. Left: the (semi-major axis, eccentricity) plane, where the mean-motion resonances pump eccentricities until orbits cross Mars's and the particles are removed; right: the histogram of survivors with the real belt from MPCORB underneath. The 3:1 and 5:2 gaps and the ν₆ inner edge open within the first million years, the 7:3 follows slowly, and the 2:1 gap only begins to empty after three million years. Produced by the [Kirkwood gaps animation tutorial](notebooks/mpc_tutorial_orbit_animation_kirkwood.ipynb).
+A gap-free synthetic asteroid belt of 4,000 test particles under the Sun, Jupiter and Saturn, integrated for a hundred million years with REBOUND. Left: the (semi-major axis, eccentricity) plane, where the mean-motion resonances pump eccentricities until orbits cross Mars's and the particles are removed; right: the histogram of survivors with the real belt from MPCORB underneath. The clock speeds up tenfold at one million and again at ten million years. The 3:1 and 5:2 gaps and the ν₆ inner edge open within the first million years, the 7:3 takes ten million to get going, and the 2:1 does nothing for three million years and then empties over the following tens of millions. Produced by the [Kirkwood gaps animation tutorial](notebooks/mpc_tutorial_orbit_animation_kirkwood.ipynb).
 
 <video controls loop muted playsinline width="100%" poster="../animations/kirkwood_gaps_forming.png">
   <source src="../animations/kirkwood_gaps_forming.mp4" type="video/mp4">
