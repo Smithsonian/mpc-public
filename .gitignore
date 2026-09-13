@@ -146,3 +146,9 @@ assist_ephem_data/
 
 # Animated GIFs written by the orbit-animation tutorial notebooks (the MP4s and poster PNGs are committed)
 docs-public/docs/tutorials/animations/*.gif
+
+# Cached integrations written by the Kirkwood-gaps animation notebook
+docs-public/docs/tutorials/notebooks/kirkwood_gaps_sim*.npz
+
+# Checkpoints of the three-phase Kirkwood-gaps integration
+docs-public/docs/tutorials/notebooks/kirkwood_gaps_ckpt/
