@@ -144,5 +144,7 @@ dmypy.json
 # Large JPL ephemeris files downloaded by the ASSIST tutorial notebook
 assist_ephem_data/
 
+# Animated GIFs written by the orbit-animation tutorial notebooks (the MP4s and poster PNGs are committed)
+docs-public/docs/tutorials/animations/*.gif
 # Large MPC catalogue file downloaded by the orbit-plotting tutorial notebook
 MPCORB.DAT.gz
