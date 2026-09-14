@@ -2,8 +2,9 @@
 
 The observations alterations unassociations table records observations that were unassociated from their current designations. These observations are generally sent to the ITF (Isolated Tracklet File).
 
-!!! note
-    When observations are sent to the ITF, the `status` field in `obs_sbn` changes from `P` to `I`.
+::: {.callout-note}
+When observations are sent to the ITF, the `status` field in `obs_sbn` changes from `P` to `I`.
+:::
 
 | Column | Data type | Description |
 |--------|-----------|-------------|

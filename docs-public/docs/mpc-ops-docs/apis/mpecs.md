@@ -20,9 +20,10 @@ The API accepts a JSON object with the following fields:
 | `issued_before` | Return only those MPECs published _before_ a given date | date string with optional time (e.g., `2000-01-01`, `2000-01-01 00:00:00`) | No                        |
 | `issued_after` | Return only those MPECs published _after_ a given date | id.                                                                        | No                                                                         |
 
-!!! note
-    The search term is always checked against both the "title" and "full name" fields of an MPEC. This is to cast a wide net in the search results.
-    For example, the MPEC titled [1992 BB](https://www.minorplanetcenter.net/mpec/J93/J93S13.html) has a "full name" called `1993-S13`, which is compressed into a mixed [Base62](https://en.wikipedia.org/wiki/Base62) character string and base 10 numeral system as `J93S13`.
+::: {.callout-note}
+The search term is always checked against both the "title" and "full name" fields of an MPEC. This is to cast a wide net in the search results.
+For example, the MPEC titled [1992 BB](https://www.minorplanetcenter.net/mpec/J93/J93S13.html) has a "full name" called `1993-S13`, which is compressed into a mixed [Base62](https://en.wikipedia.org/wiki/Base62) character string and base 10 numeral system as `J93S13`.
+:::
 
 ### Search Term Specification
 
@@ -45,8 +46,9 @@ Up to 1,000 MPECs may be returned for each search term, depending on the number 
    %=%       (most identification MPECs)
    ```
 
-!!! note
-    Currently, object designations are resolved into the "Unpacked Primary" and "Secondary" "Provisional Designations". See the documentation on [designations](../designations/provisional-designations.md) and [identifications](../identifications/index.md) for more information. Unpacked designations are the most common title format of MPECs that refer to specific objects. Future versions of this search tool will be able to identify MPECs where a given object is mentioned among others, in the title or within the MPEC text itself. For instance, in Daily Orbit Updates or identifications MPECs. For example, [MPEC 2014-A37](https://www.minorplanetcenter.net/mpec/K14/K14A37.html). 
+::: {.callout-note}
+Currently, object designations are resolved into the "Unpacked Primary" and "Secondary" "Provisional Designations". See the documentation on [designations](../designations/provisional-designations.md) and [identifications](../identifications/index.md) for more information. Unpacked designations are the most common title format of MPECs that refer to specific objects. Future versions of this search tool will be able to identify MPECs where a given object is mentioned among others, in the title or within the MPEC text itself. For instance, in Daily Orbit Updates or identifications MPECs. For example, [MPEC 2014-A37](https://www.minorplanetcenter.net/mpec/K14/K14A37.html). 
+:::
 
 ## Response Format
 

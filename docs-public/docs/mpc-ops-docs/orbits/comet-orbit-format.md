@@ -15,7 +15,7 @@ Orbital elements for comets are heliocentric.
 <tbody>
 <tr><td>1&ndash;4</td><td>i4</td><td>Periodic comet number</td></tr>
 <tr><td>5</td><td>a1</td><td>Orbit type (generally &lsquo;C&rsquo;, &lsquo;P&rsquo; or &lsquo;D&rsquo;)</td></tr>
-<tr><td>6&ndash;12</td><td>a7</td><td>Provisional designation (<a href="../designations/packed-designations.md">packed form</a>)</td></tr>
+<tr><td>6&ndash;12</td><td>a7</td><td>Provisional designation (<a href="../designations/packed-designations.html">packed form</a>)</td></tr>
 <tr><td>21&ndash;24</td><td>i4</td><td>Year of perihelion passage</td></tr>
 <tr><td>26&ndash;29</td><td>a5</td><td>Month of perihelion passage</td></tr>
 <tr><td>30&ndash;37</td><td>f7.4</td><td>Day of perihelion passage (TT)</td></tr>
@@ -32,8 +32,8 @@ Orbital elements for comets are heliocentric.
 <tr><td>96&ndash;105</td><td>&mdash;</td><td>Blank if no epoch</td></tr>
 <tr><td>107&ndash;111</td><td>i5</td><td>Number of observations in solution</td></tr>
 <tr><td>112</td><td>a1</td><td>&lsquo;*&rsquo; indicates non-gravitational parameters considered</td></tr>
-<tr><td>114&ndash;118</td><td>a5</td><td>Date of first observation (<a href="../designations/packed-dates.md">packed format</a>)</td></tr>
-<tr><td>120&ndash;124</td><td>a5</td><td>Date of last observation (<a href="../designations/packed-dates.md">packed format</a>)</td></tr>
+<tr><td>114&ndash;118</td><td>a5</td><td>Date of first observation (<a href="../designations/packed-dates.html">packed format</a>)</td></tr>
+<tr><td>120&ndash;124</td><td>a5</td><td>Date of last observation (<a href="../designations/packed-dates.html">packed format</a>)</td></tr>
 <tr><td>126</td><td>a1</td><td>Source of perturbing coordinates</td></tr>
 <tr><td>128&ndash;130</td><td>a3</td><td>Brief descriptor of perturbers (blank if unperturbed)</td></tr>
 <tr><td>132&ndash;135</td><td>h4</td><td>Fuller description of perturbers (&lsquo;0000&rsquo; if unperturbed)</td></tr>
@@ -57,7 +57,7 @@ within +/- 20 days of the time of perihelion passage.
 <tbody>
 <tr><td>1&ndash;4</td><td>i4</td><td>Periodic comet number</td></tr>
 <tr><td>5</td><td>a1</td><td>Orbit type (generally &lsquo;C&rsquo;, &lsquo;P&rsquo; or &lsquo;D&rsquo;)</td></tr>
-<tr><td>6&ndash;12</td><td>a7</td><td>Provisional designation (<a href="../designations/packed-designations.md">packed form</a>)</td></tr>
+<tr><td>6&ndash;12</td><td>a7</td><td>Provisional designation (<a href="../designations/packed-designations.html">packed form</a>)</td></tr>
 <tr><td>15&ndash;18</td><td>i4</td><td>Year of perihelion passage</td></tr>
 <tr><td>20&ndash;21</td><td>i2</td><td>Month of perihelion passage</td></tr>
 <tr><td>23&ndash;29</td><td>f7.4</td><td>Day of perihelion passage (TT)</td></tr>

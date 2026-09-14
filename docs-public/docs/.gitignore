@@ -1,0 +1,11 @@
+# Quarto build output and cache
+/_site/
+/.quarto/
+**/*.quarto_ipynb
+**/.ipynb_checkpoints/
+
+# Large data files downloaded when running the tutorial notebooks locally
+tutorials/notebooks/*.DAT
+tutorials/notebooks/*.DAT.gz
+tutorials/notebooks/*.bsp
+assist_ephem_data/

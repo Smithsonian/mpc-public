@@ -129,14 +129,15 @@ Columns 6-12 contain the provisional designation or the temporary
 designation. The provisional designation is stored in a
 [7-character packed form](../designations/packed-designations.md).
 
-!!! note
-    Temporary designations are designations assigned by the observer for new
-    or unidentified objects. Such designations must begin in column 6,
-    should not exceed 6 characters in length, and should start with one or more
-    letters.
+::: {.callout-note}
+Temporary designations are designations assigned by the observer for new
+or unidentified objects. Such designations must begin in column 6,
+should not exceed 6 characters in length, and should start with one or more
+letters.
 
-    It is important that every observation has a designation and that the
-    same designation is used for all observations of the same object.
+It is important that every observation has a designation and that the
+same designation is used for all observations of the same object.
+:::
 
 #### Discovery Asterisk
 Discovery observations for new (or unidentified) objects should contain
@@ -218,12 +219,13 @@ Column 5 is always `S` for a satellite observation.
 Columns 6-12 contain a packed version of the provisional designation
 for those objects without Roman numeral designations.
 
-!!! note
-    The first two digits of the year are packed into a single character
-    in column 6 (I = 18, J = 19, K = 20). Columns 7-8 contain the last
-    two digits of the year.
-    Columns 10-11 contain the order within the year. Column 12 will
-    be always be `0`. This is similar to the scheme used for comets.
+::: {.callout-note}
+The first two digits of the year are packed into a single character
+in column 6 (I = 18, J = 19, K = 20). Columns 7-8 contain the last
+two digits of the year.
+Columns 10-11 contain the order within the year. Column 12 will
+be always be `0`. This is similar to the scheme used for comets.
+:::
 
 Examples:
 

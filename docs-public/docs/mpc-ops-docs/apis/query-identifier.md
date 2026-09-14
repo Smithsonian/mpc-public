@@ -51,8 +51,9 @@ The following fields are accepted by the API:
 | `comparison` | String          | No       | None    | [PSQL comparison operator](https://www.postgresql.org/docs/current/functions-matching.html#FUNCTIONS-MATCHING) for fuzzy name searches; one of `['=', 'ILIKE', '%']` |
 | `group`      | String          | No       | None    | One of `['Minor Planets', 'Natural Satellites', 'Comets', 'Interstellar']`; constrains the name search to a category of objects.                                    |
 
-!!! note
-    The `comparison` and `group` fields are only applicable in name searches.
+::: {.callout-note}
+The `comparison` and `group` fields are only applicable in name searches.
+:::
 
 ## Response Fields
 

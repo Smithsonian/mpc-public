@@ -18,8 +18,9 @@ https://data.minorplanetcenter.net/api/get-obs-neocp
 | `output_format` | List of strings           | No | Output format(s): `XML`, `ADES_DF`, `OBS_DF`, `OBS80` | `XML`   |
 | `ades_version` | String                    | No | ADES version: `2017` or `2022`                        | `2022`  |
 
-!!! note 
-    Only objects currently on the NEOCP can be queried. For confirmed objects, use the [Observations API](get-obs.md).
+::: {.callout-note}
+Only objects currently on the NEOCP can be queried. For confirmed objects, use the [Observations API](get-obs.md).
+:::
 
 ## Output Formats
 
@@ -32,8 +33,9 @@ https://data.minorplanetcenter.net/api/get-obs-neocp
 
 ## Examples
 
-!!! note
-    These examples use tracklet IDs that may no longer be on the NEOCP. Replace with a current tracklet from the [NEOCP](https://minorplanetcenter.net/iau/NEO/toconfirm_tabular.html).
+::: {.callout-note}
+These examples use tracklet IDs that may no longer be on the NEOCP. Replace with a current tracklet from the [NEOCP](https://minorplanetcenter.net/iau/NEO/toconfirm_tabular.html).
+:::
 
 ### Python - XML Format
 

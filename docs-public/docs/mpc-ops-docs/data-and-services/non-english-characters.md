@@ -26,8 +26,9 @@ Use of the scheme below will ensure that any special characters required in your
 | Z with dot above (capital) | Capital Polish Z | `\.Z` |
 | z with dot above (small) | Small Polish z | `\.z` |
 
-!!! note
-    When the accented character is *i*, the dot is usually replaced by the accent. The dotless i is represented using `{\i}`, so an i with an acute accent is written as `\'{\\i}`.
+::: {.callout-note}
+When the accented character is *i*, the dot is usually replaced by the accent. The dotless i is represented using `{\i}`, so an i with an acute accent is written as `\'{\\i}`.
+:::
 
 ## Examples
 

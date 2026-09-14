@@ -41,8 +41,9 @@ Each fault event is a JSON object with the following fields:
 | `phase` | Integer (non-negative) | Processing stage identifier |
 | `failure_code` | Integer (non-zero) | Fault classification code |
 
-!!! note
-    The `fault_events` list may be non-empty even if `accepted` is `true`. In that case, any events represent warnings that did not prevent the acceptance of the submission. Every submission where accepted is false should have at least one event log entry indicating the problem. Currently, neither `failure_code` nor `phase` values are documented, nor are they guaranteed to remain stable.
+::: {.callout-note}
+The `fault_events` list may be non-empty even if `accepted` is `true`. In that case, any events represent warnings that did not prevent the acceptance of the submission. Every submission where accepted is false should have at least one event log entry indicating the problem. Currently, neither `failure_code` nor `phase` values are documented, nor are they guaranteed to remain stable.
+:::
 
 ## Examples
 

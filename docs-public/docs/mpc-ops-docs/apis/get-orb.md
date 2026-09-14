@@ -16,8 +16,9 @@ https://data.minorplanetcenter.net/api/get-orb
 |-----------------|-----------------|----------|------------------------------------------------------------------------------------------------|-------------|
 | `desig`         | String          | Yes      | Name, permanent or provisional designation                                                     | NA          |
 
-!!! note
-    You may use any designation format supported by the [Designation Identifier API](./query-identifier.md). Currently, the Orbits API is limited to single object queries.
+::: {.callout-note}
+You may use any designation format supported by the [Designation Identifier API](./query-identifier.md). Currently, the Orbits API is limited to single object queries.
+:::
 
 ## Response Format
 

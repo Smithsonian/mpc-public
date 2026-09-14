@@ -2,9 +2,10 @@
 
 The observations alterations redesignations table records observations that have been redesignated -- tracklets officially published in MPC circulars that have now been assigned a brand new designation.
 
-!!! note
-    - Usually published in a monthly circular; recorded in `redesigs.dat` in the meantime.
-    - MPC is drastically reducing redesignations; this table may be used less in the future.
+::: {.callout-note}
+- Usually published in a monthly circular; recorded in `redesigs.dat` in the meantime.
+- MPC is drastically reducing redesignations; this table may be used less in the future.
+:::
 
 | Column | Data type | Description |
 |--------|-----------|-------------|

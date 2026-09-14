@@ -2,8 +2,9 @@
 
 The NEOCP observations table contains observations and corresponding ADES uncertainties for objects currently on the NEOCP.
 
-!!! note
-    Fields prefixed with "ADES:" are valid ADES fields.
+::: {.callout-note}
+Fields prefixed with "ADES:" are valid ADES fields.
+:::
 
 | Column | Data type | Description |
 |--------|-----------|-------------|
