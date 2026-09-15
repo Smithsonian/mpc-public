@@ -215,7 +215,7 @@ class Wis(MPCObsCodes):
                 return kernel
         raise RuntimeError(f"No kernel loaded for obscode {obscode}")
 
-    def compute_key(*args: object, **kwargs: object) -> tuple:
+    def compute_obs_helio_equ_AU_key(*args: object, **kwargs: object) -> tuple:
         """Generate a unique cache key for `get_obs_helio_equ_AU` (below).
 
         Made more complex by the need to deal with positional arguments and keyword arguments.
@@ -257,7 +257,10 @@ class Wis(MPCObsCodes):
         times_jd_tuple = tuple(np.atleast_1d(times.utc.jd))  # type: ignore
         return hashkey(times_jd_tuple)
 
-    @cachedmethod(operator.attrgetter("cache_get_obs_helio_equ_AU"), key=compute_key)
+    @cachedmethod(
+        operator.attrgetter("cache_get_obs_helio_equ_AU"),
+        key=compute_obs_helio_equ_AU_key,
+    )
     def get_obs_helio_equ_AU(
         self,
         obscodeMPC: str,

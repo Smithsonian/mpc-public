@@ -1,12 +1,13 @@
 """Unit tests for the cache keys used by `Wis.get_obs_helio_equ_AU` and `get_bary_wrt_helio`.
 
-`Wis.compute_key` and `Wis.compute_bary_wrt_helio_key` are plain functions of the
-call arguments, so they can be exercised directly. That keeps coverage of the key
-logic in the unit-test run, where the end-to-end regression tests in
-`test_wis_ephemeris.py` need kernels and network.
+`Wis.compute_obs_helio_equ_AU_key` and `Wis.compute_bary_wrt_helio_key` are plain
+functions of the call arguments, so they can be exercised directly. That keeps
+coverage of the key logic in the unit-test run, where the end-to-end regression
+tests in `test_wis_ephemeris.py` need kernels and network.
 """
 
 from collections.abc import Callable
+from functools import partial
 
 import numpy as np
 import pytest
@@ -16,18 +17,15 @@ from cachetools import LRUCache
 
 from wis.wis import Wis
 
-
-def _obs_helio_key(times: Time) -> tuple:
-    return Wis.compute_key(None, "F51", times)
-
-
-def _bary_wrt_helio_key(times: Time) -> tuple:
-    return Wis.compute_bary_wrt_helio_key(None, times)
-
-
 KEY_FUNC_CASES = [
-    pytest.param(_obs_helio_key, id="get_obs_helio_equ_AU"),
-    pytest.param(_bary_wrt_helio_key, id="get_bary_wrt_helio"),
+    pytest.param(
+        partial(Wis.compute_obs_helio_equ_AU_key, None, "F51"),
+        id="get_obs_helio_equ_AU",
+    ),
+    pytest.param(
+        partial(Wis.compute_bary_wrt_helio_key, None),
+        id="get_bary_wrt_helio",
+    ),
 ]
 
 
@@ -65,9 +63,9 @@ def test_obs_helio_key_distinguishes_flags() -> None:
     """`fallback_to_geo` / `return_velocity` must key the same whether positional or keyword."""
     times = Time([2458337.82915783], format="jd", scale="tdb")
 
-    default = Wis.compute_key(None, "ZZZ", times)
-    positional = Wis.compute_key(None, "ZZZ", times, True)
-    keyword = Wis.compute_key(None, "ZZZ", times, fallback_to_geo=True)
+    default = Wis.compute_obs_helio_equ_AU_key(None, "ZZZ", times)
+    positional = Wis.compute_obs_helio_equ_AU_key(None, "ZZZ", times, True)
+    keyword = Wis.compute_obs_helio_equ_AU_key(None, "ZZZ", times, fallback_to_geo=True)
 
     assert default != positional
     assert positional == keyword
