@@ -292,9 +292,9 @@ class Wis(MPCObsCodes):
             light_travel_times [days]).
             None if obscode unknown and fallback_to_geo is False.
 
-        The returned arrays are cached and shared between calls, so they are marked
-        read-only: modifying them in place raises ValueError instead of corrupting the
-        cache for later callers.
+            The returned arrays are cached and shared between calls, so they are marked
+            read-only: modifying them in place raises ValueError instead of corrupting
+            the cache for later callers.
 
         Raises:
             RuntimeError: If the instance is not being used as a context manager, or
@@ -378,14 +378,15 @@ class Wis(MPCObsCodes):
 
         Note: This method requires a ground kernel to be loaded (for Earth position).
 
-        Returned Arrays:
-        - posns: shape=(N_times,3) array of position vectors [AU]
-        - vels: shape=(N_times,3) array of velocity vectors [AU/day]
-        - ltts: shape=(N_times) array of light travel times [days]
+        Returns:
+            Tuple of (posns, vels, ltts):
+                posns: shape=(N_times,3) array of position vectors [AU]
+                vels: shape=(N_times,3) array of velocity vectors [AU/day]
+                ltts: shape=(N_times) array of light travel times [days]
 
-        The returned arrays are cached and shared between calls, so they are marked
-        read-only: modifying them in place raises ValueError instead of corrupting the
-        cache for later callers.
+            The returned arrays are cached and shared between calls, so they are marked
+            read-only: modifying them in place raises ValueError instead of corrupting
+            the cache for later callers.
         """
         # Runtime validation
         self._require_context()
