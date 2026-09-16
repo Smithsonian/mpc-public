@@ -225,8 +225,10 @@ class Wis(MPCObsCodes):
 
         N.B.: `test_speed` seems to show that the caching helps make it ~100x faster to get the same data
         """
-        # Extract positional arguments
-        _, name, times = args[0], args[1], args[2]
+        # Extract positional arguments; fall back to the keyword form so that
+        # `get_obs_helio_equ_AU(obscodeMPC=..., times=...)` does not raise IndexError.
+        name = args[1] if len(args) > 1 else kwargs["obscodeMPC"]
+        times = args[2] if len(args) > 2 else kwargs["times"]
         # Key on the UTC JDs, because that is what `_convert_time` actually feeds to
         # SPICE. Keying on `times.jd` instead would make Time(X, scale="utc") and
         # Time(X, scale="tdb") collide despite being ~69s (i.e. ~2000km) apart.
@@ -252,8 +254,10 @@ class Wis(MPCObsCodes):
         N.B.: `test_speed` shows the same kind of caching helps make it ~100x faster
         to get the same data.
         """
-        # args[1] is `times`; args[0] is the `self` that `cachedmethod` passes through
-        times = args[1]
+        # args[1] is `times` when passed positionally; args[0] is the `self` that
+        # `cachedmethod` passes through. Fall back to the keyword form so that
+        # `get_bary_wrt_helio(times=...)` does not raise IndexError.
+        times = args[1] if len(args) > 1 else kwargs["times"]
         # Key on the UTC JDs, because that is what `_convert_time` actually feeds to
         # SPICE. Keying on `times.jd` instead would make Time(X, scale="utc") and
         # Time(X, scale="tdb") collide despite being ~69s (i.e. ~2000km) apart.

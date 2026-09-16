@@ -96,6 +96,26 @@ def test_obs_helio_key_distinguishes_flags() -> None:
     assert positional == keyword
 
 
+def test_obs_helio_key_accepts_keyword_arguments() -> None:
+    """`get_obs_helio_equ_AU(obscodeMPC=..., times=...)` must key like the positional call."""
+    times = Time([2458337.82915783], format="jd", scale="tdb")
+
+    positional = Wis.compute_obs_helio_equ_AU_key(None, "F51", times)
+    keyword = Wis.compute_obs_helio_equ_AU_key(None, obscodeMPC="F51", times=times)
+
+    assert positional == keyword
+
+
+def test_bary_wrt_helio_key_accepts_keyword_times() -> None:
+    """`get_bary_wrt_helio(times=...)` must key like the positional call."""
+    times = Time([2458337.82915783], format="jd", scale="tdb")
+
+    positional = Wis.compute_bary_wrt_helio_key(None, times)
+    keyword = Wis.compute_bary_wrt_helio_key(None, times=times)
+
+    assert positional == keyword
+
+
 def test_get_bary_wrt_helio_caches_spice_call(
     bare_wis: Wis,
     monkeypatch: pytest.MonkeyPatch,
@@ -140,3 +160,17 @@ def test_in_place_mutation_of_cached_results_raises(bare_wis: Wis) -> None:
         obs_posns[0, 0] = 0.0
     with pytest.raises(ValueError):
         bary_posns[0, 0] = 0.0
+
+
+def test_keyword_calls_share_a_cache_entry_with_positional(bare_wis: Wis) -> None:
+    """Keyword and positional calls must reach the same cache entry, not compute twice."""
+    times = Time([2458337.82915783], format="jd", scale="tdb")
+
+    obs_positional = bare_wis.get_obs_helio_equ_AU("F51", times)
+    obs_keyword = bare_wis.get_obs_helio_equ_AU(obscodeMPC="F51", times=times)
+    bary_positional = bare_wis.get_bary_wrt_helio(times)
+    bary_keyword = bare_wis.get_bary_wrt_helio(times=times)
+
+    assert obs_positional is not None and obs_keyword is not None
+    assert obs_positional is obs_keyword
+    assert bary_positional is bary_keyword
