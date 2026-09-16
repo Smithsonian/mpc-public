@@ -52,9 +52,16 @@ Common questions and answers about MPC operations and services.
     </details>
     
     <details id="faq-mpec-mailing-list">
-        <summary>How do I get removed from the MPEC mailing list?</summary>
+        <summary>How do I manage my subscriptions to the the MPEC or MPC announcment mailing lists?</summary>
         <div class="faq-answer">
-            <p>Please use the following link to automatically update your email on the MPEC mailing list: <a href="https://mpc-service.atlassian.net/servicedesk/customer/portal/18">Subscription to Minor Planet Center Notification Services</a>.</p>
+            <p>
+                Please use the following links to automatically update your email on the MPEC mailing list:
+                <ul>
+                    <li><a href="https://minorplanetcenter.net/mpcops/signup/mpecs/">Subscription to Minor Planet Electronic Circulars (MPECs)</a>.</li>
+                    <li><a href="https://minorplanetcenter.net/mpcops/signup/mpecs/unsubscribe">Unsubscription to Minor Planet Electronic Circulars (MPECs)</a>.</li>
+                </ul>
+                For the MPC Announcements Email List, please see <a href="https://mpc-service.atlassian.net/servicedesk/customer/portal/18">this page</a>.
+            </p>
         </div>
     </details>
     
