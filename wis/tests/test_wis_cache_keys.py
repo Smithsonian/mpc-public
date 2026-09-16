@@ -29,6 +29,31 @@ KEY_FUNC_CASES = [
 ]
 
 
+def _fake_spkezr(
+    target: str, epochs: np.ndarray, frame: str, abcorr: str, observer: str
+) -> tuple[list[list[float]], list[float]]:
+    """Minimal spkezr stub: one (x, y, z, vx, vy, vz) state and ltt per epoch."""
+    return ([[1.0, 2.0, 3.0, 4.0, 5.0, 6.0]] * len(epochs), [0.0] * len(epochs))
+
+
+@pytest.fixture
+def bare_wis(monkeypatch: pytest.MonkeyPatch) -> Wis:
+    """A Wis instance with no `__init__`, kernels, or network; SPICE calls are stubbed."""
+    instance = Wis.__new__(Wis)
+    instance.cache_get_obs_helio_equ_AU = LRUCache(maxsize=1024)
+    instance.cache_get_bary_wrt_helio = LRUCache(maxsize=1024)
+    instance.geocentric_xyz_dict = {"F51": np.array([0.1, 0.2, 0.3])}
+    instance._entered = True
+    monkeypatch.setattr(instance, "_has_ground_kernel", lambda: True)
+    monkeypatch.setattr(instance, "_has_satellite_kernel", lambda obscode: False)
+    # `_convert_time` calls utc2et, which needs leapsecond kernels; stub it out.
+    monkeypatch.setattr(sp, "utc2et", lambda _: 0.0)
+    monkeypatch.setattr(sp, "pxform", lambda *args: np.eye(3))
+    monkeypatch.setattr(sp, "spkpos", lambda *args: ([[1.0, 2.0, 3.0]], [0.0]))
+    monkeypatch.setattr(sp, "spkezr", _fake_spkezr)
+    return instance
+
+
 @pytest.mark.parametrize("key_func", KEY_FUNC_CASES)
 def test_key_distinguishes_time_scales(key_func: Callable[[Time], tuple]) -> None:
     """A UTC and a TDB Time with the same numeric JD must not share a cache key.
@@ -72,29 +97,46 @@ def test_obs_helio_key_distinguishes_flags() -> None:
 
 
 def test_get_bary_wrt_helio_caches_spice_call(
+    bare_wis: Wis,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """Two identical calls must reach SPICE once and reuse the cached arrays."""
     calls: list[np.ndarray] = []
 
-    def fake_spkezr(
+    def counting_spkezr(
         target: str, epochs: np.ndarray, frame: str, abcorr: str, observer: str
     ) -> tuple[list[list[float]], list[float]]:
         calls.append(epochs)
-        return ([[1.0, 2.0, 3.0, 4.0, 5.0, 6.0]] * len(epochs), [0.0] * len(epochs))
+        return _fake_spkezr(target, epochs, frame, abcorr, observer)
 
-    monkeypatch.setattr(sp, "spkezr", fake_spkezr)
-    # `_convert_time` calls utc2et, which needs leapsecond kernels; stub it out.
-    monkeypatch.setattr(sp, "utc2et", lambda _: 0.0)
-
-    instance = Wis.__new__(Wis)  # <- no __init__, so no kernels or network
-    instance.cache_get_bary_wrt_helio = LRUCache(maxsize=1024)
-    monkeypatch.setattr(instance, "_has_ground_kernel", lambda: True)
-    instance._entered = True
+    monkeypatch.setattr(sp, "spkezr", counting_spkezr)
 
     times = Time([2458337.82915783], format="jd", scale="utc")
-    first = instance.get_bary_wrt_helio(times)
-    second = instance.get_bary_wrt_helio(times)
+    first = bare_wis.get_bary_wrt_helio(times)
+    second = bare_wis.get_bary_wrt_helio(times)
 
     assert len(calls) == 1
     assert first[0][0, 0] == second[0][0, 0]
+
+
+def test_cached_results_are_read_only(bare_wis: Wis) -> None:
+    """The cached arrays are shared between callers, so they are returned read-only."""
+    times = Time([2458337.82915783], format="jd", scale="tdb")
+
+    obs_result = bare_wis.get_obs_helio_equ_AU("F51", times)
+    assert obs_result is not None
+    for array in (*obs_result, *bare_wis.get_bary_wrt_helio(times)):
+        assert not array.flags.writeable
+
+
+def test_in_place_mutation_of_cached_results_raises(bare_wis: Wis) -> None:
+    """A caller cannot corrupt the shared cache entry by mutating a returned array."""
+    times = Time([2458337.82915783], format="jd", scale="tdb")
+
+    obs_posns, _ = bare_wis.get_obs_helio_equ_AU("F51", times)
+    bary_posns, _, _ = bare_wis.get_bary_wrt_helio(times)
+
+    with pytest.raises(ValueError):
+        obs_posns[0, 0] = 0.0
+    with pytest.raises(ValueError):
+        bary_posns[0, 0] = 0.0

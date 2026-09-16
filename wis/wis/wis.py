@@ -9,6 +9,7 @@ By default these are heliocentric equatorial coordinates
 import logging
 import operator
 from types import TracebackType
+from typing import TypeVar
 
 # Third-party imports
 # -----------------------------------------
@@ -27,6 +28,8 @@ from wis.obscodes import MPCObsCodes
 
 # Set up logger
 logger = logging.getLogger(__name__)
+
+ArrayTuple = TypeVar("ArrayTuple", bound=tuple[np.ndarray, ...])
 
 
 class Wis(MPCObsCodes):
@@ -285,6 +288,10 @@ class Wis(MPCObsCodes):
             light_travel_times [days]).
             None if obscode unknown and fallback_to_geo is False.
 
+        The returned arrays are cached and shared between calls, so they are marked
+        read-only: modifying them in place raises ValueError instead of corrupting the
+        cache for later callers.
+
         Raises:
             RuntimeError: If the instance is not being used as a context manager, or
                            if the required kernel for this obscode is not loaded.
@@ -335,13 +342,19 @@ class Wis(MPCObsCodes):
         # get the heliocentric equatorial coordinates for the obscode in question
         # Validation already done above, so just route to appropriate handler
         if obscodeMPC in self.geocentric_xyz_dict:  # <- Known ground station
-            return self._get_ground_posns(obscodeMPC, epochs_tuple, return_velocity)
+            return self._read_only(
+                self._get_ground_posns(obscodeMPC, epochs_tuple, return_velocity)
+            )
 
         elif self._has_satellite_kernel(obscodeMPC):
-            return self._get_satellite_posns(obscodeMPC, epochs_tuple, return_velocity)
+            return self._read_only(
+                self._get_satellite_posns(obscodeMPC, epochs_tuple, return_velocity)
+            )
 
         elif fallback_to_geo:  # <- Treat unknown as geocenter
-            return self._get_ground_posns("500", epochs_tuple, return_velocity)
+            return self._read_only(
+                self._get_ground_posns("500", epochs_tuple, return_velocity)
+            )
         else:
             return None  # <- Unknown obscode and not falling back to geocenter
 
@@ -366,8 +379,9 @@ class Wis(MPCObsCodes):
         - vels: shape=(N_times,3) array of velocity vectors [AU/day]
         - ltts: shape=(N_times) array of light travel times [days]
 
-        The returned arrays are cached and shared between calls, so callers must not
-        modify them in place.
+        The returned arrays are cached and shared between calls, so they are marked
+        read-only: modifying them in place raises ValueError instead of corrupting the
+        cache for later callers.
         """
         # Runtime validation
         self._require_context()
@@ -381,10 +395,12 @@ class Wis(MPCObsCodes):
             "0", np.array(self._convert_time(times)), self.frame, self.abcorr, "10"
         )
         states = np.array(states)
-        return (
-            self._convert_posn(states[:, :3]),
-            self._convert_vel(states[:, 3:]),
-            self._convert_ltts(ltts),
+        return self._read_only(
+            (
+                self._convert_posn(states[:, :3]),
+                self._convert_vel(states[:, 3:]),
+                self._convert_ltts(ltts),
+            )
         )
 
     def get_obs_bary_equ_AU(
@@ -518,6 +534,12 @@ class Wis(MPCObsCodes):
         self.obs_helio_equ_AU = self.obs_geo_equ_AU + self.geo_helio
 
         return self.obs_helio_equ_AU, self.ltts
+
+    def _read_only(self, arrays: ArrayTuple) -> ArrayTuple:
+        """Mark arrays read-only before they are cached and shared between callers."""
+        for array in arrays:
+            array.flags.writeable = False
+        return arrays
 
     def _convert_time(self, times: Time) -> tuple:
         """Convert the supplied astropy-times to the required format for spiceypy.
