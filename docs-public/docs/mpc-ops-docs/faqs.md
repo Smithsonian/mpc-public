@@ -106,6 +106,18 @@ Common questions and answers about MPC operations and services.
             <p>You can view the priority assigned to your ticket by logging into the <a href="https://mpc-service.atlassian.net/servicedesk/customer/portal/">Customer Portal</a>. On the upper right, click 'Requests' and select one of the options. This will show a table of all relevant tickets, with the priorities listed on the right-hand side.</p>
         </div>
     </details>
+
+    <details id="faq-jira-email-invalid">
+        <summary>Jira says my email is not valid.</summary>
+        <div class="faq-answer">
+            <p> 
+                Some members of the <a href="https://docs.google.com/document/d/1aIC0ruXItYhdxfDNVzchb08IMghwAe_WNbhIpD1Mdk8/edit?tab=t.0#heading=h.iq9oeet496ru">MPC Users Organization</a> have reported issues with the <a href="https://mpc-service.atlassian.net/servicedesk/customer/user/login?destination=portals">Jira login screen</a> giving the error message "Enter a valid email address and try again." This message is related to something in the user's browser, and not the result of any limits we have set on Jira login emails or anything related to a specific email address. 
+            </p>
+            <p>
+                We recommend trying to log in with an <a href="https://www.wikihow.com/Activate-Incognito-Mode">Incognito/Private window</a> and/or another web browser to confirm. You may also find that some links bring you to a different login page which will work. To fix this in your primary browser, you can try <a href="https://www.wikihow.com/Clear-Cache-and-Cookies">clearing cookies and website data</a>, or other methods. If your issues persist, you can try <a href="https://www.atlassian.com/company/contact">contacting Atlassian</a> for additional support.
+            </p>
+        </div>
+    </details>
     
     <details id="faq-ip-blocked">
         <summary>I can't access your website anymore. Did you ban my IP Address?</summary>
