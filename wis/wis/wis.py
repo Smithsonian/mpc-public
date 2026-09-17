@@ -9,6 +9,7 @@ By default these are heliocentric equatorial coordinates
 import logging
 import operator
 from types import TracebackType
+from typing import TypeVar
 
 # Third-party imports
 # -----------------------------------------
@@ -27,6 +28,8 @@ from wis.obscodes import MPCObsCodes
 
 # Set up logger
 logger = logging.getLogger(__name__)
+
+ArrayTuple = TypeVar("ArrayTuple", bound=tuple[np.ndarray, ...])
 
 
 class Wis(MPCObsCodes):
@@ -83,10 +86,11 @@ class Wis(MPCObsCodes):
         # Call MPCObsCodes's __init__ to ensure it is properly set up
         super().__init__()
 
-        # The cache for get_obs_helio_equ_AU is PER-INSTANCE: the cache key describes
-        # only the call signature (obscode, times, flags), not which kernels are loaded,
-        # so a shared cache would let a DE430 instance serve a DE440 instance's results.
+        # These caches are PER-INSTANCE: the cache keys describe only the call
+        # signature (times and flags), not which kernels are loaded, so a shared
+        # cache would let a DE430 instance serve a DE440 instance's results.
         self.cache_get_obs_helio_equ_AU: LRUCache = LRUCache(maxsize=1024)
+        self.cache_get_bary_wrt_helio: LRUCache = LRUCache(maxsize=1024)
 
         # Populated by __enter__; the position methods refuse to run until then
         self.loaded_kernels: list[KernelSpecifier] = []
@@ -160,7 +164,8 @@ class Wis(MPCObsCodes):
     ) -> bool:
         """Clear the loaded SPICE kernels and cache on exiting the context manager."""
         sp.kclear()  # <- Clear the spice kernels from memory
-        self.cache_get_obs_helio_equ_AU.clear()  # <- Clear the cache
+        self.cache_get_obs_helio_equ_AU.clear()  # <- Clear the caches
+        self.cache_get_bary_wrt_helio.clear()
         self.loaded_kernels = []
         self._entered = False
         return False  # <- Do not suppress exceptions
@@ -213,15 +218,17 @@ class Wis(MPCObsCodes):
                 return kernel
         raise RuntimeError(f"No kernel loaded for obscode {obscode}")
 
-    def compute_key(*args: object, **kwargs: object) -> tuple:
+    def compute_obs_helio_equ_AU_key(*args: object, **kwargs: object) -> tuple:
         """Generate a unique cache key for `get_obs_helio_equ_AU` (below).
 
         Made more complex by the need to deal with positional arguments and keyword arguments.
 
         N.B.: `test_speed` seems to show that the caching helps make it ~100x faster to get the same data
         """
-        # Extract positional arguments
-        _, name, times = args[0], args[1], args[2]
+        # Extract positional arguments; fall back to the keyword form so that
+        # `get_obs_helio_equ_AU(obscodeMPC=..., times=...)` does not raise IndexError.
+        name = args[1] if len(args) > 1 else kwargs["obscodeMPC"]
+        times = args[2] if len(args) > 2 else kwargs["times"]
         # Key on the UTC JDs, because that is what `_convert_time` actually feeds to
         # SPICE. Keying on `times.jd` instead would make Time(X, scale="utc") and
         # Time(X, scale="tdb") collide despite being ~69s (i.e. ~2000km) apart.
@@ -241,7 +248,26 @@ class Wis(MPCObsCodes):
         # Create a unique hash key
         return hashkey(name, times_jd_tuple, fallback_to_geo, return_velocity)
 
-    @cachedmethod(operator.attrgetter("cache_get_obs_helio_equ_AU"), key=compute_key)
+    def compute_bary_wrt_helio_key(*args: object, **kwargs: object) -> tuple:
+        """Generate a unique cache key for `get_bary_wrt_helio` (below).
+
+        N.B.: `test_speed` shows the same kind of caching helps make it ~100x faster
+        to get the same data.
+        """
+        # args[1] is `times` when passed positionally; args[0] is the `self` that
+        # `cachedmethod` passes through. Fall back to the keyword form so that
+        # `get_bary_wrt_helio(times=...)` does not raise IndexError.
+        times = args[1] if len(args) > 1 else kwargs["times"]
+        # Key on the UTC JDs, because that is what `_convert_time` actually feeds to
+        # SPICE. Keying on `times.jd` instead would make Time(X, scale="utc") and
+        # Time(X, scale="tdb") collide despite being ~69s (i.e. ~2000km) apart.
+        times_jd_tuple = tuple(np.atleast_1d(times.utc.jd))  # type: ignore
+        return hashkey(times_jd_tuple)
+
+    @cachedmethod(
+        operator.attrgetter("cache_get_obs_helio_equ_AU"),
+        key=compute_obs_helio_equ_AU_key,
+    )
     def get_obs_helio_equ_AU(
         self,
         obscodeMPC: str,
@@ -265,6 +291,10 @@ class Wis(MPCObsCodes):
             If return_velocity is True: tuple of (positions [AU], velocities [AU/day],
             light_travel_times [days]).
             None if obscode unknown and fallback_to_geo is False.
+
+            The returned arrays are cached and shared between calls, so they are marked
+            read-only: modifying them in place raises ValueError instead of corrupting
+            the cache for later callers.
 
         Raises:
             RuntimeError: If the instance is not being used as a context manager, or
@@ -316,16 +346,26 @@ class Wis(MPCObsCodes):
         # get the heliocentric equatorial coordinates for the obscode in question
         # Validation already done above, so just route to appropriate handler
         if obscodeMPC in self.geocentric_xyz_dict:  # <- Known ground station
-            return self._get_ground_posns(obscodeMPC, epochs_tuple, return_velocity)
+            return self._read_only(
+                self._get_ground_posns(obscodeMPC, epochs_tuple, return_velocity)
+            )
 
         elif self._has_satellite_kernel(obscodeMPC):
-            return self._get_satellite_posns(obscodeMPC, epochs_tuple, return_velocity)
+            return self._read_only(
+                self._get_satellite_posns(obscodeMPC, epochs_tuple, return_velocity)
+            )
 
         elif fallback_to_geo:  # <- Treat unknown as geocenter
-            return self._get_ground_posns("500", epochs_tuple, return_velocity)
+            return self._read_only(
+                self._get_ground_posns("500", epochs_tuple, return_velocity)
+            )
         else:
             return None  # <- Unknown obscode and not falling back to geocenter
 
+    @cachedmethod(
+        operator.attrgetter("cache_get_bary_wrt_helio"),
+        key=compute_bary_wrt_helio_key,
+    )
     def get_bary_wrt_helio(
         self, times: Time
     ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
@@ -338,10 +378,15 @@ class Wis(MPCObsCodes):
 
         Note: This method requires a ground kernel to be loaded (for Earth position).
 
-        Returned Arrays:
-        - posns: shape=(N_times,3) array of position vectors [AU]
-        - vels: shape=(N_times,3) array of velocity vectors [AU/day]
-        - ltts: shape=(N_times) array of light travel times [days]
+        Returns:
+            Tuple of (posns, vels, ltts):
+                posns: shape=(N_times,3) array of position vectors [AU]
+                vels: shape=(N_times,3) array of velocity vectors [AU/day]
+                ltts: shape=(N_times) array of light travel times [days]
+
+            The returned arrays are cached and shared between calls, so they are marked
+            read-only: modifying them in place raises ValueError instead of corrupting
+            the cache for later callers.
         """
         # Runtime validation
         self._require_context()
@@ -355,10 +400,12 @@ class Wis(MPCObsCodes):
             "0", np.array(self._convert_time(times)), self.frame, self.abcorr, "10"
         )
         states = np.array(states)
-        return (
-            self._convert_posn(states[:, :3]),
-            self._convert_vel(states[:, 3:]),
-            self._convert_ltts(ltts),
+        return self._read_only(
+            (
+                self._convert_posn(states[:, :3]),
+                self._convert_vel(states[:, 3:]),
+                self._convert_ltts(ltts),
+            )
         )
 
     def get_obs_bary_equ_AU(
@@ -492,6 +539,12 @@ class Wis(MPCObsCodes):
         self.obs_helio_equ_AU = self.obs_geo_equ_AU + self.geo_helio
 
         return self.obs_helio_equ_AU, self.ltts
+
+    def _read_only(self, arrays: ArrayTuple) -> ArrayTuple:
+        """Mark arrays read-only before they are cached and shared between callers."""
+        for array in arrays:
+            array.flags.writeable = False
+        return arrays
 
     def _convert_time(self, times: Time) -> tuple:
         """Convert the supplied astropy-times to the required format for spiceypy.
