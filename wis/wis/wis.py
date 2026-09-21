@@ -28,7 +28,8 @@ from wis.obscodes import MPCObsCodes
 # Set up logger
 logger = logging.getLogger(__name__)
 
-# The epochs spiceypy expects are ET, defined as TDB seconds past the J2000 epoch.
+# The epochs spiceypy expects are ET, defined as TDB seconds past the J2000 epoch
+# (https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/time.html).
 J2000_TDB = Time("J2000", scale="tdb")
 
 
@@ -225,10 +226,8 @@ class Wis(MPCObsCodes):
         """
         # Extract positional arguments
         _, name, times = args[0], args[1], args[2]
-        # Key on the UTC JDs: the labels fix the instant, and so fix the ET that
-        # `_convert_time` returns from it. Keying on `times.jd` instead would make
-        # Time(X, scale="utc") and Time(X, scale="tdb") collide despite being ~69s
-        # (i.e. ~2000km) apart.
+        # Key on the UTC JDs. `_convert_time` derives the epoch from the instant,
+        # and a UTC JD names that instant whatever scale the supplied `Time` is in.
         times_jd_tuple = tuple(np.atleast_1d(times.utc.jd))  # type: ignore
 
         # fallback_to_geo / return_velocity may be passed positionally (indices

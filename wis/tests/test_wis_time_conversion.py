@@ -5,7 +5,9 @@ instance and need no ephemeris kernels, only the leap-seconds kernel that SPICE'
 own string parsers require.
 """
 
+import re
 from collections.abc import Iterator
+from datetime import datetime, timedelta
 from pathlib import Path
 
 import numpy as np
@@ -17,49 +19,38 @@ from wis.wis import Wis
 
 LSK = Path(__file__).parent.parent / "test_data" / "latest_leapseconds.tls"
 
-# The UTC days that held a leap second, i.e. the only UTC days that are 86401 s
-# long. On those days the UTC JD written by astropy and the UTC JD read by SPICE
-# disagree; on every other day they coincide.
-LEAP_SECOND_DATES = [
-    "1972-06-30",
-    "1972-12-31",
-    "1973-12-31",
-    "1974-12-31",
-    "1975-12-31",
-    "1976-12-31",
-    "1977-12-31",
-    "1978-12-31",
-    "1979-12-31",
-    "1981-06-30",
-    "1982-06-30",
-    "1983-06-30",
-    "1985-06-30",
-    "1987-12-31",
-    "1989-12-31",
-    "1990-12-31",
-    "1992-06-30",
-    "1993-06-30",
-    "1994-06-30",
-    "1995-12-31",
-    "1997-06-30",
-    "1998-12-31",
-    "2005-12-31",
-    "2008-12-31",
-    "2012-06-30",
-    "2015-06-30",
-    "2016-12-31",
-]
+_LEAP_SECOND_ENTRY = re.compile(r"@(\d{4})-([A-Z]{3})-(\d{1,2})")
 
-# Tolerance for epochs inside a leap-second day: three orders of magnitude below
-# the ~1 s error the UTC JD string produces there, and thirty above the TDB-TT
-# model difference between the two libraries.
+
+def _leap_second_dates() -> list[str]:
+    """The UTC dates that held a leap second, read from the leap-seconds kernel.
+
+    `DELTET/DELTA_AT` lists the date on which TAI-UTC steps up, so the leap second
+    itself falls on the day before each entry. The first entry fixes the 1972
+    baseline rather than adding a second.
+    """
+    entries = _LEAP_SECOND_ENTRY.findall(LSK.read_text())[1:]
+    return [
+        (
+            datetime.strptime(f"{year}-{month}-{day}", "%Y-%b-%d") - timedelta(days=1)
+        ).strftime("%Y-%m-%d")
+        for year, month, day in entries
+    ]
+
+
+# The UTC days that are 86401 s long: only on those days can the epoch written by
+# astropy and the epoch read by SPICE disagree.
+LEAP_SECOND_DATES = _leap_second_dates()
+
+# Tolerance for an epoch inside a leap-second day, where a UTC day is 86401 s long
+# and the two libraries can disagree by up to a second. Three orders of magnitude
+# below that, and well above the TDB-TT difference bounded by TDB_TT_TOL_S.
 LEAP_DAY_TOL_S = 1e-3
 
-# Tolerance for epochs away from leap seconds. There the leap tables agree, so the
-# only difference is the TDB-TT model: ERFA's full Fairhead & Bretagnon series
-# against the truncated K*sin(E) series in the leap-seconds kernel. ERFA rates its
-# own model at +/- 3 ns over 1950-2050, the kernel rates its own at about 3e-5 s,
-# and the two differ by at most 3.6e-5 s over the range tested below.
+# Tolerance for epochs that are not inside a leap-second day, where the only
+# difference left is how the two libraries model TDB-TT. The models and their
+# accuracies are cited in the test below; measured, they differ by at most
+# 3.6e-5 s over 1972-2030.
 TDB_TT_TOL_S = 1e-4
 
 FIRST_EPOCH, LAST_EPOCH = "1972-01-01", "2030-01-01"
@@ -101,9 +92,9 @@ def test_leap_second_epochs_match_spice(
 ) -> None:
     """Epochs inside a leap-second day must match SPICE to well under a second.
 
-    The 86401-second day is the only place the two UTC Julian date conventions
-    differ, so this is where a string round-trip shows up. SPICE parses the UTC
-    calendar string directly, which is the reference for what the epoch is.
+    A leap-second day lasts 86401 s, so a Julian date written for it by astropy and
+    read back by SPICE can land a second away. SPICE's parsing of the UTC calendar
+    string is the reference for what the epoch is.
     """
     times = Time(f"{date}T{time_of_day}", scale="utc")
     error = _convert(times)[0] - _spice_et(times)[0]
@@ -115,14 +106,16 @@ def test_leap_second_epochs_match_spice(
 def test_ordinary_epochs_differ_only_by_the_tdb_model(leapseconds: None) -> None:
     """Away from leap seconds, nothing but the TDB-TT model may differ.
 
-    Epochs on leap-second days are excluded, so the UTC-noon and leap-second
-    questions are out of the way: the leap tables agree, and the only remaining
-    difference between the two libraries is how each realizes TDB from TT --
-    ERFA's full Fairhead & Bretagnon series against the truncated `K*sin(E)`
-    series in the leap-seconds kernel.
-
-    The tolerance is the width of that model difference, three orders of
-    magnitude below the ~1 s error a leap-second mistake would produce.
+    Epochs on leap-second days are excluded, so the leap tables agree and the only
+    difference left is how each library models TDB-TT, a periodic term of about
+    1.7 ms peak to peak. ERFA uses the full Fairhead & Bretagnon (1990) series
+    (https://pyerfa.readthedocs.io/en/stable/api/erfa.dtdb.html), rated at +/- 3 ns
+    over 1950-2050; the toolkit's model is the truncated TDB - TT = K*sin(E) given
+    in its time documentation
+    (https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/time.html), with the
+    DELTET constants in the leap-seconds kernel, rated at about 3e-5 s. The
+    tolerance is that model difference, orders of magnitude below the error a
+    leap-second mistake would produce.
     """
     times = Time(
         np.linspace(
