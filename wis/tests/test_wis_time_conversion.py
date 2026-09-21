@@ -55,10 +55,12 @@ LEAP_SECOND_DATES = [
 # model difference between the two libraries.
 LEAP_DAY_TOL_S = 1e-3
 
-# Tolerance for epochs away from leap seconds. There both libraries run the same
-# computation, so the only difference is the float64 JD string transport, which
-# measures below 4e-6 s over 1972-2030.
-TDB_TT_TOL_S = 1e-5
+# Tolerance for epochs away from leap seconds. There the leap tables agree, so the
+# only difference is the TDB-TT model: ERFA's full Fairhead & Bretagnon series
+# against the truncated K*sin(E) series in the leap-seconds kernel. ERFA rates its
+# own model at +/- 3 ns over 1950-2050, the kernel rates its own at about 3e-5 s,
+# and the two differ by at most 3.6e-5 s over the range tested below.
+TDB_TT_TOL_S = 1e-4
 
 FIRST_EPOCH, LAST_EPOCH = "1972-01-01", "2030-01-01"
 
@@ -119,9 +121,8 @@ def test_ordinary_epochs_differ_only_by_the_tdb_model(leapseconds: None) -> None
     ERFA's full Fairhead & Bretagnon series against the truncated `K*sin(E)`
     series in the leap-seconds kernel.
 
-    The bound is tight because both sides are now the same realization. The
-    model difference is larger than this and bounded, so this tolerance is
-    retuned with the epoch definition it measures.
+    The tolerance is the width of that model difference, three orders of
+    magnitude below the ~1 s error a leap-second mistake would produce.
     """
     times = Time(
         np.linspace(
@@ -139,3 +140,25 @@ def test_ordinary_epochs_differ_only_by_the_tdb_model(leapseconds: None) -> None
         f"worst epoch {times[ordinary][worst].utc.isot}: "
         f"off by {difference[worst]:+.3e} s"
     )
+
+
+def test_convert_time_does_not_use_spice_string_parsing(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """No per-epoch SPICE string parse: the epoch comes from astropy's TDB."""
+
+    def _unexpected(*args: object, **kwargs: object) -> float:
+        raise AssertionError("_convert_time called a SPICE string parser")
+
+    monkeypatch.setattr(sp, "utc2et", _unexpected)
+    monkeypatch.setattr(sp, "str2et", _unexpected)
+
+    times = Time("2025-06-15T03:00:00", scale="utc")
+    assert _convert(times).shape == (1,)
+
+
+def test_convert_time_returns_tuple_for_scalar_input() -> None:
+    """Scalar input yields a 1-element tuple, which callers hash for cache keys."""
+    epochs = object.__new__(Wis)._convert_time(Time("2025-06-15T03:00:00", scale="utc"))
+    assert isinstance(epochs, tuple)
+    assert len(epochs) == 1
