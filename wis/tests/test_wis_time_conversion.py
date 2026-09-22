@@ -103,6 +103,27 @@ def test_leap_second_epochs_match_spice(
     )
 
 
+@pytest.mark.parametrize("date", ["1961-06-15", "1968-06-15", "1971-12-31"])
+def test_pre_1972_epochs_use_the_iers_leap_table(leapseconds: None, date: str) -> None:
+    """Before 1972 the two libraries use different leap tables, and ours is IERS.
+
+    The leap-seconds kernel's `DELTA_AT` table starts at 1972-01-01, so SPICE holds a
+    flat 9 s before that (measured 9.0005 s once the periodic ET-TAI term is
+    included), while ERFA carries the drift of that era: 1.64 s in mid-1961, 6.54 s
+    in 1968, 9.89 s at the end of 1971. Our epoch therefore differs from SPICE's by
+    the difference between the two tables, by up to ~9 s and with either sign. That
+    divergence is the pre-1972 change these epochs bring, not a defect.
+    """
+    times = Time(f"{date}T00:00:00", scale="utc")
+    # No UTC day before 1972 is 86401 s long, so the difference between the two
+    # scales' Julian dates is TAI-UTC in seconds.
+    erfa_tai_utc = (times.tai.jd - times.utc.jd) * 86400.0
+    spice_flat_tai_utc = 9.0  # the kernel's table has no pre-1972 entry
+
+    difference = _convert(times)[0] - _spice_et(times)[0]
+    assert difference == pytest.approx(erfa_tai_utc - spice_flat_tai_utc, abs=1e-3)
+
+
 def test_ordinary_epochs_differ_only_by_the_tdb_model(leapseconds: None) -> None:
     """Away from leap seconds, nothing but the TDB-TT model may differ.
 
