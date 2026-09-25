@@ -128,15 +128,15 @@ def test_ordinary_epochs_differ_only_by_the_tdb_model(leapseconds: None) -> None
     """Away from leap seconds, nothing but the TDB-TT model may differ.
 
     Epochs on leap-second days are excluded, so the leap tables agree and the only
-    difference left is how each library models TDB-TT, a periodic term of about
-    1.7 ms peak to peak. ERFA uses the full Fairhead & Bretagnon (1990) series
-    (https://pyerfa.readthedocs.io/en/stable/api/erfa.dtdb.html), rated at +/- 3 ns
-    over 1950-2050; the toolkit's model is the truncated TDB - TT = K*sin(E) given
-    in its time documentation
-    (https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/time.html), with the
-    DELTET constants in the leap-seconds kernel, rated at about 3e-5 s. The
-    tolerance is that model difference, orders of magnitude below the error a
-    leap-second mistake would produce.
+    difference left is how each library models TDB-TT, a periodic term of amplitude
+    about 1.7e-3 s. ERFA uses the full Fairhead & Bretagnon (1990) series
+    (https://pyerfa.readthedocs.io/en/stable/api/erfa.dtdb.html), rated at +/-
+    3e-9 s over 1950-2050; the toolkit keeps only the leading sinusoidal term,
+    written TDB - TT = K*sin(E) in its time documentation
+    (https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/time.html) with the
+    DELTET constants in the leap-seconds kernel, and rates that model at about
+    3e-5 s. The tolerance is that model difference, orders of magnitude below the
+    error a leap-second mistake would produce.
     """
     times = Time(
         np.linspace(
