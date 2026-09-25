@@ -16,10 +16,10 @@ reading the specified values.
 <tr><th>Columns</th><th>F77</th><th>Use</th></tr>
 </thead>
 <tbody>
-<tr><td>1&ndash;7</td><td>a7</td><td>Number or provisional designation (in <a href="../designations/packed-designations.md">packed form</a>)</td></tr>
+<tr><td>1&ndash;7</td><td>a7</td><td>Number or provisional designation (in <a href="../designations/packed-designations.html">packed form</a>)</td></tr>
 <tr><td>9&ndash;13</td><td>f5.2</td><td>Absolute magnitude, <em>H</em></td></tr>
 <tr><td>15&ndash;19</td><td>f5.2</td><td>Slope parameter, <em>G</em></td></tr>
-<tr><td>21&ndash;25</td><td>a5</td><td>Epoch (in <a href="../designations/packed-dates.md">packed form</a>, .0 TT)</td></tr>
+<tr><td>21&ndash;25</td><td>a5</td><td>Epoch (in <a href="../designations/packed-dates.html">packed form</a>, .0 TT)</td></tr>
 <tr><td>27&ndash;35</td><td>f9.5</td><td>Mean anomaly at the epoch, in degrees</td></tr>
 <tr><td>38&ndash;46</td><td>f9.5</td><td>Argument of perihelion, J2000.0 (degrees)</td></tr>
 <tr><td>49&ndash;57</td><td>f9.5</td><td>Longitude of the ascending node, J2000.0 (degrees)</td></tr>
@@ -27,7 +27,7 @@ reading the specified values.
 <tr><td>71&ndash;79</td><td>f9.7</td><td>Orbital eccentricity</td></tr>
 <tr><td>81&ndash;91</td><td>f11.8</td><td>Mean daily motion (degrees per day)</td></tr>
 <tr><td>93&ndash;103</td><td>f11.7</td><td>Semimajor axis (AU)</td></tr>
-<tr><td>106</td><td>i1 or a1</td><td><a href="uncertainty-parameter.md">Uncertainty parameter</a>, <em>U</em>. Special values: &lsquo;E&rsquo; = assumed eccentricity; &lsquo;D&rsquo; = double designation; &lsquo;F&rsquo; = e-assumed double designation</td></tr>
+<tr><td>106</td><td>i1 or a1</td><td><a href="uncertainty-parameter.html">Uncertainty parameter</a>, <em>U</em>. Special values: &lsquo;E&rsquo; = assumed eccentricity; &lsquo;D&rsquo; = double designation; &lsquo;F&rsquo; = e-assumed double designation</td></tr>
 <tr><td>108&ndash;116</td><td>a9</td><td>Reference</td></tr>
 <tr><td>118&ndash;122</td><td>i5</td><td>Number of observations</td></tr>
 <tr><td>124&ndash;126</td><td>i3</td><td>Number of oppositions</td></tr>

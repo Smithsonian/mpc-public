@@ -38,8 +38,9 @@ The following identifier formats are accepted:
 
 The response will be intentionally vacuous, but you should expect that an email was sent to the original submitter's address.
 
-!!! note
-    Action codes are sent via email to the original submitter's email address. They are NOT returned in the API response to preserve privacy.
+::: {.callout-note}
+Action codes are sent via email to the original submitter's email address. They are NOT returned in the API response to preserve privacy.
+:::
 
 ## Examples
 

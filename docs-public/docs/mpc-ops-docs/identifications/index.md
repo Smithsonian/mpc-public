@@ -38,14 +38,14 @@ Identifications can be submitted using the
 using the API, example usage
 [here](https://minorplanetcenter.net/static/submissions/media/identifications_api_example.py).
 
-!!! warning
-    The submission form does not currently support:
+::: {.callout-warning}
+The submission form does not currently support:
 
-    - The deletion of identifications.
-    - Designations that need to be retired.
-    - Identifications where some tracklets need to be redesignated before the
-      identification can be processed.
-
+- The deletion of identifications.
+- Designations that need to be retired.
+- Identifications where some tracklets need to be redesignated before the
+  identification can be processed.
+:::
 
 ---
 

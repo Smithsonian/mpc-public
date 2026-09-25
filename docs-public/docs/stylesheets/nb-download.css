@@ -1,0 +1,28 @@
+/* "Download this notebook" button injected on tutorial-notebook pages
+   by javascript/notebook-downloads.js */
+.nb-download-button {
+  display: inline-block;
+  margin: 0 0 1.25rem 0;
+  padding: 0.5rem 0.9rem;
+
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  border-radius: 0.3rem;
+  background-color: rgba(0, 0, 0, 0.04);
+
+  font-weight: 600;
+  text-decoration: none;
+
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease,
+    box-shadow 120ms ease,
+    transform 120ms ease;
+}
+
+.nb-download-button:hover,
+.nb-download-button:focus {
+  background-color: rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.28);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}

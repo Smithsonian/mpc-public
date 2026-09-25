@@ -2,8 +2,9 @@
 
 The ele220 format is an old 220-character string that was created for internal use at the MPC for storing minor planet orbital computation data.
 
-!!! warning "Deprecation Notice"
-    The MPC will deprecate the ele220 format in favor of a new orbit format. This page is provided for reference only.
+::: {.callout-warning title="Deprecation Notice"}
+The MPC will deprecate the ele220 format in favor of a new orbit format. This page is provided for reference only.
+:::
 
 **Limitations:**
 
