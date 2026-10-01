@@ -292,14 +292,14 @@ static tracklet *lib_alloc_tracklet(d2_observation *obs, int n_obs,
     tk->isAdes = is_ades ? 1 : 0;
 
     if (repeatable) {
-        tk->rand64 = 3;
+        tkSeed(tk, 3);
     } else {
         // rand() is not thread-safe: concurrent calls from multiple threads
         // (e.g. Python ThreadPoolExecutor with GIL released) race on shared
         // global state, producing correlated/duplicated seeds.
         // Use rand_r() with a per-thread seed on POSIX systems.
 #ifdef _WIN32
-        tk->rand64 = 2 * (rand() / 2) + 1;
+        tkSeed(tk, (uint64_t)rand());
 #else
         static __thread unsigned int lib_rand_seed;
         static __thread int lib_rand_seeded = 0;
@@ -308,7 +308,7 @@ static tracklet *lib_alloc_tracklet(d2_observation *obs, int n_obs,
                           ^ (unsigned int)(uintptr_t)&lib_rand_seed;
             lib_rand_seeded = 1;
         }
-        tk->rand64 = 2 * (rand_r(&lib_rand_seed) / 2) + 1;
+        tkSeed(tk, (uint64_t)rand_r(&lib_rand_seed));
 #endif
     }
 
