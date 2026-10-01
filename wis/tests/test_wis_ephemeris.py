@@ -343,13 +343,13 @@ def test_kernel_validation() -> None:
 
 
 def test_cache_key_positional_fallback_no_collision() -> None:
-    """Regression test for compute_key.
+    """Regression test for compute_obs_helio_equ_AU_key.
 
     `fallback_to_geo` passed positionally must produce a different cache key
     than the default (False), otherwise the cached `None` from a
     fallback_to_geo=False call wrongly satisfies a later fallback_to_geo=True
     call for the same unknown obscode. Also covers scalar-time inputs, which
-    previously crashed compute_key's `tuple(times.jd)`.
+    previously crashed compute_obs_helio_equ_AU_key's `tuple(times.jd)`.
     """
     times = Time([2458337.82915783, 2458338.82915783], format="jd", scale="tdb")
     unknown = "ZZZ"  # length-3, but not a real obscode
@@ -371,17 +371,17 @@ def test_cache_key_positional_fallback_no_collision() -> None:
         posns, _ = result
         assert posns.shape == (2, 3)
 
-        # A scalar Time must no longer crash compute_key and returns shape (1, 3)
+        # A scalar Time must no longer crash compute_obs_helio_equ_AU_key and returns shape (1, 3)
         scalar_times = Time(2458337.82915783, format="jd", scale="tdb")
         posns_scalar, _ = W.get_obs_helio_equ_AU("F51", scalar_times)
         assert posns_scalar.shape == (1, 3)
 
 
 def test_cache_key_distinguishes_time_scale() -> None:
-    """Regression test for compute_key.
+    """Regression test for compute_obs_helio_equ_AU_key.
 
     A UTC and a TDB Time carrying the same numeric JD are ~69s apart, but
-    compute_key used to hash the scale-dependent `times.jd` while `_convert_time`
+    compute_obs_helio_equ_AU_key used to hash the scale-dependent `times.jd` while `_convert_time`
     feeds SPICE the scale-independent `times.utc.jd`. The two calls below therefore
     shared a cache key, and the second silently returned the first's positions.
     """

@@ -8,5 +8,5 @@ logging.getLogger(__name__).addHandler(logging.NullHandler())
 
 __author__ = """Matthew John Payne"""
 __email__ = "mpayne@cfa.harvard.edu;matthewjohnpayne@gmail.com"
-__version__ = "2.0.0"
+__version__ = "2.1.0"
 __all__ = ["Wis"]

@@ -52,9 +52,14 @@ Common questions and answers about MPC operations and services.
     </details>
     
     <details id="faq-mpec-mailing-list">
-        <summary>How do I get removed from the MPEC mailing list?</summary>
+        <summary>How do I manage my subscriptions to the MPEC or MPC announcement mailing lists?</summary>
         <div class="faq-answer">
-            <p>Please use the following link to automatically update your email on the MPEC mailing list: <a href="https://mpc-service.atlassian.net/servicedesk/customer/portal/18">Subscription to Minor Planet Center Notification Services</a>.</p>
+            <p>Please use the following links to manage your MPEC mailing-list subscription:</p>
+            <ul>
+                <li><a href="https://minorplanetcenter.net/mpcops/signup/mpecs/">Subscription to Minor Planet Electronic Circulars (MPECs)</a>.</li>
+                <li><a href="https://minorplanetcenter.net/mpcops/signup/mpecs/unsubscribe">Unsubscription to Minor Planet Electronic Circulars (MPECs)</a>.</li>
+            </ul>
+            <p>For the MPC Announcements Email List, please see <a href="https://mpc-service.atlassian.net/servicedesk/customer/portal/18">this page</a>.</p>
         </div>
     </details>
     
@@ -99,6 +104,18 @@ Common questions and answers about MPC operations and services.
             <p>When a ticket is "Moved to Development", we create or link a matching task in our software development system. Depending on our assessment of the task, both tickets are assigned a priority, of "Low", "Medium", or "High".</p> 
 
             <p>You can view the priority assigned to your ticket by logging into the <a href="https://mpc-service.atlassian.net/servicedesk/customer/portal/">Customer Portal</a>. On the upper right, click 'Requests' and select one of the options. This will show a table of all relevant tickets, with the priorities listed on the right-hand side.</p>
+        </div>
+    </details>
+
+    <details id="faq-jira-email-invalid">
+        <summary>Jira says my email is not valid.</summary>
+        <div class="faq-answer">
+            <p> 
+                Some users who have Jira accounts to manage their Helpdesk tickets have reported issues with the <a href="https://mpc-service.atlassian.net/servicedesk/customer/user/login?destination=portals">Jira login screen</a> giving the error message "Enter a valid email address and try again." This message is related to something in the user's browser, and not the result of any limits we have set on Jira login emails or anything related to a specific email address. 
+            </p>
+            <p>
+                We recommend trying to log in with an <a href="https://www.wikihow.com/Activate-Incognito-Mode">Incognito/Private window</a> and/or another web browser to confirm. You may also find that some links bring you to a different login page which will work. To fix this in your primary browser, you can try <a href="https://www.wikihow.com/Clear-Cache-and-Cookies">clearing cookies and website data</a>, or other methods. If your issues persist, you can try <a href="https://www.atlassian.com/company/contact">contacting Atlassian</a> for additional support.
+            </p>
         </div>
     </details>
     

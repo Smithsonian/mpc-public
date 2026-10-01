@@ -267,6 +267,26 @@ with Wis(kernels=[DE430, TESS]) as w:
     pass
 ```
 
+### 2.1.0: Cached Methods Return Read-Only Arrays
+
+`get_obs_helio_equ_AU` and `get_bary_wrt_helio` cache their results, so every caller
+with the same times receives the same arrays. To stop one caller's in-place write
+from corrupting the cache for everyone, those arrays are now read-only: modifying
+one raises `ValueError`.
+
+```python
+posns, _ = w.get_obs_helio_equ_AU("F51", times)
+posns[0, 0] = 0.0  # ValueError: assignment destination is read-only
+```
+
+Take a copy if you need to modify the result:
+
+```python
+posns, _ = w.get_obs_helio_equ_AU("F51", times)
+posns = posns.copy()  # writeable; the cached original is left untouched
+posns[0, 0] = 0.0
+```
+
 ### CLI Changes
 ```bash
 # OLD - Downloaded all kernels by default
