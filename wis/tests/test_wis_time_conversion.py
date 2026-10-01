@@ -108,11 +108,14 @@ def test_pre_1972_epochs_use_the_iers_leap_table(leapseconds: None, date: str) -
     """Before 1972 the two libraries use different leap tables, and ours is IERS.
 
     The leap-seconds kernel's `DELTA_AT` table starts at 1972-01-01, so SPICE holds a
-    flat 9 s before that (measured 9.0005 s once the periodic ET-TAI term is
-    included), while ERFA carries the drift of that era: 1.64 s in mid-1961, 6.54 s
-    in 1968, 9.89 s at the end of 1971. Our epoch therefore differs from SPICE's by
-    the difference between the two tables, by up to ~9 s and with either sign. That
-    divergence is the pre-1972 change these epochs bring, not a defect.
+    flat 9 s before that, and its UTC and TDB strings a constant 41.18 s apart
+    (https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/et2utc_c.html);
+    measured, the 9 s holds to within 1e-4 s across 1900-1971 once the periodic
+    ET-TAI term is included, while ERFA carries the drift of that era: 1.64 s in
+    mid-1961, 6.54 s in 1968, 9.89 s at the end of 1971. Our epoch therefore differs
+    from SPICE's by the difference between the two tables, by up to ~9 s and with
+    either sign. That divergence is the pre-1972 change these epochs bring, not a
+    defect.
     """
     times = Time(f"{date}T00:00:00", scale="utc")
     # No UTC day before 1972 is 86401 s long, so the difference between the two
