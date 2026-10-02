@@ -65,6 +65,9 @@ semimajor axes.
 |-------------|------|------------|
 | Hyperbolic  | 30   | e > 1 |
 | Parabolic   | 31   | e = 1 |
+| Long Period Comet | 40  | P > 200 years |
+| Short Period Comet | 41  | P <= 200 years |
+| Natural Satellite | 50  | Central body is not the Sun |
 | Other       | 99   | Classification failure |
 
 ---
