@@ -167,7 +167,7 @@ json.dump(response.json(), sys.stdout, indent=4)
 ### cURL
 
 ```bash
-curl -X GET -H "Accept: application/json" \
+curl -X GET \
   https://data.minorplanetcenter.net/api/mpecs \
   -H "Content-type: application/json" \
   -d '{"terms": ["K14A00A", "`Oumuamua"]}'
