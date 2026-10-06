@@ -62,7 +62,7 @@ json.dump(response.json(), sys.stdout, indent=4)  # Response is minimal
 ### cURL
 
 ```bash
-curl -X POST -H "Accept: application/json" \
+curl -X POST \
   https://data.minorplanetcenter.net/api/action-codes/retrieve \
   -H "Content-type: application/json" \
   -d '{"label": "[your-label]"}'
