@@ -71,3 +71,8 @@ semimajor axes.
 | Classification Failure       | `None`/`NULL`   | Unable to be determined. |
 
 ---
+
+## See Also
+
+- [Orbit Type API](../apis/orbit-type.md)
+- [Orbit Type API Python Notebook Tutorial](../../../tutorials/notebooks/mpc_tutorial_api_orbit_type/)
