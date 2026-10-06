@@ -12,6 +12,7 @@ This page provides links to documentation for the MPC's REST APIs.
 - [NEOCP Observations](get-obs-neocp.md)
 - [Check Near-Duplicates (CND)](cnd.md)
 - [Orbits](get-orb.md)
+- [Orbit Type](orbit-type.md)
 - [Observatory Codes](obscodes.md)
 - [MPECs](mpecs.md)
 - [Action Codes](action-codes.md)
