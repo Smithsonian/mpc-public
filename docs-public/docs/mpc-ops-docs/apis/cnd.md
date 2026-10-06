@@ -79,7 +79,7 @@ near_duplicates = response.json()['results']
 ### cURL
 
 ```bash
-curl -X GET -H "Accept: application/json" \
+curl -X GET \
   https://data.minorplanetcenter.net/api/cnd \
   -H "Content-type: application/json" \
   -d '{"obs": ["     K10CM6D  C2023 05 16.43686615 56 36.807-23 12 43.67         21.55wX~6o8oF51"]}'
