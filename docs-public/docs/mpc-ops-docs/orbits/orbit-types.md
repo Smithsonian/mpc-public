@@ -65,10 +65,13 @@ semimajor axes.
 |-------------|------|------------|
 | Hyperbolic  | 30   | e > 1 |
 | Parabolic   | 31   | e = 1 |
-| Long Period Comet   | 40   | Determined by [MPC designation](../designations/provisional-designations.md) |
-| Short Period Comet   | 41   | ibid. |
-| Natural Satellite   | 50   | ibid. |
+| Long Period Comet | 40  | P > 200 years |
+| Short Period Comet | 41  | P <= 200 years |
+| Natural Satellite | 50  | Central body is not the Sun |
 | Classification Failure       | `None`/`NULL`   | Unable to be determined. |
+
+!!! note
+  The cometary and natural satellite types are determined primarily by [MPC designation](../designations/provisional-designations.md).
 
 ---
 

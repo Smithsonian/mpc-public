@@ -29,6 +29,9 @@ from wis.obscodes import MPCObsCodes
 # Set up logger
 logger = logging.getLogger(__name__)
 
+# The epochs spiceypy expects are ET, defined as TDB seconds past the J2000 epoch
+# (https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/time.html).
+J2000_TDB = Time("J2000", scale="tdb")
 ArrayTuple = TypeVar("ArrayTuple", bound=tuple[np.ndarray, ...])
 
 
@@ -136,14 +139,14 @@ class Wis(MPCObsCodes):
             self.loaded_kernels.append(kernel)
             loaded_obscodes.add(kernel.obscodeMPC)
 
-        # we always need a ground kernel for 1) the leapseconds kernel and 2) the sun's
-        # position for heliocentric queries
+        # we always need a ground kernel for the planetary ephemeris, which supplies
+        # the sun's position for heliocentric queries
         if not self._has_ground_kernel():
             sp.kclear()
             raise ValueError(
                 "No ground kernel loaded. A ground kernel (DE430 or DE440) is always "
-                "required — it supplies the leapsecond file and planetary ephemeris "
-                "needed for all position calculations. Example:\n"
+                "required — it supplies the planetary ephemeris needed for all "
+                "position calculations. Example:\n"
                 "  from wis.kernels import DE430, TESS\n"
                 "  Wis(kernels=[DE430, TESS])"
             )
@@ -229,9 +232,8 @@ class Wis(MPCObsCodes):
         # `get_obs_helio_equ_AU(obscodeMPC=..., times=...)` does not raise IndexError.
         name = args[1] if len(args) > 1 else kwargs["obscodeMPC"]
         times = args[2] if len(args) > 2 else kwargs["times"]
-        # Key on the UTC JDs, because that is what `_convert_time` actually feeds to
-        # SPICE. Keying on `times.jd` instead would make Time(X, scale="utc") and
-        # Time(X, scale="tdb") collide despite being ~69s (i.e. ~2000km) apart.
+        # Key on the UTC JDs. `_convert_time` derives the epoch from the instant,
+        # and a UTC JD names that instant whatever scale the supplied `Time` is in.
         times_jd_tuple = tuple(np.atleast_1d(times.utc.jd))  # type: ignore
 
         # fallback_to_geo / return_velocity may be passed positionally (indices
@@ -303,9 +305,7 @@ class Wis(MPCObsCodes):
         """
         self._require_context()
 
-        # Check if required kernel is loaded BEFORE converting time (which needs SPICE)
-        # This must be done first because _check_input_formats calls _convert_time
-        # which requires leapsecond kernels to be loaded
+        # Check the kernel before the position calculation, which is what needs SPICE
         has_satellite_kernel = self._has_satellite_kernel(obscodeMPC)
 
         if obscodeMPC in self.geocentric_xyz_dict:  # <- Known ground station
@@ -547,13 +547,14 @@ class Wis(MPCObsCodes):
         return arrays
 
     def _convert_time(self, times: Time) -> tuple:
-        """Convert the supplied astropy-times to the required format for spiceypy.
+        """Convert the supplied astropy-times to the ET epochs that spiceypy expects.
+
+        ET is TDB seconds past the J2000 epoch, so this is a change of origin and unit
+        within one time scale, not a change of time scale.
 
         Returning a TUPLE to help with caching of `_get_satellite_posns` & `_get_ground_posns`.
         """
-        return tuple(
-            sp.utc2et("JD" + str(jdutc)) for jdutc in np.atleast_1d(times.utc.jd)
-        )
+        return tuple(np.atleast_1d((times.tdb - J2000_TDB).sec))
 
     def _convert_posn(self, posns: np.ndarray) -> np.ndarray:
         """Convert positions from km->AU."""
@@ -583,7 +584,6 @@ class Wis(MPCObsCodes):
             )
 
         # Check supplied time is of the correct format
-        # (NB we do NOT convert to spicypy format here because we do not have kernels loaded)
         if not isinstance(times, Time):
             raise ValueError(f"Supplied time [{times}] is not an astropy Time object")
 
