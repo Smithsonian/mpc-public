@@ -20,7 +20,7 @@ The API accepts a JSON object with the following fields:
 | `q`         | Perihelion distance                      | float                                                    | No (if `a` is provided.)                                                       |
 | `e`         | Eccentricity                      | float                                                    | Yes                                                       |
 | `i`         | Inclination                      | float                                                    | Yes                                                       |
-| `mpcID`         | MPC [unpacked primary provisional designation](../designations/provisional-designations.md)                      | string                                                    | No (if `require_mpcID == False`.)                                                        |
+| `mpcID`         | MPC [unpacked primary provisional designation](../designations/provisional-designations.md)                      | string                                                    | Yes (unless `require_mpcID == False`.)                                                        |
 | `require_mpcID`         | Whether a MPC designation is required.                      | boolean                                                    | No (default: `True`)                                                        |
 
 !!! note
@@ -79,6 +79,5 @@ curl -X POST \
 
 <div class="contents-grid"></div>
 
-- [MPEC API Tutorial](../../../tutorials/notebooks/mpc_tutorial_api_mpecs/)
-- [MPEC Search Tool](https://minorplanetcenter.net/mpcops/mpecs/)
-- [Recent MPECs](https://minorplanetcenter.net/mpec/RecentMPECs.html)
+- [Orbit Type API Tutorial](../../../tutorials/notebooks/mpc_tutorial_api_orbit_type/)
+- [Orbit Type Categories](../orbits/orbit-types.md)
