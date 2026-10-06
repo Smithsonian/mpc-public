@@ -68,6 +68,14 @@ semimajor axes.
 | Long Period Comet | 40  | P > 200 years |
 | Short Period Comet | 41  | P <= 200 years |
 | Natural Satellite | 50  | Central body is not the Sun |
-| Other       | 99   | Classification failure |
+| Classification Failure       | `None`/`NULL`   | Unable to be determined. |
+
+!!! note
+  The cometary and natural satellite types are determined primarily by [MPC designation](../designations/provisional-designations.md).
 
 ---
+
+## See Also
+
+- [Orbit Type API](../apis/orbit-type.md)
+- [Orbit Type API Python Notebook Tutorial](../../../tutorials/notebooks/mpc_tutorial_api_orbit_type/)
