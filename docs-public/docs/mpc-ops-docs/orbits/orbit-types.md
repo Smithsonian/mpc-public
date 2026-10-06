@@ -65,6 +65,9 @@ semimajor axes.
 |-------------|------|------------|
 | Hyperbolic  | 30   | e > 1 |
 | Parabolic   | 31   | e = 1 |
-| Other       | 99   | Classification failure |
+| Long Period Comet   | 40   | Determined by [MPC designation](../designations/provisional-designations.md) |
+| Short Period Comet   | 41   | ibid. |
+| Natural Satellite   | 50   | ibid. |
+| Classification Failure       | `None`/`NULL`   | Unable to be determined. |
 
 ---
