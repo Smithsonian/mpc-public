@@ -12,7 +12,7 @@ https://data.minorplanetcenter.net/api/orbit-type
 
 ## Input Format
 
-The API accepts a JSON object with the following fields:
+The API accepts a JSON object with the following fields. Distances (`a` and `q`) are in AU, eccentricity (`e`) is dimensionless, and inclination (`i`) is in degrees.
 
 | field           | description                                            | format                                                                     | required |                                                                        
 |-----------------|--------------------------------------------------------|----------------------------------------------------------------------------| --- |
