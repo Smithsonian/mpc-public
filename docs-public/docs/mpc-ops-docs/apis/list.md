@@ -35,6 +35,8 @@ The following key/value pairs are accepted by the API. Where applicable, default
 | `outers` | Outer solar system objects |
 | `binaries` | Binary asteroids |
 | `comets` | All comets |
+| `comets-long-period` | All long-period comets |
+| `comets-short-period` | All short-period comets |
 | `fragments` | Comet fragments |
 | `atiras` | Atira-class asteroids |
 | `atens` | Aten-class asteroids |
@@ -49,6 +51,7 @@ The following key/value pairs are accepted by the API. Where applicable, default
 | `parabolics` | Parabolic objects |
 | `unbounded` | Unbound objects |
 | `planet-nat-sats` | Planetary natural satellites |
+| `planet-nat-sats-by-orbit` | Planetary natural satellites, as determined by [orbital parameters](../orbits/orbit-types.md) |
 | `mp-nat-sats` | Minor planet natural satellites |
 | `impacted` | Impacted objects |
 | `retired` | Retired designations |
