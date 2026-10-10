@@ -148,3 +148,6 @@ assist_ephem_data/
 docs-public/docs/tutorials/animations/*.gif
 # Large MPC catalogue file downloaded by the orbit-plotting tutorial notebook
 MPCORB.DAT.gz
+
+# AstDyS-2 family membership file downloaded by the belt mid-plane tutorial notebook
+docs-public/docs/tutorials/notebooks/astdys_all_tro.members
