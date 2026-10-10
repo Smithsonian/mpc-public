@@ -1,3 +1,7 @@
-mkdocs
-mkdocs-material
-mkdocs-jupyter
+# The documentation site is built with Quarto (https://quarto.org), which is a
+# standalone CLI installed separately (not via pip) — see the README.
+#
+# Python is only needed for Quarto's Jupyter engine to read the tutorial
+# notebooks. The notebooks are NOT executed at build time (execute: false in
+# _quarto.yml); their stored outputs are rendered as-is.
+jupyter

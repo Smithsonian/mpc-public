@@ -2,8 +2,9 @@
 
 The observations alterations deletions table records observations that were published (in an MPEC, DOU, or circular) and subsequently deleted. Once deleted, observations disappear from the `obs_sbn` table.
 
-!!! note
-    The table alone cannot reproduce all different deletion files published daily (e.g. `todelete.dat`, `removed_obs.dat`).
+::: {.callout-note}
+The table alone cannot reproduce all different deletion files published daily (e.g. `todelete.dat`, `removed_obs.dat`).
+:::
 
 | Column | Data type | Description |
 |--------|-----------|-------------|

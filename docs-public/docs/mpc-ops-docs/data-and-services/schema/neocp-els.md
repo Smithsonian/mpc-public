@@ -2,8 +2,9 @@
 
 The NEOCP elements table contains the nominal orbital elements for every tracklet that is currently on the NEOCP.
 
-!!! note
-    The `desig` field is usually the observer-assigned identifier unless MPC linking has altered it.
+::: {.callout-note}
+The `desig` field is usually the observer-assigned identifier unless MPC linking has altered it.
+:::
 
 | Column | Data type | Description |
 |--------|-----------|-------------|

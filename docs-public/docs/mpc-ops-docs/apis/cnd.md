@@ -19,8 +19,9 @@ https://data.minorplanetcenter.net/api/cnd
 | `angle_separation_arcsec` | Float | No | Spatial threshold (0-10 arcseconds). Matching observations will have been recorded within this angular radius with respect to the given observation. | 5       |
 | `omit_separation` | Boolean | No | Exclude calculated separation values from results.                                                                                                   | false   |
 
-!!! note
-    160-character "two-line" observations may be concatenated, or the 80-character parts may be in sequential order.
+::: {.callout-note}
+160-character "two-line" observations may be concatenated, or the 80-character parts may be in sequential order.
+:::
 
 **Limits:**
 
@@ -33,9 +34,9 @@ The original request will be included in a `request` attribute.
 
 An attribute for each search term is included in the `results` attribute. Note that if the search term is in our database and published, it will always be returned as one of the results. This is called an 'exact' match.
 
-!!! note
-    Exact matches may occasionally show non-zero angular separation values. This is due to the numerical difference between the RA/dec values stored in the database and those given in the obs80 string.
-
+::: {.callout-note}
+Exact matches may occasionally show non-zero angular separation values. This is due to the numerical difference between the RA/dec values stored in the database and those given in the obs80 string.
+:::
 
 The value associated with each search term is a list of dictionaries, giving data about the matching observations. The fields of each match are described below.
 

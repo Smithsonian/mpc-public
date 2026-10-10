@@ -32,16 +32,22 @@ pytest tests/test_parse.py::test_MPCORB_A -v
 
 ### docs-public (Documentation Site)
 
+The site is built with [Quarto](https://quarto.org) (project config:
+`docs-public/docs/_quarto.yml`).
+
 ```bash
 # Install dependencies
-pip install mkdocs mkdocs-material mkdocs-jupyter
+#  - Quarto CLI (standalone): https://quarto.org/docs/get-started/
+#  - Python bits for Quarto's Jupyter engine (notebooks are NOT executed):
+pip install -r docs-public/requirements.txt
 
-# Local development (from docs-public directory)
-mkdocs serve
-# Then visit http://127.0.0.1:8000/index.html
+# Local development (live-reloading preview, from docs-public/docs)
+cd docs-public/docs && quarto preview
+# Or a one-off build: `quarto render` (outputs to docs-public/docs/_site)
 
 # Deploy to public site
-mkdocs gh-deploy
+# Push to main; the deploy-docs-public.yml GitHub Action runs `quarto render`
+# and publishes docs-public/docs/_site to GitHub Pages. (No `gh-deploy`.)
 ```
 
 ## Architecture
@@ -61,14 +67,16 @@ mkdocs gh-deploy
 - `docs/tutorials/notebooks/` - Jupyter notebook API tutorials
 - `docs/tutorials/submission_tutorials.md` - Links to submission-related notebooks
 - `docs/tutorials/api_tutorials.md` - Links to API tutorial notebooks
-- `docs/javascript/` - Custom JS for notebook downloads
-- `mkdocs.yml` - Site configuration with Material theme
+- `docs/javascript/` - Custom JS for notebook downloads (`notebook-downloads.js`)
+- `docs/_quarto.yml` - Quarto site configuration (theme, navbar, search, callouts)
+- `docs/scripts/copy-notebooks.sh` - post-render step copying raw `.ipynb` to `/downloads/notebooks/`
+- `docs/_includes/after-body.html` - injects the notebook-download JS site-wide
 
 ### Tutorial Notebook Conventions
 
 - **Naming**: `mpc_tutorial_api_*.ipynb` for API tutorials, `mpc_tutorial_*.ipynb` for general tutorials
 - **Structure**: Title markdown → Import section → Sample data download (using `tempfile`/`atexit` for cleanup) → Examples (success then failure cases) → Summary
-- **mkdocs-jupyter config**: `execute: false`, `include_source: true` — notebooks are not executed during build
+- **Quarto rendering**: notebooks are not executed during build (`execute: false` in `_quarto.yml`); stored outputs are rendered as-is. Each notebook page gets a "Download this notebook" button (see `docs/javascript/notebook-downloads.js`)
 - **Sample ADES files**: Available at `https://data.minorplanetcenter.net/media/ades/goodsubmit.xml.txt` and `goodsubmit.psv.txt`
   - These use ADES v2017; the current `iau-ades` package (v0.1.1) validates against v2022
   - When using these samples, update: `version` attribute to `2022`, remove `+` prefix from `<ra>`/`<dec>` values in XML, fix `+` prefixed values in PSV

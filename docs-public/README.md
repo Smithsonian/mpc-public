@@ -17,12 +17,21 @@ consolidated *into* [docs-public](https://smithsonian.github.io/docs-public/),
 but for now, this page primarily serves as a *map into the existing documentation*.
 
 
-## Setup & Development 
+## Setup & Development
 
-1. **Install dependencies** 
-```bash
-pip install -r requirements.txt
-```
+The site is built with [**Quarto**](https://quarto.org). Markdown pages and
+Jupyter notebooks under `docs/` are rendered to a static site; the Quarto
+project config is [`docs/_quarto.yml`](docs/_quarto.yml).
+
+1. **Install dependencies**
+   - Install the **Quarto CLI** (standalone, not pip): see
+     <https://quarto.org/docs/get-started/>. Check with `quarto --version`.
+   - Install the Python bits Quarto's Jupyter engine needs to read the notebooks:
+     ```bash
+     pip install -r requirements.txt
+     ```
+     (Notebooks are **not executed** at build time — `execute: false` in
+     `_quarto.yml` — so their stored outputs are rendered as-is.)
 
 2. **Make a new branch**
 3. **Add-to / Alter some documentation**
@@ -30,9 +39,20 @@ pip install -r requirements.txt
    E.g. Create / Edit one or more *markdown* files such as [docs/index.md](docs/index.md)
 
 4. **Examine locally**
- - From the project root, run from the command-line: `mkdocs serve --livereload`
- - See [Issue #8478](https://github.com/squidfunk/mkdocs-material/issues/8478) on the addition of `--livereload` argument. Once `mkdocs` solves this issue, it should automatically watch for changes without the `--livereload` flag.
- - Then examine in browser: `http://127.0.0.1:8000/index.html`
+ - From the `docs` directory, run a live-reloading preview server:
+   ```bash
+   cd docs && quarto preview
+   ```
+   It opens a browser tab (e.g. `http://localhost:4321`) and reloads on save.
+ - Or do a one-off build and open the result:
+   ```bash
+   cd docs && quarto render   # outputs to docs/_site
+   ```
+ - Notebook tutorials get a "Download this notebook" button and their raw
+   `.ipynb` files are copied to `/downloads/notebooks/` by the post-render step
+   ([docs/scripts/copy-notebooks.sh](docs/scripts/copy-notebooks.sh)); these
+   root-relative links resolve under `quarto preview` and on the live site (but
+   not when opening `_site/index.html` directly over `file://`).
 
 5. Push Branch to Repo & Request Review
 ```bash

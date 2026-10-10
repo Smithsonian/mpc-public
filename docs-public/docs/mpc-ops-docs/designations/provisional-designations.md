@@ -105,10 +105,11 @@ followed 1893 AP (for example). In 1916, the letters reached ZZ and, rather than
 starting a series of triple-letter designations, the double-letter series was restarted
 with 1916 AA.
 
-!!! note
-    In old publications, it is common to see 'J' as the omitted letter instead of
-    'I' -- the sequence going 1892 H, 1892 I, 1892 K, etc. Modern usage would consider
-    1892 I to be the same as 1892 J and it is this latter designation which is recorded.
+::: {.callout-note}
+In old publications, it is common to see 'J' as the omitted letter instead of
+'I' -- the sequence going 1892 H, 1892 I, 1892 K, etc. Modern usage would consider
+1892 I to be the same as 1892 J and it is this latter designation which is recorded.
+:::
 
 In the double-letter scheme it was not generally possible to insert new discoveries into
 the sequence once designations had been assigned in a subsequent year. The scheme used
@@ -211,30 +212,33 @@ indicated as follows:
   the extended packed provisional format, and (b) that the first 2 digits of the year
   of discovery are 20.
 
-    !!! note
-        This implies that the extended packed provisional designation format will not be
-        applied to objects discovered prior to 2010 (see next point for the encoding of
-        the last two digits of the year).
+::: {.callout-note}
+    This implies that the extended packed provisional designation format will not be
+    applied to objects discovered prior to 2010 (see next point for the encoding of
+    the last two digits of the year).
+:::
 
 - The second character must be a capital letter (indicating the last 2 digits of the
   year of discovery, where 'P' = 25, 'Q' = 26, etc).
 
-    !!! note
-        This encoding scheme is the same as that used for the first two digits of the
-        year in the original packed provisional designation format. This implies that
-        this extended packed provisional designation format is not expected to be employed
-        beyond 2035 (as 'Z' = 35).
+::: {.callout-note}
+    This encoding scheme is the same as that used for the first two digits of the
+    year in the original packed provisional designation format. This implies that
+    this extended packed provisional designation format is not expected to be employed
+    beyond 2035 (as 'Z' = 35).
+:::
 
 - The third character is the capital letter for the half month.
 - Four alphanumeric characters [0-9A-Za-z] will be used as a base-62 representation of
   the order of designation after 15,500.
 
-    !!! note
-        This implies subtracting 15,501 from the sequence-number before converting to the
-        base-62 representation. The base-62 representation uses the digits 0-9 to
-        represent numbers from 0-9, then upper-case letters A-Z to represent numbers
-        between 10 and 35 inclusive, then lower-case letters a-z to represent numbers
-        between 36 and 61 inclusive.
+::: {.callout-note}
+    This implies subtracting 15,501 from the sequence-number before converting to the
+    base-62 representation. The base-62 representation uses the digits 0-9 to
+    represent numbers from 0-9, then upper-case letters A-Z to represent numbers
+    between 10 and 35 inclusive, then lower-case letters a-z to represent numbers
+    between 36 and 61 inclusive.
+:::
 
 As such:
 

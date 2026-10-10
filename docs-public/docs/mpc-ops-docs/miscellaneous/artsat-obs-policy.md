@@ -36,5 +36,6 @@ On May 26th 2021, the MPC implemented the above-described flagging of suspected 
 - [neocp.txt](https://www.minorplanetcenter.net/iau/NEO_dev/neocp.txt)
 - [neocp.json](https://www.minorplanetcenter.net/Extended_Files/neocp_new.json)
 
-!!! note
-    The above examples are static files to illustrate the format and are **not** updated in sync with the NEOCP.
+::: {.callout-note}
+The above examples are static files to illustrate the format and are **not** updated in sync with the NEOCP.
+:::

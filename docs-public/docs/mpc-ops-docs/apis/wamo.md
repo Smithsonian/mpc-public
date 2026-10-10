@@ -18,8 +18,9 @@ https://data.minorplanetcenter.net/api/wamo
 
 You can query the API with up to ~50k identifiers. Each identifier may return up to 100k observations. 
 
-!!! note
-    **Astrometry will be suppressed for unpublished observations.**
+::: {.callout-note}
+**Astrometry will be suppressed for unpublished observations.**
+:::
 
 The following identifier formats are accepted (can be mixed):
 

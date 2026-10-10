@@ -4,11 +4,12 @@ The observations table is a replica of the MPC internal PostgreSQL table. It con
 
 ## Known issues
 
-!!! warning
-    - **Missing observations:** Some observations present in flat files are missing from the database (on the order of hundreds of old observations).
-    - **Duplicate observations:** Multiple entries with the same `obs80_bit` and station code.
-    - **Near-duplicate observations:** Remeasurements sent without MPC knowing.
-    - **Fields with invalid values:** See MPC Explorer for details.
+::: {.callout-warning}
+- **Missing observations:** Some observations present in flat files are missing from the database (on the order of hundreds of old observations).
+- **Duplicate observations:** Multiple entries with the same `obs80_bit` and station code.
+- **Near-duplicate observations:** Remeasurements sent without MPC knowing.
+- **Fields with invalid values:** See MPC Explorer for details.
+:::
 
 ## Useful information
 
