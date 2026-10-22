@@ -9,8 +9,8 @@
 
 /* Top-level nav links */
 .md-nav--primary > .md-nav__list > .md-nav__item > .md-nav__link {
-  display: block;
-  padding: 0.18rem 0.5rem;
+  display: flex;
+  padding: 0.18rem 0.25rem;
   margin: 0.05rem 0;
 
   border: none;
@@ -18,7 +18,7 @@
   background: transparent;
 
   font-weight: 500;
-  font-size: 0.92rem;
+  font-size: 0.78rem;
 
   transition: background-color 100ms ease;
 }
@@ -49,11 +49,38 @@
   margin-top: 0.6rem;
 }
 
-/* Nested links */
-.md-nav--primary .md-nav__list .md-nav__item .md-nav__link {
-  padding-left: 1rem;
+/* Style each row once; section index links have an extra link container. */
+.md-nav--primary .md-nav__item > .md-nav__link {
   font-weight: 400;
-  font-size: 0.9rem;
+}
+
+.md-nav--primary .md-nav .md-nav__item > .md-nav__link {
+  padding: 0.12rem 0.25rem;
+  font-size: 0.7rem;
+}
+
+.md-nav--primary .md-nav__container > .md-nav__link {
+  padding: 0;
+  font-size: inherit;
+}
+
+/* Desktop uses a tree; mobile uses Material's sliding navigation panels. */
+@media screen and (min-width: 76.25em) {
+  .md-nav--primary .md-nav > .md-nav__list {
+    margin-left: 0.65rem;
+    padding-left: 0.45rem;
+    border-left: 1px solid var(--md-default-fg-color--lightest);
+  }
+
+  .md-nav--primary .md-nav .md-nav__item:not(.md-nav__item--nested) > .md-nav__link::before {
+    content: "";
+    flex-shrink: 0;
+    width: 0.18rem;
+    height: 0.18rem;
+    margin-top: 0.4em;
+    border-radius: 50%;
+    background: var(--md-default-fg-color--light);
+  }
 }
 
 .md-nav__link {
