@@ -7,6 +7,7 @@ tests in `test_wis_ephemeris.py` need kernels and network.
 """
 
 from collections.abc import Callable
+from datetime import datetime, timedelta
 from functools import partial
 
 import numpy as np
@@ -46,8 +47,8 @@ def bare_wis(monkeypatch: pytest.MonkeyPatch) -> Wis:
     instance._entered = True
     monkeypatch.setattr(instance, "_has_ground_kernel", lambda: True)
     monkeypatch.setattr(instance, "_has_satellite_kernel", lambda obscode: False)
-    # `_convert_time` calls utc2et, which needs leapsecond kernels; stub it out.
-    monkeypatch.setattr(sp, "utc2et", lambda _: 0.0)
+    # Stub the SPICE calls that the ground-position body makes (leapsecond kernels
+    # are not loaded in the unit-test run).
     monkeypatch.setattr(sp, "pxform", lambda *args: np.eye(3))
     monkeypatch.setattr(sp, "spkpos", lambda *args: ([[1.0, 2.0, 3.0]], [0.0]))
     monkeypatch.setattr(sp, "spkezr", _fake_spkezr)
@@ -56,10 +57,10 @@ def bare_wis(monkeypatch: pytest.MonkeyPatch) -> Wis:
 
 @pytest.mark.parametrize("key_func", KEY_FUNC_CASES)
 def test_key_distinguishes_time_scales(key_func: Callable[[Time], tuple]) -> None:
-    """A UTC and a TDB Time with the same numeric JD must not share a cache key.
+    """A UTC and a TDB Time with the same numeric JD must not share a key.
 
-    They are ~69s (~2000km of Earth motion) apart, and `_convert_time` feeds SPICE
-    `times.utc.jd`, so the key has to be built from the same quantity.
+    The two scales are ~69 s (~2000 km of Earth motion) apart in
+    `_convert_time`'s ET, so their keys differ.
     """
     jd = 2458337.82915783
     key_utc = key_func(Time(jd, format="jd", scale="utc"))
@@ -82,6 +83,45 @@ def test_key_distinguishes_time_values(key_func: Callable[[Time], tuple]) -> Non
     key_a = key_func(Time(2458337.82915783, format="jd", scale="tdb"))
     key_b = key_func(Time(2458338.82915783, format="jd", scale="tdb"))
     assert key_a != key_b
+
+
+def _times_sharing_one_float64_value() -> tuple[Time, Time]:
+    """Two distinct UTC instants, 5 µs apart, that round to one float64 JD value.
+
+    A JD near 2.5e6 has a float64 spacing of ~40 µs, so `Time.utc.jd` rounds
+    both instants to the same number, while the ET tuple of `_convert_time`
+    differs by ~5 µs (≈1.2 m of geocenter motion) for the two instants.
+    """
+    base = datetime(2019, 4, 13, 19, 54, 0)
+    return (
+        Time(base + timedelta(microseconds=3), scale="utc"),
+        Time(base + timedelta(microseconds=8), scale="utc"),
+    )
+
+
+@pytest.mark.parametrize("key_func", KEY_FUNC_CASES)
+def test_key_distinguishes_instants_within_one_float64_value(
+    key_func: Callable[[Time], tuple],
+) -> None:
+    """Two distinct instants inside one float64-JD value must not share a key.
+
+    Regression test: a key built from `Time.utc.jd` cannot separate these:
+    the second call would hit the first instant's cached positions. The keys
+    hash `_convert_time`'s ET tuple instead, whose ~0.1 µs resolution
+    separates them.
+    """
+    time_a, time_b = _times_sharing_one_float64_value()
+    # The collision precondition: both instants map to the same float64 JD.
+    assert float(time_a.utc.jd) == float(time_b.utc.jd)
+    assert key_func(time_a) != key_func(time_b)
+
+
+@pytest.mark.parametrize("key_func", KEY_FUNC_CASES)
+def test_key_embeds_the_spice_et(key_func: Callable[[Time], tuple]) -> None:
+    """The key must include the exact ET tuple that `_convert_time` passes to SPICE."""
+    times = Time([2458337.82915783, 2458338.82915783], format="jd", scale="tdb")
+    et_tuple = Wis.__new__(Wis)._convert_time(times)
+    assert et_tuple in key_func(times)
 
 
 def test_obs_helio_key_distinguishes_flags() -> None:
