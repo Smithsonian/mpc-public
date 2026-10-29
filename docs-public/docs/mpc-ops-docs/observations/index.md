@@ -37,7 +37,6 @@ The ADES format is the current standard for submitting observations to the MPC.
 
 ## Observing Procedures
 
-- [Guide to using the MPES (PDF)](https://minorplanetcenter.net/iau/info/MPES.pdf)
 
 <div class="contents-grid"></div>
 
@@ -45,8 +44,16 @@ The ADES format is the current standard for submitting observations to the MPC.
 - [How to specify telescope details in the observational header](telescope-details.md)
 - [Command line submissions](command-line-submissions.md)
 - [Roving observers](roving-observers.md)
+- [Guide to using the MPES (PDF)](https://minorplanetcenter.net/iau/info/MPES.pdf)
 - [Guide to video observing (PDF)](https://minorplanetcenter.net/iau/info/AGuidetoVideoAstrometry.pdf)
 - [A script to generate mini normal places from video frames](https://minorplanetcenter.net/iau/info/VideoNormalPlaces.html)
+
+
+## Observation Processing
+
+<div class="contents-grid"></div>
+
+- [Near-Duplicate Filtering](near-duplicates.md)
 
 
 ## Negative Observations
