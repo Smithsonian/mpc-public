@@ -1,3 +1,7 @@
+---
+title: MPC Documentation Hub
+---
+
 # Welcome to the Minor Planet Center's *Public* Documentation Hub
 
 This site is a landing-page providing simplified access to the MPC's 
