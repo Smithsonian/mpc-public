@@ -38,7 +38,7 @@ Please note that the SARC members are volunteering their time to help the commun
 |---------|-------------------|---------|
 | Asiago Observatory, Cima Ekar | 098, 209 | [SARC Chair](mailto:sarc_committee@googlegroups.com) |
 | ATLAS | M22, R17, T05, T08, W68 | [Larry Denneau](mailto:denneau@hawaii.edu) |
-| Catalina Sky Survey | 703, G83, G96, I52, V06 | [David Rankin](mailto:davidrankin@arizona.edu) |
+| Catalina Sky Survey | 703, G83, G96, I52, V06, V00 | [David Rankin](mailto:davidrankin@arizona.edu) |
 | Cerro Tololo | 807 | [Tyler Linder](mailto:tlinder34@gmail.com) |
 | DECAM | W84 | [Tyler Linder](mailto:tlinder34@gmail.com) |
 | ESA various telescopes | 033, 204, 246, B63, J04, J75, L80, Q12, W57, W98, Z33, Z58, Z84 | [Marco Micheli](mailto:marco.bs.it@gmail.com) |
@@ -67,6 +67,7 @@ Please note that the SARC members are volunteering their time to help the commun
 | Spacewatch 0.9m Mosaic Camera Survey | 291, 691 | [SARC Chair](mailto:sarc_committee@googlegroups.com) |
 | PanSTARRS | F51, F52 | [Rob Weryk](mailto:weryk@hawaii.edu) |
 | Spitzer | 245 | [Joe Masiero](mailto:jmasiero@ipac.caltech.edu) |
+| TESS | C57 | [SARC Chair](mailto:sarc_committee@googlegroups.com) |
 | Vera Rubin Observatory / LSST | X05 | [Mario Juric](mailto:mario.juric@gmail.com) |
 | VLT Survey Telescope (VST) | X11 | [Marco Micheli](mailto:marco.bs.it@gmail.com) |
 | WISE/NEOWISE | C51 | [Joe Masiero](mailto:jmasiero@ipac.caltech.edu) |
