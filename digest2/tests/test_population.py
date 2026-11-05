@@ -1,7 +1,6 @@
 """Tests for digest2.population — population model generation pipeline."""
 
 import math
-import tempfile
 from pathlib import Path
 
 import numpy as np
@@ -511,3 +510,32 @@ def test_mpcorb_c_python_models_match(tmp_path):
     python_model = read_model_csv(str(output))
     for name in c_model:
         np.testing.assert_allclose(c_model[name], python_model[name], rtol=1e-12)
+
+
+@pytest.mark.parametrize("fields", [
+    {"h": ""}, {"inc": "junk"}, {"ecc": "nan"}, {"axis": "inf"},
+])
+def test_mpcorb_invalid_required_fields(tmp_path, fields):
+    """Missing, malformed and non-finite fields must never enter model bins."""
+    from digest2.population import read_mpcorb
+    path = tmp_path / "invalid.dat"
+    path.write_text("-" * 160 + "\n" + _mpcorb_record(**fields))
+    ss, classes, stats = read_mpcorb(path)
+    assert stats == dict(lines=1, parse_fails=1, out_of_model=0, usable=0)
+    assert not ss.any()
+    assert not classes.any()
+
+
+@pytest.mark.parametrize("fields", [
+    {"inc": "-1"}, {"inc": "180"}, {"ecc": "-0.1"},
+    {"ecc": "1.0"}, {"axis": "0"}, {"axis": "200.0"},
+])
+def test_mpcorb_out_of_model(tmp_path, fields):
+    """Reject invalid elliptic elements and values outside model bounds."""
+    from digest2.population import read_mpcorb
+    path = tmp_path / "outside.dat"
+    path.write_text("-" * 160 + "\n" + _mpcorb_record(**fields))
+    ss, classes, stats = read_mpcorb(path)
+    assert stats == dict(lines=1, parse_fails=0, out_of_model=1, usable=0)
+    assert not ss.any()
+    assert not classes.any()

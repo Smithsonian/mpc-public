@@ -141,7 +141,7 @@ char *scanField(char *start)
     end = strchr(start, 0);
   }
   int n = end - start;
-  if (n > sizeof(field) - 1) {
+  if ((size_t)n > sizeof(field) - 1) {
     *field = 0;
     return start;
   }
@@ -161,7 +161,6 @@ void csvError(char *mod, char *class, int iq, int ie, int ii, char *heading)
 void test_class(char *mod, char *class, double pop[QX][EX][IX][HX])
 {
   char *t;
-  double d;
   for (int iq = 0; iq < QX; iq++)
     for (int ie = 0; ie < EX; ie++)
       for (int ii = 0; ii < IX; ii++) {
@@ -202,7 +201,7 @@ void test_class(char *mod, char *class, double pop[QX][EX][IX][HX])
 int orbitField(const char *record, int start, int width, double *value)
 {
   char buf[40], *end;
-  if (strlen(record) < start + width)
+  if (strlen(record) < (size_t)(start + width))
     return 0;
   memcpy(buf, record + start, width);
   buf[width] = 0;
@@ -306,8 +305,6 @@ int main(int argc, char **argv)
 
   int lines = 0;
   int good = 0;
-  int decpeuy_fails = 0;
-  int decpeu_rejects = 0;
   int parsefails = 0;
   int outofmodel = 0;
   int in_data = !mpcorb;
@@ -353,15 +350,12 @@ int main(int argc, char **argv)
         known_class[c][iq][ie][ii][ih]++;
   }
 
-
   fclose(forb);
   if (!in_data) fatal("MPCORB header separator not found");
 
   printf("%d lines\n", lines);
   if (parsefails)
     printf("%d parse fails\n", parsefails);
-  printf("%d decpeuy fails\n", decpeuy_fails);
-  printf("%d decpeu rejects\n", decpeu_rejects);
   printf("%d out of model\n", outofmodel);
   printf("%d usable\n", good);
 

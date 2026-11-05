@@ -15,7 +15,6 @@ Public domain.
 """
 
 import math
-from pathlib import Path
 from typing import Callable, Dict, List, Optional, Tuple
 
 import numpy as np
@@ -512,6 +511,23 @@ def read_mpcorb(filepath: str) -> Tuple[np.ndarray, np.ndarray, Dict]:
     are needed. Blank lines between catalog sections are ignored. Malformed
     or non-finite required fields count as parse failures; no uncertainty
     filter is applied. Statistics count data records only.
+
+    Parameters
+    ----------
+    filepath : str
+        Path to an MPCORB.DAT catalog including its header separator.
+
+    Returns
+    -------
+    known_ss : ndarray, shape (QX, EX, IX, HX)
+    known_class : ndarray, shape (D2CLASSES, QX, EX, IX, HX)
+    stats : dict
+        Counts of lines, parse_fails, out_of_model and usable data records.
+
+    Raises
+    ------
+    ValueError
+        If the dashed header separator is missing.
     """
     known_ss = np.zeros((QX, EX, IX, HX))
     known_class = np.zeros((D2CLASSES, QX, EX, IX, HX))
@@ -668,7 +684,7 @@ def read_model_csv(filepath: str) -> Dict:
     abbr_to_idx = {a: i for i, a in enumerate(CLASS_ABBR)}
 
     with open(filepath, "r") as f:
-        header = f.readline()  # skip header
+        f.readline()  # skip header
 
         for line in f:
             parts = line.rstrip("\n").split(",")
@@ -732,7 +748,7 @@ def build_model(s3m_path: str,
     s3m_path : str
         Path to s3m.dat (output of build_s3m or the C s3mbin program).
     catalog_path : str
-        Path to the known-object catalog (e.g. astorb.dat).
+        Path to the known-object catalog (astorb.dat or MPCORB.DAT).
     output_path : str
         Where to write the output CSV model file.
     catalog_format : str
