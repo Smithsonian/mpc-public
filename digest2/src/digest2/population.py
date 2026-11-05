@@ -5,7 +5,7 @@ This module provides a pure-Python implementation of the pipeline that builds
 the digest2 population model file (digest2.model.csv).  The pipeline is:
 
     S3M synthetic orbit files  -->  s3m.dat  -->  digest2.model.csv
-         (via build_s3m)           (via build_model + astorb.dat)
+         (via build_s3m)           (via build_model + astorb.dat or MPCORB.DAT)
 
 This provides pure-Python equivalents of the C programs s3mbin.c and muk.c,
 so users can regenerate or update the population model without a C compiler.
@@ -505,6 +505,52 @@ def read_astorb(filepath: str) -> Tuple[np.ndarray, np.ndarray, Dict]:
         "usable": usable,
     }
 
+def read_mpcorb(filepath: str) -> Tuple[np.ndarray, np.ndarray, Dict]:
+    """Bin MPCORB.DAT records following the dashed header separator.
+
+    Only H, inclination (degrees), eccentricity and semimajor axis (AU)
+    are needed. Blank lines between catalog sections are ignored. Malformed
+    or non-finite required fields count as parse failures; no uncertainty
+    filter is applied. Statistics count data records only.
+    """
+    known_ss = np.zeros((QX, EX, IX, HX))
+    known_class = np.zeros((D2CLASSES, QX, EX, IX, HX))
+    stats = dict(lines=0, parse_fails=0, out_of_model=0, usable=0)
+    in_data = False
+    with open(filepath, "r") as f:
+        for line in f:
+            stripped = line.strip()
+            if not in_data:
+                if len(stripped) >= 10 and set(stripped) == {"-"}:
+                    in_data = True
+                continue
+            if not stripped:
+                continue
+            stats["lines"] += 1
+            try:
+                if len(line.rstrip("\r\n")) < 103:
+                    raise ValueError("Truncated orbit record")
+                h, i, e, a = (float(line[start:end]) for start, end in
+                              ((8, 13), (59, 68), (70, 79), (92, 103)))
+                if not all(math.isfinite(v) for v in (h, i, e, a)):
+                    raise ValueError("Non-finite orbit field")
+            except ValueError:
+                stats["parse_fails"] += 1
+                continue
+            q = a * (1 - e)
+            b = qeih_to_bin(q, e, i, h)
+            if a <= 0 or e < 0 or e >= 1 or not 0 <= i <= 180 or b is None:
+                stats["out_of_model"] += 1
+                continue
+            stats["usable"] += 1
+            known_ss[b] += 1
+            for c, test in enumerate(CLASS_TESTS):
+                if test(q, e, i, h):
+                    known_class[(c,) + b] += 1
+    if not in_data:
+        raise ValueError("MPCORB header separator not found")
+    return known_ss, known_class, stats
+
 # ---------------------------------------------------------------------------
 # Volume scaling + model assembly (equivalent to muk.c main)
 # ---------------------------------------------------------------------------
@@ -690,7 +736,7 @@ def build_model(s3m_path: str,
     output_path : str
         Where to write the output CSV model file.
     catalog_format : str
-        Format of the catalog.  Currently only "astorb" is supported.
+        Format of the catalog.  Either "astorb" (default) or "mpcorb".
 
     Returns
     -------
@@ -703,6 +749,8 @@ def build_model(s3m_path: str,
     # Step 2: read orbit catalog
     if catalog_format == "astorb":
         known_ss, known_class, cat_stats = read_astorb(catalog_path)
+    elif catalog_format == "mpcorb":
+        known_ss, known_class, cat_stats = read_mpcorb(catalog_path)
     else:
         raise ValueError(f"Unsupported catalog format: {catalog_format!r}")
 

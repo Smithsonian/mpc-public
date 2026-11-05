@@ -442,3 +442,72 @@ class TestBuildModelFromS3m:
         model = read_model_csv(out_path)
         assert model["all_ss"].shape == (QX, EX, IX, HX)
         assert model["all_ss"].sum() > 0
+
+
+# Fixed-width synthetic records keep the external catalog out of the test suite.
+def _mpcorb_record(h="15.0", inc="5.0", ecc="0.15", axis="2.5"):
+    record = list(" " * 103)
+    for start, end, value in ((0, 7, "00001"), (8, 13, h),
+                              (59, 68, inc), (70, 79, ecc), (92, 103, axis)):
+        record[start:end] = value.rjust(end - start)
+    return "".join(record) + "\n"
+
+
+def _mpcorb_catalog(tmp_path):
+    path = tmp_path / "MPCORB.DAT"
+    path.write_text("Variable length header\n" * 47 + "Des'n H G Epoch\n\n"
+                    + "-" * 160 + "\n\n" + _mpcorb_record()
+                    + "\n" + _mpcorb_record(h="20.0", ecc="0.6", axis="2.0")
+                    + _mpcorb_record(h="") + "short\n"
+                    + _mpcorb_record(axis="nan")
+                    + _mpcorb_record(axis="200.0")
+                    + _mpcorb_record(ecc="1.2"))
+    return path
+
+
+def test_read_mpcorb(tmp_path):
+    from digest2.population import read_mpcorb
+    ss, classes, stats = read_mpcorb(_mpcorb_catalog(tmp_path))
+    assert stats == dict(lines=7, parse_fails=3, out_of_model=2, usable=2)
+    assert ss.sum() == 2
+    assert ss[qeih_to_bin(2.125, 0.15, 5.0, 15.0)] == 1
+    assert classes[CLASS_ABBR.index("NEO")].sum() == 1
+
+
+def test_mpcorb_requires_header_separator(tmp_path):
+    from digest2.population import read_mpcorb
+    path = tmp_path / "bad.dat"
+    path.write_text(_mpcorb_record())
+    with pytest.raises(ValueError, match="separator"):
+        read_mpcorb(path)
+
+
+def test_mpcorb_c_python_models_match(tmp_path):
+    import shutil
+    import subprocess
+    compiler = shutil.which("cc")
+    if compiler is None:
+        pytest.skip("C compiler unavailable")
+    root = Path(__file__).resolve().parents[1]
+    executable = tmp_path / "muk"
+    subprocess.run([compiler, "-std=c11", "-I" + str(root / "digest2"),
+                    str(root / "population/make_population/muk.c"),
+                    str(root / "digest2/d2model.c"), "-lm", "-o", str(executable)],
+                   check=True, capture_output=True, text=True)
+    from digest2.population import _write_s3m
+    s3m_path = str(tmp_path / "s3m.dat")
+    _write_s3m(s3m_path, np.zeros((QX, EX, IX, HX)),
+               np.zeros((D2CLASSES, QX, EX, IX, HX)))
+    catalog = _mpcorb_catalog(tmp_path)
+    result = subprocess.run([str(executable), "--mpcorb"], cwd=tmp_path,
+                            check=True, capture_output=True, text=True)
+    assert "2 usable" in result.stdout
+    assert "3 parse fails" in result.stdout
+    assert "2 out of model" in result.stdout
+    output = tmp_path / "python.csv"
+    stats = build_model(s3m_path, str(catalog), str(output), catalog_format="mpcorb")
+    assert stats["catalog_stats"]["usable"] == 2
+    c_model = read_model_csv(str(tmp_path / "digest2.model.csv"))
+    python_model = read_model_csv(str(output))
+    for name in c_model:
+        np.testing.assert_allclose(c_model[name], python_model[name], rtol=1e-12)

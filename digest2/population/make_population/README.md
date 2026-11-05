@@ -21,3 +21,19 @@ An example Makefile is provided.  You may need to make adjustments for your C co
 
 ## Usage
 For muk you will need the two input data files s3m.dat and astorb.dat.  Obtain these files as described above.  There are no command line parameters or options for muk.  Just run it; it should display some status and create the file `digest2.model.csv`.  You will then need to copy `digest2.model.csv` to your digest2 directory or otherwise make it available to digest2.  See the [digest2 README.md](https://bitbucket.org/mpcdev/digest2) for information on running digest2.
+
+### MPCORB.DAT
+
+Alternatively, run `./muk --mpcorb [catalog-path]` from the directory
+containing `s3m.dat`. The catalog path defaults to `MPCORB.DAT`.
+The Python equivalent is
+`build_model(s3m_path, catalog_path, output_path, catalog_format="mpcorb")`.
+The default catalog format remains astorb.
+
+MPCORB parsing skips the header through its dashed separator and ignores
+blank lines between sections. H (columns 9–13), inclination (60–68),
+eccentricity (71–79), and semimajor axis (93–103) determine the model bins;
+perihelion distance is derived as a*(1-e). No uncertainty filter is applied.
+Malformed required fields are reported as parse failures.
+`population/MPCORB.DAT` is ignored by Git. Obtain updated catalogs from the
+[Minor Planet Center](https://www.minorplanetcenter.org/iau/MPCORB/MPCORB.DAT).

@@ -7,7 +7,7 @@ This program preprocesses an asteroid model for use by Digest2.
 
 There are two inputs.  A model of the predicted entire asteroid population, and
 a list of known asteroids.  The predicted model is S3M, a list of synthetic
-orbits.  The list of known asteroids is astorb.dat.
+orbits.  The list of known asteroids is astorb.dat or MPCORB.DAT.
 
 Digest2 uses the 4-D histogram format in variations that allow it
 to easily compute statistics.  The variations are:
@@ -42,6 +42,7 @@ arc minute or less.
 #define _POSIX_SOURCE
 
 #include <assert.h>
+#include <ctype.h>
 #include <errno.h>
 #include <math.h>
 #include <stdio.h>
@@ -197,8 +198,33 @@ void test_class(char *mod, char *class, double pop[QX][EX][IX][HX])
       }
 }
 
-int main()
+// Parse a required fixed-width number without accepting blanks or junk.
+int orbitField(const char *record, int start, int width, double *value)
 {
+  char buf[40], *end;
+  if (strlen(record) < start + width)
+    return 0;
+  memcpy(buf, record + start, width);
+  buf[width] = 0;
+  errno = 0;
+  *value = strtod(buf, &end);
+  if (end == buf || errno || !isfinite(*value))
+    return 0;
+  while (isspace((unsigned char)*end)) end++;
+  return *end == 0;
+}
+
+int main(int argc, char **argv)
+{
+  int mpcorb = 0;
+  const char *afile = AFILE;
+  if (argc >= 2 && strcmp(argv[1], "--mpcorb") == 0 && argc <= 3) {
+    mpcorb = 1;
+    afile = argc == 3 ? argv[2] : "MPCORB.DAT";
+  } else if (argc != 1) {
+    fprintf(stderr, "Usage: muk [--mpcorb [catalog-path]]\n");
+    return 1;
+  }
   FILE *fs3m = fopen(SFILE, "r");
   if (!fs3m) {
     printf("Open %s failed\n", SFILE);
@@ -264,10 +290,10 @@ int main()
     printf("   %13.13s %8d\n", classHeading[c], nClass[c]);
 
   // read catalog
-  printf("Reading orbit catalog %s:\n", AFILE);
-  FILE *forb = fopen(AFILE, "r");
+  printf("Reading orbit catalog %s:\n", afile);
+  FILE *forb = fopen(afile, "r");
   if (!forb) {
-    printf("Open %s failed.\n", AFILE);
+    printf("Open %s failed.\n", afile);
     return (-1);
   }
   // stat the date
@@ -278,56 +304,33 @@ int main()
   strftime(line, sizeof(line), "%Y-%m-%dT%H:%M:%SZ", &orbtime);
   printf("file date %s\n", line);
 
-  if (!fgets(line, sizeof(line), forb)) {
-    printf("Read %s failed.\n", AFILE);
-    fclose(forb);
-    return (-1);
-  }
-
   int lines = 0;
   int good = 0;
   int decpeuy_fails = 0;
   int decpeu_rejects = 0;
   int parsefails = 0;
   int outofmodel = 0;
-  do {
+  int in_data = !mpcorb;
+  while (fgets(line, sizeof(line), forb)) {
+    char *p = line;
+    while (isspace((unsigned char)*p)) p++;
+    if (!in_data) {
+      if (strspn(p, "-") >= 10 && strspn(p, "-\r\n") == strlen(p))
+        in_data = 1;
+      continue;
+    }
+    if (!*p) continue;
     lines++;
-    line[246] = 0;              /* ok to step on month */
-    int decpeuy = atoi(line + 242);
-    //if ( errno || decpeuy < 2000) {
-    //  decpeuy_fails++;
-    //  continue;
-    //}
-    line[241] = 0;              /* ok, this is just a space */
-    double decpeu = atof(line + 234);
-    // printf("%d lines\n", decpeu);
-    //if ( errno || decpeu > 60.) {
-    //  printf("%d lines\n", decpeu);
-    //  decpeu_rejects++;
-    //  continue;
-    //}
-    line[181] = 0;              /* just a space */
-    double a = atof(line + 169);
-    if (errno) {
+    double a, e, i, h;
+    if (!orbitField(line, mpcorb ? 92 : 169, mpcorb ? 11 : 12, &a) ||
+        !orbitField(line, mpcorb ? 70 : 158, mpcorb ? 9 : 10, &e) ||
+        !orbitField(line, mpcorb ? 59 : 147, mpcorb ? 9 : 10, &i) ||
+        !orbitField(line, mpcorb ? 8 : 42, 5, &h)) {
       parsefails++;
       continue;
     }
-    line[168] = 0;
-    double e = atof(line + 158);
-    if (errno) {
-      parsefails++;
-      continue;
-    }
-    line[157] = 0;
-    double i = atof(line + 147);
-    if (errno) {
-      parsefails++;
-      continue;
-    }
-    line[47] = 0;
-    double h = atof(line + 42);
-    if (errno) {
-      parsefails++;
+    if (mpcorb && (a <= 0 || e < 0 || e >= 1 || i < 0 || i > 180)) {
+      outofmodel++;
       continue;
     }
 
@@ -349,9 +352,10 @@ int main()
       if ((*isClass[c]) (q, e, i, h))
         known_class[c][iq][ie][ii][ih]++;
   }
-  while (fgets(line, sizeof(line), forb));
+
 
   fclose(forb);
+  if (!in_data) fatal("MPCORB header separator not found");
 
   printf("%d lines\n", lines);
   if (parsefails)
