@@ -458,7 +458,7 @@ def _mpcorb_catalog(tmp_path):
                     + "-" * 160 + "\n\n" + _mpcorb_record()
                     + "\n" + _mpcorb_record(h="20.0", ecc="0.6", axis="2.0")
                     + _mpcorb_record(h="") + "short\n"
-                    + _mpcorb_record(axis="nan")
+                    + _mpcorb_record(axis="nan") + _mpcorb_record(h="99.99")
                     + _mpcorb_record(axis="200.0")
                     + _mpcorb_record(ecc="1.2"))
     return path
@@ -467,7 +467,7 @@ def _mpcorb_catalog(tmp_path):
 def test_read_mpcorb(tmp_path):
     from digest2.population import read_mpcorb
     ss, classes, stats = read_mpcorb(_mpcorb_catalog(tmp_path))
-    assert stats == dict(lines=7, parse_fails=3, out_of_model=2, usable=2)
+    assert stats == dict(lines=8, parse_fails=4, out_of_model=2, usable=2)
     assert ss.sum() == 2
     assert ss[qeih_to_bin(2.125, 0.15, 5.0, 15.0)] == 1
     assert classes[CLASS_ABBR.index("NEO")].sum() == 1
@@ -501,7 +501,7 @@ def test_mpcorb_c_python_models_match(tmp_path):
     result = subprocess.run([str(executable), "--mpcorb"], cwd=tmp_path,
                             check=True, capture_output=True, text=True)
     assert "2 usable" in result.stdout
-    assert "3 parse fails" in result.stdout
+    assert "4 parse fails" in result.stdout
     assert "2 out of model" in result.stdout
     output = tmp_path / "python.csv"
     stats = build_model(s3m_path, str(catalog), str(output), catalog_format="mpcorb")
@@ -539,3 +539,28 @@ def test_mpcorb_out_of_model(tmp_path, fields):
     assert stats == dict(lines=1, parse_fails=0, out_of_model=1, usable=0)
     assert not ss.any()
     assert not classes.any()
+
+
+@pytest.mark.parametrize("catalog_format", ["astorb", "mpcorb"])
+@pytest.mark.parametrize("h, usable", [("", 0), ("99.99", 0), ("nan", 0),
+                                       ("0.00", 1), ("-1.0", 1), ("15.0", 1)])
+def test_catalog_missing_h(tmp_path, catalog_format, h, usable):
+    """Reject missing H without excluding valid bright-object magnitudes."""
+    from digest2.population import read_astorb, read_mpcorb
+    path = tmp_path / "catalog.dat"
+    if catalog_format == "mpcorb":
+        path.write_text("-" * 160 + "\n" + _mpcorb_record(h=h))
+        reader = read_mpcorb
+    else:
+        record = list(" " * 181)
+        for start, end, value in ((42, 47, h), (147, 157, "5.0"),
+                                  (158, 168, "0.15"), (169, 181, "2.5")):
+            record[start:end] = value.rjust(end - start)
+        path.write_text("".join(record) + "\n")
+        reader = read_astorb
+    ss, classes, stats = reader(path)
+    assert stats == dict(lines=1, parse_fails=1-usable, out_of_model=0,
+                         usable=usable)
+    assert ss.sum() == usable
+    if not usable:
+        assert not classes.any()

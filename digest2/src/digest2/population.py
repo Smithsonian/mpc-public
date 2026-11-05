@@ -446,6 +446,9 @@ def read_s3m(filepath: str) -> Tuple[np.ndarray, np.ndarray]:
 def read_astorb(filepath: str) -> Tuple[np.ndarray, np.ndarray, Dict]:
     """Read an astorb.dat catalog and bin known objects.
 
+    Blank, non-finite and sentinel H=99.99 values count as parse failures.
+    Zero and negative H magnitudes remain valid.
+
     Parameters
     ----------
     filepath : str
@@ -476,6 +479,8 @@ def read_astorb(filepath: str) -> Tuple[np.ndarray, np.ndarray, Dict]:
             #   a:    columns 169-180 (line[169:181])
             try:
                 h = float(line[42:47])
+                if not math.isfinite(h) or h == 99.99:
+                    raise ValueError("Missing H magnitude")
                 i = float(line[147:157])
                 e = float(line[158:168])
                 a = float(line[169:181])
@@ -510,7 +515,9 @@ def read_mpcorb(filepath: str) -> Tuple[np.ndarray, np.ndarray, Dict]:
     Only H, inclination (degrees), eccentricity and semimajor axis (AU)
     are needed. Blank lines between catalog sections are ignored. Malformed
     or non-finite required fields count as parse failures; no uncertainty
-    filter is applied. Statistics count data records only.
+    filter is applied. Blank H and the missing-value sentinel H=99.99 are
+    rejected as parse failures. Zero and negative H remain valid.
+    Statistics count data records only.
 
     Parameters
     ----------
@@ -548,7 +555,7 @@ def read_mpcorb(filepath: str) -> Tuple[np.ndarray, np.ndarray, Dict]:
                     raise ValueError("Truncated orbit record")
                 h, i, e, a = (float(line[start:end]) for start, end in
                               ((8, 13), (59, 68), (70, 79), (92, 103)))
-                if not all(math.isfinite(v) for v in (h, i, e, a)):
+                if h == 99.99 or not all(math.isfinite(v) for v in (h, i, e, a)):
                     raise ValueError("Non-finite orbit field")
             except ValueError:
                 stats["parse_fails"] += 1

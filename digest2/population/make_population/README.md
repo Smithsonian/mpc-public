@@ -34,6 +34,8 @@ MPCORB parsing skips the header through its dashed separator and ignores
 blank lines between sections. H (columns 9–13), inclination (60–68),
 eccentricity (71–79), and semimajor axis (93–103) determine the model bins;
 perihelion distance is derived as a*(1-e). No uncertainty filter is applied.
-Malformed required fields are reported as parse failures.
+Malformed required fields are reported as parse failures. Both catalog readers
+exclude missing H (blank, non-finite, or `99.99`) as parse failures; zero and
+negative H remain valid for bright objects.
 `population/MPCORB.DAT` is ignored by Git. Obtain updated catalogs from the
 [Minor Planet Center](https://www.minorplanetcenter.org/iau/MPCORB/MPCORB.DAT).

@@ -322,7 +322,7 @@ int main(int argc, char **argv)
     if (!orbitField(line, mpcorb ? 92 : 169, mpcorb ? 11 : 12, &a) ||
         !orbitField(line, mpcorb ? 70 : 158, mpcorb ? 9 : 10, &e) ||
         !orbitField(line, mpcorb ? 59 : 147, mpcorb ? 9 : 10, &i) ||
-        !orbitField(line, mpcorb ? 8 : 42, 5, &h)) {
+        !orbitField(line, mpcorb ? 8 : 42, 5, &h) || h == 99.99) {
       parsefails++;
       continue;
     }
