@@ -9,9 +9,7 @@ theme:
   features:
     - navigation.top
     - navigation.footer
-    - navigation.expand
     - navigation.indexes
-    - navigation.sections
     - navigation.tracking
     - content.code.copy
     - search.highlight
@@ -23,16 +21,8 @@ plugins:
       execute: false        # recommended for docs builds
       include_source: true  # optional: adds a source link / page.nb_url
 
-nav:
-  - Home: index.md
-  - Documentation:
-    - mpc-ops-docs/index.md
-  - Services:
-    - services/index.md
-  - Tutorials:
-    - tutorials/index.md
-  - Software:
-    - software/index.md
+hooks:
+  - hooks/navigation_titles.py
 
 markdown_extensions:
   - admonition
