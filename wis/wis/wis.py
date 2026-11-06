@@ -232,9 +232,7 @@ class Wis(MPCObsCodes):
         # `get_obs_helio_equ_AU(obscodeMPC=..., times=...)` does not raise IndexError.
         name = args[1] if len(args) > 1 else kwargs["obscodeMPC"]
         times = args[2] if len(args) > 2 else kwargs["times"]
-        # Key on the UTC JDs. `_convert_time` derives the epoch from the instant,
-        # and a UTC JD names that instant whatever scale the supplied `Time` is in.
-        times_jd_tuple = tuple(np.atleast_1d(times.utc.jd))  # type: ignore
+        et_tuple = Wis._time_key(times)
 
         # fallback_to_geo / return_velocity may be passed positionally (indices
         # 3/4) or by keyword; read positionals first so positional calls do not
@@ -248,7 +246,7 @@ class Wis(MPCObsCodes):
         )
 
         # Create a unique hash key
-        return hashkey(name, times_jd_tuple, fallback_to_geo, return_velocity)
+        return hashkey(name, et_tuple, fallback_to_geo, return_velocity)
 
     def compute_bary_wrt_helio_key(*args: object, **kwargs: object) -> tuple:
         """Generate a unique cache key for `get_bary_wrt_helio` (below).
@@ -260,11 +258,19 @@ class Wis(MPCObsCodes):
         # `cachedmethod` passes through. Fall back to the keyword form so that
         # `get_bary_wrt_helio(times=...)` does not raise IndexError.
         times = args[1] if len(args) > 1 else kwargs["times"]
-        # Key on the UTC JDs, because that is what `_convert_time` actually feeds to
-        # SPICE. Keying on `times.jd` instead would make Time(X, scale="utc") and
-        # Time(X, scale="tdb") collide despite being ~69s (i.e. ~2000km) apart.
-        times_jd_tuple = tuple(np.atleast_1d(times.utc.jd))  # type: ignore
-        return hashkey(times_jd_tuple)
+        et_tuple = Wis._time_key(times)
+        return hashkey(et_tuple)
+
+    @staticmethod
+    def _time_key(times: Time) -> tuple:
+        """Build the ET tuple for `times`: TDB seconds past J2000, as a tuple.
+
+        `_convert_time` returns this value.
+
+        NB: pure astropy (no SPICE leapsecond kernel), so the key can be
+        computed wherever the methods themselves can run.
+        """
+        return tuple(np.atleast_1d((times.tdb - J2000_TDB).sec))
 
     @cachedmethod(
         operator.attrgetter("cache_get_obs_helio_equ_AU"),
@@ -554,7 +560,7 @@ class Wis(MPCObsCodes):
 
         Returning a TUPLE to help with caching of `_get_satellite_posns` & `_get_ground_posns`.
         """
-        return tuple(np.atleast_1d((times.tdb - J2000_TDB).sec))
+        return self._time_key(times)
 
     def _convert_posn(self, posns: np.ndarray) -> np.ndarray:
         """Convert positions from km->AU."""

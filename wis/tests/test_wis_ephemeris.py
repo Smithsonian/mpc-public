@@ -233,7 +233,7 @@ def test_get_bary_wrt_helio() -> None:
 
         # (3) spkssb:
         # Return the state (position and velocity) of a target body relative to the solar system barycenter.
-        et = sp.str2et("JD " + str(times.utc.jd[0]))
+        et = W._convert_time(times)[0]
         result_spkssb = sp.spkssb(10, et, W.frame)
         p0_spkssb = result_spkssb[:3]
 
@@ -260,11 +260,11 @@ def test_get_bary_wrt_helio() -> None:
         sp.kclear()
         assert sp.ktotal("ALL") == 0, "Kernels not cleared"
 
-        # Get the posns & vels from jplephem
+        # Get the posns & vels from jplephem (its epoch argument takes a TDB Julian date)
         de_filepath = next(
             _ for _ in GROUND["DE430"].kernel_filepath_map if ".bsp" in _
         )
-        p, _v = SPK.open(de_filepath)[0, 10].compute_and_differentiate(times.utc.jd[0])
+        p, _v = SPK.open(de_filepath)[0, 10].compute_and_differentiate(times.tdb.jd[0])
 
         # Check that the results from jplephem are CLOSE to those from spiceypy
         # (I do not understand why they are not identical)
@@ -348,8 +348,8 @@ def test_cache_key_positional_fallback_no_collision() -> None:
     `fallback_to_geo` passed positionally must produce a different cache key
     than the default (False), otherwise the cached `None` from a
     fallback_to_geo=False call wrongly satisfies a later fallback_to_geo=True
-    call for the same unknown obscode. Also covers scalar-time inputs, which
-    previously crashed compute_obs_helio_equ_AU_key's `tuple(times.jd)`.
+    call for the same unknown obscode. Also covers scalar-time inputs: the key
+    builder flattens them with `np.atleast_1d`.
     """
     times = Time([2458337.82915783, 2458338.82915783], format="jd", scale="tdb")
     unknown = "ZZZ"  # length-3, but not a real obscode
@@ -371,7 +371,7 @@ def test_cache_key_positional_fallback_no_collision() -> None:
         posns, _ = result
         assert posns.shape == (2, 3)
 
-        # A scalar Time must no longer crash compute_obs_helio_equ_AU_key and returns shape (1, 3)
+        # The key builder accepts a scalar Time (np.atleast_1d) and the result has shape (1, 3)
         scalar_times = Time(2458337.82915783, format="jd", scale="tdb")
         posns_scalar, _ = W.get_obs_helio_equ_AU("F51", scalar_times)
         assert posns_scalar.shape == (1, 3)
@@ -380,10 +380,7 @@ def test_cache_key_positional_fallback_no_collision() -> None:
 def test_cache_key_distinguishes_time_scale() -> None:
     """Regression test for compute_obs_helio_equ_AU_key.
 
-    A UTC and a TDB Time carrying the same numeric JD are ~69s apart, but
-    compute_obs_helio_equ_AU_key used to hash the scale-dependent `times.jd` while `_convert_time`
-    feeds SPICE the scale-independent `times.utc.jd`. The two calls below therefore
-    shared a cache key, and the second silently returned the first's positions.
+    A UTC and a TDB Time with the same numeric JD are ~69 s apart, so the two calls below must hold separate keys, each with cached positions for its own instant.
     """
     jd = 2458337.82915783
     with Wis(kernels=DE430) as W:
