@@ -94,7 +94,8 @@ typedef struct {
   observation obsPair[2];       // two obs defining motion vector
   double obsErr[2];             // observational error for two obs
   _Bool noObsErr;               // true if both of above == 0
-  uint64_t rand64;              // LCG random numuber
+  uint64_t rand64;              // LCG random number (also state slot 0 for xoshiro)
+  uint64_t rng_s[4];            // xoshiro256++ state (used when prngChoice != PRNG_LCG)
   double vmag;                  // composite value for the tracklet
   double sun_observer[2][3];    // vectors at times t0 and t1
   double observer_object_unit[2][3]; // vectors at times t0 and t1
@@ -233,6 +234,7 @@ _Bool parseMpcRoving(char *line, observation * obsp);
 void initGlobals(void);
 void score(tracklet * tk);
 double tkRand(tracklet * tk);
+void   tkSeed(tracklet * tk, uint64_t seed);
 double *roving_position(double x, double y, double altitiude);
 
 // functions in d2ades.c
