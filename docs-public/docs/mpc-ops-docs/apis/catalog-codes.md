@@ -82,17 +82,17 @@ json.dump(response.json(), sys.stdout, indent=4)
 ##### Example output for the above request:
 ```json
 {
-  'request': {
-    'catalog_code': 'v', 
-    'catalog_code_type': 'obs80_code'
-  }, 
-  'response': [
+  "request": {
+    "catalog_code": "v",
+    "catalog_code_type": "obs80_code"
+  },
+  "response": [
     {
-      'catalog': 'NOMAD',
-      'ades_code': 'NOMAD',
-      'obs80_code': 'v',
-      'deprecated': False,
-    },
+      "catalog": "NOMAD",
+      "ades_code": "NOMAD",
+      "obs80_code": "v",
+      "deprecated": false
+    }
   ]
 }
 ```
