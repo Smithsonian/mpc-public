@@ -23,7 +23,7 @@ Deprecated values are shown in *italics*. These are accepted for historical data
 | *MER* | *Meridian/Transit Circle* |
 | *UNK* | *Unknown* |
 
-A JSON representation of this table is available [here](./static/mode-instrumentation-type.json).
+A JSON representation of this table is available [here](static/mode-instrumentation-types.json).
 
 ## astCat / photCat (Star Catalogs)
 
@@ -147,11 +147,13 @@ To request the addition of a new catalog, submit a [Helpdesk ticket](https://mpc
 | *L* | *Unknown* — MUST NOT be used on new submissions |
 | *u* | *Unknown* — MUST NOT be used on new submissions |
 
-A JSON representation of this table is available [here](./static/mode-instrumentation-type.json).
+A JSON representation of this table is available [here](./static/band-photometric-passbands.json).
 
 ## notes (Observing Notes)
 
 Up to six notes may be included on a single observation.
+
+[//]: # (TODO: Generate this table and JSON from `vmsops:publishable_notes`)
 
 | note | Description |
 |------|-------------|
@@ -196,6 +198,7 @@ Up to six notes may be included on a single observation.
 | w | Weak solution |
 | Z | Astrometry from a survey reported by a non-survey measurer/pipeline |
 
+A JSON representation of this table is available [here](./static/observing-notes.json).
 
 ## photMod (Photometric Model)
 
@@ -208,6 +211,7 @@ Up to six notes may be included on a single observation.
 | NEATM | NEA Thermal Model |
 | FRM | Fast Rotator Model |
 
+A JSON representation of this table is available [here](./static/photometric-models.json).
 
 ## subFmt (Submission Format)
 
