@@ -52,6 +52,7 @@ A JSON representation of this table is available [here](static/mode-instrumentat
 | *UCAC2* | *UCAC 2* |
 | *UCAC1* | *UCAC 1* |
 | *USNOB1* | *USNO B1.0* |
+| *USNOB2* | *USNO B2.0* |
 | *USNOA2* | *USNO A2.0* |
 | *USNOSA2* | *USNO SA2.0* |
 | *USNOA1* | *USNO A1.0* |

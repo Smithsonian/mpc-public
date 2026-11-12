@@ -105,6 +105,11 @@
   "Deprecated": "Yes"
   },
   {
+  "Value": "USNOB2",
+  "Meaning": "USNO B2.0",
+  "Deprecated": "Yes"
+  },
+  {
   "Value": "USNOA2",
   "Meaning": "USNO A2.0",
   "Deprecated": "Yes"
