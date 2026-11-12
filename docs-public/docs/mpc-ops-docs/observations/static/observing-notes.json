@@ -196,7 +196,7 @@
   },
   {
   "Value":"Z",
-  "Meaning":"astrometry from F51, F52, G96, I41, 703 (large surveys without program codes) reported by a non-survey measurerer/pipeline",
+  "Meaning":"Astrometry from large surveys without program codes reported by a non-survey measurerer/pipeline",
   "Deprecated": "No"
   }
 ]

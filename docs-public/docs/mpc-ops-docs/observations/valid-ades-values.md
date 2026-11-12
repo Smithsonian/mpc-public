@@ -198,7 +198,7 @@ Up to six notes may be included on a single observation.
 | V | Very faint image |
 | W | Weak image |
 | w | Weak solution |
-| Z | Astrometry from a survey reported by a non-survey measurer/pipeline |
+| Z | Astrometry from large surveys without program codes reported by a non-survey measurerer/pipeline |
 
 A JSON representation of this table is available [here](./static/observing-notes.json).
 
