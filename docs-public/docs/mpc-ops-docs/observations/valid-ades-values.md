@@ -7,6 +7,8 @@ Deprecated values are shown in *italics*. These are accepted for historical data
 
 ## mode (Instrumentation Type)
 
+[//]: # (TODO: Is there a db table for this list? If so, produce this markdown and the JSON from that table.)
+
 | mode | Description |
 |------|-------------|
 | CCD | Charge-Coupled Device |
@@ -21,6 +23,7 @@ Deprecated values are shown in *italics*. These are accepted for historical data
 | *MER* | *Meridian/Transit Circle* |
 | *UNK* | *Unknown* |
 
+A JSON representation of this table is available [here](./static/mode-instrumentation-type.json).
 
 ## astCat / photCat (Star Catalogs)
 
@@ -91,6 +94,8 @@ To request the addition of a new catalog, submit a [Helpdesk ticket](https://mpc
 
 ## band (Photometric Passbands)
 
+[//]: # (TODO: Generate this table and JSON from `vmsops:mag_bands`; the `deprecated` field needs to be added first.)
+
 | band | Description |
 |------|-------------|
 | Lu | LSST u band |
@@ -142,6 +147,7 @@ To request the addition of a new catalog, submit a [Helpdesk ticket](https://mpc
 | *L* | *Unknown* — MUST NOT be used on new submissions |
 | *u* | *Unknown* — MUST NOT be used on new submissions |
 
+A JSON representation of this table is available [here](./static/mode-instrumentation-type.json).
 
 ## notes (Observing Notes)
 
