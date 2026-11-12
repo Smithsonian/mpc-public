@@ -27,6 +27,8 @@ A JSON representation of this table is available [here](static/mode-instrumentat
 
 ## astCat / photCat (Star Catalogs)
 
+[//]: # (TODO: Generate this table and JSON from `vmsops:astrometric_catalogs`. Combine with ./catalogue-codes.md.)
+
 | Cat | Description |
 |-----|-------------|
 | Gaia3 | Gaia DR 3 |
