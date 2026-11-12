@@ -43,6 +43,7 @@ A JSON representation of this table is available [here](static/mode-instrumentat
 | UCAC5 | UCAC 5 |
 | UCAC4 | UCAC 4 |
 | URAT1 | URAT 1 |
+| URAT2 | URAT 2 |
 | 2MASS | 2MASS |
 | NOMAD | NOMAD |
 | PPMXL | PPM-XL |
@@ -92,7 +93,7 @@ A JSON representation of this table is available [here](static/mode-instrumentat
 | *UNK* | *UNKNOWN* |
 
 To request the addition of a new catalog, submit a [Helpdesk ticket](https://mpc-service.atlassian.net/servicedesk/customer/portals).
-
+A JSON representation of this table is available [here](./static/catalog-codes.json).
 
 ## band (Photometric Passbands)
 
