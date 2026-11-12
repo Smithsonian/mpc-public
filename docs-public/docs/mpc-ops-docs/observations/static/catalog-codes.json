@@ -85,6 +85,11 @@
   "Deprecated": "No"
   },
   {
+  "Value": "UBAD",
+  "Meaning": "USNO Bright-star Astrometric Database",
+  "Deprecated": "No"
+  },
+  {
   "Value": "UCAC3",
   "Meaning": "UCAC 3",
   "Deprecated": "Yes"

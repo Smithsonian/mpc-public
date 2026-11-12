@@ -48,6 +48,7 @@ A JSON representation of this table is available [here](static/mode-instrumentat
 | NOMAD | NOMAD |
 | PPMXL | PPM-XL |
 | UBSC | USNO Bright-star Catalog |
+| UBAD | USNO Bright-star Astrometric Database |
 | *UCAC3* | *UCAC 3* |
 | *UCAC2* | *UCAC 2* |
 | *UCAC1* | *UCAC 1* |
