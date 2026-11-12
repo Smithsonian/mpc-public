@@ -178,7 +178,7 @@ Up to six notes may be included on a single observation.
 | *i* | *Inkdot measured* |
 | K | Stacked image |
 | k | Stare-mode observation by scanning system |
-| L | Corrected for differential color refraction |
+| L | Color corrected observations |
 | M | Measurement difficult |
 | m | Image tracked on object motion |
 | N | Near edge of plate, measurement uncertain |
