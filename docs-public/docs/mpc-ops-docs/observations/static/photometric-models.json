@@ -1,0 +1,32 @@
+[
+  {
+  "Value": "HG",
+  "Meaning": "HG model",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "H",
+  "Meaning": "HG model, assumed G",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "HG1G2",
+  "Meaning": "HG1G2 model",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "HG12",
+  "Meaning": "HG1,2 model",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "NEATM",
+  "Meaning": "NEA Thermal Model",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "FRM",
+  "Meaning": "Fast Rotator Model",
+  "Deprecated": "No"
+  }
+]

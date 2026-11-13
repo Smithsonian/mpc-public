@@ -1,0 +1,202 @@
+[
+  {
+  "Value": "A",
+  "Meaning": "Earlier approximate position inferior",
+  "Deprecated": "Yes"
+  },
+  {
+  "Value": "a",
+  "Meaning": "Sense of motion ambiguous",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "B",
+  "Meaning": "Bright sky/black or dark plate",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "b",
+  "Meaning": "Bad seeing",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "c",
+  "Meaning": "Crowded star field",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "D",
+  "Meaning": "Declination uncertain",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "d",
+  "Meaning": "Diffuse image",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "E",
+  "Meaning": "At or near edge of plate/frame",
+  "Deprecated": "No"
+  },  
+  {
+  "Value": "e",
+  "Meaning": "Extrapolation to zero aperture technique used",
+  "Deprecated": "No"
+  }, 
+  {
+  "Value": "F",
+  "Meaning": "Faint image",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "f",
+  "Meaning": "Involved with emulsion, plate or CCD flaw",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "G",
+  "Meaning": "Poor guiding",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "g",
+  "Meaning": "No guiding",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "H",
+  "Meaning": "Hand measurement of CCD image",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "h",
+  "Meaning": "Observed through cloud/haze",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "I",
+  "Meaning": "Involved with star",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "i",
+  "Meaning": "Inkdot measured",
+  "Deprecated": "Yes"
+  },
+  {
+  "Value": "L",
+  "Meaning": "Color corrected observations",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "K",
+  "Meaning": "Stacked image",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "k",
+  "Meaning": "Stare-mode observation by scanning system",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "M",
+  "Meaning": "Measurement difficult",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "m",
+  "Meaning": "Image tracked on object motion",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "N",
+  "Meaning": "Near edge of plate, measurement uncertain",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "n",
+  "Meaning": "Normal place",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "O",
+  "Meaning": "Image out of focus",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "o",
+  "Meaning": "Plate measured in one direction only",
+  "Deprecated": "Yes"
+  },
+  {
+  "Value": "P",
+  "Meaning": "Position uncertain",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "p",
+  "Meaning": "Poor image",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "R",
+  "Meaning": "Right ascension uncertain",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "r",
+  "Meaning": "Poor distribution of reference stars",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "S",
+  "Meaning": "Poor sky",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "s",
+  "Meaning": "Streaked image",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "T",
+  "Meaning": "Time uncertain",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "t",
+  "Meaning": "Trailed image",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "U",
+  "Meaning": "Uncertain image",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "u",
+  "Meaning": "Unconfirmed image",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "V",
+  "Meaning": "Very faint image",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "W",
+  "Meaning": "Weak image",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "w",
+  "Meaning": "Weak solution",
+  "Deprecated": "No"
+  },
+  {
+  "Value":"Z",
+  "Meaning":"Astrometry from large surveys without program codes reported by a non-survey measurerer/pipeline",
+  "Deprecated": "No"
+  }
+]

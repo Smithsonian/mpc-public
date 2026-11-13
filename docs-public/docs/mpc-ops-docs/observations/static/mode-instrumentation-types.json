@@ -1,0 +1,57 @@
+[
+  {
+  "Value": "CCD",
+  "Meaning": "Charge-Coupled Device (CCD)",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "CMO",
+  "Meaning": "Complementary Metal Oxide Semiconductor (CMOS)",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "VID",
+  "Meaning": "Video frames",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "PHO",
+  "Meaning": "Photographic",
+  "Deprecated": "Yes"
+  },
+  {
+  "Value": "ENC",
+  "Meaning": "Encoder",
+  "Deprecated": "Yes"
+  },
+  {
+  "Value": "PMT",
+  "Meaning": "Photo-Multiplier Tube",
+  "Deprecated": "Yes"
+  },
+  {
+  "Value": "MIC",
+  "Meaning": "Micrometer",
+  "Deprecated": "Yes"
+  },
+  {
+  "Value": "MER",
+  "Meaning": "Meridian/Transit Circle",
+  "Deprecated": "Yes"
+  },
+  {
+  "Value": "TDI",
+  "Meaning": "Time-delay Integration CCD",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "OCC",
+  "Meaning": "Occultation",
+  "Deprecated": "No"
+  },
+  {
+  "Value": "UNK",
+  "Meaning": "Unknown",
+  "Deprecated": "Yes"
+  }
+]
