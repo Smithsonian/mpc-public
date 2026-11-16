@@ -18,3 +18,4 @@ This page provides links to documentation for the MPC's REST APIs.
 - [Action Codes](action-codes.md)
 - [Lists of Objects](list.md)
 - [Magnitude Bands](mag-band.md)
+- [Catalog Codes](catalog-codes.md)
