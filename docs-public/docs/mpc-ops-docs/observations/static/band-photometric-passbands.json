@@ -1,0 +1,242 @@
+[
+    {
+	"Value": "Vj",
+	"Meaning": "Johnson-Cousins V",
+	"Deprecated": "No"
+    },
+    {
+	"Value": "Rc",
+	"Meaning": "Johnson-Cousins R",
+	"Deprecated": "No"
+    },
+    {
+	"Value": "Ic",
+	"Meaning": "Johnson-Cousins I",
+	"Deprecated": "No"
+    },
+    {
+	"Value": "Bj",
+	"Meaning": "Johnson-Cousins B",
+	"Deprecated": "No"
+    },
+    {
+	"Value": "Uj",
+	"Meaning": "Johnson-Cousins U",
+	"Deprecated": "No"
+    },
+    {
+	"Value": "Sg",
+	"Meaning": "Sloan g band",
+	"Deprecated": "No"
+    },
+    {
+	"Value": "Sr",
+	"Meaning": "Sloan r band",
+	"Deprecated": "No"
+    },
+    {
+	"Value": "Si",
+	"Meaning": "Sloan i band",
+	"Deprecated": "No"
+    },
+    {
+	"Value": "Sz",
+	"Meaning": "Sloan z band",
+	"Deprecated": "No"
+    },
+    {
+	"Value": "Pg",
+	"Meaning": "Pan-STARRS g band",
+	"Deprecated": "No"
+    },
+    {
+	"Value": "Pr",
+	"Meaning": "Pan-STARRS r band",
+	"Deprecated": "No"
+    },
+    {
+	"Value": "Pi",
+	"Meaning": "Pan-STARRS i band",
+	"Deprecated": "No"
+    },
+    {
+	"Value": "Pz",
+	"Meaning": "Pan-STARRS z band",
+	"Deprecated": "No"
+    },
+    {
+	"Value": "Pw",
+	"Meaning": "Pan-STARRS w band",
+	"Deprecated": "No"
+    },
+    {
+	"Value": "Py",
+	"Meaning": "Pan-STARRS y band",
+	"Deprecated": "No"
+    },
+    {
+	"Value": "Ao",
+	"Meaning": "ATLAS o band",
+	"Deprecated": "No"
+    },
+    {
+	"Value": "Ac",
+	"Meaning": "ATLAS c band",
+	"Deprecated": "No"
+    },
+    {
+	"Value": "U",
+	"Meaning": "'U band'",
+	"Deprecated": "Yes"
+    },
+    {
+	"Value": "B",
+	"Meaning": "'Photographic'",
+	"Deprecated": "Yes"
+    },
+    {
+	"Value": "V",
+	"Meaning": "'Visual'",
+	"Deprecated": "Yes"
+    },
+    {
+	"Value": "R",
+	"Meaning": "'Red'",
+	"Deprecated": "Yes"
+    },
+    {
+	"Value": "I",
+	"Meaning": "'Near IR'",
+	"Deprecated": "Yes"
+    },
+    {
+	"Value": "g",
+	"Meaning": "'g band'",
+	"Deprecated": "Yes"
+    },
+    {
+	"Value": "r",
+	"Meaning": "'r band'",
+	"Deprecated": "Yes"
+    },
+    {
+	"Value": "i",
+	"Meaning": "'i band'",
+	"Deprecated": "Yes"
+    },
+    {
+	"Value": "z",
+	"Meaning": "'z band'",
+	"Deprecated": "Yes"
+    },
+    {
+	"Value": "w",
+	"Meaning": "'w band'",
+	"Deprecated": "Yes"
+    },
+    {
+	"Value": "y",
+	"Meaning": "'y band'",
+	"Deprecated": "Yes"
+    },
+    {
+	"Value": "o",
+	"Meaning": "'ATLAS o band'",
+	"Deprecated": "Yes"
+    },
+    {
+	"Value": "c",
+	"Meaning": "'ATLAS c band'",
+	"Deprecated": "Yes"
+    },
+    {
+	"Value": "G",
+	"Meaning": "Gaia G band",
+	"Deprecated": "No"
+    },
+    {
+	"Value": "Gb",
+	"Meaning": "Gaia G_BP band",
+	"Deprecated": "No"
+    },
+    {
+	"Value": "Gr",
+	"Meaning": "Gaia G_RP band",
+	"Deprecated": "No"
+    },
+    {
+	"Value": "J",
+	"Meaning": "'1.275 micron band'",
+	"Deprecated": "Yes"
+    },
+    {
+	"Value": "H",
+	"Meaning": "'1.662 micron band'",
+	"Deprecated": "Yes"
+    },
+    {
+	"Value": "K",
+	"Meaning": "'2.159 micron band'",
+	"Deprecated": "Yes"
+    },
+    {
+	"Value": "Y",
+	"Meaning": "'1.035 micron band'",
+	"Deprecated": "Yes"
+    },
+    {
+	"Value": "W",
+	"Meaning": "Wide",
+	"Deprecated": "No"
+    },
+    {
+	"Value": "Lu",
+	"Meaning": "LSST u band",
+	"Deprecated": "No"
+    },
+    {
+	"Value": "Lg",
+	"Meaning": "LSST g band",
+	"Deprecated": "No"
+    },
+    {
+        "Value": "Lr",
+        "Meaning": "LSST r band",
+        "Deprecated": "No"
+    },
+    {
+        "Value": "Li",
+        "Meaning": "LSST i band",
+        "Deprecated": "No"
+    },
+    {
+        "Value": "Lz",
+        "Meaning": "LSST z band",
+        "Deprecated": "No"
+    },
+    {
+        "Value": "Ly",
+        "Meaning": "LSST y band",
+        "Deprecated": "No"
+    },
+    {
+	"Value": "VR",
+	"Meaning": "DECam VR",
+	"Deprecated": "No"
+    },
+    {
+	"Value": "C",
+	"Meaning": "'Clear' [MUST NOT BE USED ON NEW SUBMISSIONS]",
+	"Deprecated": "Yes"
+    },
+    {
+	"Value": "L",
+	"Meaning": "'Unknown' [MUST NOT BE USED ON NEW SUBMISSIONS]",
+	"Deprecated": "Yes"
+    },
+    {
+	"Value": "u",
+	"Meaning": "'Unknown' [MUST NOT BE USED ON NEW SUBMISSIONS]",
+	"Deprecated": "Yes"
+    }
+]

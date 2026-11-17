@@ -7,6 +7,8 @@ Deprecated values are shown in *italics*. These are accepted for historical data
 
 ## mode (Instrumentation Type)
 
+[//]: # (TODO: Is there a db table for this list? If so, produce this markdown and the JSON from that table.)
+
 | mode | Description |
 |------|-------------|
 | CCD | Charge-Coupled Device |
@@ -21,8 +23,11 @@ Deprecated values are shown in *italics*. These are accepted for historical data
 | *MER* | *Meridian/Transit Circle* |
 | *UNK* | *Unknown* |
 
+A JSON representation of this table is available [here](static/mode-instrumentation-types.json).
 
 ## astCat / photCat (Star Catalogs)
+
+[//]: # (TODO: Generate this table and JSON from `vmsops:astrometric_catalogs`. Combine with ./catalogue-codes.md.)
 
 | Cat | Description |
 |-----|-------------|
@@ -38,14 +43,17 @@ Deprecated values are shown in *italics*. These are accepted for historical data
 | UCAC5 | UCAC 5 |
 | UCAC4 | UCAC 4 |
 | URAT1 | URAT 1 |
+| URAT2 | URAT 2 |
 | 2MASS | 2MASS |
 | NOMAD | NOMAD |
 | PPMXL | PPM-XL |
 | UBSC | USNO Bright-star Catalog |
+| UBAD | USNO Bright-star Astrometric Database |
 | *UCAC3* | *UCAC 3* |
 | *UCAC2* | *UCAC 2* |
 | *UCAC1* | *UCAC 1* |
 | *USNOB1* | *USNO B1.0* |
+| *USNOB2* | *USNO B2.0* |
 | *USNOA2* | *USNO A2.0* |
 | *USNOSA2* | *USNO SA2.0* |
 | *USNOA1* | *USNO A1.0* |
@@ -87,9 +95,11 @@ Deprecated values are shown in *italics*. These are accepted for historical data
 | *UNK* | *UNKNOWN* |
 
 To request the addition of a new catalog, submit a [Helpdesk ticket](https://mpc-service.atlassian.net/servicedesk/customer/portals).
-
+A JSON representation of this table is available [here](./static/catalog-codes.json).
 
 ## band (Photometric Passbands)
+
+[//]: # (TODO: Generate this table and JSON from `vmsops:mag_bands`; the `deprecated` field needs to be added first.)
 
 | band | Description |
 |------|-------------|
@@ -142,10 +152,13 @@ To request the addition of a new catalog, submit a [Helpdesk ticket](https://mpc
 | *L* | *Unknown* — MUST NOT be used on new submissions |
 | *u* | *Unknown* — MUST NOT be used on new submissions |
 
+A JSON representation of this table is available [here](./static/band-photometric-passbands.json).
 
 ## notes (Observing Notes)
 
 Up to six notes may be included on a single observation.
+
+[//]: # (TODO: Generate this table and JSON from `vmsops:publishable_notes`)
 
 | note | Description |
 |------|-------------|
@@ -168,7 +181,7 @@ Up to six notes may be included on a single observation.
 | *i* | *Inkdot measured* |
 | K | Stacked image |
 | k | Stare-mode observation by scanning system |
-| L | Corrected for differential color refraction |
+| L | Color corrected observations |
 | M | Measurement difficult |
 | m | Image tracked on object motion |
 | N | Near edge of plate, measurement uncertain |
@@ -188,8 +201,9 @@ Up to six notes may be included on a single observation.
 | V | Very faint image |
 | W | Weak image |
 | w | Weak solution |
-| Z | Astrometry from a survey reported by a non-survey measurer/pipeline |
+| Z | Astrometry from large surveys without program codes reported by a non-survey measurerer/pipeline |
 
+A JSON representation of this table is available [here](./static/observing-notes.json).
 
 ## photMod (Photometric Model)
 
@@ -202,6 +216,7 @@ Up to six notes may be included on a single observation.
 | NEATM | NEA Thermal Model |
 | FRM | Fast Rotator Model |
 
+A JSON representation of this table is available [here](./static/photometric-models.json).
 
 ## subFmt (Submission Format)
 
