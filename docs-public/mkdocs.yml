@@ -36,6 +36,7 @@ markdown_extensions:
       line_spans: __span
       pygments_lang_class: true
   - pymdownx.inlinehilite
+  # Used to include Markdown in other Markdown files.
   - pymdownx.snippets
   - pymdownx.superfences
 
