@@ -27,72 +27,7 @@ A JSON representation of this table is available [here](static/mode-instrumentat
 
 ## astCat / photCat (Star Catalogs)
 
-[//]: # (TODO: Generate this table and JSON from `vmsops:astrometric_catalogs`. Combine with ./catalogue-codes.md.)
-
-| Cat | Description |
-|-----|-------------|
-| Gaia3 | Gaia DR 3 |
-| Gaia3E | Gaia EDR 3 |
-| Gaia2 | Gaia DR 2 |
-| Gaia1 | Gaia DR 1 |
-| Gaia_2016 | Gaia epoch 2016 |
-| Gaia_Int | Gaia_Int |
-| PS1_DR1 | PanSTARRS-1 DR 1 |
-| PS1_DR2 | PanSTARRS-1 DR 2 |
-| ATLAS2 | ATLAS-REFCAT 2 |
-| UCAC5 | UCAC 5 |
-| UCAC4 | UCAC 4 |
-| URAT1 | URAT 1 |
-| URAT2 | URAT 2 |
-| 2MASS | 2MASS |
-| NOMAD | NOMAD |
-| PPMXL | PPM-XL |
-| UBSC | USNO Bright-star Catalog |
-| UBAD | USNO Bright-star Astrometric Database |
-| *UCAC3* | *UCAC 3* |
-| *UCAC2* | *UCAC 2* |
-| *UCAC1* | *UCAC 1* |
-| *USNOB1* | *USNO B1.0* |
-| *USNOB2* | *USNO B2.0* |
-| *USNOA2* | *USNO A2.0* |
-| *USNOSA2* | *USNO SA2.0* |
-| *USNOA1* | *USNO A1.0* |
-| *USNOSA1* | *USNO SA1.0* |
-| *Tyc2* | *Tycho 2* |
-| *Tyc1* | *Tycho 1* |
-| *Hip2* | *Hipparcos 2* |
-| *Hip1* | *Hipparcos 1* |
-| *ACT* | *ACT* |
-| *GSCACT* | *GSC-ACT* |
-| *GSC2.3* | *GSC 2.3* |
-| *GSC2.2* | *GSC 2.2* |
-| *GSC1.2* | *GSC 1.2* |
-| *GSC1.1* | *GSC 1.1* |
-| *GSC1.0* | *GSC 1.0* |
-| *GSC* | *GSC (unspecified version)* |
-| *SDSS8* | *SDSS DR8* |
-| *SDSS7* | *SDSS DR7* |
-| *CMC15* | *CMC 15* |
-| *CMC14* | *CMC 14* |
-| *SSTRC4* | *SST-RC4* |
-| *SSTRC1* | *SST-RC1* |
-| *MPOSC3* | *MPOSC 3* |
-| *PPM* | *PPM* |
-| *AC* | *Astrographic Catalogue* |
-| *SAO1984* | *SAO 1984* |
-| *SAO* | *SAO* |
-| *AGK3* | *AGK 3* |
-| *FK4* | *FK4* |
-| *ACRS* | *ACRS* |
-| *LickGas* | *Lick Gaspra Catalogue* |
-| *Ida93* | *Ida93 Catalogue* |
-| *Perth70* | *Perth 70* |
-| *COSMOS* | *COSMOS/UKST Southern Sky Catalogue* |
-| *Yale* | *Yale* |
-| *ZZCAT* | *USNO Zodiacal Zone Catalog* |
-| *IHW* | *International Halley Watch* |
-| *GZ* | *Giacobini-Zinner Catalogue* |
-| *UNK* | *UNKNOWN* |
+--8<-- "docs/mpc-ops-docs/observations/static/catalog-codes.md"
 
 To request the addition of a new catalog, submit a [Helpdesk ticket](https://mpc-service.atlassian.net/servicedesk/customer/portals).
 A JSON representation of this table is available [here](./static/catalog-codes.json).
