@@ -3,6 +3,7 @@ Regenerate the valid ADES JSON files and Markdown tables from the API.
 """
 import json
 import logging
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -20,7 +21,7 @@ static_files_dir = (
 
 
 def main():
-    # make_static_files('catalog-codes')
+    make_static_files('catalog-codes')
     make_static_files('mag-bands', {'band': 'all'}, method='GET')
 
 
@@ -76,6 +77,20 @@ def write_markdown_table(rows: list[dict[str, Any]], filename: str):
                         f"| {row.get('allowed')} "
                         f"| `{row.get('deprecated', '')}` |\n"
                     )
+
+            f.write(
+                "\n"
+                "!!! note\n"
+                f"    This table was automatically generated on "
+                f"{datetime.now().strftime('%Y-%m-%d')} "
+                f"from the relevant API endpoint at "
+            )
+            if 'catalog-codes' in filename:
+                f.write("[`/api/catalog-codes`](/docs/mpc-ops-docs/apis/catalog-codes.md). ")
+            elif 'mag-bands' in filename:
+                f.write("[`/api/mag-band`](/docs/mpc-ops-docs/apis/mag-band.md). ")
+
+            f.write("Please use the API for the most recent values.\n")
 
         logging.info(f"Wrote Markdown table to {static_files_dir}")
     else:
