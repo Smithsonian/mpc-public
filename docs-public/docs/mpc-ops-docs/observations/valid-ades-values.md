@@ -89,7 +89,7 @@ A JSON representation of this table is available [here](./static/catalog-codes.j
 | *L* | *Unknown* — MUST NOT be used on new submissions |
 | *u* | *Unknown* — MUST NOT be used on new submissions |
 
-A JSON representation of this table is available [here](./static/mag-bands.json).
+A JSON representation of this table is available [here](./static/mag-bands.json). See also the [Magnitude Band API](../apis/mag-band.md) for programmatic, real-time access to this data.
 
 ## notes (Observing Notes)
 
