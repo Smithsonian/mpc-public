@@ -1,312 +1,422 @@
 [
   {
-  "Value": "Gaia_Int",
-  "Meaning": "Gaia_Int",
-  "Deprecated": "No"
+    "ades_code": "2MASS",
+    "catalog": "2MASS",
+    "deprecated": false,
+    "obs80_code": "L"
   },
   {
-  "Value": "PS1_DR2",
-  "Meaning": "PanSTARRS-1 DR 2",
-  "Deprecated": "No"
+    "ades_code": "AC",
+    "catalog": "Astrographic Catalogue",
+    "deprecated": true,
+    "obs80_code": "A"
   },
   {
-  "Value": "PS1_DR1",
-  "Meaning": "PanSTARRS-1 DR 1",
-  "Deprecated": "No"
+    "ades_code": "ACRS",
+    "catalog": "ACRS",
+    "deprecated": true,
+    "obs80_code": "F"
   },
   {
-  "Value": "ATLAS2",
-  "Meaning": "ATLAS-REFCAT 2",
-  "Deprecated": "No"
-  },
-   {
-  "Value": "Gaia3",
-  "Meaning": "Gaia DR 3 (Vega)",
-  "Deprecated": "No"
+    "ades_code": "ACT",
+    "catalog": "ACT",
+    "deprecated": true,
+    "obs80_code": "l"
   },
   {
-  "Value": "Gaia3E",
-  "Meaning": "Gaia EDR 3",
-  "Deprecated": "No"
+    "ades_code": "AG",
+    "catalog": "Astronomische Gesellschaft 1",
+    "deprecated": false,
+    "obs80_code": "@"
   },
   {
-  "Value": "Gaia2",
-  "Meaning": "Gaia DR 2",
-  "Deprecated": "No"
+    "ades_code": "AGK3",
+    "catalog": "AGK 3",
+    "deprecated": true,
+    "obs80_code": "D"
   },
   {
-  "Value": "Gaia1",
-  "Meaning": "Gaia DR 1",
-  "Deprecated": "No"
+    "ades_code": "AKARI",
+    "catalog": "AKARI Point Source Catalogs",
+    "deprecated": false,
+    "obs80_code": "!"
   },
   {
-  "Value": "Gaia_2016",
-  "Meaning": "Gaia epoch 2016",
-  "Deprecated": "No"
+    "ades_code": "APASS",
+    "catalog": "AAVSO Photometric All-Sky Survey",
+    "deprecated": true,
+    "obs80_code": "8"
   },
   {
-  "Value": "URAT1",
-  "Meaning": "URAT 1",
-  "Deprecated": "No"
+    "ades_code": "ATLAS2",
+    "catalog": "ATLAS-REFCAT 2",
+    "deprecated": false,
+    "obs80_code": "Z"
   },
   {
-  "Value": "URAT2",
-  "Meaning": "URAT 2",
-  "Deprecated": "No"
+    "ades_code": "CMC14",
+    "catalog": "CMC 14",
+    "deprecated": true,
+    "obs80_code": "w"
   },
   {
-  "Value": "UCAC5",
-  "Meaning": "UCAC 5",
-  "Deprecated": "No"
+    "ades_code": "CMC15",
+    "catalog": "CMC 15",
+    "deprecated": true,
+    "obs80_code": "Q"
   },
   {
-  "Value": "UCAC4",
-  "Meaning": "UCAC 4",
-  "Deprecated": "No"
+    "ades_code": "COSMOS",
+    "catalog": "COSMOS/UKST Southern Sky Catalogue",
+    "deprecated": true,
+    "obs80_code": "J"
   },
   {
-  "Value": "PPMXL",
-  "Meaning": "PPM-XL",
-  "Deprecated": "No"
+    "ades_code": "FK4",
+    "catalog": "FK4",
+    "deprecated": true,
+    "obs80_code": "E"
   },
   {
-  "Value": "NOMAD",
-  "Meaning": "NOMAD",
-  "Deprecated": "No"
+    "ades_code": "Gaia1",
+    "catalog": "Gaia DR1",
+    "deprecated": false,
+    "obs80_code": "U"
   },
   {
-  "Value": "2MASS",
-  "Meaning": "2MASS",
-  "Deprecated": "No"
+    "ades_code": "Gaia2",
+    "catalog": "Gaia DR2",
+    "deprecated": false,
+    "obs80_code": "V"
   },
   {
-  "Value": "UBSC",
-  "Meaning": "USNO BSC",
-  "Deprecated": "No"
+    "ades_code": "Gaia_2016",
+    "catalog": "Gaia_2016",
+    "deprecated": false,
+    "obs80_code": "6"
   },
   {
-  "Value": "UBAD",
-  "Meaning": "USNO Bright-star Astrometric Database",
-  "Deprecated": "No"
+    "ades_code": "Gaia3",
+    "catalog": "Gaia DR3",
+    "deprecated": false,
+    "obs80_code": "W"
   },
   {
-  "Value": "UCAC3",
-  "Meaning": "UCAC 3",
-  "Deprecated": "Yes"
+    "ades_code": "Gaia3E",
+    "catalog": "Gaia EDR3",
+    "deprecated": false,
+    "obs80_code": "X"
   },
   {
-  "Value": "UCAC2",
-  "Meaning": "UCAC 2",
-  "Deprecated": "Yes"
+    "ades_code": "Gaia_Int",
+    "catalog": "Gaia_Int",
+    "deprecated": false,
+    "obs80_code": "3"
   },
   {
-  "Value": "UCAC1",
-  "Meaning": "UCAC 1",
-  "Deprecated": "Yes"
+    "ades_code": "GSC",
+    "catalog": "GSC (version unspecified)",
+    "deprecated": true,
+    "obs80_code": "z"
   },
   {
-  "Value": "USNOB1",
-  "Meaning": "USNO B1.0",
-  "Deprecated": "Yes"
+    "ades_code": "GSC1.0",
+    "catalog": "GSC 1.0",
+    "deprecated": true,
+    "obs80_code": "h"
   },
   {
-  "Value": "USNOB2",
-  "Meaning": "USNO B2.0",
-  "Deprecated": "Yes"
+    "ades_code": "GSC1.1",
+    "catalog": "GSC-1.1",
+    "deprecated": true,
+    "obs80_code": "i"
   },
   {
-  "Value": "USNOA2",
-  "Meaning": "USNO A2.0",
-  "Deprecated": "Yes"
+    "ades_code": "GSC1.2",
+    "catalog": "GSC-1.2",
+    "deprecated": true,
+    "obs80_code": "j"
   },
   {
-  "Value": "USNOSA2",
-  "Meaning": "USNO SA2.0",
-  "Deprecated": "Yes"
+    "ades_code": "GSC2.2",
+    "catalog": "GSC-2.2",
+    "deprecated": true,
+    "obs80_code": "k"
   },
   {
-  "Value": "USNOA1",
-  "Meaning": "USNO A1.0",
-  "Deprecated": "Yes"
+    "ades_code": "GSC2.3",
+    "catalog": "GSC-2.3",
+    "deprecated": true,
+    "obs80_code": "M"
   },
   {
-  "Value": "USNOSA1",
-  "Meaning": "USNO SA1.0",
-  "Deprecated": "Yes"
+    "ades_code": "GSCACT",
+    "catalog": "GSC-ACT",
+    "deprecated": true,
+    "obs80_code": "m"
   },
   {
-  "Value": "Tyc2",
-  "Meaning": "Tycho 2",
-  "Deprecated": "Yes"
+    "ades_code": "GZ",
+    "catalog": "Giacobini-Zinner Catalogue",
+    "deprecated": true,
+    "obs80_code": "4"
   },
   {
-  "Value": "Tyc1",
-  "Meaning": "Tycho 1",
-  "Deprecated": "Yes"
+    "ades_code": "Hip1",
+    "catalog": "Hipparcos 1",
+    "deprecated": true,
+    "obs80_code": "y"
   },
   {
-  "Value": "Hip2",
-  "Meaning": "Hipparcos 2",
-  "Deprecated": "Yes"
+    "ades_code": "Hip2",
+    "catalog": "Hipparcos 2",
+    "deprecated": true,
+    "obs80_code": "x"
   },
   {
-  "Value": "Hip1",
-  "Meaning": "Hipparcos 1",
-  "Deprecated": "Yes"
+    "ades_code": "Ida93",
+    "catalog": "Ida93 Catalogue",
+    "deprecated": true,
+    "obs80_code": "H"
   },
   {
-  "Value": "ACT",
-  "Meaning": "ACT",
-  "Deprecated": "Yes"
+    "ades_code": "IHW",
+    "catalog": "International Halley Watch",
+    "deprecated": true,
+    "obs80_code": "0"
   },
   {
-  "Value": "GSCACT",
-  "Meaning": "GSC-ACT",
-  "Deprecated": "Yes"
+    "ades_code": "IRASPSC",
+    "catalog": "IRASPSC",
+    "deprecated": false,
+    "obs80_code": "^"
   },
   {
-  "Value": "GSC2.3",
-  "Meaning": "GSC 2.3",
-  "Deprecated": "Yes"
+    "ades_code": "LickGas",
+    "catalog": "Lick Gaspra Catalogue",
+    "deprecated": true,
+    "obs80_code": "G"
   },
   {
-  "Value": "GSC2.2",
-  "Meaning": "GSC 2.2",
-  "Deprecated": "Yes"
+    "ades_code": "LSST2502",
+    "catalog": "Rubin photometric catalog",
+    "deprecated": false,
+    "obs80_code": "$"
   },
   {
-  "Value": "GSC1.2",
-  "Meaning": "GSC 1.2",
-  "Deprecated": "Yes"
+    "ades_code": "MPOSC3",
+    "catalog": "MPOSC 3",
+    "deprecated": true,
+    "obs80_code": "P"
   },
   {
-  "Value": "GSC1.1",
-  "Meaning": "GSC 1.1",
-  "Deprecated": "Yes"
+    "ades_code": "NOMAD",
+    "catalog": "NOMAD",
+    "deprecated": false,
+    "obs80_code": "v"
   },
   {
-  "Value": "GSC1.0",
-  "Meaning": "GSC 1.0",
-  "Deprecated": "Yes"
+    "ades_code": "Perth70",
+    "catalog": "Perth 70",
+    "deprecated": true,
+    "obs80_code": "I"
   },
   {
-  "Value": "GSC",
-  "Meaning": "GSC (unspecified version)",
-  "Deprecated": "Yes"
+    "ades_code": "PPM",
+    "catalog": "PPM",
+    "deprecated": true,
+    "obs80_code": "p"
   },
   {
-  "Value": "SDSS8",
-  "Meaning": "SDSS DR8",
-  "Deprecated": "Yes"
+    "ades_code": "PPMXL",
+    "catalog": "PPM-XL",
+    "deprecated": false,
+    "obs80_code": "t"
   },
   {
-  "Value": "SDSS7",
-  "Meaning": "SDSS DR7",
-  "Deprecated": "Yes"
+    "ades_code": "PS1_DR1",
+    "catalog": "PanSTARRS-1 DR1",
+    "deprecated": false,
+    "obs80_code": "1"
   },
   {
-  "Value": "CMC15",
-  "Meaning": "CMC 15",
-  "Deprecated": "Yes"
+    "ades_code": "PS1_DR2",
+    "catalog": "PanSTARRS-1 DR2",
+    "deprecated": false,
+    "obs80_code": "2"
   },
   {
-  "Value": "CMC14",
-  "Meaning": "CMC 14",
-  "Deprecated": "Yes"
+    "ades_code": "SAO",
+    "catalog": "SAO",
+    "deprecated": true,
+    "obs80_code": "C"
   },
   {
-  "Value": "SSTRC4",
-  "Meaning": "SST-RC4",
-  "Deprecated": "Yes"
+    "ades_code": "SAO1984",
+    "catalog": "SAO 1984",
+    "deprecated": true,
+    "obs80_code": "B"
   },
   {
-  "Value": "SSTRC1",
-  "Meaning": "SST-RC1",
-  "Deprecated": "Yes"
+    "ades_code": "SDSS16",
+    "catalog": "SDSS DR16",
+    "deprecated": false,
+    "obs80_code": "*"
   },
   {
-  "Value": "MPOSC3",
-  "Meaning": "MPOSC 3",
-  "Deprecated": "Yes"
+    "ades_code": "SDSS7",
+    "catalog": "SDSS DR7",
+    "deprecated": true,
+    "obs80_code": "N"
   },
   {
-  "Value": "PPM",
-  "Meaning": "PPM",
-  "Deprecated": "Yes"
+    "ades_code": "SDSS8",
+    "catalog": "SDSS DR8",
+    "deprecated": true,
+    "obs80_code": "n"
   },
   {
-  "Value": "AC",
-  "Meaning": "Astrographic Catalogue",
-  "Deprecated": "Yes"
+    "ades_code": "SDSS9",
+    "catalog": "SDSS DR9",
+    "deprecated": false,
+    "obs80_code": "&"
   },
   {
-  "Value": "SAO1984",
-  "Meaning": "SAO 1984",
-  "Deprecated": "Yes"
+    "ades_code": "SSTRC1",
+    "catalog": "SST-RC1",
+    "deprecated": true,
+    "obs80_code": "O"
   },
   {
-  "Value": "SAO",
-  "Meaning": "SAO",
-  "Deprecated": "Yes"
+    "ades_code": "SSTRC4",
+    "catalog": "SST-RC4",
+    "deprecated": true,
+    "obs80_code": "R"
   },
   {
-  "Value": "AGK3",
-  "Meaning": "AGK 3",
-  "Deprecated": "Yes"
+    "ades_code": "Tyc1",
+    "catalog": "Tycho-1",
+    "deprecated": true,
+    "obs80_code": "f"
   },
   {
-  "Value": "FK4",
-  "Meaning": "FK4",
-  "Deprecated": "Yes"
+    "ades_code": "Tyc2",
+    "catalog": "Tycho-2",
+    "deprecated": true,
+    "obs80_code": "g"
   },
   {
-  "Value": "ACRS",
-  "Meaning": "ACRS",
-  "Deprecated": "Yes"
+    "ades_code": "UBAD",
+    "catalog": "USNO-UBAD",
+    "deprecated": false,
+    "obs80_code": "5"
   },
   {
-  "Value": "LickGas",
-  "Meaning": "Lick Gaspra Catalogue",
-  "Deprecated": "Yes"
+    "ades_code": "UBSC",
+    "catalog": "USNO Bright Star Catalog",
+    "deprecated": false,
+    "obs80_code": "9"
   },
   {
-  "Value": "Ida93",
-  "Meaning": "Ida93 Catalogue",
-  "Deprecated": "Yes"
+    "ades_code": "UCAC1",
+    "catalog": "UCAC 1",
+    "deprecated": true,
+    "obs80_code": "e"
   },
   {
-  "Value": "Perth70",
-  "Meaning": "Perth 70",
-  "Deprecated": "Yes"
+    "ades_code": "UCAC2",
+    "catalog": "UCAC 2",
+    "deprecated": true,
+    "obs80_code": "r"
   },
   {
-  "Value": "COSMOS",
-  "Meaning": "COSMOS/UKST Southern Sky Catalogue",
-  "Deprecated": "Yes"
+    "ades_code": "UCAC3",
+    "catalog": "UCAC 3",
+    "deprecated": true,
+    "obs80_code": "u"
   },
   {
-  "Value": "Yale",
-  "Meaning": "Yale",
-  "Deprecated": "Yes"
+    "ades_code": "UCAC4",
+    "catalog": "UCAC 4",
+    "deprecated": false,
+    "obs80_code": "q"
   },
   {
-  "Value": "ZZCAT",
-  "Meaning": "USNO Zodiacal Zone Catalog",
-  "Deprecated": "Yes"
+    "ades_code": "UCAC5",
+    "catalog": "UCAC 5",
+    "deprecated": false,
+    "obs80_code": "Y"
   },
   {
-  "Value": "IHW",
-  "Meaning": "International Halley Watch",
-  "Deprecated": "Yes"
+    "ades_code": "UNK",
+    "catalog": "Unknown",
+    "deprecated": false,
+    "obs80_code": " "
   },
   {
-  "Value": "GZ",
-  "Meaning": "GZ Giacobini-Zinner Catalogue",
-  "Deprecated": "Yes"
+    "ades_code": "URAT1",
+    "catalog": "URAT 1",
+    "deprecated": false,
+    "obs80_code": "S"
   },
   {
-  "Value": "UNK",
-  "Meaning": "UNKNOWN",
-  "Deprecated": "Yes"
+    "ades_code": "URAT2",
+    "catalog": "URAT 2",
+    "deprecated": false,
+    "obs80_code": "T"
+  },
+  {
+    "ades_code": "USNOA1",
+    "catalog": "USNO-A1.0",
+    "deprecated": true,
+    "obs80_code": "a"
+  },
+  {
+    "ades_code": "USNOA2",
+    "catalog": "USNO-A2.0",
+    "deprecated": true,
+    "obs80_code": "c"
+  },
+  {
+    "ades_code": "USNOB1",
+    "catalog": "USNO B1.0",
+    "deprecated": true,
+    "obs80_code": "o"
+  },
+  {
+    "ades_code": "USNOB2",
+    "catalog": "USNO B2.0",
+    "deprecated": true,
+    "obs80_code": "s"
+  },
+  {
+    "ades_code": "USNOSA1",
+    "catalog": "USNO-SA1.0",
+    "deprecated": true,
+    "obs80_code": "b"
+  },
+  {
+    "ades_code": "USNOSA2",
+    "catalog": "USNO-SA2.0",
+    "deprecated": true,
+    "obs80_code": "d"
+  },
+  {
+    "ades_code": "WISE",
+    "catalog": "WISE",
+    "deprecated": false,
+    "obs80_code": "#"
+  },
+  {
+    "ades_code": "Yale",
+    "catalog": "Yale",
+    "deprecated": true,
+    "obs80_code": "K"
+  },
+  {
+    "ades_code": "ZZCAT",
+    "catalog": "USNO Zodiacal Zone Catalog",
+    "deprecated": false,
+    "obs80_code": "7"
   }
 ]
