@@ -34,6 +34,8 @@ A JSON representation of this table is available [here](./static/catalog-codes.j
 
 ## band (Photometric Passbands)
 
+--8<-- "docs/mpc-ops-docs/observations/static/mag-bands.md"
+
 [//]: # (TODO: Generate this table and JSON from `vmsops:mag_bands`; the `deprecated` field needs to be added first.)
 
 | band | Description |
@@ -87,7 +89,7 @@ A JSON representation of this table is available [here](./static/catalog-codes.j
 | *L* | *Unknown* — MUST NOT be used on new submissions |
 | *u* | *Unknown* — MUST NOT be used on new submissions |
 
-A JSON representation of this table is available [here](./static/band-photometric-passbands.json).
+A JSON representation of this table is available [here](./static/mag-bands.json).
 
 ## notes (Observing Notes)
 
