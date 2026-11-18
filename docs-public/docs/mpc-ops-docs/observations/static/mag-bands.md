@@ -59,3 +59,6 @@
 | `y` | Near Infrared | True | `` |
 | `Y` | Near-Infrared 1.0 microns | True | `` |
 | `z` | Near Infrared | True | `` |
+
+!!! note
+    This table was automatically generated on 2026-11-18 from the relevant API endpoint at [`/api/mag-band`](/docs/mpc-ops-docs/apis/mag-band.md). Please use the API for the most recent values.
