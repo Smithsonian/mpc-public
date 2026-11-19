@@ -34,62 +34,9 @@ A JSON representation of this table is available [here](./static/catalog-codes.j
 
 ## band (Photometric Passbands)
 
---8<-- "docs/mpc-ops-docs/observations/static/mag-bands.md"
+--8<-- "docs/mpc-ops-docs/observations/static/mag-band.md"
 
-[//]: # (TODO: Generate this table and JSON from `vmsops:mag_bands`; the `deprecated` field needs to be added first.)
-
-| band | Description |
-|------|-------------|
-| Lu | LSST u band |
-| Lg | LSST g band |
-| Lr | LSST r band |
-| Li | LSST i band |
-| Lz | LSST z band |
-| Ly | LSST y band |
-| VR | DECam VR band |
-| Vj | Johnson-Cousins V |
-| Rc | Johnson-Cousins R |
-| Ic | Johnson-Cousins I |
-| Bj | Johnson-Cousins B |
-| Uj | Johnson-Cousins U |
-| Sg | Sloan g band |
-| Sr | Sloan r band |
-| Si | Sloan i band |
-| Sz | Sloan z band |
-| Pg | Pan-STARRS g band |
-| Pr | Pan-STARRS r band |
-| Pi | Pan-STARRS i band |
-| Pz | Pan-STARRS z band |
-| Pw | Pan-STARRS w band |
-| Py | Pan-STARRS y band |
-| Ao | ATLAS o band |
-| Ac | ATLAS c band |
-| G | Gaia G band |
-| Gb | Gaia G_BP band |
-| Gr | Gaia G_RP band |
-| W | Wide |
-| *U* | *U band* |
-| *B* | *Photographic* |
-| *V* | *Visual* |
-| *R* | *Red* |
-| *I* | *Near IR* |
-| *g* | *g band* |
-| *r* | *r band* |
-| *i* | *i band* |
-| *z* | *z band* |
-| *w* | *w band* |
-| *y* | *y band* |
-| *o* | *ATLAS o band* |
-| *c* | *ATLAS c band* |
-| *J* | *1.275 micron band* |
-| *H* | *1.662 micron band* |
-| *K* | *2.159 micron band* |
-| *Y* | *1.035 micron band* |
-| *C* | *Clear* — MUST NOT be used on new submissions |
-| *L* | *Unknown* — MUST NOT be used on new submissions |
-| *u* | *Unknown* — MUST NOT be used on new submissions |
-
-A JSON representation of this table is available [here](./static/mag-bands.json). See also the [Magnitude Band API](../apis/mag-band.md) for programmatic, real-time access to this data.
+See also the [Magnitude Band API](../apis/mag-band.md) for programmatic, real-time access to this data.
 
 ## notes (Observing Notes)
 
