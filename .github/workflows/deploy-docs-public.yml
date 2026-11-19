@@ -13,6 +13,10 @@ concurrency:
   group: 'pages'
   cancel-in-progress: true
 
+defaults:
+  run:
+    working-directory: ./docs-public
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -31,11 +35,11 @@ jobs:
           python-version: '3.13'
 
       - name: Install dependencies
-        run: pip install -r docs-public/requirements.txt
+        run: pip install -r requirements.txt
 
       - name: Build site
         run: |
-          mkdocs build -f docs-public/mkdocs.yml -d site
+          mkdocs build -f mkdocs.yml -d site
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
@@ -43,7 +47,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: docs-public/site
+          path: site
 
       - name: Deploy to GitHub Pages
         id: deployment
