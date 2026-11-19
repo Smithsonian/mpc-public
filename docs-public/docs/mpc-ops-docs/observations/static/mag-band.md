@@ -61,5 +61,4 @@
 | `z` | Near Infrared | `0.37` | True | `` |
 
 !!! note
-    This table was automatically generated on 2026-11-19 from the relevant API endpoint at [`/api/mag-band`](/docs/mpc-ops-docs/apis/mag-band.md). Please use the API for the most recent values.
-A JSON representation of this table is available [here](/mpc-ops-docs/observations/static/mag-band.json).
+    This table was generated on 2026-11-19 from the relevant API endpoint at [`/api/mag-band`](/docs/mpc-ops-docs/apis/mag-band.md). Please use the API for the most recent values. A JSON representation of this table is also available [here](/mpc-ops-docs/observations/static/mag-band.json).

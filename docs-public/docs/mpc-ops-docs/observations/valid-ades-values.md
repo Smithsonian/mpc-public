@@ -30,13 +30,10 @@ A JSON representation of this table is available [here](static/mode-instrumentat
 --8<-- "docs/mpc-ops-docs/observations/static/catalog-codes.md"
 
 To request the addition of a new catalog, submit a [Helpdesk ticket](https://mpc-service.atlassian.net/servicedesk/customer/portals).
-A JSON representation of this table is available [here](./static/catalog-codes.json).
 
 ## band (Photometric Passbands)
 
 --8<-- "docs/mpc-ops-docs/observations/static/mag-band.md"
-
-See also the [Magnitude Band API](../apis/mag-band.md) for programmatic, real-time access to this data.
 
 ## notes (Observing Notes)
 

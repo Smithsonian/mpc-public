@@ -78,15 +78,15 @@ def write_markdown_table(rows: list[dict[str, Any]], basename: str):
             f.write(
                 "\n"
                 "!!! note\n"
-                f"    This table was automatically generated on "
+                f"    This table was generated on "
                 f"{datetime.now().strftime('%Y-%m-%d')} "
                 f"from the relevant API endpoint at "
             )
             f.write(f"[`/api/{basename}`](/docs/mpc-ops-docs/apis/{basename}.md). ")
 
-            f.write("Please use the API for the most recent values.\n")
+            f.write("Please use the API for the most recent values. ")
 
-            f.write("A JSON representation of this table is available "
+            f.write("A JSON representation of this table is also available "
                     f"[here](/mpc-ops-docs/observations/static/{basename}.json).")
 
         logging.info(f"Wrote Markdown table to {static_files_dir}")
