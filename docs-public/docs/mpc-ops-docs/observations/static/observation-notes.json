@@ -85,6 +85,11 @@
   "Deprecated": "Yes"
   },
   {
+    "Value": "J",
+    "Meaning": "J2000.0 rereduction of previously-reported position",
+    "Deprecated": "No"
+  },
+  {
   "Value": "L",
   "Meaning": "Color corrected observations",
   "Deprecated": "No"
