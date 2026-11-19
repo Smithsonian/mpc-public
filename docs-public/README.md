@@ -32,6 +32,7 @@ pip install -r requirements.txt
 4. **Examine locally**
  - From the project root, run from the command-line: `mkdocs serve --livereload`
  - See [Issue #8478](https://github.com/squidfunk/mkdocs-material/issues/8478) on the addition of `--livereload` argument. Once `mkdocs` solves this issue, it should automatically watch for changes without the `--livereload` flag.
+ - If you're only changing Markdown files, you can also run `mkdocs serve -f mkdocs.dev.yml --livereload` to avoid having to wait for the notebooks to be built.
  - Then examine in browser: `http://127.0.0.1:8000/index.html`
 
 5. Push Branch to Repo & Request Review

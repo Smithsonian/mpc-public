@@ -71,4 +71,5 @@ print(json.dumps(response.json(), indent=4))
 ## See Also
 
 - [Magnitude Band API Tutorial](../../../tutorials/notebooks/mpc_tutorial_api_mag_band/)
+- [Magnitude Band Codes](../observations/valid-ades-values.md#band-photometric-passbands) (Produced from this API on an interim basis.)
 

@@ -1,0 +1,10 @@
+# This version of mkdocs.yml is used for local development
+#  WITHOUT building the python notebooks.
+# It's useful for testing Markdown-ONLY changes to the docs,
+# without having to wait for the notebooks to be built.
+
+# Run it with `mkdocs serve -f mkdocs.dev.yml --livereload`
+
+INHERIT: mkdocs.yml
+plugins:
+  - search

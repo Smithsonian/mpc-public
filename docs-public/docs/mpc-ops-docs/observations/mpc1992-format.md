@@ -313,16 +313,18 @@ be given in V- or R-band, for example. In the past for comets, the magnitude
 was specified as being nuclear, N, or total, T, but observers are now encouraged to
 provide the actual band used.
 
-    The current list of acceptable magnitude bands is `B, V, R, I, J, W, U, C, L, H, K, Y, G, g, r, i, w, y, z, o, c, v, u`. Non-recognized
-    magnitude bands will
-    cause observations to be rejected. Addition of new recognised bands
-    requires knowledge of a standard correction to convert a magnitude in that
-    band to V. Conversion to V band used by MPC is located [here](https://minorplanetcenter.net/iau/info/BandConversion.txt).
+**The current list of acceptable magnitude bands is available [here](valid-ades-values.md#band-photometric-passbands).**
+Nonrecognized magnitude bands will cause observations to be rejected. 
+Addition of new recognized bands requires knowledge of a standard correction 
+to convert a magnitude in that band to V. 
+Conversions to V band used by MPC are located [here](https://minorplanetcenter.net/iau/info/BandConversion.txt), or via the [Magnitude Bands API](../apis/mag-band.md).
 
+!!! note
     The formerly-used "C" band to indicate "clear" or "no filter"
     is no longer valid for newly-submitted observations, but will remain on
     previously-submitted observations.
-For programmatic access to magnitude bands, see the [Magnitude Bands API](https://minorplanetcenter.net/mpcops/documentation/mag-band-api/).
+
+For programmatic access to magnitude bands, see the [Magnitude Bands API](../apis/mag-band.md).
 
 #### Observatory Code
 Observatory codes are stored in columns 78-80.
