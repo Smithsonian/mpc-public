@@ -5,50 +5,12 @@ Alphabetic notes shown with some observations are defined according to the schem
 
 ## Standard Alphabetic `Note 1` Codes
 
-| Code | Definition |
-|------|-----------|
-| A | earlier approximate position inferior |
-| a | sense of motion ambiguous |
-| B | bright sky/black or dark plate |
-| b | bad seeing |
-| c | crowded star field |
-| D | declination uncertain |
-| d | diffuse image |
-| E | at or near edge of plate |
-| F | faint image |
-| f | involved with emulsion or plate flaw |
-| G | poor guiding |
-| g | no guiding |
-| H | hand measurement of CCD image |
-| h | observed through cloud/haze |
-| I | involved with star |
-| i | inkdot measured |
-| J | J2000.0 rereduction of previously-reported position |
-| K | stacked image |
-| k | stare-mode observation by scanning system |
-| M | measurement difficult |
-| m | image tracked on object motion |
-| N | near edge of plate, measurement uncertain |
-| O | image out of focus |
-| o | plate measured in one direction only |
-| P | position uncertain |
-| p | poor image |
-| R | right ascension uncertain |
-| r | poor distribution of reference stars |
-| S | poor sky |
-| s | streaked image |
-| T | time uncertain |
-| t | trailed image |
-| U | uncertain image |
-| u | unconfirmed image |
-| V | very faint image |
-| W | weak image |
-| w | weak solution |
+--8<-- "docs/mpc-ops-docs/observations/static/observation-notes.md"
 
 
 ## Restricted and Deprecated Codes
 
-These codes are either restricted or must not be used on newly-submitted observations:
+These codes are either restricted or **must not** be used on newly-submitted observations:
 
 | Code | Definition |
 |------|-----------|

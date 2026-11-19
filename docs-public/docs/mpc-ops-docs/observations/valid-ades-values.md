@@ -158,52 +158,7 @@ A JSON representation of this table is available [here](./static/band-photometri
 
 Up to six notes may be included on a single observation.
 
-[//]: # (TODO: Generate this table and JSON from `vmsops:publishable_notes`)
-
-| note | Description |
-|------|-------------|
-| *A* | *Earlier approximate position inferior* |
-| a | Sense of motion ambiguous |
-| B | Bright sky/black or dark plate |
-| b | Bad seeing |
-| c | Crowded star field |
-| D | Declination uncertain |
-| d | Diffuse image |
-| E | At or near edge of plate/frame |
-| e | Extrapolation to zero aperture technique used |
-| F | Faint image |
-| f | Involved with emulsion, plate or CCD flaw |
-| G | Poor guiding |
-| g | No guiding |
-| H | Hand measurement of CCD image |
-| h | Observed through cloud/haze |
-| I | Involved with star |
-| *i* | *Inkdot measured* |
-| K | Stacked image |
-| k | Stare-mode observation by scanning system |
-| L | Color corrected observations |
-| M | Measurement difficult |
-| m | Image tracked on object motion |
-| N | Near edge of plate, measurement uncertain |
-| n | Normal place |
-| O | Image out of focus |
-| *o* | *Plate measured in one direction only* |
-| P | Position uncertain |
-| p | Poor image |
-| R | Right ascension uncertain |
-| r | Poor distribution of reference stars |
-| S | Poor sky |
-| s | Streaked image |
-| T | Time uncertain |
-| t | Trailed image |
-| U | Uncertain image |
-| u | Unconfirmed image |
-| V | Very faint image |
-| W | Weak image |
-| w | Weak solution |
-| Z | Astrometry from large surveys without program codes reported by a non-survey measurerer/pipeline |
-
-A JSON representation of this table is available [here](./static/observing-notes.json).
+--8<-- "docs/mpc-ops-docs/observations/static/observation-notes.md"
 
 ## photMod (Photometric Model)
 
